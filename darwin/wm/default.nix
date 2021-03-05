@@ -1,8 +1,5 @@
 {config, pkgs, ...}:
-
-let
-  keycodes = import ./keycodes.nix;
-in {
+{
   services.yabai.enable = true;
   services.yabai.package = pkgs.yabai;
   services.yabai.enableScriptingAddition = true;
