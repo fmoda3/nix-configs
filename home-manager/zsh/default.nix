@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   programs.zsh = {
@@ -103,19 +103,31 @@
       rm = "nocorrect rm"; # Override rm -i alias which makes rm prompt for every action
     };
 
-    plugins = [{
-      name = "zsh-syntax-highlighting";
-      src = pkgs.fetchFromGitHub {
-        owner = "zsh-users";
-        repo = "zsh-syntax-highlighting";
-        rev = "0.7.1";
-        sha256 = "03r6hpb5fy4yaakqm3lbf4xcvd408r44jgpv4lnzl9asp4sb9qc0";
-      };
-    }];
+    plugins = [
+      {
+        name = "zsh-syntax-highlighting";
+        src = pkgs.fetchFromGitHub {
+          owner = "zsh-users";
+          repo = "zsh-syntax-highlighting";
+          rev = "0.7.1";
+          sha256 = "03r6hpb5fy4yaakqm3lbf4xcvd408r44jgpv4lnzl9asp4sb9qc0";
+        };
+      }
+      {
+        name = "powerlevel10k";
+        src = pkgs.zsh-powerlevel10k;
+        file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+      }
+      {
+        name = "powerlevel10k-config";
+        src = lib.cleanSource ./p10k-config;
+        file = "p10k.zsh";
+      }
+    ];
 
     oh-my-zsh = {
       enable = true;
-      theme = "apple";
+      theme = "";
       plugins = [
         "z"
         "git"
@@ -127,6 +139,7 @@
     };
 
     initExtra = ''
+      source $HOME/.config/zsh/.p10k.zsh
       eval "$(direnv hook zsh)"
     '';
   };
