@@ -12,10 +12,10 @@
        orientation = "bottom";
        showhidden = true;
        mineffect = "genie";
+       minimize-to-application = true;
        launchanim = true;
        show-process-indicators = true;
        tilesize = 48;
-       static-only = true;
        mru-spaces = false;
      };
      finder = {
