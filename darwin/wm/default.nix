@@ -5,7 +5,7 @@
   services.yabai.enableScriptingAddition = true;
   services.yabai.extraConfig = ''
     # let simple-bar handle bar
-    yabai -m config external_bar all:25:0 
+    yabai -m config external_bar all:10:0 
 
     yabai -m config mouse_follows_focus          off
     yabai -m config focus_follows_mouse          off
@@ -59,13 +59,13 @@
     spacing_right      = 15;
     text_font	       = ''"Helvetica Neue:Bold:12.0"'';
     icon_font	       = ''"Font Awesome 5 Free:Regular:12.0"'';
-    background_color   = "0xff202020";
-    foreground_color   = "0xffa8a8a8";
-    space_icon_color   = "0xff458588";
-    power_icon_color   = "0xffcd950c";
-    battery_icon_color = "0xffd75f5f";
-    dnd_icon_color     = "0xffa8a8a8";
-    clock_icon_color   = "0xffa8a8a8";
+    background_color   = "0xff2e3440";
+    foreground_color   = "0xff5e81ac";
+    space_icon_color   = "0xffbf616a";
+    power_icon_color   = "0xffd08770";
+    battery_icon_color = "0xffebcb8b";
+    dnd_icon_color     = "0xffa3be8c";
+    clock_icon_color   = "0xffb48ead";
     space_icon_strip   = "I II III IV V VI VII VIII IX X";
     power_icon_strip   = " ";
     space_icon         = "";
