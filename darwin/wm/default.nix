@@ -107,6 +107,9 @@
     # make floating window fill right-half of screen
     shift + alt - right  : yabai -m window --grid 1:2:1:0:1:1
 
+    # create desktop
+    cmd + alt - n : yabai -m space --create
+
     # destroy desktop
     cmd + alt - w : yabai -m space --destroy
 
@@ -147,7 +150,6 @@
     ctrl + alt - 1  : yabai -m display --focus 1
     ctrl + alt - 2  : yabai -m display --focus 2
     ctrl + alt - 3  : yabai -m display --focus 3
-
 
     # move window
     shift + ctrl - a : yabai -m window --move rel:-20:0
@@ -224,8 +226,6 @@
     ctrl + cmd - p ; passthrough
     passthrough < ctrl + cmd - p ; default
 
-    ctrl + cmd - s : $HOME/.choose-scripts/bwmenu
-
     # open terminal
     cmd - return : open -a kitty
     ctrl + alt - t : open -a kitty
@@ -235,12 +235,6 @@
    
     ctrl + cmd - b : zsh -c "fish -c battpop"
     ctrl + cmd - d : zsh -c "fish -c timepop"
-
     ctrl + cmd - w : zsh -c "fish -c wifi-toggle"
-
-    cmd - space : zsh -c "bash ~/.local/bin/choose-launcher.sh"
-    cmd + shift - f : zsh -c "bash ~/.local/bin/choose-file-manager.sh"
-    cmd + shift - b : zsh -c "bash ~/.local/bin/choose-buku.sh"
-
   '';
 }

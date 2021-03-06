@@ -6,7 +6,7 @@
     autoUpdate = true;
     cleanup = "uninstall";
     casks = [
-     "kitty"
+      "kitty"
     ];
   };
 }

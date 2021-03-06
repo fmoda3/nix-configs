@@ -28,7 +28,12 @@
     enable = true;
     promptInit = "";
   };
-  # programs.fish.enable = true;
+  programs.fish.enable = true;
+
+  # Overlays
+  nixpkgs.overlays = [
+    (import ./overlays/yabai.nix)
+  ];
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
