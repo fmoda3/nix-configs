@@ -38,16 +38,19 @@
     yabai -m rule --add app="choose" manage=off
 
     # Space labels
-    yabai -m space 1 --label "Term 1"
-    yabai -m space 2 --label "Dev 2"
-    yabai -m space 3 --label "Web 3"
-    yabai -m space 4 --label "Email 4"
-    yabai -m space 5 --label "Social 5"
-    yabai -m space 6 --label "Media 6"
-    yabai -m space 7 --label "Games 7"
-    yabai -m space 8 --label "Tools 8"
-    yabai -m space 9 --label "Float 9"
-    yabai -m space 10 --label "Misc 10"
+    yabai -m space 1 --label "Term"
+    yabai -m space 2 --label "Dev"
+    yabai -m space 3 --label "Web"
+    yabai -m space 4 --label "Email"
+    yabai -m space 5 --label "Social"
+    yabai -m space 6 --label "Media"
+    yabai -m space 7 --label "Games"
+    yabai -m space 8 --label "Tools"
+    yabai -m space 9 --label "Float"
+    yabai -m space 10 --label "Misc"
+
+    # Make float space
+    yabai -m space 9 --layout float
 
     # Unmanaged
     yabai -m rule --add app="^System Preferences$" sticky=on layer=above manage=off    
