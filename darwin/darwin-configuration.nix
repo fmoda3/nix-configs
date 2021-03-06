@@ -7,12 +7,9 @@
     ./system-defaults
     ./fonts
     ./wm
-    ./homebrew
-  ];
-
-  # List packages installed in system profile. To search by name, run:
-  # $ nix-env -qaP | grep wget
-  environment.systemPackages = [
+    ./system-packages
+    # Nix currently handling all needed
+    # ./homebrew
   ];
 
   # Use a custom configuration.nix location.

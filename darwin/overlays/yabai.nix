@@ -1,5 +1,6 @@
 self: super:
 {
+  # Override yabai version to 3.3.7 until it makes its way to nixPkgs
   yabai = super.yabai.overrideAttrs (o: rec {
     version = "3.3.7";
     src = builtins.fetchTarball {
