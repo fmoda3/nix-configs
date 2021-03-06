@@ -16,7 +16,7 @@ For Linux:
 
 For macOS:
 
-Note: Multi User is highly recommended, as nix-darwin defaults to multi-user, and may remove single user support in the future.
+Note: Multi User is highly recommended, as [nix-darwin defaults to multi-user](https://github.com/LnL7/nix-darwin/issues/287), and [may remove single user support in the future](https://github.com/NixOS/nix/pull/4289).
 
 * Single User:
 
@@ -39,6 +39,8 @@ Clone:
 ## Install Nix Darwin (macOS only)
 
 [Nix Darwin Installation Guide](https://github.com/LnL7/nix-darwin#install)
+
+Run Installer:
 
     nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
     ./result/bin/darwin-installer
@@ -80,3 +82,17 @@ Link Config:
 Switch to config:
 
     home-manager switch
+
+## Known Issues
+
+* If you installed Nix in Single User mode, and then installed Nix Darwin with nix-daemon enabled (multi-user, and the default), [you may run into permissions issues](https://github.com/LnL7/nix-darwin/issues/188) when executing nix.  These permissions can be fixed by:
+
+      chown -R root:nixbld /nix
+      chmod 1777 /nix/var/nix/profiles/per-user
+      chown -R $USER:staff /nix/var/nix/profiles/per-user/$USER
+      mkdir -m 1777 -p /nix/var/nix/gcroots/per-user
+      chown -R $USER:staff /nix/var/nix/gcroots/per-user/$USER
+
+* This warning is a [known issue](https://github.com/LnL7/nix-darwin/issues/295):
+
+    > warning: Nix search path entry '/nix/var/nix/profiles/per-user/root/channels' does not exist, ignoring
