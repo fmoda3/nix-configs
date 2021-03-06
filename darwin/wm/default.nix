@@ -16,8 +16,8 @@
     yabai -m config window_shadow                float
     yabai -m config window_border                on
     yabai -m config window_border_width          4
-    yabai -m config active_window_border_color   0xFF5E81AC
-    yabai -m config normal_window_border_color   0xFF8FBCBB
+    yabai -m config active_window_border_color   0xFF8FBCBB
+    yabai -m config normal_window_border_color   0xFF5E81AC
     yabai -m config insert_window_border_color   0xFFBF616A
     yabai -m config active_window_opacity        1.0
     yabai -m config normal_window_opacity        0.90
@@ -37,14 +37,16 @@
     yabai -m rule --add app="choose" manage=off
 
     # Space labels
-    yabai -m space 1 --label "Browser 1"
+    yabai -m space 1 --label "Term 1"
     yabai -m space 2 --label "Dev 2"
-    yabai -m space 3 --label "Comms 3"
-    yabai -m space 4 --label "Tools 4"
+    yabai -m space 3 --label "Web 3"
+    yabai -m space 4 --label "Email 4"
     yabai -m space 5 --label "Social 5"
     yabai -m space 6 --label "Media 6"
-    yabai -m space 7 --label "Float 7"
-    yabai -m space 8 --label "Misc 8"
+    yabai -m space 7 --label "Games 7"
+    yabai -m space 8 --label "Tools 8"
+    yabai -m space 9 --label "Float 9"
+    yabai -m space 10 --label "Misc 10"
 
     # Unmanaged
     yabai -m rule --add app="^System Preferences$" sticky=on layer=above manage=off    
@@ -57,8 +59,8 @@
     height	       = 26;
     spacing_left       = 25;
     spacing_right      = 15;
-    text_font	       = ''"Helvetica Neue:Bold:12.0"'';
-    icon_font	       = ''"Font Awesome 5 Free:Regular:12.0"'';
+    text_font	       = ''"TerminessTTF Nerd Font:Medium:12.0"'';
+    icon_font	       = ''"TerminessTTF Nerd Font:Medium:12.0"'';
     background_color   = "0xff2e3440";
     foreground_color   = "0xff5e81ac";
     space_icon_color   = "0xffbf616a";
@@ -66,7 +68,7 @@
     battery_icon_color = "0xffebcb8b";
     dnd_icon_color     = "0xffa3be8c";
     clock_icon_color   = "0xffb48ead";
-    space_icon_strip   = "I II III IV V VI VII VIII IX X";
+    space_icon_strip   = "         ";
     power_icon_strip   = " ";
     space_icon         = "";
     clock_icon         = "";
@@ -232,9 +234,5 @@
 
     # lock screen
     cmd - l : /System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend
-   
-    ctrl + cmd - b : zsh -c "fish -c battpop"
-    ctrl + cmd - d : zsh -c "fish -c timepop"
-    ctrl + cmd - w : zsh -c "fish -c wifi-toggle"
   '';
 }
