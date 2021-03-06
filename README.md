@@ -52,6 +52,8 @@ Answers to prompts:
     Would you like to load darwin configuration in /etc/bashrc? [y/n] y
     Would you like to create /run? [y/n] y
 
+Note: If you installed Nix in Single User, you may want to respond Yes to the first prompt and edit the configuration to disable the nix-daemon.  This repo's configs have the nix-daemon enabled, and will need that changed as well before switching below.
+
 Link Config:
 
     rm ~/.nixpkgs/darwin-configuration.nix
