@@ -1,5 +1,4 @@
 { config, pkgs, ...}:
-
 {
   system.keyboard = {
     enableKeyMapping = true;
@@ -27,5 +26,4 @@
        AppleInterfaceStyle = "Dark"; # set dark mode
      };
    };
-  
 }

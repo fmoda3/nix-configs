@@ -1,5 +1,4 @@
 { config, pkgs, lib, ... }:
-
 {
   programs.zsh = {
     enable = true;
@@ -127,7 +126,7 @@
 
     oh-my-zsh = {
       enable = true;
-      theme = "";
+      theme = ""; # Disable theme to allow powerlevel10k to manage it
       plugins = [
         "z"
         "git"

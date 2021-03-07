@@ -1,5 +1,4 @@
 { config, pkgs, ... }:
-
 {
   nixpkgs.config.allowUnfree = true;
 
@@ -8,7 +7,7 @@
     ./fonts
     ./wm
     ./system-packages
-    # Nix currently handling all needed
+    # Nix currently handling all needed programs
     # ./homebrew
   ];
 

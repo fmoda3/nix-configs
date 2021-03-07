@@ -9,7 +9,7 @@ in {
     vimdiffAlias = true;
 
     plugins = with pkgs.vimPlugins; [
-	      # Basics
+        # Basics
         vim-sensible
         vim-fugitive
         vim-surround

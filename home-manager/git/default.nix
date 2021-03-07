@@ -1,5 +1,4 @@
 { config, pkgs, ... }:
-
 {
   programs = {
     git = {
@@ -8,6 +7,7 @@
       userEmail = "fmoda3@mac.com";
 
       aliases = {
+        # add
         a = "add";                           # add
         chunkyadd = "add --patch";           # stage commits chunk by chunk
 
@@ -115,6 +115,18 @@
       };
 
       extraConfig = {
+        advice = {
+          statusHints = true;
+        };
+
+        apply = {
+          whitespace = "nowarn";
+        };
+
+        branch = {
+          autosetupmerge = true;
+        };
+
         color = {
           ui = true;
           status = true;
@@ -134,12 +146,18 @@
           new = "green";
         };
 
-        format = {
-          pretty = "format:%C(blue)%ad%Creset %C(yellow)%h%C(green)%d%Creset %C(blue)%s %C(magenta) [%an]%Creset";
+        core = {
+          autocrlf = false;
+          editor = "vim";
         };
 
-        mergetool = {
-          prompt = false;
+        diff = {
+          mnemonicprefix = true;
+          algorithm = "patience";
+        };
+
+        format = {
+          pretty = "format:%C(blue)%ad%Creset %C(yellow)%h%C(green)%d%Creset %C(blue)%s %C(magenta) [%an]%Creset";
         };
 
         merge = {
@@ -147,30 +165,12 @@
           verbosity = 1;
         };
 
-        apply = {
-          whitespace = "nowarn";
-        };
-
-        branch = {
-          autosetupmerge = true;
-        };
+        mergetool = {
+          prompt = false;
+        };        
 
         push = {
           default = "tracking";
-        };
-
-        core = {
-          autocrlf = false;
-          editor = "vim";
-        };
-
-        advice = {
-          statusHints = true;
-        };
-
-        diff = {
-          mnemonicprefix = true;
-          algorithm = "patience";
         };
 
         rerere = {

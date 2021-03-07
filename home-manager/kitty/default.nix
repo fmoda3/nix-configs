@@ -5,7 +5,7 @@ in {
     enable = true;
     font = {
       package = pkgs.nerdfonts;
-      name = "SauceCodePro Nerd Font";
+      name = "Inconsolata Nerd Font";
     };
     settings = {
       bold_font = "auto";
