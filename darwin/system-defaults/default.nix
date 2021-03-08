@@ -7,7 +7,6 @@
 
   system.defaults = {
      dock = {
-       autohide = true;
        orientation = "bottom";
        showhidden = true;
        mineffect = "genie";

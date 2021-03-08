@@ -1,5 +1,15 @@
 {config, pkgs, ...}:
 {
+  # Hide the dock and menu bar, for Yabai
+  system.defaults = {
+    dock = {
+      autohide = true;
+    };
+    NSGlobalDomain = {
+      _HIHideMenuBar = true;
+    };
+  };
+
   services.yabai.enable = true;
   services.yabai.package = pkgs.yabai;
   services.yabai.enableScriptingAddition = true;
