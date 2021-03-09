@@ -68,12 +68,12 @@
   services.spacebar.enable = true;
   services.spacebar.package = pkgs.spacebar;
   services.spacebar.config = {
-    position 	       = "top";
-    height	       = 26;
+    position           = "top";
+    height             = 26;
     spacing_left       = 25;
     spacing_right      = 15;
-    text_font	       = ''"TerminessTTF Nerd Font:Medium:12.0"'';
-    icon_font	       = ''"TerminessTTF Nerd Font:Medium:12.0"'';
+    text_font          = ''"TerminessTTF Nerd Font:Medium:12.0"'';
+    icon_font          = ''"TerminessTTF Nerd Font:Medium:12.0"'';
     background_color   = "0xff2e3440";
     foreground_color   = "0xff5e81ac";
     space_icon_color   = "0xffbf616a";
