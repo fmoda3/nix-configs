@@ -15,7 +15,7 @@
   services.yabai.enableScriptingAddition = true;
   services.yabai.extraConfig = ''
     # let simple-bar handle bar
-    yabai -m config external_bar all:10:0 
+    yabai -m config external_bar all:26:0 
 
     yabai -m config mouse_follows_focus          off
     yabai -m config focus_follows_mouse          off
@@ -26,8 +26,8 @@
     yabai -m config window_shadow                float
     yabai -m config window_border                on
     yabai -m config window_border_width          4
-    yabai -m config active_window_border_color   0xFF8FBCBB
-    yabai -m config normal_window_border_color   0xFF5E81AC
+    yabai -m config active_window_border_color   0xFF5E81AC
+    yabai -m config normal_window_border_color   0xFF4C566A
     yabai -m config insert_window_border_color   0xFFBF616A
     yabai -m config active_window_opacity        1.0
     yabai -m config normal_window_opacity        0.90
