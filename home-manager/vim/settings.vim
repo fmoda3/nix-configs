@@ -26,11 +26,11 @@ if (empty($TMUX))
 endif
 
 syntax enable
-colorscheme nord
-set background=dark
+colorscheme THEME
+set background=LIGHT_DARK
 
 let g:lightline = {
-      \ 'colorscheme': 'nord',
+      \ 'colorscheme': 'THEME',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'fugitive', 'filename' ] ]

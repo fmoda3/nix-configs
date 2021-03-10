@@ -5,7 +5,7 @@
   imports = [
     ./system-defaults
     ./fonts
-    ./wm
+    ./wm/themes/nord.nix
     ./system-packages
     # Nix currently handling all needed programs
     # ./homebrew

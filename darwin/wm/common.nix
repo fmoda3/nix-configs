@@ -13,37 +13,33 @@
   services.yabai.enable = true;
   services.yabai.package = pkgs.yabai;
   services.yabai.enableScriptingAddition = true;
+  services.yabai.config = {
+    mouse_follows_focus = "off";
+    focus_follows_mouse = "off";
+    window_placement        = "second_child";
+    window_topmost          = "on";
+    window_opacity          = "off";
+    window_opacity_duration = "0.0";
+    window_shadow           = "float";
+    window_border           = "on";
+    window_border_width     = "4";
+    active_window_opacity   = "1.0";
+    normal_window_opacity   = "0.90";
+    split_ratio             = "0.50";
+    auto_balance            = "on";
+    mouse_modifier          = "fn";
+    mouse_action1           = "move";
+    mouse_action2           = "resize";
+    mouse_drop_action		    = "swap";
+  
+    layout                  = "bsp";
+    top_padding             = "20";
+    bottom_padding          = "20";
+    left_padding            = "20";
+    right_padding           = "20";
+    window_gap              = "10";
+  };
   services.yabai.extraConfig = ''
-    # let simple-bar handle bar
-    yabai -m config external_bar all:26:0 
-
-    yabai -m config mouse_follows_focus          off
-    yabai -m config focus_follows_mouse          off
-    yabai -m config window_placement             second_child
-    yabai -m config window_topmost               on
-    yabai -m config window_opacity               off
-    yabai -m config window_opacity_duration      0.0
-    yabai -m config window_shadow                float
-    yabai -m config window_border                on
-    yabai -m config window_border_width          4
-    yabai -m config active_window_border_color   0xFF5E81AC
-    yabai -m config normal_window_border_color   0xFF4C566A
-    yabai -m config insert_window_border_color   0xFFBF616A
-    yabai -m config active_window_opacity        1.0
-    yabai -m config normal_window_opacity        0.90
-    yabai -m config split_ratio                  0.50
-    yabai -m config auto_balance                 on
-    yabai -m config mouse_modifier               fn
-    yabai -m config mouse_action1                move
-    yabai -m config mouse_action2                resize
-    yabai -m config mouse_drop_action		 swap
-    
-    yabai -m config layout                       bsp
-    yabai -m config top_padding                  20
-    yabai -m config bottom_padding               20
-    yabai -m config left_padding                 20
-    yabai -m config right_padding                20
-    yabai -m config window_gap                   10
     yabai -m rule --add app="choose" manage=off
 
     # Space labels
@@ -72,15 +68,6 @@
     height             = 26;
     spacing_left       = 25;
     spacing_right      = 15;
-    text_font          = ''"TerminessTTF Nerd Font:Medium:12.0"'';
-    icon_font          = ''"TerminessTTF Nerd Font:Medium:12.0"'';
-    background_color   = "0xff2e3440";
-    foreground_color   = "0xff5e81ac";
-    space_icon_color   = "0xffbf616a";
-    power_icon_color   = "0xffd08770";
-    battery_icon_color = "0xffebcb8b";
-    dnd_icon_color     = "0xffa3be8c";
-    clock_icon_color   = "0xffb48ead";
     space_icon_strip   = "         ";
     power_icon_strip   = " ";
     space_icon         = "";

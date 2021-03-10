@@ -26,10 +26,10 @@
   };
 
   imports = [
-    ./kitty
+    ./kitty/themes/nord.nix
     ./zsh
     ./git
-    ./vim
+    ./vim/themes/nord.nix
     ./tmux
     ./direnv
   ];

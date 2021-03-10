@@ -1,6 +1,5 @@
 { config, pkgs, ... }:
-let theme = builtins.readFile ./theme.conf;
-in {
+{
   programs.kitty = {
     enable = true;
     font = {
@@ -19,8 +18,5 @@ in {
       macos_option_as_alt = "yes";
       scrollback_lines = 10000;
     };
-    extraConfig = ''
-      ${theme}
-    '';
   };
 }
