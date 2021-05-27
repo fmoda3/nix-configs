@@ -138,7 +138,6 @@
     };
 
     initExtra = ''
-      source $HOME/.config/zsh/.p10k.zsh
       eval "$(direnv hook zsh)"
     '';
   };
