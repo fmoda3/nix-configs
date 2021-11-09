@@ -1,14 +1,8 @@
 { config, pkgs, ... }:
 {
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
-
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
   home = {
-    username = "fmoda3";
-    homeDirectory = "/Users/fmoda3";
-
     sessionVariables = {
       EDITOR = "vim";
       VISUAL = "vim";
@@ -26,10 +20,10 @@
   };
 
   imports = [
-    ./kitty/themes/nord.nix
+    ./kitty
     ./zsh
     ./git
-    ./vim/themes/nord.nix
+    ./vim
     ./tmux
     ./direnv
   ];

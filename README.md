@@ -2,99 +2,44 @@
 
 ## Install Nix (Linux and macOS)
 
-[Nix Installation Guide](https://nixos.org/manual/nix/stable/#ch-installing-binary)
+[Nix Installation Guide](https://nixos.org/manual/nix/stable/installation/installing-binary.html)
 
-For Linux:
+The following will install single-user on Linux and multi-user on macos:
 
-* Single User:
 
       sh <(curl -L https://nixos.org/nix/install)
 
-* Multi User:
+To install multi-user on Linux:
 
       sh <(curl -L https://nixos.org/nix/install) --daemon
 
-For macOS:
+## Enable Flakes:
 
-Note: Multi User is highly recommended, as [nix-darwin defaults to multi-user](https://github.com/LnL7/nix-darwin/issues/287), and [may remove single user support in the future](https://github.com/NixOS/nix/pull/4289).
+Create a file in `~/.config/nix/nix.conf` and add the following:
 
-* Single User:
-
-      sh <(curl -L https://nixos.org/nix/install) --darwin-use-unencrypted-nix-store-volume
-
-* Multi User:
-
-      sh <(curl -L https://nixos.org/nix/install) --darwin-use-unencrypted-nix-store-volume --daemon
+    experimental-features = nix-command flakes
 
 ## Clone Repo:
 
-If you need git (may need to uninstall this later as it can conflict with Home Manager's version):
-
-    nix-env -iA nixpkgs.git
-
-Clone:
-
     git clone git@github.com:fmoda3/nix-configs.git ~/.nix-configs
 
-## Install Nix Darwin (macOS only)
+## Build Flake
 
-[Nix Darwin Installation Guide](https://github.com/LnL7/nix-darwin#install)
+Substitute "personal-laptop" for current machine's configuration
 
-Run Installer:
+    cd ~/.nix-configs
+    nix build ".#darwinConfigurations.personal-laptop.system"
+    ./result/sw/bin/darwin-rebuild switch --flake .#personal-laptop
 
-    nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
-    ./result/bin/darwin-installer
+## Rebuilding
 
-Answers to prompts:
+To rebuild after making changes:
 
-    Would you like edit the default configuration.nix before starting? [y/n] n
-    Would you like to manage <darwin> with nix-channel? [y/n] y
-    Would you like to load darwin configuration in /etc/bashrc? [y/n] y
-    Would you like to create /run? [y/n] y
+    darwin-rebuild build --flake .#personal-laptop
+    darwin-rebuild switch --flake .#personal-laptop
 
-Note: If you installed Nix in Single User, you may want to respond Yes to the first prompt and edit the configuration to disable the nix-daemon.  This repo's configs have the nix-daemon enabled, and will need that changed as well before switching below.
+## Updating flake.lock
 
-Link Config:
+If the flake.lock needs to be updated:
 
-    rm ~/.nixpkgs/darwin-configuration.nix
-    ln -s ~/.nix-configs/darwin/darwin-configuration.nix ~/.nixpkgs/darwin-configuration.nix
-
-Switch to config:
-
-    darwin-rebuild switch
-
-## Install Home Manager (Linux and macOS)
-
-[Home Manager Installation Guide](https://github.com/nix-community/home-manager#installation)
-
-Add Home Manager Channel:
-
-    nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
-    nix-channel --update
-
-Install Home Manager:
-
-    nix-shell '<home-manager>' -A install
-
-Link Config:
-
-    rm ~/.config/nixpkgs/home.nix
-    ln -s ~/.nix-configs/home-manager/home.nix ~/.config/nixpkgs/home.nix
-
-Switch to config:
-
-    home-manager switch
-
-## Known Issues
-
-* If you installed Nix in Single User mode, and then installed Nix Darwin with nix-daemon enabled (multi-user, and the default), [you may run into permissions issues](https://github.com/LnL7/nix-darwin/issues/188) when executing nix.  These permissions can be fixed by:
-
-      chown -R root:nixbld /nix
-      chmod 1777 /nix/var/nix/profiles/per-user
-      chown -R $USER:staff /nix/var/nix/profiles/per-user/$USER
-      mkdir -m 1777 -p /nix/var/nix/gcroots/per-user
-      chown -R $USER:staff /nix/var/nix/gcroots/per-user/$USER
-
-* This warning is a [known issue](https://github.com/LnL7/nix-darwin/issues/295):
-
-    > warning: Nix search path entry '/nix/var/nix/profiles/per-user/root/channels' does not exist, ignoring
+    nix flake update

@@ -1,5 +1,7 @@
 { config, pkgs, ... }:
-{
+let
+  vimSettings = builtins.readFile ./settings.vim;
+in {
   programs.neovim = {
     enable = true;
     viAlias = true;
@@ -17,6 +19,12 @@
         vim-nix
         vim-polyglot
         lightline-vim
+        # theming
+        nord-vim
     ];
+
+    extraConfig = ''
+      ${builtins.replaceStrings ["THEME" "LIGHT_DARK"] ["nord" "dark"] vimSettings}
+    '';
   };
 }

@@ -1,13 +1,13 @@
 { config, pkgs, ...}:
 let
   extensions = (with pkgs.vscode-extensions; [
-      bbenoist.Nix
+      bbenoist.nix
     ]) ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
       {
         name = "nord-visual-studio-code";
         publisher = "arcticicestudio";
-        version = "0.15.1";
-        sha256 = "0lc50jkwxq3vffpwlkqdnkq77c7gbpfn1lk9l0n9qxsyfyhb68qj";
+        version = "0.19.0";
+        sha256 = "05bmzrmkw9syv2wxqlfddc3phjads6ql2grknws85fcqzqbfl1kb";
       }
       {
         name = "vscode-theme-onedark";
