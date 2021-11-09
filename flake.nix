@@ -76,6 +76,14 @@
       ];
     in {
       darwinConfigurations = {
+        personal-laptop = darwin.lib.darwinSystem {
+          system = "x86_64-darwin";
+          modules = darwinModules {
+            user = "fmoda3";
+            host = "personal-laptop";
+          };
+          specialArgs = { inherit inputs nixpkgs; };
+        };
         macvm = darwin.lib.darwinSystem {
           system = "x86_64-darwin";
           modules = darwinModules {
