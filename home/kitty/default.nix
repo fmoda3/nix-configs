@@ -4,7 +4,7 @@
     enable = true;
     font = {
       package = pkgs.nerdfonts;
-      name = "Inconsolata Nerd Font";
+      name = "Inconsolata Nerd Font Mono";
     };
     settings = {
       bold_font = "auto";
