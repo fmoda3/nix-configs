@@ -13,13 +13,13 @@
        minimize-to-application = true;
        launchanim = true;
        show-process-indicators = true;
-       tilesize = 48;
+       # tilesize = 48;
        mru-spaces = false;
      };
      finder = {
-       AppleShowAllExtensions = true;
-       FXEnableExtensionChangeWarning = false;
-       CreateDesktop = false; # disable desktop icons
+       # AppleShowAllExtensions = true;
+       # FXEnableExtensionChangeWarning = false;
+       # CreateDesktop = false; # disable desktop icons
      };
      NSGlobalDomain = {
        AppleInterfaceStyle = "Dark"; # set dark mode

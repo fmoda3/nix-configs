@@ -2,8 +2,9 @@
 {
    fonts = {
      enableFontDir = true;
-     fonts = with pkgs; [
-       nerdfonts
-     ];
+     # fonts declared with home-manager
+     # fonts = with pkgs; [
+     #   nerdfonts
+     # ];
    };   
 }

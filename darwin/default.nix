@@ -11,7 +11,7 @@
 
   imports = [
     ./system-defaults
-    ./system-packages
+    # ./system-packages
     ./fonts
     # yabai doesn't yet work with Monterey
     # ./wm/themes/nord.nix

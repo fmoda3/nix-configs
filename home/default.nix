@@ -16,8 +16,13 @@
       httpie
       neofetch
       wget
+
+      # Fonts
+      pkgs.nerdfonts
     ];
   };
+
+  fonts.fontconfig.enable = true;
 
   imports = [
     ./kitty
