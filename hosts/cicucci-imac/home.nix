@@ -1,1 +1,6 @@
-{ config, pkgs, ... }: { imports = [ ../../home ]; }
+{ config, pkgs, ... }: { 
+  imports = [
+    ../../home
+    ../../home/personal.nix
+  ]; 
+}

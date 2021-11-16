@@ -3,8 +3,6 @@
   programs = {
     git = {
       enable = true;
-      userName = "fmoda3";
-      userEmail = "fmoda3@mac.com";
 
       aliases = {
         # add
