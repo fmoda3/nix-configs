@@ -18,7 +18,9 @@
       wget
 
       # Fonts
-      pkgs.nerdfonts
+      nerdfonts
+      cozette
+      scientifica
     ];
   };
 
