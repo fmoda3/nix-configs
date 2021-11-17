@@ -17,6 +17,7 @@
       macos_titlebar_color = "background";
       macos_option_as_alt = "yes";
       scrollback_lines = 10000;
+      window_padding_width = 4;
 
       # Nord Colorscheme for Kitty
       foreground           = "#D8DEE9";
