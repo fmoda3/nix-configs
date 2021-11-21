@@ -7,6 +7,9 @@
     terminal = "screen-256color";
     keyMode = "vi";
     historyLimit = 10000;
+    escapeTime = 1;
+    customPaneNavigationAndResize = true;
+    resizeAmount = 5;
 
     plugins = with pkgs.tmuxPlugins; [
       sensible
@@ -14,21 +17,6 @@
     ];
 
     extraConfig = ''
-      #setting the delay between prefix and command
-      # START:delay
-      set -sg escape-time 1
-      # END:delay
-
-      # Ensure that we can send Ctrl-A to other apps
-      # START:bind_prefix
-      bind C-a send-prefix
-      # END:bind_prefix
-
-      # Set the base index for panes to 1 instead of 0
-      # START:panes_index
-      setw -g pane-base-index 1
-      # END:panes_index
-
       # splitting panes
       # START:panesplit
       bind | split-window -h
@@ -66,7 +54,7 @@
       set -g status-left-length 52
       set -g status-right-length 451
 
-      # Screen like binding for last window\
+      # Screen like binding for last window
       bind C-a last-window
 
       # Log output to a text file on demand
