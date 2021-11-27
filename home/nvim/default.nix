@@ -11,20 +11,30 @@ in {
     plugins = with pkgs.vimPlugins; [
         # Basics
         vim-sensible
-        vim-fugitive
-        vim-surround
         vim-commentary
         vim-sneak
-        vim-closetag
         vim-nix
         vim-polyglot
-        lightline-vim
+
+        # UI
+        nvim-web-devicons
+        nvim-tree-lua
+        galaxyline-nvim
+        indent-blankline-nvim
+        vim-signify
+        pears-nvim
+        
         # theming
         nord-vim
     ];
 
     extraConfig = ''
-      ${builtins.replaceStrings ["THEME" "LIGHT_DARK"] ["nord" "dark"] vimSettings}
+      :luafile ~/.config/nvim/lua/init.lua
     '';
+  };
+
+  xdg.configFile.nvim = {
+    source = ./config;
+    recursive = true;
   };
 }

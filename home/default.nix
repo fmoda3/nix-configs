@@ -30,7 +30,7 @@
     ./kitty
     ./zsh
     ./git
-    ./vim
+    ./nvim
     ./tmux
     ./direnv
   ];

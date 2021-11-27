@@ -1,0 +1,213 @@
+ -- This file configures galaxyline, a fast and small statusline for nvim.
+ -- The configuration was taken from github.com/siduck76/neovim-dotfiles/ 
+ -- All I did was change the colors. Full credit goes to siduck76
+
+local gl = require("galaxyline")
+local gls = gl.section
+
+gl.short_line_list = {" "} -- keeping this table { } as empty will show inactive statuslines
+
+local colors = {
+    -- Dark
+    nord0 = "#2E3440", -- Black
+    nord1 = "#3B4252", -- Dark Grey
+    nord2 = "#434C5E", -- Grey
+    nord3 = "#4C566A", -- Light Grey
+    -- Light
+    nord4 = "#D8DEE9", -- Darkest White
+    nord5 = "#E5E9F0", -- Darker White
+    nord6 = "#ECEFF4", -- White
+    -- Frost
+    nord7 = "#8FBCBB", -- Blue/Green
+    nord8 = "#88C0D0", -- Cyan
+    nord9 = "#81A1C1", -- Light Blue
+    nord10 = "#5E81AC", -- Blue
+    -- Aurora
+    nord11 = "#BF616A", -- Red
+    nord12 = "#D08770", -- Orange
+    nord13 = "#EBCB8B", -- Yellow
+    nord14 = "#A3BE8C", -- Green
+    nord15 = "#B48EAD", -- Purple
+}
+
+gls.left[1] = {
+    leftRounded = {
+        provider = function()
+            return ""
+        end,
+        highlight = {colors.nord5, colors.nord0}
+    }
+}
+
+gls.left[2] = {
+    statusIcon = {
+        provider = function()
+            return "  "
+        end,
+        highlight = {colors.nord3, colors.nord5},
+        separator = " ",
+        separator_highlight = {colors.nord2, colors.nord3}
+    }
+}
+
+gls.left[3] = {
+    FileIcon = {
+        provider = "FileIcon",
+        condition = buffer_not_empty,
+        highlight = {require("galaxyline.provider_fileinfo").get_file_icon_color, colors.nord3}
+    }
+}
+
+gls.left[4] = {
+    FileName = {
+        provider = {"FileName", "FileSize"},
+        condition = buffer_not_empty,
+        highlight = {colors.nord6, colors.nord3}
+    }
+}
+
+gls.left[5] = {
+    teech = {
+        provider = function()
+            return ""
+        end,
+        separator = " ",
+        highlight = {colors.nord3, colors.nord0}
+    }
+}
+
+local checkwidth = function()
+    local squeeze_width = vim.fn.winwidth(0) / 2
+    if squeeze_width > 40 then
+        return true
+    end
+    return false
+end
+
+gls.left[6] = {
+    DiffAdd = {
+        provider = "DiffAdd",
+        condition = checkwidth,
+        icon = "   ",
+        highlight = {colors.nord14, colors.nord0}
+    }
+}
+
+gls.left[7] = {
+    DiffModified = {
+        provider = "DiffModified",
+        condition = checkwidth,
+        icon = " ",
+        highlight = {colors.nord12, colors.nord0}
+    }
+}
+
+gls.left[8] = {
+    DiffRemove = {
+        provider = "DiffRemove",
+        condition = checkwidth,
+        icon = " ",
+        highlight = {colors.nord13, colors.nord0}
+    }
+}
+
+gls.left[9] = {
+    LeftEnd = {
+        provider = function()
+            return " "
+        end,
+        separator = " ",
+        separator_highlight = {colors.nord0, colors.nord0},
+        highlight = {colors.nord0, colors.nord0}
+    }
+}
+
+gls.left[10] = {
+    DiagnosticError = {
+        provider = "DiagnosticError",
+        icon = "  ",
+        highlight = {colors.red, colors.bg}
+    }
+}
+
+gls.left[11] = {
+    Space = {
+        provider = function()
+            return " "
+        end,
+        highlight = {colors.line_bg, colors.line_bg}
+    }
+}
+
+gls.left[12] = {
+    DiagnosticWarn = {
+        provider = "DiagnosticWarn",
+        icon = "  ",
+        highlight = {colors.nord11, colors.nord0}
+    }
+}
+
+gls.right[1] = {
+    GitIcon = {
+        provider = function()
+            return "   "
+        end,
+        condition = require("galaxyline.provider_vcs").check_git_workspace,
+        highlight = {colors.nord14, colors.nord0}
+    }
+}
+
+gls.right[2] = {
+    GitBranch = {
+        provider = "GitBranch",
+        condition = require("galaxyline.provider_vcs").check_git_workspace,
+        highlight = {colors.nord14, colors.nord0}
+    }
+}
+
+gls.right[3] = {
+    right_LeftRounded = {
+        provider = function()
+            return "" 
+        end,
+        separator = " ",
+        separator_highlight = {colors.nord0, colors.nord0},
+        highlight = {colors.nord8, colors.nord0}
+    }
+}
+
+gls.right[4] = {
+    ViMode = {
+        provider = function()
+            local alias = {
+                n = "NORMAL",
+                i = "INSERT",
+                c = "COMMAND",
+                V = "VISUAL",
+                [""] = "VISUAL",
+                v = "VISUAL",
+                R = "REPLACE"
+            }
+            return alias[vim.fn.mode()]
+        end,
+        highlight = {colors.nord3, colors.nord8}
+    }
+}
+
+gls.right[5] = {
+    PerCent = {
+        provider = "LinePercent",
+        separator = " ",
+        separator_highlight = {colors.nord3, colors.nord8},
+        highlight = {colors.nord3, colors.nord5}
+    }
+}
+
+gls.right[6] = {
+    rightRounded = {
+        provider = function()
+            return ""
+        end,
+        highlight = {colors.nord5, colors.nord0}
+    }
+}
