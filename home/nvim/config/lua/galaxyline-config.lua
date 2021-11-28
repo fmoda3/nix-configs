@@ -78,44 +78,6 @@ gls.left[5] = {
     }
 }
 
-gls.left[6] = {
-    DiffAdd = {
-        provider = "DiffAdd",
-        condition = hide_in_width,
-        icon = " ",
-        highlight = {colors.nord14, colors.nord0}
-    }
-}
-
-gls.left[7] = {
-    DiffModified = {
-        provider = "DiffModified",
-        condition = hide_in_width,
-        icon = " ",
-        highlight = {colors.nord12, colors.nord0}
-    }
-}
-
-gls.left[8] = {
-    DiffRemove = {
-        provider = "DiffRemove",
-        condition = hide_in_width,
-        icon = " ",
-        highlight = {colors.nord13, colors.nord0}
-    }
-}
-
-gls.left[9] = {
-    LeftEnd = {
-        provider = function()
-            return " "
-        end,
-        separator = " ",
-        separator_highlight = {colors.nord0, colors.nord0},
-        highlight = {colors.nord0, colors.nord0}
-    }
-}
-
 gls.mid[1] = {
     mid_leftRounded = {
         provider = function()
@@ -190,7 +152,7 @@ gls.right[1] = {
             return ""
         end,
         condition = require("galaxyline.provider_vcs").check_git_workspace,
-        highlight = {colors.nord14, colors.nord0}
+        highlight = {colors.nord10, colors.nord0}
     }
 }
 
@@ -200,11 +162,48 @@ gls.right[2] = {
         condition = require("galaxyline.provider_vcs").check_git_workspace,
         separator = " ",
         separator_highlight = {colors.nord0, colors.nord0},
-        highlight = {colors.nord14, colors.nord0}
+        highlight = {colors.nord10, colors.nord0}
     }
 }
 
 gls.right[3] = {
+    GitSpace = {
+        provider = function()
+            return " "
+        end,
+        condition = require("galaxyline.provider_vcs").check_git_workspace,
+        highlight = {colors.nord0, colors.nord0}
+    }
+}
+
+gls.right[4] = {
+    DiffAdd = {
+        provider = "DiffAdd",
+        condition = hide_in_width,
+        icon = " ",
+        highlight = {colors.nord14, colors.nord0}
+    }
+}
+
+gls.right[5] = {
+    DiffModified = {
+        provider = "DiffModified",
+        condition = hide_in_width,
+        icon = " ",
+        highlight = {colors.nord12, colors.nord0}
+    }
+}
+
+gls.right[6] = {
+    DiffRemove = {
+        provider = "DiffRemove",
+        condition = hide_in_width,
+        icon = " ",
+        highlight = {colors.nord13, colors.nord0}
+    }
+}
+
+gls.right[7] = {
     right_LeftRounded = {
         provider = function()
             return "" 
@@ -215,7 +214,7 @@ gls.right[3] = {
     }
 }
 
-gls.right[4] = {
+gls.right[8] = {
     ViMode = {
         provider = function()
             local alias = {
@@ -233,7 +232,7 @@ gls.right[4] = {
     }
 }
 
-gls.right[5] = {
+gls.right[9] = {
     PerCent = {
         provider = "LinePercent",
         separator = " ",
@@ -242,7 +241,7 @@ gls.right[5] = {
     }
 }
 
-gls.right[6] = {
+gls.right[10] = {
     rightRounded = {
         provider = function()
             return ""
