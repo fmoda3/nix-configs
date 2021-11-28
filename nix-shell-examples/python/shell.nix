@@ -5,4 +5,12 @@ let
     # other python packages you want
   ]);
 in
-  python-with-my-packages.env
+pkgs.mkShell {
+  buildInputs = [
+    python-with-my-packages
+    pkgs.pyright
+  ];
+  shellHook = ''
+    PYTHONPATH=${python-with-my-packages}/${python-with-my-packages.sitePackages}
+  '';
+}

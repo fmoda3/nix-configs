@@ -16,6 +16,7 @@
            buildInputs = [
              (pkgs.${python}.withPackages
                (ps: with ps; [ pip black pyflakes isort ]))
+             pkgs.pyright
            ];
          };
        # Customize ends

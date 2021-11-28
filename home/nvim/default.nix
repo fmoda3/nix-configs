@@ -23,6 +23,17 @@ in {
         indent-blankline-nvim
         vim-signify
         pears-nvim
+
+        # LSP
+        nvim-lspconfig
+        cmp-nvim-lsp
+        cmp-buffer
+        cmp-path
+        # cmp-cmdline
+        nvim-cmp
+        cmp-vsnip
+        vim-vsnip
+        lspkind-nvim
         
         # theming
         nord-vim

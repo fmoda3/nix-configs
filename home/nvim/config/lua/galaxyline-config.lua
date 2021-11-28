@@ -7,6 +7,8 @@ local gls = gl.section
 
 gl.short_line_list = {" "} -- keeping this table { } as empty will show inactive statuslines
 
+vim.api.nvim_command('hi GalaxyLineFillSection guibg=NONE')
+
 local colors = {
     -- Dark
     nord0 = "#2E3440", -- Black
@@ -76,19 +78,11 @@ gls.left[5] = {
     }
 }
 
-local checkwidth = function()
-    local squeeze_width = vim.fn.winwidth(0) / 2
-    if squeeze_width > 40 then
-        return true
-    end
-    return false
-end
-
 gls.left[6] = {
     DiffAdd = {
         provider = "DiffAdd",
-        condition = checkwidth,
-        icon = "   ",
+        condition = hide_in_width,
+        icon = " ",
         highlight = {colors.nord14, colors.nord0}
     }
 }
@@ -96,7 +90,7 @@ gls.left[6] = {
 gls.left[7] = {
     DiffModified = {
         provider = "DiffModified",
-        condition = checkwidth,
+        condition = hide_in_width,
         icon = " ",
         highlight = {colors.nord12, colors.nord0}
     }
@@ -105,7 +99,7 @@ gls.left[7] = {
 gls.left[8] = {
     DiffRemove = {
         provider = "DiffRemove",
-        condition = checkwidth,
+        condition = hide_in_width,
         icon = " ",
         highlight = {colors.nord13, colors.nord0}
     }
@@ -122,35 +116,78 @@ gls.left[9] = {
     }
 }
 
-gls.left[10] = {
+gls.mid[1] = {
+    mid_leftRounded = {
+        provider = function()
+            return ""
+        end,
+        highlight = {colors.nord3, colors.nord0}
+    }
+}
+
+gls.mid[2] = {
+    lspIcon = {
+        provider = function()
+            return ""
+        end,
+        highlight = {colors.nord15, colors.nord3}
+    }
+}
+
+gls.mid[3] = {
+    GetLspClient = {
+        provider = "GetLspClient",
+        separator = {" ", " "},
+        separator_highlight = {colors.nord3, colors.nord3},
+        highlight = {colors.nord15, colors.nord3}
+    }
+}
+
+gls.mid[4] = {
     DiagnosticError = {
         provider = "DiagnosticError",
-        icon = "  ",
-        highlight = {colors.red, colors.bg}
+        icon = " ",
+        highlight = {colors.nord11, colors.nord3}
     }
 }
 
-gls.left[11] = {
-    Space = {
-        provider = function()
-            return " "
-        end,
-        highlight = {colors.line_bg, colors.line_bg}
-    }
-}
-
-gls.left[12] = {
+gls.mid[5] = {
     DiagnosticWarn = {
         provider = "DiagnosticWarn",
-        icon = "  ",
-        highlight = {colors.nord11, colors.nord0}
+        icon = " ",
+        highlight = {colors.nord12, colors.nord3}
+    }
+}
+
+gls.mid[7] = {
+    DiagnosticInfo = {
+        provider = "DiagnosticInfo",
+        icon = "\u{f05a} ",
+        highlight = {colors.nord11, colors.nord3}
+    }
+}
+
+gls.mid[8] = {
+    DiagnosticHint = {
+        provider = "DiagnosticHint",
+        icon = " ",
+        highlight = {colors.nord10, colors.nord3}
+    }
+}
+
+gls.mid[9] = {
+    mid_rightRounded = {
+        provider = function()
+            return ""
+        end,
+        highlight = {colors.nord3, colors.nord0}
     }
 }
 
 gls.right[1] = {
     GitIcon = {
         provider = function()
-            return "   "
+            return ""
         end,
         condition = require("galaxyline.provider_vcs").check_git_workspace,
         highlight = {colors.nord14, colors.nord0}
@@ -161,6 +198,8 @@ gls.right[2] = {
     GitBranch = {
         provider = "GitBranch",
         condition = require("galaxyline.provider_vcs").check_git_workspace,
+        separator = " ",
+        separator_highlight = {colors.nord0, colors.nord0},
         highlight = {colors.nord14, colors.nord0}
     }
 }
