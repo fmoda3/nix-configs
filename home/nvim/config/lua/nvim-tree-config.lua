@@ -1,3 +1,18 @@
+local nord = require('nord-colors')
+local util = require('util')
+util.colorize({
+    NvimTreeRootFolder =        { fg = nord.nord7_gui, style = "bold" },
+    NvimTreeGitDirty =          { fg = nord.nord15_gui },
+    NvimTreeGitNew =            { fg = nord.nord14_gui },
+    NvimTreeImageFile =         { fg = nord.nord15_gui },
+    NvimTreeExecFile =          { fg = nord.nord14_gui },
+    NvimTreeSpecialFile =       { fg = nord.nord9_gui , style = "underline" },
+    NvimTreeFolderName=         { fg = nord.nord10_gui },
+    NvimTreeEmptyFolderName=    { fg = nord.nord1_gui },
+    NvimTreeFolderIcon=         { fg = nord.nord4_gui },
+    NvimTreeIndentMarker =      { fg  = nord.nord1_gui },
+})
+
 require'nvim-tree'.setup {
     disable_netrw       = true,
     hijack_netrw        = true,

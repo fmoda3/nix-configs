@@ -3,6 +3,7 @@ let
   vimSettings = builtins.readFile ./settings.vim;
 in {
   programs.neovim = {
+    package = pkgs.neovim-nightly;
     enable = true;
     viAlias = true;
     vimAlias = true;
@@ -36,6 +37,9 @@ in {
         cmp-vsnip
         vim-vsnip
         lspkind-nvim
+        (nvim-treesitter.withPlugins
+          (plugins: pkgs.tree-sitter.allGrammars)
+        )
         
         # theming
         nord-vim

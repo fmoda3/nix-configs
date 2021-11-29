@@ -1,41 +1,22 @@
- -- This file configures galaxyline, a fast and small statusline for nvim.
- -- The configuration was taken from github.com/siduck76/neovim-dotfiles/ 
- -- All I did was change the colors. Full credit goes to siduck76
+-- This file configures galaxyline, a fast and small statusline for nvim.
+-- The configuration was taken from github.com/siduck76/neovim-dotfiles/ 
+-- All I did was change the colors. Full credit goes to siduck76
 
 local gl = require("galaxyline")
 local gls = gl.section
 
+gl.short_line_list = {"NvimTree", "-MINIMAP-"}
+
 vim.api.nvim_command('hi GalaxyLineFillSection guibg=NONE')
 
-local colors = {
-    -- Dark
-    nord0 = "#2E3440", -- Black
-    nord1 = "#3B4252", -- Dark Grey
-    nord2 = "#434C5E", -- Grey
-    nord3 = "#4C566A", -- Light Grey
-    -- Light
-    nord4 = "#D8DEE9", -- Darkest White
-    nord5 = "#E5E9F0", -- Darker White
-    nord6 = "#ECEFF4", -- White
-    -- Frost
-    nord7 = "#8FBCBB", -- Blue/Green
-    nord8 = "#88C0D0", -- Cyan
-    nord9 = "#81A1C1", -- Light Blue
-    nord10 = "#5E81AC", -- Blue
-    -- Aurora
-    nord11 = "#BF616A", -- Red
-    nord12 = "#D08770", -- Orange
-    nord13 = "#EBCB8B", -- Yellow
-    nord14 = "#A3BE8C", -- Green
-    nord15 = "#B48EAD", -- Purple
-}
+local colors = require('nord-colors')
 
 gls.left[1] = {
     leftStart = {
         provider = function()
             return ""
         end,
-        highlight = {colors.nord5, colors.nord0}
+        highlight = {colors.nord5_gui, colors.nord0_gui}
     }
 }
 
@@ -44,9 +25,9 @@ gls.left[2] = {
         provider = function()
             return "  "
         end,
-        highlight = {colors.nord3, colors.nord5},
+        highlight = {colors.nord3_gui, colors.nord5_gui},
         separator = " ",
-        separator_highlight = {colors.nord2, colors.nord3}
+        separator_highlight = {colors.nord2_gui, colors.nord3_gui}
     }
 }
 
@@ -54,7 +35,7 @@ gls.left[3] = {
     FileIcon = {
         provider = "FileIcon",
         condition = buffer_not_empty,
-        highlight = {require("galaxyline.provider_fileinfo").get_file_icon_color, colors.nord3}
+        highlight = {require("galaxyline.provider_fileinfo").get_file_icon_color, colors.nord3_gui}
     }
 }
 
@@ -62,7 +43,7 @@ gls.left[4] = {
     FileName = {
         provider = {"FileName", "FileSize"},
         condition = buffer_not_empty,
-        highlight = {colors.nord6, colors.nord3}
+        highlight = {colors.nord6_gui, colors.nord3_gui}
     }
 }
 
@@ -72,7 +53,7 @@ gls.left[5] = {
             return ""
         end,
         separator = " ",
-        highlight = {colors.nord3, colors.nord0}
+        highlight = {colors.nord3_gui, colors.nord0_gui}
     }
 }
 
@@ -81,7 +62,7 @@ gls.mid[1] = {
         provider = function()
             return ""
         end,
-        highlight = {colors.nord3, colors.nord0}
+        highlight = {colors.nord3_gui, colors.nord0_gui}
     }
 }
 
@@ -90,7 +71,7 @@ gls.mid[2] = {
         provider = function()
             return ""
         end,
-        highlight = {colors.nord15, colors.nord3}
+        highlight = {colors.nord15_gui, colors.nord3_gui}
     }
 }
 
@@ -98,8 +79,8 @@ gls.mid[3] = {
     GetLspClient = {
         provider = "GetLspClient",
         separator = {" ", " "},
-        separator_highlight = {colors.nord3, colors.nord3},
-        highlight = {colors.nord15, colors.nord3}
+        separator_highlight = {colors.nord3_gui, colors.nord3_gui},
+        highlight = {colors.nord15_gui, colors.nord3_gui}
     }
 }
 
@@ -107,7 +88,7 @@ gls.mid[4] = {
     DiagnosticError = {
         provider = "DiagnosticError",
         icon = " ",
-        highlight = {colors.nord11, colors.nord3}
+        highlight = {colors.nord11_gui, colors.nord3_gui}
     }
 }
 
@@ -115,7 +96,7 @@ gls.mid[5] = {
     DiagnosticWarn = {
         provider = "DiagnosticWarn",
         icon = " ",
-        highlight = {colors.nord12, colors.nord3}
+        highlight = {colors.nord12_gui, colors.nord3_gui}
     }
 }
 
@@ -123,7 +104,7 @@ gls.mid[7] = {
     DiagnosticInfo = {
         provider = "DiagnosticInfo",
         icon = "\u{f05a} ",
-        highlight = {colors.nord11, colors.nord3}
+        highlight = {colors.nord11_gui, colors.nord3_gui}
     }
 }
 
@@ -131,7 +112,7 @@ gls.mid[8] = {
     DiagnosticHint = {
         provider = "DiagnosticHint",
         icon = " ",
-        highlight = {colors.nord10, colors.nord3}
+        highlight = {colors.nord10_gui, colors.nord3_gui}
     }
 }
 
@@ -140,7 +121,7 @@ gls.mid[9] = {
         provider = function()
             return ""
         end,
-        highlight = {colors.nord3, colors.nord0}
+        highlight = {colors.nord3_gui, colors.nord0_gui}
     }
 }
 
@@ -150,7 +131,7 @@ gls.right[1] = {
             return ""
         end,
         condition = require("galaxyline.provider_vcs").check_git_workspace,
-        highlight = {colors.nord10, colors.nord0}
+        highlight = {colors.nord10_gui, colors.nord0_gui}
     }
 }
 
@@ -159,8 +140,8 @@ gls.right[2] = {
         provider = "GitBranch",
         condition = require("galaxyline.provider_vcs").check_git_workspace,
         separator = " ",
-        separator_highlight = {colors.nord0, colors.nord0},
-        highlight = {colors.nord10, colors.nord0}
+        separator_highlight = {colors.nord0_gui, colors.nord0_gui},
+        highlight = {colors.nord10_gui, colors.nord0_gui}
     }
 }
 
@@ -170,7 +151,7 @@ gls.right[3] = {
             return " "
         end,
         condition = require("galaxyline.provider_vcs").check_git_workspace,
-        highlight = {colors.nord0, colors.nord0}
+        highlight = {colors.nord0_gui, colors.nord0_gui}
     }
 }
 
@@ -179,7 +160,7 @@ gls.right[4] = {
         provider = "DiffAdd",
         condition = hide_in_width,
         icon = " ",
-        highlight = {colors.nord14, colors.nord0}
+        highlight = {colors.nord14_gui, colors.nord0_gui}
     }
 }
 
@@ -188,7 +169,7 @@ gls.right[5] = {
         provider = "DiffModified",
         condition = hide_in_width,
         icon = " ",
-        highlight = {colors.nord12, colors.nord0}
+        highlight = {colors.nord12_gui, colors.nord0_gui}
     }
 }
 
@@ -197,7 +178,7 @@ gls.right[6] = {
         provider = "DiffRemove",
         condition = hide_in_width,
         icon = " ",
-        highlight = {colors.nord13, colors.nord0}
+        highlight = {colors.nord13_gui, colors.nord0_gui}
     }
 }
 
@@ -207,8 +188,8 @@ gls.right[7] = {
             return "" 
         end,
         separator = " ",
-        separator_highlight = {colors.nord0, colors.nord0},
-        highlight = {colors.nord8, colors.nord0}
+        separator_highlight = {colors.nord0_gui, colors.nord0_gui},
+        highlight = {colors.nord8_gui, colors.nord0_gui}
     }
 }
 
@@ -226,7 +207,7 @@ gls.right[8] = {
             }
             return alias[vim.fn.mode()]
         end,
-        highlight = {colors.nord3, colors.nord8}
+        highlight = {colors.nord3_gui, colors.nord8_gui}
     }
 }
 
@@ -234,8 +215,8 @@ gls.right[9] = {
     PerCent = {
         provider = "LinePercent",
         separator = " ",
-        separator_highlight = {colors.nord3, colors.nord8},
-        highlight = {colors.nord3, colors.nord5}
+        separator_highlight = {colors.nord3_gui, colors.nord8_gui},
+        highlight = {colors.nord3_gui, colors.nord5_gui}
     }
 }
 
@@ -244,6 +225,6 @@ gls.right[10] = {
         provider = function()
             return ""
         end,
-        highlight = {colors.nord5, colors.nord0}
+        highlight = {colors.nord5_gui, colors.nord0_gui}
     }
 }

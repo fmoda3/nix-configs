@@ -15,6 +15,7 @@
   
     # Other sources
     flake-utils.url = "github:numtide/flake-utils";
+    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
   };
   outputs = inputs@{ self, nixpkgs, darwin, home-manager, flake-utils, ... }:
     let
@@ -27,6 +28,7 @@
           # "pkgs" currently points to unstable
           # The following overlay allows you to specify "stable.pkgs" for stable versions
           # and "master.pkgs" for versions on master
+          neovim-nightly-overlay.overlay
           (
             final: prev:
             let

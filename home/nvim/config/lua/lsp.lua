@@ -1,3 +1,15 @@
+local nord = require("nord-colors")
+local util = require("util")
+
+-- CMP Colors
+util.colorize({
+    CmpItemKind =	{ fg = nord.nord15_gui },
+    CmpItemAbbrMatch =	{ fg = nord.nord5_gui, style = 'bold' },
+    CmpItemAbbrMatchFuzzy = { fg = nord.nord5_gui, style = 'bold' },
+    CmpItemAbbr =	{ fg = nord.nord4_gui},
+    CmpItemMenu =       { fg = nord.nord14_gui },
+})
+
 -- Autocompletion setup
 vim.o.completeopt = "menu,menuone,noselect"
 
@@ -66,13 +78,57 @@ cmp.setup.cmdline('/', {
 })
     
 -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
--- cmp.setup.cmdline(':', {
---     sources = cmp.config.sources({
--- 	{ name = 'path' }
+cmp.setup.cmdline(':', {
+    sources = cmp.config.sources({
+	{ name = 'path' }
 --     }, {
 -- 	{ name = 'cmdline' }
---     })
--- })
+    })
+})
+
+-- LSP Colors
+util.colorize({
+    LspDiagnosticsDefaultError =           { fg = nord.nord11_gui }, -- used for "Error" diagnostic virtual text
+    LspDiagnosticsSignError =              { fg = nord.nord11_gui }, -- used for "Error" diagnostic signs in sign column
+    LspDiagnosticsFloatingError =          { fg = nord.nord11_gui }, -- used for "Error" diagnostic messages in the diagnostics float
+    LspDiagnosticsVirtualTextError =       { fg = nord.nord11_gui }, -- Virtual text "Error"
+    LspDiagnosticsUnderlineError =         { style = 'undercurl', sp = nord.nord11_gui }, -- used to underline "Error" diagnostics.
+    LspDiagnosticsDefaultWarning =         { fg = nord.nord15_gui}, -- used for "Warning" diagnostic signs in sign column
+    LspDiagnosticsSignWarning =            { fg = nord.nord15_gui}, -- used for "Warning" diagnostic signs in sign column
+    LspDiagnosticsFloatingWarning =        { fg = nord.nord15_gui}, -- used for "Warning" diagnostic messages in the diagnostics float
+    LspDiagnosticsVirtualTextWarning =     { fg = nord.nord15_gui}, -- Virtual text "Warning"
+    LspDiagnosticsUnderlineWarning =       { style = 'undercurl', sp = nord.nord15_gui }, -- used to underline "Warning" diagnostics.
+    LspDiagnosticsDefaultInformation =     { fg = nord.nord10_gui }, -- used for "Information" diagnostic virtual text
+    LspDiagnosticsSignInformation =        { fg = nord.nord10_gui },  -- used for "Information" diagnostic signs in sign column
+    LspDiagnosticsFloatingInformation =    { fg = nord.nord10_gui }, -- used for "Information" diagnostic messages in the diagnostics float
+    LspDiagnosticsVirtualTextInformation = { fg = nord.nord10_gui }, -- Virtual text "Information"
+    LspDiagnosticsUnderlineInformation =   { style = 'undercurl', sp = nord.nord10_gui }, -- used to underline "Information" diagnostics.
+    LspDiagnosticsDefaultHint =            { fg = nord.nord9_gui  },  -- used for "Hint" diagnostic virtual text
+    LspDiagnosticsSignHint =               { fg = nord.nord9_gui  }, -- used for "Hint" diagnostic signs in sign column
+    LspDiagnosticsFloatingHint =           { fg = nord.nord9_gui  }, -- used for "Hint" diagnostic messages in the diagnostics float
+    LspDiagnosticsVirtualTextHint =        { fg = nord.nord9_gui  }, -- Virtual text "Hint"
+    LspDiagnosticsUnderlineHint =          { style = 'undercurl', sp = nord.nord10_gui }, -- used to underline "Hint" diagnostics.
+    LspReferenceText =                     { fg = nord.nord4_gui, bg = nord.nord1_gui }, -- used for highlighting "text" references
+    LspReferenceRead =                     { fg = nord.nord4_gui, bg = nord.nord1_gui }, -- used for highlighting "read" references
+    LspReferenceWrite =                    { fg = nord.nord4_gui, bg = nord.nord1_gui }, -- used for highlighting "write" references
+	
+    DiagnosticVirtualTextWarn  = { link = "LspDiagnosticsVirtualTextWarning" },
+    DiagnosticUnderlineWarn    = { link = "LspDiagnosticsUnderlineWarning" },
+    DiagnosticFloatingWarn     = { link = "LspDiagnosticsFloatingWarning" },
+    DiagnosticSignWarn         = { link = "LspDiagnosticsSignWarning" },
+    DiagnosticVirtualTextError = { link = "LspDiagnosticsVirtualTextError" },
+    DiagnosticUnderlineError   = { link = "LspDiagnosticsUnderlineError" },
+    DiagnosticFloatingError    = { link = "LspDiagnosticsFloatingError" },
+    DiagnosticSignError        = { link = "LspDiagnosticsSignError" },
+    DiagnosticVirtualTextInfo  = { link = "LspDiagnosticsVirtualTextInformation" },
+    DiagnosticUnderlineInfo    = { link = "LspDiagnosticsUnderlineInformation" },
+    DiagnosticFloatingInfo     = { link = "LspDiagnosticsFloatingInformation" },
+    DiagnosticSignInfo         = { link = "LspDiagnosticsSignInformation" },
+    DiagnosticVirtualTextHint  = { link = "LspDiagnosticsVirtualTextHint" },
+    DiagnosticUnderlineHint    = { link = "LspDiagnosticsUnderlineHint" },
+    DiagnosticFloatingHint     = { link = "LspDiagnosticsFloatingHint" },
+    DiagnosticSignHint         = { link = "LspDiagnosticsSignHint" },
+})
     
 -- Setup lspconfig.
 local nvim_lsp = require('lspconfig')
