@@ -12,10 +12,10 @@ util.colorize({
 
 -- Autocompletion setup
 local has_words_before = function()
-    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+    local line, col = table.unpack(vim.api.nvim_win_get_cursor(0))
     return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
-      
+
 local feedkey = function(key, mode)
     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
 end
@@ -55,7 +55,7 @@ cmp.setup({
 	    else
 		fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
 	    end
-	end, { "i", "s" }),  
+	end, { "i", "s" }),
 	["<S-Tab>"] = cmp.mapping(function()
 	    if cmp.visible() then
 		cmp.select_prev_item()
@@ -74,14 +74,14 @@ cmp.setup({
 	    format = lspkind.cmp_format(),
     }
 })
-    
+
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline('/', {
     sources = {
 	    { name = 'buffer' }
     }
 })
-    
+
 -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline(':', {
     sources = cmp.config.sources({
@@ -116,7 +116,7 @@ util.colorize({
     LspReferenceText =                     { fg = nord.nord4_gui, bg = nord.nord1_gui }, -- used for highlighting "text" references
     LspReferenceRead =                     { fg = nord.nord4_gui, bg = nord.nord1_gui }, -- used for highlighting "read" references
     LspReferenceWrite =                    { fg = nord.nord4_gui, bg = nord.nord1_gui }, -- used for highlighting "write" references
-	
+
     DiagnosticVirtualTextWarn  = { link = "LspDiagnosticsVirtualTextWarning" },
     DiagnosticUnderlineWarn    = { link = "LspDiagnosticsUnderlineWarning" },
     DiagnosticFloatingWarn     = { link = "LspDiagnosticsFloatingWarning" },
@@ -134,7 +134,7 @@ util.colorize({
     DiagnosticFloatingHint     = { link = "LspDiagnosticsFloatingHint" },
     DiagnosticSignHint         = { link = "LspDiagnosticsSignHint" },
 })
-    
+
 -- Setup lspconfig.
 local nvim_lsp = require('lspconfig')
 -- Use an on_attach function to only map the following keys
@@ -142,13 +142,13 @@ local nvim_lsp = require('lspconfig')
 local on_attach = function(client, bufnr)
     local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
     local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-      
+
     -- Enable completion triggered by <c-x><c-o>
     buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-      
+
     -- Mappings.
     local opts = { noremap=true, silent=true }
-      
+
     -- See `:help vim.lsp.*` for documentation on any of the below functions
     buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
     buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
