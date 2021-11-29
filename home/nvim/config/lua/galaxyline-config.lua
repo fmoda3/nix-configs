@@ -5,7 +5,7 @@
 local gl = require("galaxyline")
 local gls = gl.section
 
-gl.short_line_list = {"NvimTree", "-MINIMAP-"}
+gl.short_line_list = {"NvimTree", "minimap"}
 
 vim.api.nvim_command('hi GalaxyLineFillSection guibg=NONE')
 
