@@ -5,8 +5,6 @@
 local gl = require("galaxyline")
 local gls = gl.section
 
-gl.short_line_list = {" "} -- keeping this table { } as empty will show inactive statuslines
-
 vim.api.nvim_command('hi GalaxyLineFillSection guibg=NONE')
 
 local colors = {
@@ -33,7 +31,7 @@ local colors = {
 }
 
 gls.left[1] = {
-    leftRounded = {
+    leftStart = {
         provider = function()
             return ""
         end,
@@ -69,7 +67,7 @@ gls.left[4] = {
 }
 
 gls.left[5] = {
-    teech = {
+    leftEnd = {
         provider = function()
             return ""
         end,
@@ -79,7 +77,7 @@ gls.left[5] = {
 }
 
 gls.mid[1] = {
-    mid_leftRounded = {
+    midStart = {
         provider = function()
             return ""
         end,
@@ -138,7 +136,7 @@ gls.mid[8] = {
 }
 
 gls.mid[9] = {
-    mid_rightRounded = {
+    midEnd = {
         provider = function()
             return ""
         end,
@@ -204,7 +202,7 @@ gls.right[6] = {
 }
 
 gls.right[7] = {
-    right_LeftRounded = {
+    rightStart = {
         provider = function()
             return "" 
         end,
@@ -242,7 +240,7 @@ gls.right[9] = {
 }
 
 gls.right[10] = {
-    rightRounded = {
+    rightEnd = {
         provider = function()
             return ""
         end,

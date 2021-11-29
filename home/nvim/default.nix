@@ -23,6 +23,8 @@ in {
         indent-blankline-nvim
         vim-signify
         pears-nvim
+        minimap-vim
+        telescope-nvim
 
         # LSP
         nvim-lspconfig
