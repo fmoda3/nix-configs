@@ -32,7 +32,7 @@ in {
         cmp-nvim-lsp
         cmp-buffer
         cmp-path
-        # cmp-cmdline
+        cmp-cmdline
         nvim-cmp
         cmp-vsnip
         vim-vsnip
