@@ -21,10 +21,14 @@ local feedkey = function(key, mode)
 end
 
 local cmp = require'cmp'
+local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 local lspkind = require('lspkind')
+
+cmp.event:on( 'confirm_done', cmp_autopairs.on_confirm_done({  map_char = { tex = '' } }))
+
 cmp.setup({
     completion = {
-	completeopt = 'menu,menuone,noselect,noinsert'
+	    completeopt = 'menu,menuone,noselect,noinsert'
     },
     snippet = {
 	expand = function(args)
@@ -61,20 +65,20 @@ cmp.setup({
 	end, { "i", "s" })
     },
     sources = cmp.config.sources({
-	{ name = 'nvim_lsp' },
-	{ name = 'vsnip' },
+	    { name = 'nvim_lsp' },
+	    { name = 'vsnip' },
     }, {
-	{ name = 'buffer' },
+	    { name = 'buffer' },
     }),
     formatting = {
-	format = lspkind.cmp_format(),
+	    format = lspkind.cmp_format(),
     }
 })
     
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline('/', {
     sources = {
-	{ name = 'buffer' }
+	    { name = 'buffer' }
     }
 })
     
@@ -187,6 +191,13 @@ require'lspconfig'.pyright.setup{
 -- Elixir
 require'lspconfig'.elixirls.setup{
     cmd = { 'elixir-ls' },
+    -- Settings block is required, as there is no default set for elixir
+    settings = {
+        elixirLs = {
+            dialyzerEnabled = true,
+            dialyzerFormat = "dialyxir_long"
+        }
+    },
     on_attach = on_attach,
     capabilities = capabilities
 }

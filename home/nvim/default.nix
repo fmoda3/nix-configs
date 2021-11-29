@@ -23,7 +23,7 @@ in {
         galaxyline-nvim
         indent-blankline-nvim
         vim-signify
-        pears-nvim
+        nvim-autopairs
         minimap-vim
         telescope-nvim
 
