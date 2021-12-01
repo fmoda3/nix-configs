@@ -3,10 +3,10 @@ local util = require("util")
 
 -- CMP Colors
 util.colorize({
-    CmpItemKind =	{ fg = nord.nord15_gui },
-    CmpItemAbbrMatch =	{ fg = nord.nord5_gui, style = 'bold' },
+    CmpItemKind =   { fg = nord.nord15_gui },
+    CmpItemAbbrMatch =  { fg = nord.nord5_gui, style = 'bold' },
     CmpItemAbbrMatchFuzzy = { fg = nord.nord5_gui, style = 'bold' },
-    CmpItemAbbr =	{ fg = nord.nord4_gui},
+    CmpItemAbbr =   { fg = nord.nord4_gui},
     CmpItemMenu =       { fg = nord.nord14_gui },
 })
 
@@ -28,66 +28,66 @@ cmp.event:on( 'confirm_done', cmp_autopairs.on_confirm_done({  map_char = { tex 
 
 cmp.setup({
     completion = {
-	    completeopt = 'menu,menuone,noselect,noinsert'
+        completeopt = 'menu,menuone,noselect,noinsert'
     },
     snippet = {
-	expand = function(args)
-	    vim.fn["vsnip#anonymous"](args.body)
-	end,
+        expand = function(args)
+            vim.fn["vsnip#anonymous"](args.body)
+        end,
     },
     mapping = {
         ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
-	['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-	['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-	['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
-	['<C-e>'] = cmp.mapping({
-	    i = cmp.mapping.abort(),
-	    c = cmp.mapping.close(),
-	}),
-	['<CR>'] = cmp.mapping.confirm({ select = false }),
-	["<Tab>"] = cmp.mapping(function(fallback)
-	    if cmp.visible() then
-		cmp.select_next_item()
-	    elseif vim.fn["vsnip#available"](1) == 1 then
-		feedkey("<Plug>(vsnip-expand-or-jump)", "")
-	    elseif has_words_before() then
-		cmp.complete()
-	    else
-		fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
-	    end
-	end, { "i", "s" }),
-	["<S-Tab>"] = cmp.mapping(function()
-	    if cmp.visible() then
-		cmp.select_prev_item()
-	    elseif vim.fn["vsnip#jumpable"](-1) == 1 then
-		feedkey("<Plug>(vsnip-jump-prev)", "")
-	    end
-	end, { "i", "s" })
+        ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
+        ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+        ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
+        ['<C-e>'] = cmp.mapping({
+            i = cmp.mapping.abort(),
+            c = cmp.mapping.close(),
+        }),
+        ['<CR>'] = cmp.mapping.confirm({ select = false }),
+        ["<Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+                cmp.select_next_item()
+            elseif vim.fn["vsnip#available"](1) == 1 then
+                feedkey("<Plug>(vsnip-expand-or-jump)", "")
+            elseif has_words_before() then
+                cmp.complete()
+            else
+                fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
+            end
+        end, { "i", "s" }),
+        ["<S-Tab>"] = cmp.mapping(function()
+            if cmp.visible() then
+                cmp.select_prev_item()
+            elseif vim.fn["vsnip#jumpable"](-1) == 1 then
+                feedkey("<Plug>(vsnip-jump-prev)", "")
+            end
+        end, { "i", "s" })
     },
     sources = cmp.config.sources({
-	    { name = 'nvim_lsp' },
-	    { name = 'vsnip' },
+        { name = 'nvim_lsp' },
+        { name = 'vsnip' },
     }, {
-	    { name = 'buffer' },
+        { name = 'buffer' },
     }),
     formatting = {
-	    format = lspkind.cmp_format(),
+        format = lspkind.cmp_format(),
     }
 })
 
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline('/', {
     sources = {
-	    { name = 'buffer' }
+        { name = 'buffer' }
     }
 })
 
 -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline(':', {
     sources = cmp.config.sources({
-	    { name = 'path' }
+        { name = 'path' }
     }, {
-	    { name = 'cmdline' }
+        { name = 'cmdline' }
     })
 })
 
@@ -201,3 +201,4 @@ require'lspconfig'.elixirls.setup{
     on_attach = on_attach,
     capabilities = capabilities
 }
+
