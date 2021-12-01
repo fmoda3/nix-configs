@@ -117,6 +117,10 @@ util.colorize({
     LspReferenceRead =                     { fg = nord.nord4_gui, bg = nord.nord1_gui }, -- used for highlighting "read" references
     LspReferenceWrite =                    { fg = nord.nord4_gui, bg = nord.nord1_gui }, -- used for highlighting "write" references
 
+    DiagnosticError            = { link = "LspDiagnosticsDefaultError" },
+    DiagnosticWarn             = { link = "LspDiagnosticsDefaultWarning" },
+    DiagnosticInfo             = { link = "LspDiagnosticsDefaultInformation" },
+    DiagnosticHint             = { link = "LspDiagnosticsDefaultHint" },
     DiagnosticVirtualTextWarn  = { link = "LspDiagnosticsVirtualTextWarning" },
     DiagnosticUnderlineWarn    = { link = "LspDiagnosticsUnderlineWarning" },
     DiagnosticFloatingWarn     = { link = "LspDiagnosticsFloatingWarning" },
@@ -132,7 +136,7 @@ util.colorize({
     DiagnosticVirtualTextHint  = { link = "LspDiagnosticsVirtualTextHint" },
     DiagnosticUnderlineHint    = { link = "LspDiagnosticsUnderlineHint" },
     DiagnosticFloatingHint     = { link = "LspDiagnosticsFloatingHint" },
-    DiagnosticSignHint         = { link = "LspDiagnosticsSignHint" },
+    DiagnosticSignHint         = { link = "LspDiagnosticsSignHint" }
 })
 
 -- Setup lspconfig.
