@@ -102,46 +102,206 @@
       rm = "nocorrect rm"; # Override rm -i alias which makes rm prompt for every action
     };
 
-    prezto = {
-      enable = true;
-      prompt.theme = "powerlevel10k";
-      pmodules = [
-        "environment"
-        "terminal"
-        "editor"
-        "history"
-        "directory"
-        "spectrum"
-        "utility"
-        "completion"
-        "prompt"
-        "syntax-highlighting"
-        "osx"
-        "helper"
-        "tmux"
-        "git"
-        "autosuggestions"
-        "history-substring-search"
-        "archive"
-      ];
-      editor = {
-        keymap = "vi";
-        dotExpansion = true;
-      };
-      terminal.autoTitle = false;
-      caseSensitive = false;
-    };
-
-    plugins = [
-      {
-        name = "powerlevel10k-config";
-        src = lib.cleanSource ./p10k-config;
-        file = "p10k.zsh";
-      }
-    ];
-
     initExtra = ''
       eval "$(direnv hook zsh)"
     '';
+  };
+
+  # Zsh prompt
+  programs.starship = {
+    enable = true;
+    enableZshIntegration = true;
+    settings = {
+      format = lib.concatStrings [
+        "$username"
+        "$hostname"
+        "$shlvl"
+        "$singularity"
+        "$kubernetes"
+        "$directory"
+        "$vcsh"
+        "$git_branch"
+        "$git_commit"
+        "$git_state"
+        "$git_metrics"
+        "$git_status"
+        "$hg_branch"
+        "$docker_context"
+        "$package"
+        "$cmake"
+        "$cobol"
+        "$dart"
+        "$deno"
+        "$dotnet"
+        "$elixir"
+        "$elm"
+        "$erlang"
+        "$golang"
+        "$helm"
+        "$java"
+        "$julia"
+        "$kotlin"
+        "$lua"
+        "$nim"
+        "$nodejs"
+        "$ocaml"
+        "$perl"
+        "$php"
+        "$pulumi"
+        "$purescript"
+        "$python"
+        "$rlang"
+        "$red"
+        "$ruby"
+        "$rust"
+        "$scala"
+        "$swift"
+        "$terraform"
+        "$vlang"
+        "$vagrant"
+        "$zig"
+        "$nix_shell"
+        "$conda"
+        "$memory_usage"
+        "$aws"
+        "$gcloud"
+        "$openstack"
+        "$env_var"
+        "$crystal"
+        "$custom"
+        "$cmd_duration"
+        "$line_break"
+        "$jobs"
+        "$battery"
+        "$status"
+        "$shell"
+        "$character"
+      ];
+
+      right_format = lib.concatStrings [
+        "$time"
+      ];
+
+      add_newline = false;
+
+      directory = {
+        style = "blue";
+      };
+
+      character = {
+        success_symbol = "[❯](purple)";
+        error_symbol = "[❯](red)";
+        vicmd_symbol = "[❮](green)";
+      };
+
+      git_branch = {
+        format = "[$branch]($style)";
+        style = "bright-black";
+      };
+
+      git_status = {
+        format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](218) ($ahead_behind$stashed)]($style)";
+        style = "cyan";
+        conflicted = "​";
+        untracked = "​";
+        modified = "​";
+        staged = "​";
+        renamed = "​";
+        deleted = "​";
+        stashed = "";
+      };
+
+      git_state = {
+        format = "\([$state( $progress_current/$progress_total)]($style)\) ";
+        style = "bright-black";
+      };
+
+      cmd_duration = {
+        format = "[$duration]($style) ";
+        style = "yellow";
+      };
+
+      time = {
+        disabled = false;
+        format = "[$time]($style)";
+        style = "bright-black";
+        use_12hr = true;
+      };
+
+      # Symbols
+      aws = {
+        symbol = " ";
+      };
+      conda = {
+        symbol = " ";
+      };
+      dart = {
+        symbol = " ";
+      };
+      directory = {
+        read_only = " ";
+      };
+      docker_context = {
+        symbol = " ";
+      };
+      elixir = {
+        symbol = " ";
+      };
+      elm = {
+        symbol = " ";
+      };
+      git_branch = {
+        symbol = " ";
+      };
+      golang = {
+        symbol = " ";
+      };
+      hg_branch = {
+        symbol = " ";
+      };
+      java = {
+        symbol = " ";
+      };
+      julia = {
+        symbol = " ";
+      };
+      memory_usage = {
+        symbol = " ";
+      };
+      nim = {
+        symbol = " ";
+      };
+      nix_shell = {
+        symbol = " ";
+      };
+      package = {
+        symbol = " ";
+      };
+      perl = {
+        symbol = " ";
+      };
+      php = {
+        symbol = " ";
+      };
+      python = {
+        symbol = " ";
+      };
+      ruby = {
+        symbol = " ";
+      };
+      rust = {
+        symbol = " ";
+      };
+      scala = {
+        symbol = " ";
+      };
+      shlvl = {
+        symbol = " ";
+      };
+      swift = {
+        symbol = "ﯣ ";
+      };
+
+    };
   };
 }
