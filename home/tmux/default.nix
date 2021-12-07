@@ -38,6 +38,7 @@
       #START:activity
       setw -g monitor-activity on
       set -g visual-activity on
+      setw -g window-status-activity-style none
       #END:activity
 
       # Ring the bell if any background window rang a bell
