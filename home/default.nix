@@ -27,7 +27,7 @@
   fonts.fontconfig.enable = true;
 
   imports = [
-    ./kitty
+    # ./kitty
     ./zsh
     ./git
     ./nvim

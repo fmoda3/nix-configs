@@ -54,4 +54,14 @@ in {
     source = ./config;
     recursive = true;
   };
+
+  home = {
+    packages = with pkgs; [
+      # Language Servers
+      beam.packages.erlang.elixir_ls
+      java-language-server
+      pyright
+      rnix-lsp
+    ];
+  };
 }
