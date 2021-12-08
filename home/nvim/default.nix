@@ -59,7 +59,7 @@ in {
     packages = with pkgs; [
       # Language Servers
       beam.packages.erlang.elixir_ls
-      java-language-server
+      stable.java-language-server
       pyright
       rnix-lsp
     ];

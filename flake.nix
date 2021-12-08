@@ -4,8 +4,8 @@
     # Package sets
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixpkgs-master.url = "github:nixos/nixpkgs/master";
-    nixpkgs-stable-darwin.url = "github:nixos/nixpkgs/nixpkgs-21.05-darwin";
-    nixos-stable.url = "github:nixos/nixpkgs/nixos-21.05";
+    nixpkgs-stable-darwin.url = "github:nixos/nixpkgs/nixpkgs-21.11-darwin";
+    nixos-stable.url = "github:nixos/nixpkgs/nixos-21.11";
   
     # Environment/system management
     darwin.url = "github:lnl7/nix-darwin";
@@ -91,6 +91,14 @@
           modules = darwinModules {
             user = "fmoda3";
             host = "cicucci-laptop";
+          };
+          specialArgs = { inherit inputs nixpkgs; };
+        };
+        work-laptop = darwin.lib.darwinSystem {
+          system = "aarch64-darwin";
+          modules = darwinModules {
+            user = "frank";
+            host = "LWCQT4R7P9";
           };
           specialArgs = { inherit inputs nixpkgs; };
         };
