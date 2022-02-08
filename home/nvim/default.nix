@@ -37,6 +37,8 @@ in {
         cmp-vsnip
         vim-vsnip
         lspkind-nvim
+        null-ls-nvim
+        nvim-lsp-ts-utils
         (nvim-treesitter.withPlugins
           (plugins: pkgs.tree-sitter.allGrammars)
         )
@@ -59,9 +61,13 @@ in {
     packages = with pkgs; [
       # Language Servers
       beam.packages.erlang.elixir_ls
-      stable.java-language-server
+      java-language-server
       pyright
       rnix-lsp
+      nodejs
+      nodePackages.typescript-language-server
+      nodePackages.eslint_d
+      nodePackages.prettier
     ];
   };
 }

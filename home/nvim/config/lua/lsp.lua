@@ -166,11 +166,20 @@ local on_attach = function(client, bufnr)
     buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
     buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
     buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-    buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-    buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-    buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-    buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+    buf_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float(0, {scope="line"})<CR>', opts)
+    buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev({ float =  { border = "single" }})<CR>', opts)
+    buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next({ float =  { border = "single" }})<CR>', opts)
+    buf_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
     buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+
+    if client.resolved_capabilities.document_formatting then
+        vim.cmd([[
+            augroup LspFormatting
+                autocmd! * <buffer>
+                autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()
+            augroup END
+            ]])
+    end
 end
 
 
@@ -205,4 +214,38 @@ require'lspconfig'.elixirls.setup{
     on_attach = on_attach,
     capabilities = capabilities
 }
+-- Typescript
+require'lspconfig'.tsserver.setup{
+    init_options = require("nvim-lsp-ts-utils").init_options,
+    on_attach = function(client, bufnr)
+        local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+        on_attach(client, bufnr)
 
+        client.resolved_capabilities.document_formatting = false
+        client.resolved_capabilities.document_range_formatting = false
+
+        local ts_utils = require("nvim-lsp-ts-utils")
+        ts_utils.setup({
+            enable_import_on_completion = true
+        })
+        ts_utils.setup_client(client)
+
+        -- Mappings.
+        local opts = { noremap=true, silent=true }
+
+        buf_set_keymap("n", "gto", ":TSLspOrganize<CR>", opts)
+        buf_set_keymap("n", "gtr", ":TSLspRenameFile<CR>", opts)
+        buf_set_keymap("n", "gti", ":TSLspImportAll<CR>", opts)
+    end,
+    capabilities = capabilities
+}
+-- Null LS is an in-memory LS for supporting packages without language servers
+local null_ls = require("null-ls")
+null_ls.setup({
+    sources = {
+        null_ls.builtins.diagnostics.eslint_d,
+        null_ls.builtins.code_actions.eslint_d,
+        null_ls.builtins.formatting.prettier
+    },
+    on_attach = on_attach
+})
