@@ -26,6 +26,7 @@ in {
         nvim-autopairs
         minimap-vim
         telescope-nvim
+        nord-vim
 
         # LSP
         nvim-lspconfig
@@ -59,6 +60,7 @@ in {
 
   home = {
     packages = with pkgs; [
+      tree-sitter
       # Language Servers
       beam.packages.erlang.elixir_ls
       java-language-server
