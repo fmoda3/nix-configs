@@ -1,0 +1,11 @@
+{
+  "url": "https://github.com/bkegley/tree-sitter-graphql",
+  "rev": "5e66e961eee421786bdda8495ed1db045e06b5fe",
+  "date": "2021-05-10T09:09:29-05:00",
+  "path": "/nix/store/fkrhabr80bkg98bhpm4yh8ra2hy97ydm-tree-sitter-graphql-5e66e96",
+  "sha256": "0xvrd6p9rxdjpqfq575ap6hpl2f7dad5i4d4m05w1qk9jx33vw9n",
+  "fetchLFS": false,
+  "fetchSubmodules": false,
+  "deepClone": false,
+  "leaveDotGit": false
+}

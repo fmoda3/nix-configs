@@ -39,6 +39,9 @@
               stable = nixpkgs-stable.legacyPackages.${system};
             }
           )
+          (
+            final: prev: { flake = self; } // import ./pkgs final prev
+          )
         ];
       };
       darwinModules = { user, host }: with inputs; [

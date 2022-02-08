@@ -1,0 +1,11 @@
+{
+  "url": "https://github.com/tree-sitter/tree-sitter-verilog",
+  "rev": "8f6b1f357d1231c420404b5f7a368a73c25adfa2",
+  "date": "2021-03-09T15:23:54-08:00",
+  "path": "/nix/store/hk8njb3vb8mkiyzgwwg98ibcqvciyih6-tree-sitter-verilog-8f6b1f3",
+  "sha256": "13fihjd9cjdrn152nax0npq4ybgfzzgv96v10cz7909f40rchgxw",
+  "fetchLFS": false,
+  "fetchSubmodules": false,
+  "deepClone": false,
+  "leaveDotGit": false
+}

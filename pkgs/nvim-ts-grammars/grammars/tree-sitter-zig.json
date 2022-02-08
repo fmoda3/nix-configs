@@ -1,0 +1,11 @@
+{
+  "url": "https://github.com/maxxnino/tree-sitter-zig",
+  "rev": "93331b8bd8b4ebee2b575490b2758f16ad4e9f30",
+  "date": "2022-01-10T15:22:15+09:00",
+  "path": "/nix/store/rvh718nczpv29ry4yb0ps7wjf3fndgyr-tree-sitter-zig-93331b8",
+  "sha256": "0irckd6bh3i1vr5bi2lwsbvibbpih3jv3xqdq0dbsiy447dfiv50",
+  "fetchLFS": false,
+  "fetchSubmodules": false,
+  "deepClone": false,
+  "leaveDotGit": false
+}

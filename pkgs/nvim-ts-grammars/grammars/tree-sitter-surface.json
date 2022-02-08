@@ -1,0 +1,11 @@
+{
+  "url": "https://github.com/connorlay/tree-sitter-surface",
+  "rev": "f4586b35ac8548667a9aaa4eae44456c1f43d032",
+  "date": "2022-01-18T18:13:51-08:00",
+  "path": "/nix/store/mssk9bdvw9x3g0zk2nhjiic7blvbs67r-tree-sitter-surface-f4586b3",
+  "sha256": "085yvq2m4dbhhn51ndhzvgfmpp3hqiwk1a39xpjy4lxgrhbyjzqn",
+  "fetchLFS": false,
+  "fetchSubmodules": false,
+  "deepClone": false,
+  "leaveDotGit": false
+}

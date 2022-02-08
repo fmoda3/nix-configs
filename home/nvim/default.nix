@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 let
   vimSettings = builtins.readFile ./settings.vim;
 in {
@@ -41,7 +41,7 @@ in {
         null-ls-nvim
         nvim-lsp-ts-utils
         (nvim-treesitter.withPlugins
-          (plugins: pkgs.tree-sitter.allGrammars)
+          (plugins: pkgs.nvim-ts-grammars.allGrammars)
         )
         
         # theming
