@@ -34,6 +34,7 @@ in {
         cmp-buffer
         cmp-path
         cmp-cmdline
+        cmp-nvim-lsp-signature-help
         nvim-cmp
         cmp-vsnip
         vim-vsnip
