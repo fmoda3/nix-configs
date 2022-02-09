@@ -1,0 +1,11 @@
+{
+  "url": "https://github.com/atom-ocaml/tree-sitter-ocamllex",
+  "rev": "ac1d5957e719d49bd6acd27439b79843e4daf8ed",
+  "date": "2020-05-29T16:23:39+02:00",
+  "path": "/nix/store/0cr5iiwf50brp6wdsg4x502jxc8b5p4i-tree-sitter-ocamllex-ac1d595",
+  "sha256": "10flhgbyra1crvy5wyin3f6qm3rsa1ih8yi77wca05xxbyg4072x",
+  "fetchLFS": false,
+  "fetchSubmodules": false,
+  "deepClone": false,
+  "leaveDotGit": false
+}

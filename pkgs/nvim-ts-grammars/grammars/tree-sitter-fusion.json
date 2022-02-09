@@ -1,0 +1,11 @@
+{
+  "url": "https://gitlab.com/jirgn/tree-sitter-fusion.git",
+  "rev": "19db2f47ba4c3a0f6238d4ae0e2abfca16e61dd6",
+  "date": "2021-12-29T18:11:38+00:00",
+  "path": "/nix/store/pzp7a35jjli8sydk6mkvbmshd920r2ic-tree-sitter-fusion-19db2f4",
+  "sha256": "0r8n0s8wwvdd9azks0z3w3q3cccwf04r2g3ds19jlqjrvbgnmpnp",
+  "fetchLFS": false,
+  "fetchSubmodules": false,
+  "deepClone": false,
+  "leaveDotGit": false
+}

@@ -1,0 +1,11 @@
+{
+  "url": "https://github.com/alemuller/tree-sitter-ninja",
+  "rev": "0a95cfdc0745b6ae82f60d3a339b37f19b7b9267",
+  "date": "2022-01-07T20:40:39-03:00",
+  "path": "/nix/store/mkxaf6rwa5b8dgbkqmzwcdiqrx76mysr-tree-sitter-ninja-0a95cfd",
+  "sha256": "1vmfx2k6bxfwcz319vskjhyszc6hz3j32bw4lgj72l7p890ykwkv",
+  "fetchLFS": false,
+  "fetchSubmodules": false,
+  "deepClone": false,
+  "leaveDotGit": false
+}

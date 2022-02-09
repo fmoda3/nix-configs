@@ -1,0 +1,11 @@
+{
+  "url": "https://github.com/euclidianAce/tree-sitter-teal",
+  "rev": "fcc5f6f4d194dede4e676834ff28a506e39e17b4",
+  "date": "2021-07-23T11:49:00-05:00",
+  "path": "/nix/store/pwghhsi1qg4mk71f0701yvj3wgamaw8x-tree-sitter-teal-fcc5f6f",
+  "sha256": "09kp224mjz4fnj019by26siz1i9ih5dqi0amn9lm5lq31vlxjv1k",
+  "fetchLFS": false,
+  "fetchSubmodules": false,
+  "deepClone": false,
+  "leaveDotGit": false
+}

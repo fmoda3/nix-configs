@@ -1,0 +1,11 @@
+{
+  "url": "https://github.com/CyberShadow/tree-sitter-d",
+  "rev": "c2fbf21bd3aa45495fe13247e040ad5815250032",
+  "date": "2021-07-18T08:56:18+00:00",
+  "path": "/nix/store/m3zb9jwkfdaql9bhs9nb44xjp0b56v06-tree-sitter-d-c2fbf21",
+  "sha256": "0iyyjc4p14g5w2dcb8m132am9c7ximz3qz92287bncbrnsfbg9fm",
+  "fetchLFS": false,
+  "fetchSubmodules": false,
+  "deepClone": false,
+  "leaveDotGit": false
+}

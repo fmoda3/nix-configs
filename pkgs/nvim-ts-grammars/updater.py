@@ -32,17 +32,16 @@ for idx, data in enumerate(parsers_data):
     parser_rev = lockfile_data[parser_name]['revision']
     parser_file_path = os.path.join(grammars_path,
                                     f"tree-sitter-{parser_name}.json")
-    if os.path.exists(parser_file_path):
-        print(f"Updating {parser_name} ({idx+1} of {count})")
-        grammars_file.write(f"  tree-sitter-{parser_name} = "
-				+ "("
-				+ "builtins.fromJSON ("
-				+ f"builtins.readFile ./tree-sitter-{parser_name}.json"
-				+ "));\n")
+    print(f"Updating {parser_name} ({idx+1} of {count})")
+    grammars_file.write(f"  tree-sitter-{parser_name} = "
+            + "("
+            + "builtins.fromJSON ("
+            + f"builtins.readFile ./tree-sitter-{parser_name}.json"
+            + "));\n")
 
-        nix_prefetch_args = ["--url", parser_repo, "--rev", parser_rev]
-        with open(parser_file_path, "w") as f:
-            subprocess.run(nix_prefetch_cmd + nix_prefetch_args, stdout=f)
+    nix_prefetch_args = ["--url", parser_repo, "--rev", parser_rev]
+    with open(parser_file_path, "w") as f:
+        subprocess.run(nix_prefetch_cmd + nix_prefetch_args, stdout=f)
 
 grammars_file.write("}")
 grammars_file.close()
