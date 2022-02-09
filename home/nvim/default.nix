@@ -38,7 +38,6 @@ in {
         cmp-vsnip
         vim-vsnip
         lspkind-nvim
-        null-ls-nvim
         nvim-lsp-ts-utils
         (nvim-treesitter.withPlugins
           (plugins: pkgs.nvim-ts-grammars.allGrammars)
@@ -46,6 +45,31 @@ in {
         
         # theming
         nord-vim
+    ];
+
+    extraPackages = with pkgs; [
+      tree-sitter
+      # Language Servers
+      # Bash
+      nodePackages.bash-language-server
+      # Elixir
+      beam.packages.erlang.elixir_ls
+      # Erlang
+      beam.packages.erlang.erlang-ls
+      # Java
+      java-language-server
+      # Kotlin
+      kotlin-language-server
+      # Lua
+      sumneko-lua-language-server
+      # Nix
+      rnix-lsp
+      # Python
+      pyright
+      # Typescript
+      nodePackages.typescript-language-server
+      # Web (ESLint, HTML, CSS, JSON)
+      nodePackages.vscode-langservers-extracted
     ];
 
     extraConfig = ''
@@ -56,20 +80,5 @@ in {
   xdg.configFile.nvim = {
     source = ./config;
     recursive = true;
-  };
-
-  home = {
-    packages = with pkgs; [
-      tree-sitter
-      # Language Servers
-      beam.packages.erlang.elixir_ls
-      java-language-server
-      pyright
-      rnix-lsp
-      nodejs
-      nodePackages.typescript-language-server
-      nodePackages.eslint_d
-      nodePackages.prettier
-    ];
   };
 }

@@ -124,37 +124,29 @@ local on_attach = function(client, bufnr)
     buf_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
     buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 
-    if client.resolved_capabilities.document_formatting then
-        vim.cmd([[
-            augroup LspFormatting
-                autocmd! * <buffer>
-                autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()
-            augroup END
-            ]])
-    end
+    -- if client.resolved_capabilities.document_formatting then
+    --     vim.cmd([[
+    --         augroup LspFormatting
+    --             autocmd! * <buffer>
+    --             autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()
+    --         augroup END
+    --         ]])
+    -- end
 end
 
 
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 -- Enable Language Servers
--- Nix
-require'lspconfig'.rnix.setup{
-    on_attach = on_attach,
-    capabilities = capabilities
-}
--- Java
-require'lspconfig'.java_language_server.setup{
-    cmd = { 'java-language-server' },
-    on_attach = on_attach,
-    capabilities = capabilities
-}
--- Python
-require'lspconfig'.pyright.setup{
-    on_attach = on_attach,
-    capabilities = capabilities
-}
+local function default_lsp_setup(module)
+    nvim_lsp[module].setup{
+        on_attach = on_attach,
+        capabilities = capabilities
+    }
+end
+-- Bash
+default_lsp_setup('bashls')
 -- Elixir
-require'lspconfig'.elixirls.setup{
+nvim_lsp.elixirls.setup{
     cmd = { 'elixir-ls' },
     -- Settings block is required, as there is no default set for elixir
     settings = {
@@ -166,8 +158,52 @@ require'lspconfig'.elixirls.setup{
     on_attach = on_attach,
     capabilities = capabilities
 }
+-- Erlang
+default_lsp_setup('erlangls')
+-- Java
+nvim_lsp.java_language_server.setup{
+    cmd = { 'java-language-server' },
+    on_attach = on_attach,
+    capabilities = capabilities
+}
+-- Kotlin
+default_lsp_setup('kotlin_language_server')
+-- Lua
+local runtime_path = vim.split(package.path, ';')
+table.insert(runtime_path, "lua/?.lua")
+table.insert(runtime_path, "lua/?/init.lua")
+nvim_lsp.sumneko_lua.setup{
+    settings = {
+        Lua = {
+            runtime = {
+                -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+                version = 'LuaJIT',
+                -- Setup your lua path
+                path = runtime_path,
+            },
+            diagnostics = {
+                -- Get the language server to recognize the `vim` global
+                globals = {'vim'},
+            },
+            workspace = {
+                -- Make the server aware of Neovim runtime files
+                library = vim.api.nvim_get_runtime_file("", true),
+            },
+            -- Do not send telemetry data containing a randomized but unique identifier
+            telemetry = {
+                enable = false,
+            }
+        }
+    },
+    on_attach = on_attach,
+    capabilities = capabilities
+}
+-- Nix
+default_lsp_setup('rnix')
+-- Python
+default_lsp_setup('pyright')
 -- Typescript
-require'lspconfig'.tsserver.setup{
+nvim_lsp.tsserver.setup{
     init_options = require("nvim-lsp-ts-utils").init_options,
     on_attach = function(client, bufnr)
         local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
@@ -191,13 +227,24 @@ require'lspconfig'.tsserver.setup{
     end,
     capabilities = capabilities
 }
--- Null LS is an in-memory LS for supporting packages without language servers
-local null_ls = require("null-ls")
-null_ls.setup({
-    sources = {
-        null_ls.builtins.diagnostics.eslint_d,
-        null_ls.builtins.code_actions.eslint_d,
-        null_ls.builtins.formatting.eslint_d
-    },
-    on_attach = on_attach
-})
+-- Web
+-- ESLint
+nvim_lsp.eslint.setup{
+    on_attach = function(client, bufnr)
+        on_attach(client, bufnr)
+        -- Run all eslint fixes on save
+        vim.cmd([[
+            augroup EslintOnSave
+                autocmd! * <buffer>
+                autocmd BufWritePre <buffer> EslintFixAll
+            augroup END
+            ]])
+    end,
+    capabilities = capabilities
+}
+-- CSS
+default_lsp_setup('cssls')
+-- HTML
+default_lsp_setup('html')
+-- JSON
+default_lsp_setup('jsonls')
