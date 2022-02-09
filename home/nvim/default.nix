@@ -49,6 +49,7 @@ in {
 
     extraPackages = with pkgs; [
       tree-sitter
+      nodejs
       # Language Servers
       # Bash
       nodePackages.bash-language-server

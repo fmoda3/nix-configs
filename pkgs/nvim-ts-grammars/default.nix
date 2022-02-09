@@ -1,4 +1,4 @@
-{ lib, stdenv, tree-sitter, fetchgit, callPackage }:
+{ lib, stdenv, tree-sitter, nodejs, fetchgit, callPackage }:
 
 let
   fetchGrammar = (v: fetchgit { inherit (v) url rev sha256 fetchSubmodules; });

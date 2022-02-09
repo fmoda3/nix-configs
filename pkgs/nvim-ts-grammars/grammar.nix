@@ -1,5 +1,6 @@
 { stdenv
 , tree-sitter
+, nodejs
 , lib
 }:
 
@@ -22,7 +23,7 @@ stdenv.mkDerivation rec {
 
   src = if location == null then source else "${source}/${location}";
 
-  buildInputs = [ tree-sitter ];
+  nativeBuildInputs = [ tree-sitter nodejs ];
 
   dontUnpack = true;
   dontConfigure = true;
@@ -39,7 +40,19 @@ stdenv.mkDerivation rec {
     elif [[ -e "$src/src/scanner.c" ]]; then
       $CC -c "$src/src/scanner.c" -o scanner.o $CFLAGS
     fi
-    $CC -c "$src/src/parser.c" -o parser.o $CFLAGS
+    if [[ -e "$src/src/parser.c" ]]; then
+      $CC -c "$src/src/parser.c" -o parser.o $CFLAGS
+    else
+      # If the parser doesn't exist, it probably needs to be generated
+      # Swift and Teal do this
+      mkdir -p src_copy
+      cp -r $src/* src_copy/.
+      chmod -R u+w src_copy
+      pushd src_copy
+      tree-sitter generate
+      popd
+      $CC -c "src_copy/src/parser.c" -o parser.o $CFLAGS
+    fi
     $CXX -shared -o parser *.o
     runHook postBuild
   '';
