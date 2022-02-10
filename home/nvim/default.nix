@@ -26,6 +26,7 @@ in {
         nvim-autopairs
         minimap-vim
         telescope-nvim
+        trouble-nvim
         nord-vim
 
         # LSP
