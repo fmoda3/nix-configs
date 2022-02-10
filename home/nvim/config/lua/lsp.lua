@@ -3,11 +3,11 @@ local util = require("util")
 
 -- CMP Colors
 util.colorize({
-    CmpItemKind =   { fg = nord.nord15_gui },
+    CmpItemKind = { fg = nord.nord15_gui },
     CmpItemAbbrMatch =  { fg = nord.nord5_gui, style = 'bold' },
     CmpItemAbbrMatchFuzzy = { fg = nord.nord5_gui, style = 'bold' },
-    CmpItemAbbr =   { fg = nord.nord4_gui},
-    CmpItemMenu =       { fg = nord.nord14_gui },
+    CmpItemAbbr = { fg = nord.nord4_gui},
+    CmpItemMenu = { fg = nord.nord14_gui },
 })
 
 -- Autocompletion setup
@@ -24,7 +24,7 @@ local cmp = require'cmp'
 local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 local lspkind = require('lspkind')
 
-cmp.event:on( 'confirm_done', cmp_autopairs.on_confirm_done({  map_char = { tex = '' } }))
+cmp.event:on( 'confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = '' } }))
 
 cmp.setup({
     completion = {
@@ -97,33 +97,32 @@ local nvim_lsp = require('lspconfig')
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
-    local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
     local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
     -- Enable completion triggered by <c-x><c-o>
     buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
     -- Mappings.
-    local opts = { noremap=true, silent=true }
-
-    -- See `:help vim.lsp.*` for documentation on any of the below functions
-    buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-    buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-    buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-    buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-    buf_set_keymap('n', '<C-s>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-    buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-    buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-    buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-    buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-    buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-    buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-    buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-    buf_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float(0, {scope="line"})<CR>', opts)
-    buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev({ float =  { border = "single" }})<CR>', opts)
-    buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next({ float =  { border = "single" }})<CR>', opts)
-    buf_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
-    buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+    local opts = { noremap=true, silent=true, buffer=true }
+    require('legendary').bind_keymaps({
+        { 'gD', vim.lsp.buf.declaration, description = 'LSP: Go to declaration', opts = opts },
+        { 'gd', vim.lsp.buf.definition, description = 'LSP: Go to definition', opts = opts },
+        { 'K', vim.lsp.buf.hover, description = 'LSP: Hover', opts = opts },
+        { 'gi', vim.lsp.buf.implementation, description = 'LSP: Go to implementation', opts = opts },
+        { '<C-s>', vim.lsp.buf.signature_help, description = 'LSP: Signature help', opts = opts },
+        { '<space>wa', vim.lsp.buf.add_workspace_folder, description = 'LSP: Add workspace folder', opts = opts },
+        { '<space>wr', vim.lsp.buf.remove_workspace_folder, description = 'LSP: Remove workspace folder', opts = opts },
+        { '<space>wl', function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, description = 'LSP: List workspaces', opts = opts },
+        { '<space>D', vim.lsp.buf.type_definition, description = 'LSP: Show type definition', opts = opts },
+        { '<space>rn', vim.lsp.buf.rename, description = 'LSP: Rename', opts = opts },
+        { '<space>ca', vim.lsp.buf.code_action, description = 'LSP: Code Action', opts = opts },
+        { 'gr', vim.lsp.buf.references, description = 'LSP: Show references', opts = opts },
+        { '<space>e', function() vim.diagnostic.open_float(0, {scope="line"}) end, description = 'Diagnostics: Show window', opts = opts },
+        { '[d', function() vim.diagnostic.goto_prev({ float =  { border = "single" }}) end, description = 'Diagnostics: Previous', opts = opts },
+        { ']d', function() vim.diagnostic.goto_next({ float =  { border = "single" }}) end, description = 'Diagnostics: Next', opts = opts },
+        { '<space>q', vim.diagnostic.setloclist, description = 'Diagnostic: Show location list', opts = opts },
+        { '<space>f', vim.lsp.buf.formatting, description = 'LSP: Format file', opts = opts }
+    })
 
     -- if client.resolved_capabilities.document_formatting then
     --     vim.cmd([[
@@ -207,7 +206,6 @@ default_lsp_setup('pyright')
 nvim_lsp.tsserver.setup{
     init_options = require("nvim-lsp-ts-utils").init_options,
     on_attach = function(client, bufnr)
-        local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
         on_attach(client, bufnr)
 
         client.resolved_capabilities.document_formatting = false
@@ -220,11 +218,12 @@ nvim_lsp.tsserver.setup{
         ts_utils.setup_client(client)
 
         -- Mappings.
-        local opts = { noremap=true, silent=true }
-
-        buf_set_keymap("n", "gto", ":TSLspOrganize<CR>", opts)
-        buf_set_keymap("n", "gtr", ":TSLspRenameFile<CR>", opts)
-        buf_set_keymap("n", "gti", ":TSLspImportAll<CR>", opts)
+        local opts = { noremap=true, silent=true, buffer=true }
+        require('legendary').bind_keymaps({
+            { 'gto', ':TSLspOrganize<CR>', description = 'LSP: Organize imports', opts = opts },
+            { 'gtr', ':TSLspRenameFile<CR>', description = 'LSP: Rename file', opts = opts },
+            { 'gti', ':TSLspImportAll<CR>', description = 'LSP: Import missing imports', opts = opts }
+        })
     end,
     capabilities = capabilities
 }

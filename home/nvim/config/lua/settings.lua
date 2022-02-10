@@ -23,7 +23,10 @@ vim.cmd("colorscheme nord")
 opt.background="dark"
 
 -- Movement keybinds
-vim.api.nvim_set_keymap('n', '<C-h>', '<C-w>h', { noremap = true })
-vim.api.nvim_set_keymap('n', '<C-j>', '<C-w>j', { noremap = true })
-vim.api.nvim_set_keymap('n', '<C-k>', '<C-w>k', { noremap = true })
-vim.api.nvim_set_keymap('n', '<C-hl', '<C-w>l', { noremap = true })
+local opts = { noremap = true }
+require('legendary').bind_keymaps({
+	{ '<C-h>', '<C-w>h', description = 'Panes: Move left', opts = opts },
+	{ '<C-j>', '<C-w>j', description = 'Panes: Move down', opts = opts },
+	{ '<C-k>', '<C-w>k', description = 'Panes: Move up', opts = opts },
+	{ '<C-l>', '<C-w>l', description = 'Panes: Move right', opts = opts }
+})

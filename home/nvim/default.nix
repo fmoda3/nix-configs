@@ -27,6 +27,8 @@ in {
         minimap-vim
         telescope-nvim
         trouble-nvim
+        legendary-nvim
+        dressing-nvim
         nord-vim
 
         # LSP

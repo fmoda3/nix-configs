@@ -1,8 +1,11 @@
 -- Telescope Settings
-vim.api.nvim_set_keymap('n', '<Leader>ff', [[<cmd>lua require('telescope.builtin').find_files()<cr>]], { noremap = true })
-vim.api.nvim_set_keymap('n', '<Leader>fg', [[<cmd>lua require('telescope.builtin').live_grep()<cr>]], { noremap = true })
-vim.api.nvim_set_keymap('n', '<Leader>fb', [[<cmd>lua require('telescope.builtin').buffers()<cr>]], { noremap = true })
-vim.api.nvim_set_keymap('n', '<Leader>fh', [[<cmd>lua require('telescope.builtin').help_tags()<cr>]], { noremap = true })
+local opts = { noremap = true }
+require('legendary').bind_keymaps({
+    { '<Leader>ff', require('telescope.builtin').find_files, description = 'Telescope: Find files', opts = opts },
+    { '<Leader>fg', require('telescope.builtin').live_grep, description = 'Telescope: Live grep', opts = opts },
+    { '<Leader>fb', require('telescope.builtin').buffers, description = 'Telescope: Buffers', opts = opts },
+    { '<Leader>fh', require('telescope.builtin').help_tags, description = 'Telescope: Help tags', opts = opts }
+})
 
 -- Telescope colors
 local nord = require('nord-colors')
