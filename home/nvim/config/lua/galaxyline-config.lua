@@ -4,6 +4,7 @@
 
 local gl = require("galaxyline")
 local gls = gl.section
+local condition = require('galaxyline.condition')
 
 gl.short_line_list = {"NvimTree", "minimap"}
 
@@ -34,7 +35,7 @@ gls.left[2] = {
 gls.left[3] = {
     FileIcon = {
         provider = "FileIcon",
-        condition = buffer_not_empty,
+        condition = condition.buffer_not_empty,
         highlight = {require("galaxyline.providers.fileinfo").get_file_icon_color, colors.nord3_gui}
     }
 }
@@ -42,7 +43,7 @@ gls.left[3] = {
 gls.left[4] = {
     FileName = {
         provider = {"FileName", "FileSize"},
-        condition = buffer_not_empty,
+        condition = condition.buffer_not_empty,
         highlight = {colors.nord6_gui, colors.nord3_gui}
     }
 }
@@ -158,7 +159,7 @@ gls.right[3] = {
 gls.right[4] = {
     DiffAdd = {
         provider = "DiffAdd",
-        condition = hide_in_width,
+        condition = condition.hide_in_width,
         icon = " ",
         highlight = {colors.nord14_gui, colors.nord0_gui}
     }
@@ -167,7 +168,7 @@ gls.right[4] = {
 gls.right[5] = {
     DiffModified = {
         provider = "DiffModified",
-        condition = hide_in_width,
+        condition = condition.hide_in_width,
         icon = " ",
         highlight = {colors.nord12_gui, colors.nord0_gui}
     }
@@ -176,7 +177,7 @@ gls.right[5] = {
 gls.right[6] = {
     DiffRemove = {
         provider = "DiffRemove",
-        condition = hide_in_width,
+        condition = condition.hide_in_width,
         icon = " ",
         highlight = {colors.nord13_gui, colors.nord0_gui}
     }
