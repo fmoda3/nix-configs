@@ -1,6 +1,4 @@
 local opt = vim.opt
-local fn = vim.fn
-local env = vim.env
 local g = vim.g
 
 -- global options --
@@ -16,6 +14,9 @@ opt.termguicolors = true
 opt.cursorline = true
 opt.relativenumber = true
 opt.number = true
+
+-- Set leader key
+g.mapleader = ','
 
 -- Color Scheme Settings
 vim.cmd("syntax enable")
