@@ -29,6 +29,8 @@ in {
         trouble-nvim
         legendary-nvim
         dressing-nvim
+        bufferline-nvim
+        vim-smoothie
         nord-vim
 
         # LSP
