@@ -32,6 +32,8 @@ in {
         dressing-nvim
         bufferline-nvim
         vim-smoothie
+        fidget-nvim
+        nvim-lightbulb
         nord-vim
 
         # LSP
