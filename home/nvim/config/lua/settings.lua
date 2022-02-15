@@ -14,6 +14,7 @@ opt.termguicolors = true
 opt.cursorline = true
 opt.relativenumber = true
 opt.number = true
+opt.signcolumn="auto:9"
 
 -- Set leader key
 g.mapleader = ','
