@@ -20,9 +20,10 @@ in {
         # UI
         nvim-web-devicons
         nvim-tree-lua
-        galaxyline-nvim
+        # galaxyline-nvim
+        feline-nvim
+        gitsigns-nvim
         indent-blankline-nvim
-        vim-signify
         nvim-autopairs
         minimap-vim
         telescope-nvim
