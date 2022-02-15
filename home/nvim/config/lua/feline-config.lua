@@ -15,7 +15,8 @@ local disable = {
         '^fugitiveblame$',
         '^qf$',
         '^help$',
-        '^minimap$'
+        '^minimap$',
+        '^Trouble$'
     },
     buftypes = {
         '^terminal$'
@@ -25,20 +26,22 @@ local disable = {
 
 -- Better lsp client retrieval than built in
 local get_lsp_client = function (component)
-    local msg = 'No Active Lsp'
-    local buf_ft = vim.api.nvim_buf_get_option(0,'filetype')
-    local clients = vim.lsp.get_active_clients()
+    local msg = "No Active Lsp"
+
+    local clients = vim.lsp.buf_get_clients()
     if next(clients) == nil then
-      return msg
+        return msg
     end
 
-    for _,client in ipairs(clients) do
-      local filetypes = client.config.filetypes
-      if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
-        return client.name
-      end
+    local client_names = ""
+    for _, client in pairs(clients) do
+        if string.len(client_names) < 1 then
+            client_names = client_names .. client.name
+        else
+            client_names = client_names .. ", " .. client.name
+        end
     end
-    return msg
+    return string.len(client_names) > 0 and client_names or msg
 end
 
 -- LEFT
@@ -70,6 +73,7 @@ components.active[1][2] = {
     provider = {
         name = 'file_info',
         opts = {
+            file_readonly_icon = '',
             file_modified_icon = ''
         }
     },
