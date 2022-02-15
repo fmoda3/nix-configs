@@ -40,7 +40,7 @@ local on_attach = function(client, bufnr)
     -- end
 end
 
-local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
 for type, icon in pairs(signs) do
   local hl = "DiagnosticSign" .. type
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
@@ -174,4 +174,4 @@ local util = require('util')
 util.colorize({
     LightBulbSignColor = { fg = colors.nord13_gui }
 })
-vim.fn.sign_define('LightBulbSign', { text = "", texthl = "LightBulbSignColor", linehl="", numhl="" })
+vim.fn.sign_define('LightBulbSign', { text = "", texthl = "LightBulbSignColor", linehl="", numhl="" })
