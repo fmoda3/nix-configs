@@ -17,6 +17,9 @@ in {
         vim-nix
         vim-polyglot
 
+        # Cache
+        impatient-nvim
+
         # UI
         nvim-web-devicons
         nvim-tree-lua
@@ -32,8 +35,8 @@ in {
         dressing-nvim
         bufferline-nvim
         vim-smoothie
-        fidget-nvim
-        nvim-lightbulb
+        numb-nvim
+        lightspeed-nvim
         nord-vim
 
         # LSP
@@ -48,6 +51,8 @@ in {
         vim-vsnip
         lspkind-nvim
         nvim-lsp-ts-utils
+        fidget-nvim
+        nvim-lightbulb
         (nvim-treesitter.withPlugins
           (plugins: pkgs.nvim-ts-grammars.allGrammars)
         )
