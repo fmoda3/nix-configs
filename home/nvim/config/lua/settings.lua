@@ -21,8 +21,9 @@ g.mapleader = ','
 
 -- Color Scheme Settings
 vim.cmd("syntax enable")
-vim.cmd("colorscheme nord")
 opt.background="dark"
+g.nord_italic = false
+require('nord').set()
 
 -- Movement keybinds
 local opts = { noremap = true }
