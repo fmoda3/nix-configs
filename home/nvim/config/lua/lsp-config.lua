@@ -8,6 +8,8 @@ local on_attach = function(client, bufnr)
     -- Enable completion triggered by <c-x><c-o>
     buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
+    require('illuminate').on_attach(client)
+
     -- Mappings.
     local opts = { noremap=true, silent=true, buffer=true }
     require('legendary').bind_keymaps({
@@ -27,7 +29,9 @@ local on_attach = function(client, bufnr)
         { '[d', function() vim.diagnostic.goto_prev({ float =  { border = "single" }}) end, description = 'Diagnostics: Previous', opts = opts },
         { ']d', function() vim.diagnostic.goto_next({ float =  { border = "single" }}) end, description = 'Diagnostics: Next', opts = opts },
         { '<space>q', vim.diagnostic.setloclist, description = 'Diagnostic: Show location list', opts = opts },
-        { '<space>f', vim.lsp.buf.formatting, description = 'LSP: Format file', opts = opts }
+        { '<space>f', vim.lsp.buf.formatting, description = 'LSP: Format file', opts = opts },
+        { ']u', function() require('illuminate').next_reference({ wrap = true }) end, description = "Illuminate: Next reference", opts = opts },
+        { '[u', function() require('illuminate').next_reference({ reverse = true, wrap = true }) end, description = "Illuminate: Previous reference", opts = opts }
     })
 
     -- if client.resolved_capabilities.document_formatting then

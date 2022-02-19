@@ -53,6 +53,7 @@ in {
         nvim-lsp-ts-utils
         fidget-nvim
         nvim-lightbulb
+        vim-illuminate
         (nvim-treesitter.withPlugins
           (plugins: pkgs.nvim-ts-grammars.allGrammars)
         )
