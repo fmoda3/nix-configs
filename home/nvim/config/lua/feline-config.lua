@@ -16,7 +16,12 @@ local disable = {
         '^qf$',
         '^help$',
         '^minimap$',
-        '^Trouble$'
+        '^Trouble$',
+        '^dap-repl$',
+        '^dapui_watches$',
+        '^dapui_stacks$',
+        '^dapui_breakpoints$',
+        '^dapui_scopes$'
     },
     buftypes = {
         '^terminal$'

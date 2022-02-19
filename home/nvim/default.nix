@@ -1,6 +1,7 @@
 { config, pkgs, lib, ... }:
 let
   vimSettings = builtins.readFile ./settings.vim;
+  python-debug = pkgs.python.withPackages (p: with p; [debugpy]);
 in {
   programs.neovim = {
     package = pkgs.neovim-nightly;
@@ -17,9 +18,6 @@ in {
         vim-nix
         vim-polyglot
 
-        # Cache
-        impatient-nvim
-
         # UI
         nvim-web-devicons
         nvim-tree-lua
@@ -28,7 +26,6 @@ in {
         gitsigns-nvim
         indent-blankline-nvim
         nvim-autopairs
-        minimap-vim
         telescope-nvim
         trouble-nvim
         legendary-nvim
@@ -57,6 +54,12 @@ in {
         (nvim-treesitter.withPlugins
           (plugins: pkgs.nvim-ts-grammars.allGrammars)
         )
+
+        # DAP
+        nvim-dap
+        telescope-dap-nvim
+        nvim-dap-ui
+        nvim-dap-virtual-text
         
         # theming
         nord-nvim
@@ -82,6 +85,7 @@ in {
       rnix-lsp
       # Python
       pyright
+      python-debug
       # Typescript
       nodePackages.typescript-language-server
       # Web (ESLint, HTML, CSS, JSON)
@@ -89,6 +93,8 @@ in {
     ];
 
     extraConfig = ''
+      let g:elixir_ls_home = "${pkgs.beam.packages.erlang.elixir_ls}"
+      let g:python_debug_home = "${python-debug}"
       :luafile ~/.config/nvim/lua/init.lua
     '';
   };
