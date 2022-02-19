@@ -1,15 +1,3 @@
-local nord = require("nord-colors")
-local util = require("util")
-
--- CMP Colors
-util.colorize({
-    CmpItemKind = { fg = nord.nord15_gui },
-    CmpItemAbbrMatch =  { fg = nord.nord5_gui, style = 'bold' },
-    CmpItemAbbrMatchFuzzy = { fg = nord.nord5_gui, style = 'bold' },
-    CmpItemAbbr = { fg = nord.nord4_gui},
-    CmpItemMenu = { fg = nord.nord14_gui },
-})
-
 -- Autocompletion setup
 local has_words_before = function()
     local line, col = table.unpack(vim.api.nvim_win_get_cursor(0))

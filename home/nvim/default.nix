@@ -37,7 +37,7 @@ in {
         vim-smoothie
         numb-nvim
         lightspeed-nvim
-        nord-vim
+        nvim-ts-rainbow
 
         # LSP
         nvim-lspconfig
@@ -58,7 +58,7 @@ in {
         )
         
         # theming
-        nord-vim
+        nord-nvim
     ];
 
     extraPackages = with pkgs; [

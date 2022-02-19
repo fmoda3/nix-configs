@@ -27,8 +27,8 @@ opt.background="dark"
 -- Movement keybinds
 local opts = { noremap = true }
 require('legendary').bind_keymaps({
-	{ '<C-h>', '<C-w>h', description = 'Panes: Move left', opts = opts },
-	{ '<C-j>', '<C-w>j', description = 'Panes: Move down', opts = opts },
-	{ '<C-k>', '<C-w>k', description = 'Panes: Move up', opts = opts },
-	{ '<C-l>', '<C-w>l', description = 'Panes: Move right', opts = opts }
+    { '<C-h>', '<C-w>h', description = 'Panes: Move left', opts = opts },
+    { '<C-j>', '<C-w>j', description = 'Panes: Move down', opts = opts },
+    { '<C-k>', '<C-w>k', description = 'Panes: Move up', opts = opts },
+    { '<C-l>', '<C-w>l', description = 'Panes: Move right', opts = opts }
 })
