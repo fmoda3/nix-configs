@@ -35,6 +35,7 @@ in {
         numb-nvim
         lightspeed-nvim
         nvim-ts-rainbow
+        null-ls-nvim
 
         # LSP
         nvim-lspconfig
@@ -83,9 +84,12 @@ in {
       sumneko-lua-language-server
       # Nix
       rnix-lsp
+      nixfmt
+      stable.statix # use stable until null-ls update in nixpkgs-unstable
       # Python
       pyright
       python-debug
+      black
       # Typescript
       nodePackages.typescript-language-server
       # Web (ESLint, HTML, CSS, JSON)

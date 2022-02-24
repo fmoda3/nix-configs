@@ -114,7 +114,15 @@ nvim_lsp.sumneko_lua.setup{
     capabilities = capabilities
 }
 -- Nix
-default_lsp_setup('rnix')
+nvim_lsp.rnix.setup{
+    on_attach = function(client, bufnr)
+        on_attach(client, bufnr)
+
+        -- Let statix format
+        client.resolved_capabilities.document_formatting = false
+        client.resolved_capabilities.document_range_formatting = false
+    end
+}
 -- Python
 default_lsp_setup('pyright')
 -- Typescript
@@ -123,6 +131,7 @@ nvim_lsp.tsserver.setup{
     on_attach = function(client, bufnr)
         on_attach(client, bufnr)
 
+        -- Let nixfmt format
         client.resolved_capabilities.document_formatting = false
         client.resolved_capabilities.document_range_formatting = false
 
@@ -163,3 +172,19 @@ default_lsp_setup('cssls')
 default_lsp_setup('html')
 -- JSON
 default_lsp_setup('jsonls')
+
+-- NULL
+require("null-ls").setup({
+    sources = {
+        -- Elixir
+        require("null-ls").builtins.diagnostics.credo,
+
+        -- Nix
+        require("null-ls").builtins.formatting.nixfmt,
+        require("null-ls").builtins.diagnostics.statix,
+        require("null-ls").builtins.code_actions.statix,
+
+        -- Python
+        require("null-ls").builtins.formatting.black
+    },
+})
