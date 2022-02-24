@@ -1,17 +1,17 @@
 { lib, stdenv, tree-sitter, nodejs, fetchgit, callPackage }:
 
 let
-  fetchGrammar = (v: fetchgit { inherit (v) url rev sha256 fetchSubmodules; });
+  fetchGrammar = v: fetchgit { inherit (v) url rev sha256 fetchSubmodules; };
   builtGrammars =
     let
       change = name: grammar:
         callPackage ./grammar.nix { } {
           language = if grammar ? language then grammar.language else name;
-          version = tree-sitter.version;
+          inherit (tree-sitter) version;
           source = fetchGrammar grammar;
           location = if grammar ? location then grammar.location else null;
         };
-      grammars' = (import ./grammars);
+      grammars' = import ./grammars;
       grammars = grammars' //
         { tree-sitter-ocaml = grammars'.tree-sitter-ocaml // { location = "ocaml"; }; } //
         { tree-sitter-ocaml_interface = grammars'.tree-sitter-ocaml // { location = "interface"; }; } //

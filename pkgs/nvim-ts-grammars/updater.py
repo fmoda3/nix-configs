@@ -34,10 +34,9 @@ for idx, data in enumerate(parsers_data):
                                     f"tree-sitter-{parser_name}.json")
     print(f"Updating {parser_name} ({idx+1} of {count})")
     grammars_file.write(f"  tree-sitter-{parser_name} = "
-            + "("
             + "builtins.fromJSON ("
             + f"builtins.readFile ./tree-sitter-{parser_name}.json"
-            + "));\n")
+            + ");\n")
 
     nix_prefetch_args = ["--url", parser_repo, "--rev", parser_rev]
     with open(parser_file_path, "w") as f:

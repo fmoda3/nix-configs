@@ -32,7 +32,7 @@
           (
             final: prev:
             let
-              system = prev.stdenv.system;
+              inherit (prev.stdenv) system;
               nixpkgs-stable = if system == "x86_64-darwin" || system == "aarch64-darwin" then nixpkgs-stable-darwin else nixos-stable;
             in {
               master = nixpkgs-master.legacyPackages.${system};
