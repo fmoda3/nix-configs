@@ -85,7 +85,7 @@ in {
       # Nix
       rnix-lsp
       nixfmt
-      stable.statix # use stable until null-ls update in nixpkgs-unstable
+      statix
       # Python
       pyright
       python-debug
