@@ -159,13 +159,18 @@
         };
 
         merge = {
+          conflictstyle = "diff3";
           summary = true;
           verbosity = 1;
         };
 
         mergetool = {
           prompt = false;
-        };        
+        };
+
+        pull = {
+          ff = "only";
+        };
 
         push = {
           default = "tracking";
