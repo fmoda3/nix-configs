@@ -142,6 +142,7 @@
 
     initExtra = ''
       eval "$(direnv hook zsh)"
+      path+="/opt/homebrew/bin"
     '';
   };
 }

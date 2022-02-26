@@ -1,1 +1,6 @@
-{ config, pkgs, ... }: { imports = [ ../../darwin ]; }
+{ config, pkgs, ... }: {
+  imports = [
+    ../../darwin
+    ../../darwin/work.nix
+  ];
+}
