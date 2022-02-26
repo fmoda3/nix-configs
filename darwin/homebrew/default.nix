@@ -8,5 +8,9 @@
       "libffi"
       "cocoapods"
     ];
+    extraConfig = ''
+      tap "toasttab/toast", "git@github.com:toasttab/homebrew-toast"
+      brew "lunchbox"
+    '';
   };
 }

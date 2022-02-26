@@ -8,6 +8,7 @@
     packages = [
       pkgs.awscli
       pkgs.oktoast
+      pkgs.pizzabox
     ];
   };
 }
