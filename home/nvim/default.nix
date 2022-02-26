@@ -36,6 +36,7 @@ in {
         lightspeed-nvim
         nvim-ts-rainbow
         null-ls-nvim
+        nvim-notify
 
         # LSP
         nvim-lspconfig
