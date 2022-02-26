@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 {
   imports = [
-    ./homebrew/work.nix
+    # ./homebrew/personal.nix
   ];
 }

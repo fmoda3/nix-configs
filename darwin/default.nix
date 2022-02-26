@@ -15,8 +15,6 @@
     ./fonts
     # yabai doesn't yet work with Monterey
     # ./wm/themes/nord.nix
-    # Nix currently handling all needed programs
-    # ./homebrew
   ];
 
   # Create /etc/zshrc that loads the nix-darwin environment.
