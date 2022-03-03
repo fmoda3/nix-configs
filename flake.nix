@@ -42,25 +42,6 @@
           (
             final: prev: { flake = self; } // import ./pkgs final prev
           )
-          # Fixes clipboard test in ipython
-          # Remove when https://github.com/NixOS/nixpkgs/pull/161366 merged and in unstable
-          (
-            self: super: {
-              python3 = super.python3.override {
-                packageOverrides = pySelf: pySuper: {
-                  ipython = pySuper.ipython.overridePythonAttrs (old: {
-                    preCheck = old.preCheck + super.lib.optionalString super.stdenv.isDarwin ''
-                      echo '#!${super.stdenv.shell}' > pbcopy
-                      chmod a+x pbcopy
-                      cp pbcopy pbpaste
-                      export PATH="$(pwd)''${PATH:+":$PATH"}"
-                    '';
-                  });
-                };
-                self = self.python3;
-              };
-            }
-          )
         ];
       };
       darwinModules = { user, host }: with inputs; [

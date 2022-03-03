@@ -32,6 +32,7 @@
   tree-sitter-scss = builtins.fromJSON (builtins.readFile ./tree-sitter-scss.json);
   tree-sitter-erlang = builtins.fromJSON (builtins.readFile ./tree-sitter-erlang.json);
   tree-sitter-elixir = builtins.fromJSON (builtins.readFile ./tree-sitter-elixir.json);
+  tree-sitter-gleam = builtins.fromJSON (builtins.readFile ./tree-sitter-gleam.json);
   tree-sitter-surface = builtins.fromJSON (builtins.readFile ./tree-sitter-surface.json);
   tree-sitter-eex = builtins.fromJSON (builtins.readFile ./tree-sitter-eex.json);
   tree-sitter-heex = builtins.fromJSON (builtins.readFile ./tree-sitter-heex.json);
@@ -97,4 +98,5 @@
   tree-sitter-hack = builtins.fromJSON (builtins.readFile ./tree-sitter-hack.json);
   tree-sitter-norg = builtins.fromJSON (builtins.readFile ./tree-sitter-norg.json);
   tree-sitter-vala = builtins.fromJSON (builtins.readFile ./tree-sitter-vala.json);
+  tree-sitter-lalrpop = builtins.fromJSON (builtins.readFile ./tree-sitter-lalrpop.json);
 }
