@@ -13,7 +13,6 @@ in {
     plugins = with pkgs.vimPlugins; [
         # Basics
         vim-sensible
-        vim-commentary
 
         # File Tree
         nvim-web-devicons
@@ -46,6 +45,8 @@ in {
         nvim-ts-rainbow
         # Notify window
         nvim-notify
+        # Commenting
+        comment-nvim
 
         # Syntax highlighting
         (nvim-treesitter.withPlugins
