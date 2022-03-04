@@ -14,50 +14,70 @@ in {
         # Basics
         vim-sensible
         vim-commentary
-        vim-sneak
-        vim-nix
-        vim-polyglot
 
-        # UI
+        # File Tree
         nvim-web-devicons
         nvim-tree-lua
-        # galaxyline-nvim
+        # Status line
         feline-nvim
+        # Git info
         gitsigns-nvim
+        # Indent lines
         indent-blankline-nvim
+        # Auto close
         nvim-autopairs
+        # Fuzzy finder window
         telescope-nvim
+        # Diagnostics window
         trouble-nvim
+        # Keybindings window
         legendary-nvim
+        # Better native input/select windows
         dressing-nvim
+        # Tabs
         bufferline-nvim
+        # Smooth scrolling
         vim-smoothie
+        # Peek line search
         numb-nvim
+        # Fast navigation
         lightspeed-nvim
+        # Rainbow brackets
         nvim-ts-rainbow
-        null-ls-nvim
+        # Notify window
         nvim-notify
 
+        # Syntax highlighting
+        (nvim-treesitter.withPlugins
+          (plugins: pkgs.nvim-ts-grammars.allGrammars)
+        )
+        
         # LSP
         nvim-lspconfig
+        nvim-lsp-ts-utils
+        # Mostly for linting
+        null-ls-nvim
+        # LSP status window
+        fidget-nvim
+        # Code actions sign
+        nvim-lightbulb
+        # Highlight selected symbol
+        vim-illuminate
+
+        # Completions
         cmp-nvim-lsp
         cmp-buffer
         cmp-path
         cmp-cmdline
         cmp-nvim-lsp-signature-help
         nvim-cmp
+        lspkind-nvim
+
+        # Snippets
         cmp-vsnip
         vim-vsnip
-        lspkind-nvim
-        nvim-lsp-ts-utils
-        fidget-nvim
-        nvim-lightbulb
-        vim-illuminate
-        (nvim-treesitter.withPlugins
-          (plugins: pkgs.nvim-ts-grammars.allGrammars)
-        )
 
-        # DAP
+        # Debug adapter protocol
         nvim-dap
         telescope-dap-nvim
         nvim-dap-ui
