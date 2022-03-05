@@ -1,5 +1,4 @@
 require('settings')
--- require('galaxyline-config')
 require('feline-config')
 require('nvim-tree-config')
 require('indent-blankline-config')

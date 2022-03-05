@@ -13,6 +13,8 @@ in {
     plugins = with pkgs.vimPlugins; [
         # Basics
         vim-sensible
+        # Add syntax/detection/indentation for elixir
+        vim-elixir
 
         # File Tree
         nvim-web-devicons
@@ -75,8 +77,8 @@ in {
         lspkind-nvim
 
         # Snippets
-        cmp-vsnip
-        vim-vsnip
+        luasnip
+        cmp_luasnip
 
         # Debug adapter protocol
         nvim-dap
