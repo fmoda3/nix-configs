@@ -13,5 +13,14 @@ pkgs.python3Packages.buildPythonPackage rec {
     sha256 = "15pqwa1gjqszfx79yxymj23lq1219i78zqa40bwxnmmqdrgfxkq3";
   };
 
-  doCheck = false;
+  pythonImportsCheck = [
+    "typing"
+  ];
+
+  meta = with lib; {
+    description = "Library for checking types of objects";
+    homepage = "https://github.com/ramonhagenaars/typish";
+    license = licenses.mit;
+    maintainers = with maintainers; [ ];
+  };
 }

@@ -13,9 +13,18 @@ pkgs.python3Packages.buildPythonPackage rec {
     sha256 = "1v835vjfwiwfqqgdi76inlk0b9mqffyk8g5fbfrz165a0dblirsi";
   };
 
-  doCheck = false;
-
   propagatedBuildInputs = with pkgs.python3Packages; [
     typish
   ];
+
+  pythonImportsCheck = [
+    "jsons"
+  ];
+
+  meta = with lib; {
+    description = "Turn Python objects into dicts or json strings and back";
+    homepage = "https://github.com/ramonhagenaars/jsons";
+    license = licenses.mit;
+    maintainers = with maintainers; [ ];
+  };
 }
