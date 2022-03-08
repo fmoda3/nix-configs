@@ -5,8 +5,8 @@ vimUtils.buildVimPluginFrom2Nix {
     src = fetchFromGitHub {
       owner = "mrjones2014";
       repo = "legendary.nvim";
-      rev = "219a558d5a316ff8a70b4bdf98cb52345f1d0436";
-      sha256 = "0ylcpxq8m86jz6dm039rcmw70iynjla0vyvq3l9wmq9bavxh1cbj";
+      rev = "a06bffa8a1407ae846a580afc55227275a998892";
+      sha256 = "0prf8q20j2qy85mgvd2mf1i41nmkq9bnn4i6n70kpp4l9yhinbyp";
     };
     meta.homepage = "https://github.com/mrjones2014/legendary.nvim";
   }
