@@ -4,22 +4,19 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
+    flake-compat = {
+      url = "github:edolstra/flake-compat";
+      flake = false;
+    };
   };
 
-  outputs = { self, nixpkgs, flake-utils }:
+  outputs = { self, nixpkgs, flake-utils, flake-compat }:
     flake-utils.lib.eachDefaultSystem (system:
       let pkgs = nixpkgs.legacyPackages.${system};
       in {
-        devShell = pkgs.mkShell {
-          buildInputs = with pkgs; [
-            jdk11
-            gradle
-            java-language-server
-          ];
-          shellHook = ''
-            export JAVA_HOME=${pkgs.jdk11}
-            PATH="${pkgs.jdk11}/bin:$PATH"
-          '';
+        devShell = with pkgs; mkShell {
+          buildInputs = [ jdk11 ];
         };
-      });
+      }
+    );
 }
