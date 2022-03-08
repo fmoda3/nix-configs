@@ -88,6 +88,8 @@ nvim_lsp.elixirls.setup{
 }
 -- Erlang
 default_lsp_setup('erlangls')
+-- Haskell
+default_lsp_setup('hls')
 -- Java
 nvim_lsp.java_language_server.setup{
     cmd = { 'java-language-server' },

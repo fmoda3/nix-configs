@@ -101,6 +101,8 @@ in {
       beam.packages.erlang.elixir_ls
       # Erlang
       beam.packages.erlang.erlang-ls
+      # Haskell
+      haskellPackages.haskell-language-server
       # Java
       java-language-server
       # Kotlin
