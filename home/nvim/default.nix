@@ -13,8 +13,9 @@ in {
     plugins = with pkgs.vimPlugins; [
         # Basics
         vim-sensible
-        # Add syntax/detection/indentation for elixir
+        # Add syntax/detection/indentation for langs
         vim-elixir
+        vim-nix
 
         # File Tree
         nvim-web-devicons
