@@ -14,7 +14,7 @@ pkgs.python3Packages.buildPythonPackage rec {
   };
 
   pythonImportsCheck = [
-    "typing"
+    "typish"
   ];
 
   meta = with lib; {
