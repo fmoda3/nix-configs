@@ -17,7 +17,7 @@ local on_attach = function(client, bufnr)
         { 'gd', vim.lsp.buf.definition, description = 'LSP: Go to definition', opts = opts },
         { 'K', vim.lsp.buf.hover, description = 'LSP: Hover', opts = opts },
         { 'gi', vim.lsp.buf.implementation, description = 'LSP: Go to implementation', opts = opts },
-        { '<C-s>', vim.lsp.buf.signature_help, description = 'LSP: Signature help', opts = opts },
+        { '<C-s>', vim.lsp.buf.signature_help, description = 'LSP: Signature help', mode = { 'n', 'i' }, opts = opts },
         { '<space>wa', vim.lsp.buf.add_workspace_folder, description = 'LSP: Add workspace folder', opts = opts },
         { '<space>wr', vim.lsp.buf.remove_workspace_folder, description = 'LSP: Remove workspace folder', opts = opts },
         { '<space>wl', function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, description = 'LSP: List workspaces', opts = opts },
