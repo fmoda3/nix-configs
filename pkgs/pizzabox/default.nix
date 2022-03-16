@@ -6,17 +6,14 @@ pkgs.python3Packages.buildPythonPackage rec {
 
   src = fetchGit {
     url = "git@github.com:toasttab/pizzabox.git";
-    rev = "d1f31a1017f085af1057b1d1ae1dca4906927d97";
+    rev = "f56e3fafef3e453ef5b111b27ca040c34fbfd12c";
     ref = "main";
   };
 
-  buildInputs = with pkgs; [
-    terminal-notifier
-  ];
-
   doCheck = false;
 
-  propagatedBuildInputs = with pkgs.python3Packages; [
+  propagatedBuildInputs = with pkgs; with python3Packages; [
+    terminal-notifier
     click
     pyyaml
     requests
