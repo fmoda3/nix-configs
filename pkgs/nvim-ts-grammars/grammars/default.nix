@@ -41,10 +41,12 @@
   tree-sitter-ocamllex = builtins.fromJSON (builtins.readFile ./tree-sitter-ocamllex.json);
   tree-sitter-swift = builtins.fromJSON (builtins.readFile ./tree-sitter-swift.json);
   tree-sitter-c_sharp = builtins.fromJSON (builtins.readFile ./tree-sitter-c_sharp.json);
+  tree-sitter-todotxt = builtins.fromJSON (builtins.readFile ./tree-sitter-todotxt.json);
   tree-sitter-typescript = builtins.fromJSON (builtins.readFile ./tree-sitter-typescript.json);
   tree-sitter-tsx = builtins.fromJSON (builtins.readFile ./tree-sitter-tsx.json);
   tree-sitter-scala = builtins.fromJSON (builtins.readFile ./tree-sitter-scala.json);
   tree-sitter-supercollider = builtins.fromJSON (builtins.readFile ./tree-sitter-supercollider.json);
+  tree-sitter-slint = builtins.fromJSON (builtins.readFile ./tree-sitter-slint.json);
   tree-sitter-haskell = builtins.fromJSON (builtins.readFile ./tree-sitter-haskell.json);
   tree-sitter-hcl = builtins.fromJSON (builtins.readFile ./tree-sitter-hcl.json);
   tree-sitter-markdown = builtins.fromJSON (builtins.readFile ./tree-sitter-markdown.json);

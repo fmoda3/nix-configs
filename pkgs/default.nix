@@ -11,6 +11,5 @@ final: prev:
   vimPlugins = prev.vimPlugins // {
     cmp-nvim-lsp-signature-help = prev.callPackage ./cmp-nvim-lsp-signature-help { };
     legendary-nvim = prev.callPackage ./legendary-nvim { };
-    nvim-autopairs = prev.callPackage ./nvim-autopairs { };
   };
 }
