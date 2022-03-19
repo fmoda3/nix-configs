@@ -5,10 +5,11 @@
   };
 
   home = {
-    packages = [
-      pkgs.awscli
-      pkgs.oktoast
-      pkgs.pizzabox
+    packages = with pkgs; [
+      awscli
+      oktoast
+      pizzabox
+      heroku
     ];
   };
 }
