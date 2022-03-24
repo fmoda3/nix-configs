@@ -121,6 +121,9 @@ in {
       nodePackages.typescript-language-server
       # Web (ESLint, HTML, CSS, JSON)
       nodePackages.vscode-langservers-extracted
+      # Telescope tools
+      ripgrep
+      fd
     ];
 
     extraConfig = ''

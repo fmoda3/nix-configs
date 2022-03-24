@@ -62,6 +62,9 @@
       # START:pipe-pane
       bind P pipe-pane -o "cat >>~/#W.log" \; display "Toggled logging to ~/#W.log"
       # END:pipe-pane
+
+      # Neovim color compatibility
+      set-option -sa terminal-overrides ',xterm-256color:RGB'
     '';
   };
 }
