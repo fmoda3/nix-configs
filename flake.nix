@@ -90,7 +90,7 @@
           specialArgs = { inherit inputs nixpkgs; };
         };
         cicucci-laptop = darwin.lib.darwinSystem {
-          system = "x86_64-darwin";
+          system = "aarch64-darwin";
           modules = darwinModules {
             user = "fmoda3";
             host = "cicucci-laptop";
