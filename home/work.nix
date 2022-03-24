@@ -12,4 +12,8 @@
       heroku
     ];
   };
+
+  programs.zsh.localVariables = {
+    TOAST_GIT = "/Users/frank/Development";
+  };
 }
