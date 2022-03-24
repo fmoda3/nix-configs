@@ -13,7 +13,7 @@
     ];
   };
 
-  programs.zsh.localVariables = {
+  programs.zsh.sessionVariables = {
     TOAST_GIT = "/Users/frank/Development";
   };
 }
