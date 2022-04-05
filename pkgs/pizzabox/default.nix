@@ -6,7 +6,7 @@ pkgs.python3Packages.buildPythonPackage rec {
 
   src = fetchGit {
     url = "git@github.com:toasttab/pizzabox.git";
-    rev = "91cb7a337bb691154236c855c2b21e40b481d04e";
+    rev = "69fb13fe8bc3b4736f20fda34f98fb158538c2df";
     ref = "main";
   };
 
@@ -14,6 +14,7 @@ pkgs.python3Packages.buildPythonPackage rec {
 
   propagatedBuildInputs = with pkgs; with python3Packages; [
     terminal-notifier
+    rsync
     click
     pyyaml
     requests
@@ -21,6 +22,7 @@ pkgs.python3Packages.buildPythonPackage rec {
     pyperclip
     jsons
     docker
+    watchdog
   ];
 
 }
