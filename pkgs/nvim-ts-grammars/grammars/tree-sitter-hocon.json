@@ -1,9 +1,9 @@
 {
   "url": "https://github.com/antosha417/tree-sitter-hocon",
-  "rev": "5b4688cc57c773e69fe7dfc3f6b83c054557f4f1",
-  "date": "2022-01-15T21:15:26+02:00",
-  "path": "/nix/store/vbhlrxj08831kn3qz86g2j7dplkyx5nb-tree-sitter-hocon-5b4688c",
-  "sha256": "1id5favhkdcq591nz31lxbkkcbzh80sjpza9ya566rj28nhxrh9m",
+  "rev": "bb412e2633f4a3611a4e16efe58d917093bb4782",
+  "date": "2022-03-21T19:26:44+02:00",
+  "path": "/nix/store/x9ww0ann9igxf2jvvjk6405v3gxv5mrd-tree-sitter-hocon-bb412e2",
+  "sha256": "1i35afnnvkr1i0zvi81npdhvbdk1b432rgllb4iib7hn8ff76dds",
   "fetchLFS": false,
   "fetchSubmodules": false,
   "deepClone": false,

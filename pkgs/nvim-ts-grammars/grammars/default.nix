@@ -101,4 +101,6 @@
   tree-sitter-norg = builtins.fromJSON (builtins.readFile ./tree-sitter-norg.json);
   tree-sitter-vala = builtins.fromJSON (builtins.readFile ./tree-sitter-vala.json);
   tree-sitter-lalrpop = builtins.fromJSON (builtins.readFile ./tree-sitter-lalrpop.json);
+  tree-sitter-solidity = builtins.fromJSON (builtins.readFile ./tree-sitter-solidity.json);
+  tree-sitter-cooklang = builtins.fromJSON (builtins.readFile ./tree-sitter-cooklang.json);
 }

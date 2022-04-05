@@ -1,0 +1,11 @@
+{
+  "url": "https://github.com/addcninblue/tree-sitter-cooklang",
+  "rev": "5e113412aadb78955c27010daa4dbe1d202013cf",
+  "date": "2022-03-16T19:21:44-07:00",
+  "path": "/nix/store/822asmgwalrs2c48v9kfc4s69cn4rf1c-tree-sitter-cooklang-5e11341",
+  "sha256": "1d8zya33mxsdp1svmhm47a17mndj5pvmw9wi2kdqxpkysf0pjbip",
+  "fetchLFS": false,
+  "fetchSubmodules": false,
+  "deepClone": false,
+  "leaveDotGit": false
+}
