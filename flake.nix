@@ -101,15 +101,7 @@
           system = "aarch64-darwin";
           modules = darwinModules {
             user = "frank";
-            host = "N79JL2WX5C";
-          };
-          specialArgs = { inherit inputs nixpkgs; };
-        };
-        work-laptop-old = darwin.lib.darwinSystem {
-          system = "aarch64-darwin";
-          modules = darwinModules {
-            user = "frank";
-            host = "LWCQT4R7P9";
+            host = "work-laptop";
           };
           specialArgs = { inherit inputs nixpkgs; };
         };
