@@ -8,6 +8,7 @@ final: prev:
     jsons = prev.callPackage ./jsons { };
     typish = prev.callPackage ./typish { };
   };
+  toast-services = prev.callPackage ./toast-services { };
   vimPlugins = prev.vimPlugins // {
     cmp-nvim-lsp-signature-help = prev.callPackage ./cmp-nvim-lsp-signature-help { };
     legendary-nvim = prev.callPackage ./legendary-nvim { };

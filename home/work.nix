@@ -9,6 +9,7 @@
       postgresql
       awscli
       oktoast
+      toast-services
       pizzabox
       heroku
     ];
