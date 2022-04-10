@@ -1,11 +1,15 @@
-{ lib, pkgs, ... }:
+{ lib
+, buildPythonPackage
+, fetchPypi
+, typish
+}:
 
-pkgs.python3Packages.buildPythonPackage rec {
+buildPythonPackage rec {
   pname = "jsons";
   version = "1.6.1";
   format = "wheel";
 
-  src = pkgs.python3Packages.fetchPypi {
+  src = fetchPypi {
     inherit pname version;
     format = "wheel";
     dist = "py3";
@@ -13,7 +17,7 @@ pkgs.python3Packages.buildPythonPackage rec {
     sha256 = "1v835vjfwiwfqqgdi76inlk0b9mqffyk8g5fbfrz165a0dblirsi";
   };
 
-  propagatedBuildInputs = with pkgs.python3Packages; [
+  propagatedBuildInputs = [
     typish
   ];
 

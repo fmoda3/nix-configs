@@ -1,16 +1,21 @@
 final: prev:
 
+with prev;
 {
-  nvim-ts-grammars = prev.callPackage ./nvim-ts-grammars { };
-  oktoast = prev.callPackage ./oktoast { };
-  pizzabox = prev.callPackage ./pizzabox { };
-  python3Packages = prev.python3Packages // {
-    jsons = prev.callPackage ./jsons { };
-    typish = prev.callPackage ./typish { };
+  nvim-ts-grammars = callPackage ./nvim-ts-grammars { };
+  oktoast = callPackage ./oktoast { };
+  pizzabox = callPackage ./pizzabox { };
+  python3Packages = python3Packages // {
+    jsons = callPackage ./jsons { };
+    typish = callPackage ./typish { };
   };
   toast-services = prev.callPackage ./toast-services { };
-  vimPlugins = prev.vimPlugins // {
-    cmp-nvim-lsp-signature-help = prev.callPackage ./cmp-nvim-lsp-signature-help { };
-    legendary-nvim = prev.callPackage ./legendary-nvim { };
+  vimPlugins = vimPlugins // {
+    cmp-nvim-lsp-signature-help = callPackage ./cmp-nvim-lsp-signature-help {
+      inherit (vimUtils) buildVimPluginFrom2Nix;
+    };
+    legendary-nvim = callPackage ./legendary-nvim {
+      inherit (vimUtils) buildVimPluginFrom2Nix;
+    };
   };
 }

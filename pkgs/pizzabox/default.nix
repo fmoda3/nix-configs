@@ -1,6 +1,18 @@
-{ lib, pkgs, ... }:
+{ buildPythonPackage
+, fetchGit
+, terminal-notifier
+, rsync
+, click
+, pyyaml
+, requests
+, rich
+, pyperclip
+, jsons
+, docker
+, watchdog
+}:
 
-pkgs.python3Packages.buildPythonPackage rec {
+buildPythonPackage rec {
   pname = "pizzabox";
   version = "0.1.0";
 
@@ -12,7 +24,7 @@ pkgs.python3Packages.buildPythonPackage rec {
 
   doCheck = false;
 
-  propagatedBuildInputs = with pkgs; with python3Packages; [
+  propagatedBuildInputs = [
     terminal-notifier
     rsync
     click

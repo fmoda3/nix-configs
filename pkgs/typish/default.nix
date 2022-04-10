@@ -1,11 +1,14 @@
-{ lib, pkgs, ... }:
+{ lib
+, buildPythonPackage
+, fetchPypi
+}:
 
-pkgs.python3Packages.buildPythonPackage rec {
+buildPythonPackage rec {
   pname = "typish";
   version = "1.9.3";
   format = "wheel";
 
-  src = pkgs.python3Packages.fetchPypi {
+  src = fetchPypi {
     inherit pname version;
     format = "wheel";
     dist = "py3";
