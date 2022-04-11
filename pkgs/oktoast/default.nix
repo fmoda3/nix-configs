@@ -1,14 +1,5 @@
-{ mkDerivation
-, pkgs
-, makeWrapper
-, makeBinPath
-, writeShellScriptBin
-, saml2aws
-, gnused
-, awscli
-}:
-
-mkDerivation {
+{ stdenv, fetchFromGitHub, pkgs, lib }:
+stdenv.mkDerivation {
   pname = "oktoast";
   version = "1.0";
 
@@ -18,7 +9,7 @@ mkDerivation {
   };
 
   nativeBuildInputs = [
-    makeWrapper
+    pkgs.makeWrapper
   ];
 
   installPhase = ''
@@ -28,11 +19,11 @@ mkDerivation {
 
   postFixup = ''
     wrapProgram $out/bin/oktoast \
-      --prefix PATH : ${makeBinPath [
-        saml2aws
+      --prefix PATH : ${lib.makeBinPath [
+        pkgs.saml2aws
         # gnused installs "sed", but oktoast needs "gsed"
-        (writeShellScriptBin "gsed" "exec -a $0 ${gnused}/bin/sed \"$@\"")
-        awscli
+        (pkgs.writeShellScriptBin "gsed" "exec -a $0 ${pkgs.gnused}/bin/sed \"$@\"")
+        pkgs.awscli
       ]}
   '';
 }

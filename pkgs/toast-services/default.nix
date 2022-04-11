@@ -1,11 +1,5 @@
-{ mkDerivation
-, fetchFromGitHub
-, makeWrapper
-, makeBinPath
-, awscli
-}:
-
-mkDerivation {
+{ stdenv, fetchFromGitHub, pkgs, lib }:
+stdenv.mkDerivation {
   pname = "toast-services";
   version = "1.0";
 
@@ -16,7 +10,7 @@ mkDerivation {
   };
 
   nativeBuildInputs = [
-    makeWrapper
+    pkgs.makeWrapper
   ];
 
   installPhase = ''
@@ -31,12 +25,12 @@ mkDerivation {
 
   postFixup = ''
     wrapProgram $out/bin/deploy_g2_service \
-      --prefix PATH : ${makeBinPath [ awscli ]}
+      --prefix PATH : ${lib.makeBinPath [ pkgs.awscli ]}
     wrapProgram $out/bin/deploy_spa \
-      --prefix PATH : ${makeBinPath [ awscli ]}
+      --prefix PATH : ${lib.makeBinPath [ pkgs.awscli ]}
     wrapProgram $out/bin/destroy_g2_service \
-      --prefix PATH : ${makeBinPath [ awscli ]}
+      --prefix PATH : ${lib.makeBinPath [ pkgs.awscli ]}
     wrapProgram $out/bin/destroy_spa \
-      --prefix PATH : ${makeBinPath [ awscli ]}
+      --prefix PATH : ${lib.makeBinPath [ pkgs.awscli ]}
   '';
 }
