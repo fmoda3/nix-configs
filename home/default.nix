@@ -11,10 +11,12 @@
 
     packages = with pkgs; [
       # command line utilities
+      ack
       curl
       htop
       httpie
       neofetch
+      tldr
       wget
 
       # Fonts
