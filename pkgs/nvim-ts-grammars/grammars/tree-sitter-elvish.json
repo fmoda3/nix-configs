@@ -1,0 +1,11 @@
+{
+  "url": "https://github.com/ckafi/tree-sitter-elvish",
+  "rev": "e50787cadd3bc54f6d9c0704493a79078bb8a4e5",
+  "date": "2022-03-26T17:57:15+01:00",
+  "path": "/nix/store/n5nfg1bqwpxsy3zk06nzrp35d6qq93dy-tree-sitter-elvish-e50787c",
+  "sha256": "1xw9mqq3p64lgli6nvlavrrlg29nfj2fbg7rr2jw1jcjk8lgxv1p",
+  "fetchLFS": false,
+  "fetchSubmodules": false,
+  "deepClone": false,
+  "leaveDotGit": false
+}

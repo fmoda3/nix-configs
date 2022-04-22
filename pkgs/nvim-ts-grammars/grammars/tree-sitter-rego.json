@@ -1,0 +1,11 @@
+{
+  "url": "https://github.com/FallenAngel97/tree-sitter-rego",
+  "rev": "858ca3013da4d50ea1bdb32162a2bfb43641b422",
+  "date": "2022-04-04T09:52:25+03:00",
+  "path": "/nix/store/v3s74nsnvi85nxabx1vxp1xmy7508f7f-tree-sitter-rego-858ca30",
+  "sha256": "0cg7znpgnqv3w99ssax4hxcyhfhxhh5bk2xnnqry665nlrbba6y9",
+  "fetchLFS": false,
+  "fetchSubmodules": false,
+  "deepClone": false,
+  "leaveDotGit": false
+}

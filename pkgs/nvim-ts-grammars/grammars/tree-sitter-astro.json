@@ -1,0 +1,11 @@
+{
+  "url": "https://github.com/virchau13/tree-sitter-astro",
+  "rev": "6602ccbf9a5f79845dad62f1e118e07f97e3533c",
+  "date": "2022-04-08T17:00:02+08:00",
+  "path": "/nix/store/10jdpmh8w12yj8rbhb6c32nrbr98qwrn-tree-sitter-astro-6602ccb",
+  "sha256": "0cnvrrv7lw5wj0k2armg2hm8f7swwraj6zg3n5qria963wh8hwy4",
+  "fetchLFS": false,
+  "fetchSubmodules": false,
+  "deepClone": false,
+  "leaveDotGit": false
+}

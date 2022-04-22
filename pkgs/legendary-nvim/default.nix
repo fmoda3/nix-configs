@@ -1,12 +1,12 @@
 { fetchFromGitHub, vimUtils, ... }:
 vimUtils.buildVimPluginFrom2Nix {
     pname = "legendary-nvim";
-    version = "2022-04-04";
+    version = "2022-04-19";
     src = fetchFromGitHub {
       owner = "mrjones2014";
       repo = "legendary.nvim";
-      rev = "c70d8cd627c26f169c839e4b089c0b4dc53fbe13";
-      sha256 = "1a3bvh5ybifrsinsly0pz4p2bxs3ssh9883g8hncvdv8z5lr3qj7";
+      rev = "77b7bc365c2470aff48b7398eb940e8c88789af3";
+      sha256 = "0wxfwqs50jg59qf4lrbkbxpsh4f1kswmcfd01kvjz6wpnfg6c1b1";
     };
     meta.homepage = "https://github.com/mrjones2014/legendary.nvim";
   }

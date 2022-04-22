@@ -1,7 +1,7 @@
 { config, pkgs, ...}:
 {
    fonts = {
-     enableFontDir = true;
+     fontDir.enable = true;
      # fonts declared with home-manager
      # fonts = with pkgs; [
      #   nerdfonts

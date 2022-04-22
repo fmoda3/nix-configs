@@ -1,7 +1,8 @@
 { config, pkgs, lib, ... }:
 let
   vimSettings = builtins.readFile ./settings.vim;
-  python-debug = pkgs.python.withPackages (p: with p; [debugpy]);
+  # Remove stable when 1.6.0 is no longer broken
+  python-debug = pkgs.stable.python3.withPackages (p: with p; [debugpy]);
 in {
   programs.neovim = {
     package = pkgs.neovim-nightly;
