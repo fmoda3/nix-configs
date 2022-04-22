@@ -14,7 +14,7 @@
        launchanim = true;
        show-process-indicators = true;
        # tilesize = 48;
-       mru-spaces = false;
+       mru-spaces = true;
      };
      finder = {
        # AppleShowAllExtensions = true;
