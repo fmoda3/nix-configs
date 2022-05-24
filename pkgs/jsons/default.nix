@@ -2,7 +2,7 @@
 
 pkgs.python3Packages.buildPythonPackage rec {
   pname = "jsons";
-  version = "1.6.1";
+  version = "1.6.2";
   format = "wheel";
 
   src = pkgs.python3Packages.fetchPypi {
@@ -10,7 +10,7 @@ pkgs.python3Packages.buildPythonPackage rec {
     format = "wheel";
     dist = "py3";
     python = "py3";
-    sha256 = "1v835vjfwiwfqqgdi76inlk0b9mqffyk8g5fbfrz165a0dblirsi";
+    sha256 = "1zb8m90lzpjhjkgrmq7gk4pndv58hk5qz17djnxghgqnkg9lkk7m";
   };
 
   propagatedBuildInputs = with pkgs.python3Packages; [
