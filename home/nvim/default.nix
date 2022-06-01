@@ -2,7 +2,7 @@
 let
   vimSettings = builtins.readFile ./settings.vim;
   # Remove stable when 1.6.0 is no longer broken
-  python-debug = pkgs.stable.python3.withPackages (p: with p; [debugpy]);
+  # python-debug = pkgs.python310.withPackages (p: with p; [debugpy]);
 in {
   programs.neovim = {
     package = pkgs.neovim-nightly;
@@ -116,7 +116,7 @@ in {
       statix
       # Python
       pyright
-      python-debug
+      # python-debug
       black
       # Typescript
       nodePackages.typescript-language-server
@@ -129,9 +129,9 @@ in {
 
     extraConfig = ''
       let g:elixir_ls_home = "${pkgs.beam.packages.erlang.elixir_ls}"
-      let g:python_debug_home = "${python-debug}"
       :luafile ~/.config/nvim/lua/init.lua
     '';
+    # let g:python_debug_home = "${python-debug}"
   };
 
   xdg.configFile.nvim = {

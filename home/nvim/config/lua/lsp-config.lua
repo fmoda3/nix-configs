@@ -34,7 +34,7 @@ local on_attach = function(client, bufnr)
         { '[u', function() require('illuminate').next_reference({ reverse = true, wrap = true }) end, description = "Illuminate: Previous reference", opts = opts }
     })
 
-    -- if client.resolved_capabilities.document_formatting then
+    -- if client.server_capabilities.document_formatting then
     --     vim.cmd([[
     --         augroup LspFormatting
     --             autocmd! * <buffer>
@@ -137,8 +137,8 @@ nvim_lsp.rnix.setup{
         on_attach(client, bufnr)
 
         -- Let statix format
-        client.resolved_capabilities.document_formatting = false
-        client.resolved_capabilities.document_range_formatting = false
+        client.server_capabilities.document_formatting = false
+        client.server_capabilities.document_range_formatting = false
     end
 }
 -- Python
@@ -150,8 +150,8 @@ nvim_lsp.tsserver.setup{
         on_attach(client, bufnr)
 
         -- Let eslint format
-        client.resolved_capabilities.document_formatting = false
-        client.resolved_capabilities.document_range_formatting = false
+        client.server_capabilities.document_formatting = false
+        client.server_capabilities.document_range_formatting = false
 
         local ts_utils = require("nvim-lsp-ts-utils")
         ts_utils.setup({

@@ -1,0 +1,11 @@
+{
+  "url": "https://github.com/mitchellh/tree-sitter-proto",
+  "rev": "42d82fa18f8afe59b5fc0b16c207ee4f84cb185f",
+  "date": "2021-06-12T09:29:04-07:00",
+  "path": "/nix/store/nrykfg3f7v3gpkxj8fzj4ibmzyzachsp-tree-sitter-proto-42d82fa",
+  "sha256": "001y2z2683fagryqj5f0gs3rcgx2nbw3x3r9afydhss80ihb8zvi",
+  "fetchLFS": false,
+  "fetchSubmodules": false,
+  "deepClone": false,
+  "leaveDotGit": false
+}

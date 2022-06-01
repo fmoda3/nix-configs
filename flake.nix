@@ -4,8 +4,8 @@
     # Package sets
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixpkgs-master.url = "github:nixos/nixpkgs/master";
-    nixpkgs-stable-darwin.url = "github:nixos/nixpkgs/nixpkgs-21.11-darwin";
-    nixos-stable.url = "github:nixos/nixpkgs/nixos-21.11";
+    nixpkgs-stable-darwin.url = "github:nixos/nixpkgs/nixpkgs-22.05-darwin";
+    nixos-stable.url = "github:nixos/nixpkgs/nixos-22.05";
   
     # Environment/system management
     darwin.url = "github:lnl7/nix-darwin";
@@ -23,6 +23,7 @@
         config = {
           allowUnfree = true;
           allowUnsupportedSystem = true;
+          allowBroken = true; # Delete when pyopenssl fixed for M1 machines
         };
         overlays = [
           # "pkgs" currently points to unstable

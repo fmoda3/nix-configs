@@ -16,7 +16,8 @@ let
         { tree-sitter-ocaml = grammars'.tree-sitter-ocaml // { location = "ocaml"; }; } //
         { tree-sitter-ocaml_interface = grammars'.tree-sitter-ocaml // { location = "interface"; }; } //
         { tree-sitter-typescript = grammars'.tree-sitter-typescript // { location = "typescript"; }; } //
-        { tree-sitter-tsx = grammars'.tree-sitter-typescript // { location = "tsx"; }; };
+        { tree-sitter-tsx = grammars'.tree-sitter-typescript // { location = "tsx"; }; } //
+        { tree-sitter-v = grammars'.tree-sitter-v // { location = "tree_sitter_v"; }; };
     in
     lib.mapAttrs change grammars;
   allGrammars = builtins.attrValues builtGrammars;

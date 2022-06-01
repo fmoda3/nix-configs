@@ -1,0 +1,11 @@
+{
+  "url": "https://github.com/vlang/vls",
+  "rev": "b1e06022eea54dc95b3d45c3aeb4c005aff5dce2",
+  "date": "2022-05-29T11:24:02+08:00",
+  "path": "/nix/store/k369dqiaxr9j6xzk776vg7r0cf3s2nbk-vls-b1e0602",
+  "sha256": "19wdc2fhwdbzjc0pacm8wyzw0kbg6r11hjjfpl7n5z5mfh2jc8wn",
+  "fetchLFS": false,
+  "fetchSubmodules": false,
+  "deepClone": false,
+  "leaveDotGit": false
+}
