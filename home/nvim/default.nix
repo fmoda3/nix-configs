@@ -17,6 +17,7 @@ in {
         # Add syntax/detection/indentation for langs
         vim-elixir
         vim-nix
+        kotlin-vim
 
         # File Tree
         nvim-web-devicons
