@@ -7,7 +7,7 @@
   home = {
     packages = with pkgs; [
       postgresql
-      awscli
+      awscli2
       oktoast
       toast-services
       pizzabox
