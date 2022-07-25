@@ -13,6 +13,8 @@ let
         };
       grammars' = import ./grammars;
       grammars = grammars' //
+        { tree-sitter-markdown = grammars'.tree-sitter-markdown // { location = "tree-sitter-markdown"; }; } //
+        { tree-sitter-markdown_inline = grammars'.tree-sitter-markdown_inline // { location = "tree-sitter-markdown-inline"; }; } //
         { tree-sitter-ocaml = grammars'.tree-sitter-ocaml // { location = "ocaml"; }; } //
         { tree-sitter-ocaml_interface = grammars'.tree-sitter-ocaml // { location = "interface"; }; } //
         { tree-sitter-typescript = grammars'.tree-sitter-typescript // { location = "typescript"; }; } //

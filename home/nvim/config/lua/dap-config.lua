@@ -25,17 +25,25 @@ require('legendary').bind_keymaps({
 })
 
 require("dapui").setup({
-    sidebar = {
-        elements = {
-            { id = "watches", size = 00.25 },
-            { id = "stacks", size = 0.25 },
-            { id = "breakpoints", size = 0.25 },
-            { id = "scopes", size = 0.25 }
+    layouts = {
+        {
+            elements = {
+                'watches',
+                'stacks',
+                'breakpoints',
+                'scopes'
+            },
+            size = 60,
+            position = 'left'
         },
-        size = 60
-    },
-    tray = {
-        size = 15
+        {
+            elements = {
+                'repl',
+                'console'
+            },
+            size = 15,
+            position = 'bottom'
+        }
     }
 })
 require("nvim-dap-virtual-text").setup()

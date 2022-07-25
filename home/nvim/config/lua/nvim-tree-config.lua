@@ -4,7 +4,7 @@ require'nvim-tree'.setup {
     open_on_setup       = false,
     ignore_ft_on_setup  = {},
 
-    update_to_buf_dir   = {
+    hijack_directories   = {
         enable = true,
         auto_open = true,
     },
@@ -34,10 +34,14 @@ require'nvim-tree'.setup {
         width = 25,
         height = 30,
         side = 'left',
-        auto_resize = true,
         mappings = {
             custom_only = false,
             list = {}
+        }
+    },
+    actions = {
+        open_file = {
+            resize_window = true
         }
     }
 }
