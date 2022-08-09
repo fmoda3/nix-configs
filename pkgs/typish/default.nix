@@ -1,17 +1,25 @@
-{ lib, pkgs, ... }:
+{ lib, pkgs, fetchFromGitHub, ... }:
 
 pkgs.python3Packages.buildPythonPackage rec {
   pname = "typish";
   version = "1.9.3";
-  format = "wheel";
 
-  src = pkgs.python3Packages.fetchPypi {
-    inherit pname version;
-    format = "wheel";
-    dist = "py3";
-    python = "py3";
-    sha256 = "15pqwa1gjqszfx79yxymj23lq1219i78zqa40bwxnmmqdrgfxkq3";
+  src = fetchFromGitHub {
+    owner = "ramonhagenaars";
+    repo = "typish";
+    rev = "7875850f55e2df8a9e2426e2d484ab618e347c7f";
+    sha256 = "0mc5hw92f15mwd92rb2q9isc4wi7xq76449w7ph5bskcspas0wrf";
   };
+
+  checkInputs = with pkgs.python3Packages; [
+    numpy
+    pytestCheckHook
+  ];
+
+  disabledTestPaths = [
+    # Requires old version of nptyping which circular depends on typish
+    "tests/functions/test_instance_of.py"
+  ];
 
   pythonImportsCheck = [
     "typish"

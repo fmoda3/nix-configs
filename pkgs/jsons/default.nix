@@ -1,20 +1,25 @@
-{ lib, pkgs, ... }:
+{ lib, pkgs, fetchFromGitHub, ... }:
 
 pkgs.python3Packages.buildPythonPackage rec {
   pname = "jsons";
   version = "1.6.3";
-  format = "wheel";
 
-  src = pkgs.python3Packages.fetchPypi {
-    inherit pname version;
-    format = "wheel";
-    dist = "py3";
-    python = "py3";
-    sha256 = "00aly5f4pzhv9n9jc9h922ghh4q5j1ncr9kw7j2a6wkg64cqjzzh";
+  src = fetchFromGitHub {
+    owner = "ramonhagenaars";
+    repo = "jsons";
+    rev = "0sdwc57f3lwzhbcapjdbay9f8rn65rlspxa67a2i5apcgg403qpc";
+    sha256 = "0sdwc57f3lwzhbcapjdbay9f8rn65rlspxa67a2i5apcgg403qpc";
   };
 
   propagatedBuildInputs = with pkgs.python3Packages; [
     typish
+  ];
+
+  checkInputs = with pkgs.python3Packages; [
+    attrs
+    tzdata
+  ] ++ lib.optionals pkgs.python3Packages.isPy36 [
+    dataclasses
   ];
 
   pythonImportsCheck = [
