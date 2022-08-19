@@ -13,20 +13,14 @@
       # command line utilities
       ack
       curl
+      dig
       htop
       httpie
       neofetch
       tldr
       wget
-
-      # Fonts
-      nerdfonts
-      cozette
-      scientifica
     ];
   };
-
-  fonts.fontconfig.enable = true;
 
   imports = [
     # ./kitty

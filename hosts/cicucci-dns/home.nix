@@ -1,6 +1,6 @@
 { config, pkgs, ... }: {
   imports = [
-    ../../home/headless.nix
+    ../../home
     ../../home/personal.nix
   ];
 }
