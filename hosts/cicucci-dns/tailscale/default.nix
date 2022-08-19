@@ -29,11 +29,13 @@
     '';
   };
 
-  firewall = {
-    allowedTCPPorts = [ 22 ];
-    allowedUDPPorts = [ config.services.tailscale.port ];
-    trustedInterfaces = [ "tailscale0" ];
-    checkReversePath = "loose";
+  networking = {
+    firewall = {
+      allowedTCPPorts = [ 22 ];
+      allowedUDPPorts = [ config.services.tailscale.port ];
+      trustedInterfaces = [ "tailscale0" ];
+      checkReversePath = "loose";
+    };
   };
 
   boot.kernel.sysctl = {
