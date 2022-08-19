@@ -130,15 +130,6 @@
           };
           specialArgs = { inherit inputs nixpkgs; };
         };
-        ## Example nixos instance
-        # nano = nixpkgs.lib.nixosSystem {
-        #   system = "x86_64-linux";
-        #   modules = nixosModules {
-        #     user = "fmoda3";
-        #     host = "nano";
-        #   };
-        #   specialArgs = { inherit inputs nixpkgs; };
-        # };
       };
     };
 }
