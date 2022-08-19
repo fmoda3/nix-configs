@@ -13,6 +13,7 @@
       # command line utilities
       ack
       curl
+      dig
       htop
       httpie
       neofetch

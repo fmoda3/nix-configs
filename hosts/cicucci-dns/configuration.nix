@@ -64,6 +64,7 @@
           "2620:fe::fe:10"
         ];
         upstream_dns = [ "127.0.0.1:5335" ];
+        enable_dnssec = true;
       };
     };
   };
@@ -85,7 +86,7 @@
         use-caps-for-id = "no";
         edns-buffer-size = 1232;
         prefetch = "yes";
-        num-threads = 1;
+        num-threads = 4;
         so-rcvbuf = "1m";
         private-address = [
           "192.168.0.0/16"
