@@ -70,7 +70,13 @@
         {
           nixpkgs = nixpkgsConfig;
           # `home-manager` config
-          users.users.${user}.home = "/home/${user}";
+          users.users.${user} = {
+            home = "/home/${user}";
+            isNormalUser = true;
+            group = "fmoda3";
+            extraGroups = [ "wheel" ];
+          };
+          users.groups.${user} = {};
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
@@ -115,7 +121,15 @@
           specialArgs = { inherit inputs nixpkgs; };
         };
       };
-      nixosConfigurations = { 
+      nixosConfigurations = {
+        cicucci-dns = nixpkgs.lib.nixosSystem {
+          system = "aarch64-linux";
+          modules = nixosModules {
+            user = "fmoda3";
+            host = "cicucci-dns";
+          };
+          specialArgs = { inherit inputs nixpkgs; };
+        };
         ## Example nixos instance
         # nano = nixpkgs.lib.nixosSystem {
         #   system = "x86_64-linux";

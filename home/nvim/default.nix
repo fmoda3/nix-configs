@@ -108,7 +108,7 @@ in {
       # Java
       java-language-server
       # Kotlin
-      kotlin-language-server
+      # kotlin-language-server
       # Lua
       sumneko-lua-language-server
       # Nix
