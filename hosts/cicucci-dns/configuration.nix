@@ -43,5 +43,13 @@
     '';
   };
 
+  programs.zsh = {
+    enable = true;
+    enableCompletion = false;
+    promptInit = "";
+  };
+
+  users.defaultUserShell = pkgs.zsh;
+
   system.stateVersion = "22.05";
 }

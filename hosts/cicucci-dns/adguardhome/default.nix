@@ -14,7 +14,11 @@
           "2620:fe::10"
           "2620:fe::fe:10"
         ];
-        upstream_dns = [ "127.0.0.1:5335" ];
+        upstream_dns = [
+          "1.1.1.1"
+          "1.0.0.1"
+        ];
+        # upstream_dns = [ "127.0.0.1:5335" ];
         enable_dnssec = true;
       };
     };
