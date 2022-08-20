@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }:
 {
-	services.adguardhome = {
+  services.adguardhome = {
     enable = true;
     host = "0.0.0.0";
     port = 80;
@@ -9,17 +9,17 @@
         bind_host = "0.0.0.0";
         bind_hosts = [ "0.0.0.0" ];
         bootstrap_dns = [
-          "9.9.9.10"
-          "149.112.112.10"
-          "2620:fe::10"
-          "2620:fe::fe:10"
+          "1.1.1.1"
+          "1.0.0.1"
         ];
         upstream_dns = [
           "1.1.1.1"
           "1.0.0.1"
         ];
+        # bootstrap_dns [ "127.0.0.1:5335" ];
         # upstream_dns = [ "127.0.0.1:5335" ];
         enable_dnssec = true;
+        ratelimit = 0;
       };
     };
   };
