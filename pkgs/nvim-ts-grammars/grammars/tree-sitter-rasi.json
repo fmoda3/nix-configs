@@ -1,9 +1,9 @@
 {
   "url": "https://github.com/Fymyte/tree-sitter-rasi",
-  "rev": "e2961f02244c068a67549adf896b0779e4a29516",
-  "date": "2022-01-22T15:40:50+01:00",
-  "path": "/nix/store/95i6mgyizdvyjpggz52glbxzqd1sggf3-tree-sitter-rasi-e2961f0",
-  "sha256": "18sldlz2qajv42qkjmdlic7n8f87anb4pz6jb246bl9xx8sa1myk",
+  "rev": "12391343979463a2484e6353e5afb6dcb8c31e8b",
+  "date": "2022-07-30T22:07:31-04:00",
+  "path": "/nix/store/dgh9vg8pj0wgd8yphhyri97ycm9s6skk-tree-sitter-rasi-1239134",
+  "sha256": "05x9x9q95l4zmx5xgcs3z5nksa6jh77g4l1iw8cinrl35l9gcqi6",
   "fetchLFS": false,
   "fetchSubmodules": false,
   "deepClone": false,

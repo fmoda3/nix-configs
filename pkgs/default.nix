@@ -11,6 +11,6 @@ final: prev:
   # sumneko-lua-language-server = prev.callPackage ./sumneko-lua-language-server { };
   toast-services = prev.callPackage ./toast-services { };
   vimPlugins = prev.vimPlugins // {
-    legendary-nvim = prev.callPackage ./legendary-nvim { };
+    gitsigns-nvim-fixed = prev.callPackage ./gitsigns-nvim-fixed { };
   };
 }

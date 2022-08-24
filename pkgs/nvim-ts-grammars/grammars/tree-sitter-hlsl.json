@@ -1,0 +1,11 @@
+{
+  "url": "https://github.com/theHamsta/tree-sitter-hlsl",
+  "rev": "d5e2ee6953a51bac0c8a5e1e4a8d04855db624c2",
+  "date": "2022-08-20T20:38:06+02:00",
+  "path": "/nix/store/cjn0v6pyw0mzhiw9znw5mk2h9mk33sha-tree-sitter-hlsl-d5e2ee6",
+  "sha256": "0z655vj79apbidnvkyqxi0zjlwfg216m80c6y4fnhcxdpc1vyib1",
+  "fetchLFS": false,
+  "fetchSubmodules": false,
+  "deepClone": false,
+  "leaveDotGit": false
+}

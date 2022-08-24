@@ -1,5 +1,7 @@
 {
+  tree-sitter-agda = builtins.fromJSON (builtins.readFile ./tree-sitter-agda.json);
   tree-sitter-qmljs = builtins.fromJSON (builtins.readFile ./tree-sitter-qmljs.json);
+  tree-sitter-racket = builtins.fromJSON (builtins.readFile ./tree-sitter-racket.json);
   tree-sitter-scheme = builtins.fromJSON (builtins.readFile ./tree-sitter-scheme.json);
   tree-sitter-javascript = builtins.fromJSON (builtins.readFile ./tree-sitter-javascript.json);
   tree-sitter-rego = builtins.fromJSON (builtins.readFile ./tree-sitter-rego.json);
@@ -11,6 +13,7 @@
   tree-sitter-cuda = builtins.fromJSON (builtins.readFile ./tree-sitter-cuda.json);
   tree-sitter-d = builtins.fromJSON (builtins.readFile ./tree-sitter-d.json);
   tree-sitter-glsl = builtins.fromJSON (builtins.readFile ./tree-sitter-glsl.json);
+  tree-sitter-hlsl = builtins.fromJSON (builtins.readFile ./tree-sitter-hlsl.json);
   tree-sitter-dockerfile = builtins.fromJSON (builtins.readFile ./tree-sitter-dockerfile.json);
   tree-sitter-dot = builtins.fromJSON (builtins.readFile ./tree-sitter-dot.json);
   tree-sitter-rust = builtins.fromJSON (builtins.readFile ./tree-sitter-rust.json);
@@ -119,4 +122,5 @@
   tree-sitter-proto = builtins.fromJSON (builtins.readFile ./tree-sitter-proto.json);
   tree-sitter-v = builtins.fromJSON (builtins.readFile ./tree-sitter-v.json);
   tree-sitter-tiger = builtins.fromJSON (builtins.readFile ./tree-sitter-tiger.json);
+  tree-sitter-gitignore = builtins.fromJSON (builtins.readFile ./tree-sitter-gitignore.json);
 }

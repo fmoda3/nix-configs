@@ -25,7 +25,7 @@ in {
         # Status line
         feline-nvim
         # Git info
-        gitsigns-nvim
+        gitsigns-nvim-fixed
         # Indent lines
         indent-blankline-nvim
         # Auto close
