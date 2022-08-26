@@ -9,7 +9,6 @@
         uboot.enable = true;
       };
       grub.enable = false;
-      generic-extlinux-compatible.enable = true;
     };
   };
 
