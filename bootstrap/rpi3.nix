@@ -16,7 +16,7 @@
   imports = [ ./hardware-configuration.nix ];
   swapDevices = [ { device = "/swapfile"; size = 2048; } ];
 
-  environment.systemPackages = with pkgs; [ vim ];
+  environment.systemPackages = with pkgs; [ vim git ];
 
   services.openssh.enable = true;
   
