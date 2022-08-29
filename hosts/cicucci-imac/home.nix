@@ -1,7 +1,10 @@
 { config, pkgs, ... }: { 
   imports = [
     ../../home
-    ../../home/fonts.nix
-    ../../home/personal.nix
-  ]; 
+  ];
+
+  my-home = {
+    includeFonts = true;
+    useNeovim = true;
+  };
 }

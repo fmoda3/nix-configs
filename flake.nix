@@ -56,9 +56,7 @@
           users.users.${user}.home = "/Users/${user}";
           home-manager = {
             useGlobalPkgs = true;
-            users.${user} = with self.homeManagerModules; {
-              imports = [ (./. + "/hosts/${host}/home.nix") ];
-            };
+            users.${user} = import (./. + "/hosts/${host}/home.nix");
           };
         }
       ];
@@ -80,9 +78,7 @@
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
-            users.${user} = with self.homeManagerModules; {
-              imports = [ (./. + "/hosts/${host}/home.nix") ];
-            };
+            users.${user} = import (./. + "/hosts/${host}/home.nix");
           };
         }
       ];

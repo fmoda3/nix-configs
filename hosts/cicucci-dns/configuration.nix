@@ -14,10 +14,11 @@
 
   imports = [
     ./hardware-configuration.nix
-    ./openssh
-    ./adguardhome
-    ./unbound
-    ./tailscale
+    ../../linux/openssh
+    ../../linux/adguardhome
+    ../../linux/unbound
+    ../../linux/tailscale
+    ../../linux/tailscale-autoconnect
   ];
 
   hardware.enableRedistributableFirmware = true;
@@ -26,6 +27,11 @@
     networkmanager = {
       enable = true;
     };
+  };
+
+  services.tailscale-autoconnect = {
+    enable = true;
+    authkey = "tskey-kveqY12CNTRL-wQHntvWh7JgruYi1iwVgy";
   };
 
   nix = {
