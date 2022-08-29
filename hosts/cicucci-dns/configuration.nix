@@ -1,7 +1,16 @@
 { config, pkgs, lib, ...}:
 {
   boot = {
-    kernelPackages = pkgs.linuxPackages;
+    kernelPackages = pkgs.linuxPackagesFor (pkgs.linux_5_15.override {
+      argsOverride = rec {
+        src = pkgs.fetchurl {
+          url = "mirror://kernel/linux/kernel/v5.x/linux-${version}.tar.xz";
+          sha256 = "08w2kgc0v0ld7nxbary7d9fr2vxrsmqby7l4fhf7njgi6wsbp9p9";
+        };
+        version = "5.15.56";
+        modDirVersion = "5.15.56";
+      };
+    });
     loader = {
       raspberryPi = {
         enable = true;
