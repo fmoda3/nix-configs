@@ -1,6 +1,9 @@
 { config, pkgs, ... }: {
   imports = [
     ../../darwin
-    ../../darwin/work.nix
   ];
+
+  my-darwin = {
+    isWork = true;
+  };
 }

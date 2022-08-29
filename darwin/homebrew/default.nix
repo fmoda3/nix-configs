@@ -1,7 +1,7 @@
 { config, pkgs, ...}:
 {
   homebrew = {
-    enable = true;
+    enable = config.my-darwin.isWork;
     cleanup = "uninstall";
     brews = [
       "libffi"
