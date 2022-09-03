@@ -1,0 +1,11 @@
+{
+  "url": "https://github.com/Decodetalkers/tree-sitter-meson",
+  "rev": "13d86d307b421a48d787ce4148371816356de040",
+  "date": "2022-08-24T21:08:01+08:00",
+  "path": "/nix/store/iyyyi1m8hypxv971sx0ycjnri4618pk8-tree-sitter-meson-13d86d3",
+  "sha256": "0xib076s18qdghs85amgqkwn9nkxa13adkn8drmlfiaxm2lqbks9",
+  "fetchLFS": false,
+  "fetchSubmodules": false,
+  "deepClone": false,
+  "leaveDotGit": false
+}
