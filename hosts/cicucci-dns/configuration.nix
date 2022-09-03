@@ -23,11 +23,7 @@
 
   imports = [
     ./hardware-configuration.nix
-    ../../linux/openssh
-    ../../linux/adguardhome
-    ../../linux/unbound
-    ../../linux/tailscale
-    ../../linux/tailscale-autoconnect
+    ../../linux
   ];
 
   hardware.enableRedistributableFirmware = true;
@@ -38,33 +34,17 @@
     };
   };
 
-  services.tailscale-autoconnect = {
-    enable = true;
-    authkey = "tskey-kveqY12CNTRL-wQHntvWh7JgruYi1iwVgy";
-  };
-
-  nix = {
-    package = pkgs.nixFlakes;
-    settings.auto-optimise-store = true;
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 30d";
+  my-linux = {
+    enableNixOptimise = true;
+    tailscale = {
+      enable = true;
+      authkey = "tskey-kveqY12CNTRL-wQHntvWh7JgruYi1iwVgy";
+      advertiseExitNode = true;
     };
-    extraOptions = ''
-      experimental-features = nix-command flakes
-      min-free = ${toString (100 * 1024 * 1024)}
-      max-free = ${toString (1024 * 1024 * 1024)}
-    '';
+    adblocker = {
+      enable = true;
+      useUnbound = true;
+    };
   };
 
-  programs.zsh = {
-    enable = true;
-    enableCompletion = false;
-    promptInit = "";
-  };
-
-  users.defaultUserShell = pkgs.zsh;
-
-  system.stateVersion = "22.05";
 }
