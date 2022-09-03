@@ -1,4 +1,5 @@
 { config, pkgs, lib, ... }:
+with lib;
 {
   config = mkIf config.my-linux.adblocker.useUnbound {
     services.unbound = {
