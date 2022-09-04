@@ -100,6 +100,9 @@
 
       # RM
       rm = "nocorrect rm"; # Override rm -i alias which makes rm prompt for every action
+
+      # Misc
+      caff = "caffeinate -d -i -m -s"; # Prevents computer from falling asleep
     };
 
     prezto = {
