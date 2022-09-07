@@ -198,7 +198,7 @@ require("null-ls").setup({
         require("null-ls").builtins.diagnostics.credo,
 
         -- Nix
-        require("null-ls").builtins.formatting.nixfmt,
+        require("null-ls").builtins.formatting.nixpkgs_fmt,
         require("null-ls").builtins.diagnostics.statix,
         require("null-ls").builtins.code_actions.statix,
 

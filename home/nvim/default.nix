@@ -116,7 +116,7 @@ in
         sumneko-lua-language-server
         # Nix
         rnix-lsp
-        nixfmt
+        nixpkgs-fmt
         statix
         # Python
         pyright
