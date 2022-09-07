@@ -13,7 +13,8 @@
   outputs = { self, nixpkgs, flake-utils, flake-compat }:
     flake-utils.lib.eachDefaultSystem (system:
       let pkgs = nixpkgs.legacyPackages.${system};
-      in {
+      in
+      {
         devShell = pkgs.mkShell {
           buildInputs = with pkgs;
             [

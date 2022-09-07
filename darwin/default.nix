@@ -2,7 +2,8 @@
 with lib;
 let
   cfg = config.my-darwin;
-in {
+in
+{
 
   imports = [
     ./system-defaults
@@ -52,5 +53,5 @@ in {
     system.stateVersion = 4;
   };
 
-  
+
 }

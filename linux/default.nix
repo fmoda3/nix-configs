@@ -2,7 +2,8 @@
 with lib;
 let
   cfg = config.my-linux;
-in {
+in
+{
 
   imports = [
     ./openssh
@@ -32,7 +33,7 @@ in {
               Whether we should run tailscale
             '';
           };
-          
+
           authkey = mkOption {
             type = types.str;
             default = null;
@@ -106,5 +107,5 @@ in {
 
     system.stateVersion = "22.05";
   };
-  
+
 }

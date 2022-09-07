@@ -10,18 +10,20 @@ with lib;
         dns = {
           bind_host = "0.0.0.0";
           bind_hosts = [ "0.0.0.0" ];
-          bootstrap_dns = if config.my-linux.adblocker.useUnbound then [
-            "127.0.0.1:5335"
-          ] else [
-            "1.1.1.1"
-            "1.0.0.1"
-          ];
-          upstream_dns = if config.my-linux.adblocker.useUnbound then [
-            "127.0.0.1:5335"
-          ] else [
-            "1.1.1.1"
-            "1.0.0.1"
-          ];
+          bootstrap_dns =
+            if config.my-linux.adblocker.useUnbound then [
+              "127.0.0.1:5335"
+            ] else [
+              "1.1.1.1"
+              "1.0.0.1"
+            ];
+          upstream_dns =
+            if config.my-linux.adblocker.useUnbound then [
+              "127.0.0.1:5335"
+            ] else [
+              "1.1.1.1"
+              "1.0.0.1"
+            ];
           enable_dnssec = true;
           ratelimit = 0;
         };

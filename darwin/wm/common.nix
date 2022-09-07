@@ -1,4 +1,4 @@
-{config, pkgs, ...}:
+{ config, pkgs, ... }:
 {
   # Hide the dock and menu bar, for Yabai
   system.defaults = {
@@ -16,28 +16,28 @@
   services.yabai.config = {
     mouse_follows_focus = "off";
     focus_follows_mouse = "off";
-    window_placement        = "second_child";
-    window_topmost          = "on";
-    window_opacity          = "off";
+    window_placement = "second_child";
+    window_topmost = "on";
+    window_opacity = "off";
     window_opacity_duration = "0.0";
-    window_shadow           = "float";
-    window_border           = "on";
-    window_border_width     = "4";
-    active_window_opacity   = "1.0";
-    normal_window_opacity   = "0.90";
-    split_ratio             = "0.50";
-    auto_balance            = "on";
-    mouse_modifier          = "fn";
-    mouse_action1           = "move";
-    mouse_action2           = "resize";
-    mouse_drop_action		    = "swap";
-  
-    layout                  = "bsp";
-    top_padding             = "20";
-    bottom_padding          = "20";
-    left_padding            = "20";
-    right_padding           = "20";
-    window_gap              = "10";
+    window_shadow = "float";
+    window_border = "on";
+    window_border_width = "4";
+    active_window_opacity = "1.0";
+    normal_window_opacity = "0.90";
+    split_ratio = "0.50";
+    auto_balance = "on";
+    mouse_modifier = "fn";
+    mouse_action1 = "move";
+    mouse_action2 = "resize";
+    mouse_drop_action = "swap";
+
+    layout = "bsp";
+    top_padding = "20";
+    bottom_padding = "20";
+    left_padding = "20";
+    right_padding = "20";
+    window_gap = "10";
   };
   services.yabai.extraConfig = ''
     yabai -m rule --add app="choose" manage=off
@@ -64,20 +64,20 @@
   services.spacebar.enable = true;
   services.spacebar.package = pkgs.spacebar;
   services.spacebar.config = {
-    position           = "top";
-    height             = 26;
-    spacing_left       = 25;
-    spacing_right      = 15;
-    space_icon_strip   = "         ";
-    power_icon_strip   = " ";
-    space_icon         = "";
-    clock_icon         = "";
-    dnd_icon           = "";
-    clock_format       = ''"%d/%m/%y %R"'';
+    position = "top";
+    height = 26;
+    spacing_left = 25;
+    spacing_right = 15;
+    space_icon_strip = "         ";
+    power_icon_strip = " ";
+    space_icon = "";
+    clock_icon = "";
+    dnd_icon = "";
+    clock_format = ''"%d/%m/%y %R"'';
   };
 
   services.skhd.enable = true;
-  services.skhd.package =  pkgs.skhd;
+  services.skhd.package = pkgs.skhd;
   services.skhd.skhdConfig = ''
     # focus window
     alt - j : yabai -m window --focus west

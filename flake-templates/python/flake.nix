@@ -18,5 +18,6 @@
         mach-nix-wrapper = import mach-nix { inherit pkgs; };
         requirements = builtins.readFile ./requirements.txt;
         pythonShell = mach-nix-wrapper.mkPythonShell { inherit requirements; };
-      in { devShell = pythonShell; });
+      in
+      { devShell = pythonShell; });
 }

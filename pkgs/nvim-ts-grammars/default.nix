@@ -23,4 +23,5 @@ let
     in
     lib.mapAttrs change grammars;
   allGrammars = builtins.attrValues builtGrammars;
-in { inherit builtGrammars allGrammars; }
+in
+{ inherit builtGrammars allGrammars; }

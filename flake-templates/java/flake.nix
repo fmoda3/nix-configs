@@ -1,4 +1,4 @@
-{ 
+{
   description = "Example Java Project";
 
   inputs = {
@@ -13,7 +13,8 @@
   outputs = { self, nixpkgs, flake-utils, flake-compat }:
     flake-utils.lib.eachDefaultSystem (system:
       let pkgs = nixpkgs.legacyPackages.${system};
-      in {
+      in
+      {
         devShell = with pkgs; mkShell {
           buildInputs = [ jdk11 ];
         };

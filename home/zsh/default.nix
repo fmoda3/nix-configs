@@ -9,7 +9,7 @@
     localVariables = {
       GREP_COLOR = "1;33";
     };
-    
+
     shellAliases = {
       # PS
       psa = "ps aux";

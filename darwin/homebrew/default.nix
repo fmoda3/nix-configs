@@ -1,4 +1,4 @@
-{ config, pkgs, ...}:
+{ config, pkgs, ... }:
 {
   homebrew = {
     enable = config.my-darwin.isWork;

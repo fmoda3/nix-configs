@@ -6,13 +6,13 @@
     nixpkgs-master.url = "github:nixos/nixpkgs/master";
     nixpkgs-stable-darwin.url = "github:nixos/nixpkgs/nixpkgs-22.05-darwin";
     nixos-stable.url = "github:nixos/nixpkgs/nixos-22.05";
-  
+
     # Environment/system management
     darwin.url = "github:lnl7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-  
+
     # Other sources
     flake-utils.url = "github:numtide/flake-utils";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
@@ -32,13 +32,14 @@
           neovim-nightly-overlay.overlay
           (
             final: prev:
-            let
-              inherit (prev.stdenv) system;
-              nixpkgs-stable = if system == "x86_64-darwin" || system == "aarch64-darwin" then nixpkgs-stable-darwin else nixos-stable;
-            in {
-              master = nixpkgs-master.legacyPackages.${system};
-              stable = nixpkgs-stable.legacyPackages.${system};
-            }
+              let
+                inherit (prev.stdenv) system;
+                nixpkgs-stable = if system == "x86_64-darwin" || system == "aarch64-darwin" then nixpkgs-stable-darwin else nixos-stable;
+              in
+              {
+                master = nixpkgs-master.legacyPackages.${system};
+                stable = nixpkgs-stable.legacyPackages.${system};
+              }
           )
           (
             final: prev: { flake = self; } // import ./pkgs final prev
@@ -74,7 +75,7 @@
             group = "fmoda3";
             extraGroups = [ "wheel" ];
           };
-          users.groups.${user} = {};
+          users.groups.${user} = { };
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
@@ -82,7 +83,8 @@
           };
         }
       ];
-    in {
+    in
+    {
       darwinConfigurations = {
         cicucci-imac = darwin.lib.darwinSystem {
           system = "x86_64-darwin";

@@ -2,7 +2,8 @@
 with lib;
 let
   cfg = config.my-home;
-in {
+in
+{
 
   imports = [
     # ./kitty
@@ -46,7 +47,7 @@ in {
       sessionVariables = {
         EDITOR = "vim";
         VISUAL = "vim";
-        PAGER  = "less";
+        PAGER = "less";
       };
 
       packages = with pkgs; [
@@ -79,13 +80,14 @@ in {
 
     fonts.fontconfig.enable = cfg.includeFonts;
 
-    programs.git = if cfg.isWork then {
-      userEmail = "frank@toasttab.com";
-      userName = "Frank Moda";
-    } else {
-      userEmail = "fmoda3@mac.com";
-      userName = "Frank Moda";
-    };
+    programs.git =
+      if cfg.isWork then {
+        userEmail = "frank@toasttab.com";
+        userName = "Frank Moda";
+      } else {
+        userEmail = "fmoda3@mac.com";
+        userName = "Frank Moda";
+      };
 
     programs.zsh.sessionVariables = optionalAttrs cfg.isWork {
       TOAST_GIT = "/Users/frank/Development";
@@ -101,5 +103,5 @@ in {
     # changes in each release.
     home.stateVersion = "21.05";
   };
-  
+
 }

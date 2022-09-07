@@ -23,7 +23,7 @@
         inputs = with pkgs;
           basePackages ++ lib.optionals stdenv.isLinux [ inotify-tools ]
           ++ lib.optionals stdenv.isDarwin
-          (with darwin.apple_sdk.frameworks; [ CoreFoundation CoreServices ]);
+            (with darwin.apple_sdk.frameworks; [ CoreFoundation CoreServices ]);
 
         hooks = ''
           # this allows mix to work on the local directory
@@ -36,7 +36,8 @@
           export LANG=en_US.UTF-8
           export ERL_AFLAGS="-kernel shell_history enabled"
         '';
-      in {
+      in
+      {
         devShell = pkgs.mkShell {
           buildInputs = inputs;
           shellHook = hooks;
