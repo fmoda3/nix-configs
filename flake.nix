@@ -8,16 +8,30 @@
     nixos-stable.url = "github:nixos/nixpkgs/nixos-22.05";
 
     # Environment/system management
-    darwin.url = "github:lnl7/nix-darwin";
-    darwin.inputs.nixpkgs.follows = "nixpkgs";
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    darwin = {
+      url = "github:lnl7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        utils.follows = "flake-utils";
+      };
+    };
 
     # Other sources
     flake-utils.url = "github:numtide/flake-utils";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+    devshell = {
+      url = "github:numtide/devshell";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
+    };
   };
-  outputs = inputs@{ self, nixpkgs, darwin, home-manager, flake-utils, ... }:
+  outputs = inputs@{ self, nixpkgs, darwin, home-manager, flake-utils, devshell, ... }:
     let
       nixpkgsConfig = with inputs; {
         config = {
@@ -129,5 +143,16 @@
           specialArgs = { inherit inputs nixpkgs; };
         };
       };
-    };
+    } // flake-utils.lib.eachDefaultSystem (system: {
+      devShell =
+        let pkgs = import nixpkgs {
+          inherit system;
+
+          overlays = [ devshell.overlay ];
+        };
+        in
+        pkgs.devshell.mkShell {
+          imports = [ (pkgs.devshell.importTOML ./devshell.toml) ];
+        };
+    });
 }
