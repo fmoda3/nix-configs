@@ -145,11 +145,12 @@
       };
     } // flake-utils.lib.eachDefaultSystem (system: {
       devShell =
-        let pkgs = import nixpkgs {
-          inherit system;
+        let
+          pkgs = import nixpkgs {
+            inherit system;
 
-          overlays = [ devshell.overlay ];
-        };
+            overlays = [ devshell.overlay ];
+          };
         in
         pkgs.devshell.mkShell {
           imports = [ (pkgs.devshell.importTOML ./devshell.toml) ];
