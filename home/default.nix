@@ -64,6 +64,7 @@ in
         nerdfonts
         cozette
         scientifica
+        monocraft
       ] ++ optionals (!cfg.useNeovim) [
         # Add vim if not setting up neovim
         vim
