@@ -1,7 +1,6 @@
 { config, pkgs, lib, ... }:
 with lib;
 let
-  vimSettings = builtins.readFile ./settings.vim;
   # Remove stable when 1.6.0 is no longer broken
   # python-debug = pkgs.python310.withPackages (p: with p; [debugpy]);
 in
