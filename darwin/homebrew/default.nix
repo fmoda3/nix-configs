@@ -2,14 +2,19 @@
 {
   homebrew = {
     enable = config.my-darwin.isWork;
-    cleanup = "uninstall";
+    onActivation = {
+      cleanup = "uninstall";
+    };
+    taps = [
+      {
+        name = "toasttab/toast";
+        clone_target = "git@github.com:toasttab/homebrew-toast";
+      }
+    ];
     brews = [
       "libffi"
       "cocoapods"
+      "lunchbox"
     ];
-    extraConfig = ''
-      tap "toasttab/toast", "git@github.com:toasttab/homebrew-toast"
-      brew "lunchbox"
-    '';
   };
 }

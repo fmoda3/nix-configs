@@ -1,9 +1,9 @@
 {
   "url": "https://github.com/vlang/vls",
-  "rev": "ea2ebe049de299543b99a3a663377ec73f7a6534",
-  "date": "2022-08-27T20:34:10+08:00",
-  "path": "/nix/store/ywfga1f9ziy2djhaqjp6j7p87zj3wm17-vls-ea2ebe0",
-  "sha256": "0m4kxh5yvbf7hqxk7lpygyd4k7zq944jvv1apx196ava5g1pb378",
+  "rev": "93767cb0adef03dead4155d9e500ca2a0b44c133",
+  "date": "2022-09-01T23:55:55+08:00",
+  "path": "/nix/store/9b4a6qxj6ayqlkk5f5200z1bdrg303qw-vls-93767cb",
+  "sha256": "1p8sbl92szp8rdwrp9mwdqqjcb4wv0bw55dg9hl1wilf1fs2hifm",
   "fetchLFS": false,
   "fetchSubmodules": false,
   "deepClone": false,

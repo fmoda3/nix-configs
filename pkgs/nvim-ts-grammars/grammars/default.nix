@@ -47,6 +47,7 @@
   tree-sitter-ocaml = builtins.fromJSON (builtins.readFile ./tree-sitter-ocaml.json);
   tree-sitter-ocaml_interface = builtins.fromJSON (builtins.readFile ./tree-sitter-ocaml_interface.json);
   tree-sitter-ocamllex = builtins.fromJSON (builtins.readFile ./tree-sitter-ocamllex.json);
+  tree-sitter-menhir = builtins.fromJSON (builtins.readFile ./tree-sitter-menhir.json);
   tree-sitter-org = builtins.fromJSON (builtins.readFile ./tree-sitter-org.json);
   tree-sitter-swift = builtins.fromJSON (builtins.readFile ./tree-sitter-swift.json);
   tree-sitter-c_sharp = builtins.fromJSON (builtins.readFile ./tree-sitter-c_sharp.json);
@@ -123,5 +124,6 @@
   tree-sitter-proto = builtins.fromJSON (builtins.readFile ./tree-sitter-proto.json);
   tree-sitter-v = builtins.fromJSON (builtins.readFile ./tree-sitter-v.json);
   tree-sitter-tiger = builtins.fromJSON (builtins.readFile ./tree-sitter-tiger.json);
+  tree-sitter-sxhkdrc = builtins.fromJSON (builtins.readFile ./tree-sitter-sxhkdrc.json);
   tree-sitter-gitignore = builtins.fromJSON (builtins.readFile ./tree-sitter-gitignore.json);
 }

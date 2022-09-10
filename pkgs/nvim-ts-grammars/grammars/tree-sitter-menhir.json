@@ -1,0 +1,11 @@
+{
+  "url": "https://github.com/Kerl13/tree-sitter-menhir",
+  "rev": "db7953acb0d5551f207373c81fa07a57d7b085cb",
+  "date": "2022-09-01T19:11:17+02:00",
+  "path": "/nix/store/hkcbxzrd9ahdhbjpfzp8anzlnnlqq1d6-tree-sitter-menhir-db7953a",
+  "sha256": "08m9y32ji91p4viwl58955riwcq35fs19j849v8z6c0vkqarpy63",
+  "fetchLFS": false,
+  "fetchSubmodules": false,
+  "deepClone": false,
+  "leaveDotGit": false
+}

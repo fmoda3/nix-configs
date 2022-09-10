@@ -8,9 +8,8 @@ final: prev:
   python3Packages = prev.python3Packages // {
     jsons = prev.callPackage ./jsons { };
   };
-  # sumneko-lua-language-server = prev.callPackage ./sumneko-lua-language-server { };
   toast-services = prev.callPackage ./toast-services { };
-  vimPlugins = prev.vimPlugins // {
-    gitsigns-nvim-fixed = prev.callPackage ./gitsigns-nvim-fixed { };
-  };
+  # vimPlugins = prev.vimPlugins // {
+  #   gitsigns-nvim = prev.callPackage ./gitsigns-nvim { };
+  # };
 }
