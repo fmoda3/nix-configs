@@ -2,7 +2,8 @@
 
 let
   version = "1.2";
-in fetchurl rec {
+in
+fetchurl rec {
   name = "monocraft-${version}";
 
   url = "https://github.com/IdreesInc/Monocraft/releases/download/v${version}/Monocraft.otf";
