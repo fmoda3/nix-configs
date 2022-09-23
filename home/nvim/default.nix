@@ -1,8 +1,8 @@
 { config, pkgs, lib, ... }:
 with lib;
 let
-  # Remove stable when 1.6.0 is no longer broken
-  # python-debug = pkgs.python310.withPackages (p: with p; [debugpy]);
+  # Remove pkgs.python3Packages when build is fixed in nixpkgs
+  python-debug = pkgs.python3.withPackages (p: with p; [pkgs.python3Packages.debugpy]);
 in
 {
   config = mkIf config.my-home.useNeovim {
@@ -131,10 +131,10 @@ in
       ];
 
       extraConfig = ''
+        let g:python_debug_home = "${python-debug}"
         let g:elixir_ls_home = "${pkgs.beam.packages.erlang.elixir_ls}"
         :luafile ~/.config/nvim/lua/init.lua
       '';
-      # let g:python_debug_home = "${python-debug}"
     };
 
     xdg.configFile.nvim = {
