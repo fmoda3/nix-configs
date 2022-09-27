@@ -81,7 +81,7 @@ in
   config = {
     # Enable Flakes
     nix = {
-      package = pkgs.nixFlakes;
+      package = pkgs.nixStable;
       settings.auto-optimise-store = cfg.enableNixOptimise;
       gc = optionalAttrs cfg.enableNixOptimise {
         automatic = true;

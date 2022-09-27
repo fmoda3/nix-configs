@@ -1,0 +1,11 @@
+{
+  "url": "https://github.com/ObserverOfTime/tree-sitter-gitattributes",
+  "rev": "cee9f8865694b29bb9e85e0b90805f92ad3fc47e",
+  "date": "2022-09-12T22:55:40+03:00",
+  "path": "/nix/store/brq3c8hx0ywwcraxk8fnhhzdjcjq04cg-tree-sitter-gitattributes-cee9f88",
+  "sha256": "149q9kgs5b12h52xc9m1rnr8hci74pyv9cpxrzcnn0bwrvhl7vrm",
+  "fetchLFS": false,
+  "fetchSubmodules": false,
+  "deepClone": false,
+  "leaveDotGit": false
+}

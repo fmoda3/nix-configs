@@ -8,11 +8,11 @@ from urllib.request import urlopen
 grammars_path = os.path.join(os.getcwd(), "grammars")
 nix_prefetch_cmd = ["nix-prefetch-git", "--quiet", "--no-deepClone"]
 
-lockfile_url = "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/9b13872f19aa97916ba0ae92bac6fb9e2c1dd06d/lockfile.json"
+lockfile_url = "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/8ec59aee8097c64fcf27d1dbd77ea181c50846c5/lockfile.json"
 lockfile_body = urlopen(lockfile_url).read()
 lockfile_data = json.loads(lockfile_body.decode("utf-8"))
 
-parsers_url = "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/9b13872f19aa97916ba0ae92bac6fb9e2c1dd06d/lua/nvim-treesitter/parsers.lua"
+parsers_url = "https://raw.githubusercontent.com/nvim-treesitter/nvim-treesitter/8ec59aee8097c64fcf27d1dbd77ea181c50846c5/lua/nvim-treesitter/parsers.lua"
 parsers_re = re.compile(r'list.(\w+)\s=.*\s.*\s*url\s=\s([^,]+),',
                         re.MULTILINE)
 parsers_body = urlopen(parsers_url).read()

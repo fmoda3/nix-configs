@@ -106,11 +106,11 @@ in
         # Erlang
         beam.packages.erlang.erlang-ls
         # Haskell
-        haskellPackages.haskell-language-server
+        stable.haskellPackages.haskell-language-server
         # Java
         java-language-server
         # Kotlin
-        # kotlin-language-server
+        kotlin-language-server
         # Lua
         sumneko-lua-language-server
         # Nix

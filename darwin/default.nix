@@ -30,7 +30,7 @@ in
 
     # Enable Flakes
     nix = {
-      package = pkgs.nixFlakes;
+      package = pkgs.nixStable;
       extraOptions = "experimental-features = nix-command flakes";
     };
 
