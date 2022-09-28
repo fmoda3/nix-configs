@@ -75,6 +75,10 @@ pkgs.python3Packages.buildPythonPackage rec {
     export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
   '';
 
+  postCheck = lib.optionals stdenv.isDarwin ''
+    unset OBJC_DISABLE_INITIALIZE_FORK_SAFETY
+  '';
+
   # Override default arguments in pytest.ini
   pytestFlagsArray = [
     "--timeout=0"
