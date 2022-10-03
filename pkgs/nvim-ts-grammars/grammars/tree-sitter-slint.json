@@ -1,9 +1,9 @@
 {
   "url": "https://github.com/jrmoulton/tree-sitter-slint",
-  "rev": "8d85c71d4b1b9f7a76c1bca2e1a3b3a2f3d8ee1a",
-  "date": "2022-09-15T16:50:50-06:00",
-  "path": "/nix/store/hj4mzcfxisnbpp7h042h17ka48na73vw-tree-sitter-slint-8d85c71",
-  "sha256": "1j5parx1mg1yzll129h2wds8hg9qkndv8671yzpfj63qlh6siw7c",
+  "rev": "d422300f5d6ccce8f9a617dfed57aafb636fadb2",
+  "date": "2022-09-27T19:20:23-06:00",
+  "path": "/nix/store/i6pqbs76av66zpi63sq9jdhp9knf5453-tree-sitter-slint-d422300",
+  "sha256": "1xqnwypw56mjr29jdaxdsim5hxympy7pl6mh52a87lmim0jl38wg",
   "fetchLFS": false,
   "fetchSubmodules": false,
   "deepClone": false,

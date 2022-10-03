@@ -1,9 +1,9 @@
 {
   "url": "https://github.com/ckafi/tree-sitter-elvish",
-  "rev": "e50787cadd3bc54f6d9c0704493a79078bb8a4e5",
-  "date": "2022-03-26T17:57:15+01:00",
-  "path": "/nix/store/n5nfg1bqwpxsy3zk06nzrp35d6qq93dy-tree-sitter-elvish-e50787c",
-  "sha256": "1xw9mqq3p64lgli6nvlavrrlg29nfj2fbg7rr2jw1jcjk8lgxv1p",
+  "rev": "f32711e31e987fd5c2c002f3daba02f25c68672f",
+  "date": "2022-09-22T11:50:55+02:00",
+  "path": "/nix/store/da13rsfkibdk8f0q2s1p64hfav43s89i-tree-sitter-elvish-f32711e",
+  "sha256": "17nq19kmkdrad00lapjfd146wg09v7znzls2g8wwq7ykhxqfjygz",
   "fetchLFS": false,
   "fetchSubmodules": false,
   "deepClone": false,

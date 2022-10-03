@@ -1,9 +1,9 @@
 {
   "url": "https://github.com/bamonroe/tree-sitter-rnoweb",
-  "rev": "a2562aa0c21fdf4954a30904495119b328b14301",
-  "date": "2022-07-29T13:06:36+02:00",
-  "path": "/nix/store/k8ybxaqxb16hqas5jr0k8j0mq20l26q3-tree-sitter-rnoweb-a2562aa",
-  "sha256": "1kfbj1nr828ibx1gxr1nbq87jpffdf53crz8mj0d4q1r3vcp8zld",
+  "rev": "502c1126dc6777f09af5bef16e72a42f75bd081e",
+  "date": "2022-10-01T15:09:52-04:00",
+  "path": "/nix/store/sl7n9rxa2w3f8n6jnb27q15qhy1rb5pw-tree-sitter-rnoweb-502c112",
+  "sha256": "09h4wmq1h0s33i1rlggwzxxqhwczxfd3p2ag5xds314cig5j2qb8",
   "fetchLFS": false,
   "fetchSubmodules": false,
   "deepClone": false,
