@@ -73,6 +73,8 @@ local function default_lsp_setup(module)
 end
 -- Bash
 default_lsp_setup('bashls')
+-- Dart
+default_lsp_setup('dartls')
 -- Elixir
 nvim_lsp.elixirls.setup{
     cmd = { 'elixir-ls' },

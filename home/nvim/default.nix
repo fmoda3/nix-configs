@@ -20,6 +20,8 @@ in
         vim-elixir
         vim-nix
         kotlin-vim
+        dart-vim-plugin
+        vim-flutter
 
         # File Tree
         nvim-web-devicons
@@ -101,6 +103,8 @@ in
         # Language Servers
         # Bash
         nodePackages.bash-language-server
+        # Dart
+        dart
         # Elixir
         beam.packages.erlang.elixir_ls
         # Erlang
