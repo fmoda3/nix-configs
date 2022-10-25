@@ -8,7 +8,7 @@ in
   imports = [
     ./system-defaults
     # ./system-packages
-    ./fonts
+    # ./fonts
     # yabai doesn't yet work with Monterey
     # ./wm/themes/nord.nix
     ./homebrew
