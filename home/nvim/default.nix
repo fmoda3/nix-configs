@@ -1,8 +1,7 @@
 { config, pkgs, lib, ... }:
 with lib;
 let
-  # Remove pkgs.python3Packages when build is fixed in nixpkgs
-  python-debug = pkgs.python3.withPackages (p: with p; [pkgs.python3Packages.debugpy]);
+  python-debug = pkgs.python3.withPackages (p: with p; [debugpy]);
 in
 {
   config = mkIf config.my-home.useNeovim {
