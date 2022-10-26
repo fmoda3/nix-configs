@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 with lib;
 let
-  python-debug = pkgs.python3.withPackages (p: with p; [debugpy]);
+  python-debug = pkgs.python3.withPackages (p: with p; [ debugpy ]);
 in
 {
   config = mkIf config.my-home.useNeovim {
