@@ -77,6 +77,8 @@ in
         toast-services
         pizzabox
         heroku
+        podman
+        qemu
       ];
     };
 
@@ -93,6 +95,7 @@ in
 
     programs.zsh.sessionVariables = optionalAttrs cfg.isWork {
       TOAST_GIT = "/Users/frank/Development";
+      DOCKER_HOST = "unix:///Users/frank/.local/share/containers/podman/machine/podman-machine-default/podman.sock";
     };
 
     # This value determines the Home Manager release that your
