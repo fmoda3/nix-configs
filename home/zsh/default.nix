@@ -4,7 +4,14 @@
     enable = true;
     enableCompletion = true;
     enableAutosuggestions = true;
+    enableSyntaxHighlighting = true;
     dotDir = ".config/zsh";
+
+    historySubstringSearch.enable = true;
+    history = {
+      expireDuplicatesFirst = true;
+      extended = true;
+    };
 
     localVariables = {
       GREP_COLOR = "1;33";
@@ -104,44 +111,6 @@
       # Misc
       caff = "caffeinate -d -i -m -s"; # Prevents computer from falling asleep
     };
-
-    prezto = {
-      enable = true;
-      prompt.theme = "powerlevel10k";
-      pmodules = [
-        "environment"
-        "terminal"
-        "editor"
-        "history"
-        "directory"
-        "spectrum"
-        "utility"
-        "completion"
-        "prompt"
-        "syntax-highlighting"
-        "osx"
-        "helper"
-        "tmux"
-        "git"
-        "autosuggestions"
-        "history-substring-search"
-        "archive"
-      ];
-      editor = {
-        keymap = "vi";
-        dotExpansion = true;
-      };
-      terminal.autoTitle = false;
-      caseSensitive = false;
-    };
-
-    plugins = [
-      {
-        name = "powerlevel10k-config";
-        src = lib.cleanSource ./p10k-config;
-        file = "p10k.zsh";
-      }
-    ];
 
     initExtra = ''
       eval "$(direnv hook zsh)"

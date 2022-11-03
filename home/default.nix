@@ -8,6 +8,7 @@ in
   imports = [
     # ./kitty
     ./zsh
+    ./starship
     ./git
     ./nvim
     ./tmux
