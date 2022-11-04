@@ -4,6 +4,84 @@
     enable = true;
     enableZshIntegration = true;
     settings = {
+      format = lib.concatStrings [
+        "$username"
+        "$hostname"
+        "$localip"
+        "$shlvl"
+        "$singularity"
+        "$kubernetes"
+        "$directory"
+        "$vcsh"
+        "$git_branch"
+        "$git_commit"
+        "$git_state"
+        "$git_metrics"
+        "$git_status"
+        "$hg_branch"
+        "$docker_context"
+        "$package"
+        "$c"
+        "$cmake"
+        "$cobol"
+        "$daml"
+        "$dart"
+        "$deno"
+        "$dotnet"
+        "$elixir"
+        "\${custom.elixir}"
+        "$elm"
+        "$erlang"
+        "$golang"
+        "$haskell"
+        "$helm"
+        "$java"
+        "$julia"
+        "$kotlin"
+        "$lua"
+        "$nim"
+        "$nodejs"
+        "$ocaml"
+        "$perl"
+        "$php"
+        "$pulumi"
+        "$purescript"
+        "$python"
+        "$raku"
+        "$rlang"
+        "$red"
+        "$ruby"
+        "$rust"
+        "$scala"
+        "$swift"
+        "$terraform"
+        "$vlang"
+        "$vagrant"
+        "$zig"
+        "$buf"
+        "$nix_shell"
+        "$conda"
+        "$meson"
+        "$spack"
+        "$memory_usage"
+        "$aws"
+        "$gcloud"
+        "$openstack"
+        "$azure"
+        "$env_var"
+        "$crystal"
+        "$custom"
+        "$sudo"
+        "$cmd_duration"
+        "$line_break"
+        "$jobs"
+        "$battery"
+        "$time"
+        "$status"
+        "$container"
+        "$shell"
+        "$character"
+      ];
       aws = {
         disabled = true;
         symbol = "  ";
@@ -56,7 +134,15 @@
       dotnet = {
         format = "\\[[$symbol($version)(🎯 $tfm)]($style)\\]";
       };
+      custom.elixir = {
+        command = "elixir --short-version";
+        detect_files = ["mix.exs"];
+        symbol = " ";
+        format = "\\[[$symbol($output)]($style)\\]";
+        style = "bold purple";
+      };
       elixir = {
+        disabled = true;
         symbol = " ";
         format = "\\[[$symbol($version \\(OTP $otp_version\\))]($style)\\]";
       };
@@ -75,6 +161,7 @@
         format = "\\[[$symbol$branch]($style)\\]";
       };
       git_status = {
+        stashed = "";
         format = "([\\[$all_status$ahead_behind\\]]($style))";
       };
       golang = {
@@ -137,6 +224,7 @@
         format = "\\[[$symbol$cloud(\\($project\\))]($style)\\]";
       };
       package = {
+        disabled = true;
         symbol = " ";
         format = "\\[[$symbol$version]($style)\\]";
       };
