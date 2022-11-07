@@ -25,6 +25,8 @@
     };
   };
 
+  time.timeZone = "America/New_York";
+
   my-linux = {
     enableNixOptimise = true;
     tailscale = {
