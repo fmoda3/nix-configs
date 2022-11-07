@@ -56,7 +56,6 @@ in
         ack
         curl
         htop
-        httpie
         neofetch
         tldr
         wget

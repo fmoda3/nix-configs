@@ -1,0 +1,11 @@
+{
+  "url": "https://github.com/the-mikedavis/tree-sitter-git-rebase",
+  "rev": "127f5b56c1ad3e8a449a7d6e0c7412ead7f7724c",
+  "date": "2022-10-18T16:04:55+00:00",
+  "path": "/nix/store/x4s2fllwmzrcs5pd5ay9drqphaj45ssz-tree-sitter-git-rebase-127f5b5",
+  "sha256": "1lg7c0bjrjga2abyi4hk5w8wbakp2aj83nrmarqynmz5nx790wg1",
+  "fetchLFS": false,
+  "fetchSubmodules": false,
+  "deepClone": false,
+  "leaveDotGit": false
+}

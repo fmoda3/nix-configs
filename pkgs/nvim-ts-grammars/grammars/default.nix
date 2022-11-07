@@ -129,6 +129,7 @@
   tree-sitter-gitignore = builtins.fromJSON (builtins.readFile ./tree-sitter-gitignore.json);
   tree-sitter-nickel = builtins.fromJSON (builtins.readFile ./tree-sitter-nickel.json);
   tree-sitter-gitattributes = builtins.fromJSON (builtins.readFile ./tree-sitter-gitattributes.json);
+  tree-sitter-git_rebase = builtins.fromJSON (builtins.readFile ./tree-sitter-git_rebase.json);
   tree-sitter-blueprint = builtins.fromJSON (builtins.readFile ./tree-sitter-blueprint.json);
   tree-sitter-twig = builtins.fromJSON (builtins.readFile ./tree-sitter-twig.json);
   tree-sitter-diff = builtins.fromJSON (builtins.readFile ./tree-sitter-diff.json);

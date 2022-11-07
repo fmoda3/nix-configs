@@ -1,7 +1,6 @@
 final: prev:
 
 {
-  monocraft = prev.callPackage ./monocraft { };
   nvim-ts-grammars = prev.callPackage ./nvim-ts-grammars { };
   oktoast = prev.callPackage ./oktoast { };
   pizzabox = prev.callPackage ./pizzabox { };
