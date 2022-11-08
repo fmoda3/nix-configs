@@ -136,7 +136,7 @@
       };
       custom.elixir = {
         command = "elixir --short-version";
-        detect_files = ["mix.exs"];
+        detect_files = [ "mix.exs" ];
         symbol = " ";
         format = "\\[[$symbol($output)]($style)\\]";
         style = "bold purple";
