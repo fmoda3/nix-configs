@@ -48,7 +48,7 @@ in
         # Peek line search
         numb-nvim
         # Fast navigation
-        lightspeed-nvim
+        leap-nvim
         # Rainbow brackets
         nvim-ts-rainbow
         # Notify window
