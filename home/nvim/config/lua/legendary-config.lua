@@ -5,6 +5,6 @@ require('legendary').setup({
     select_prompt = 'Legendary'
 })
 
-require('legendary').bind_keymaps({
+require('legendary').keymaps({
     { '<leader>', ':Legendary<cr>', opts = { silent = true }, description = 'Show legendary' }
 })

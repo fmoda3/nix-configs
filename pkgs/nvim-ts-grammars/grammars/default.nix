@@ -133,4 +133,8 @@
   tree-sitter-blueprint = builtins.fromJSON (builtins.readFile ./tree-sitter-blueprint.json);
   tree-sitter-twig = builtins.fromJSON (builtins.readFile ./tree-sitter-twig.json);
   tree-sitter-diff = builtins.fromJSON (builtins.readFile ./tree-sitter-diff.json);
+  tree-sitter-vhs = builtins.fromJSON (builtins.readFile ./tree-sitter-vhs.json);
+  tree-sitter-awk = builtins.fromJSON (builtins.readFile ./tree-sitter-awk.json);
+  tree-sitter-arduino = builtins.fromJSON (builtins.readFile ./tree-sitter-arduino.json);
+  tree-sitter-jq = builtins.fromJSON (builtins.readFile ./tree-sitter-jq.json);
 }

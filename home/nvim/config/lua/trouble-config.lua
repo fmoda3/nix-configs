@@ -1,7 +1,7 @@
 require("trouble").setup {}
 
 local opts = { silent = true, noremap = true }
-require('legendary').bind_keymaps({
+require('legendary').keymaps({
     { '<Leader>xx', '<cmd>TroubleToggle<cr>', description = 'Trouble: Toggle', opts = opts },
 	{ '<Leader>xs', '<cmd>Trouble<cr>', description = 'Trouble: Open', opts = opts },
     { '<Leader>xc', '<cmd>TroubleClose<cr>', description = 'Trouble: Close', opts = opts },

@@ -1,0 +1,11 @@
+{
+  "url": "https://github.com/charmbracelet/tree-sitter-vhs",
+  "rev": "2f87b9d973597e69552ecf6a4fe16470fbd8c44e",
+  "date": "2022-11-10T15:57:56-05:00",
+  "path": "/nix/store/r5rgccb91rj5yxlv28mfrzl49q6513i2-tree-sitter-vhs-2f87b9d",
+  "sha256": "1fbglyifzdalv5m3219zb23cm78n9pvsr1d6sdxds62ya1fssp0v",
+  "fetchLFS": false,
+  "fetchSubmodules": false,
+  "deepClone": false,
+  "leaveDotGit": false
+}

@@ -36,8 +36,6 @@
       nixpkgsConfig = with inputs; {
         config = {
           allowUnfree = true;
-          allowUnsupportedSystem = true;
-          allowBroken = true; # Delete when pyopenssl fixed for M1 machines
         };
         overlays = [
           # "pkgs" currently points to unstable

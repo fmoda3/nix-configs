@@ -1,7 +1,7 @@
 require('telescope').load_extension('dap')
 
 local opts = { noremap = true }
-require('legendary').bind_keymaps({
+require('legendary').keymaps({
     { '<Leader>dct', require("dap").continue, description = 'DAP: Continue', opts = opts },
     { '<Leader>dsv', require("dap").step_over, description = 'DAP: Step over', opts = opts },
     { '<Leader>dsi', require("dap").step_into, description = 'DAP: Step into', opts = opts },

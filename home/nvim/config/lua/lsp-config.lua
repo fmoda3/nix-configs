@@ -12,7 +12,7 @@ local on_attach = function(client, bufnr)
 
     -- Mappings.
     local opts = { noremap=true, silent=true, buffer=true }
-    require('legendary').bind_keymaps({
+    require('legendary').keymaps({
         { 'gD', vim.lsp.buf.declaration, description = 'LSP: Go to declaration', opts = opts },
         { 'gd', vim.lsp.buf.definition, description = 'LSP: Go to definition', opts = opts },
         { 'K', vim.lsp.buf.hover, description = 'LSP: Hover', opts = opts },
@@ -163,7 +163,7 @@ nvim_lsp.tsserver.setup{
 
         -- Mappings.
         local opts = { noremap=true, silent=true, buffer=true }
-        require('legendary').bind_keymaps({
+        require('legendary').keymaps({
             { 'gto', ':TSLspOrganize<CR>', description = 'LSP: Organize imports', opts = opts },
             { 'gtr', ':TSLspRenameFile<CR>', description = 'LSP: Rename file', opts = opts },
             { 'gti', ':TSLspImportAll<CR>', description = 'LSP: Import missing imports', opts = opts }

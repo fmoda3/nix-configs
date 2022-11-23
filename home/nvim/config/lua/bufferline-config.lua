@@ -8,7 +8,7 @@ require("bufferline").setup{
 }
 
 local opts = { silent = true, noremap = true }
-require('legendary').bind_keymaps({
+require('legendary').keymaps({
     { '[b', '<cmd>BufferLineCycleNext<cr>', description = 'BufferLine: Next buffer', opts = opts },
     { ']b', '<cmd>BufferLineCyclePrev<cr>', description = 'BufferLine: Previous buffer', opts = opts },
     { '<Leader>be', '<cmd>BufferLineSortByExtension<cr>', description = 'BufferLine: Organize by extension', opts = opts },
