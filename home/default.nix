@@ -83,20 +83,6 @@ in
 
     fonts.fontconfig.enable = cfg.includeFonts;
 
-    programs.git =
-      if cfg.isWork then {
-        userEmail = "frank@toasttab.com";
-        userName = "Frank Moda";
-      } else {
-        userEmail = "fmoda3@mac.com";
-        userName = "Frank Moda";
-      };
-
-    programs.zsh.sessionVariables = optionalAttrs cfg.isWork {
-      TOAST_GIT = "/Users/frank/Development";
-      DOCKER_HOST = "unix:///Users/frank/.local/share/containers/podman/machine/podman-machine-default/podman.sock";
-    };
-
     # This value determines the Home Manager release that your
     # configuration is compatible with. This helps avoid breakage
     # when a new Home Manager release introduces backwards

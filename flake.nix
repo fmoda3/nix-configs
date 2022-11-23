@@ -86,7 +86,7 @@
           users.users.${user} = {
             home = "/home/${user}";
             isNormalUser = true;
-            group = "fmoda3";
+            group = "${user}";
             extraGroups = [ "wheel" ];
           };
           users.groups.${user} = { };

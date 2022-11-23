@@ -4,6 +4,9 @@
     git = {
       enable = true;
 
+      userName = "Frank Moda";
+      userEmail = if config.my-home.isWork then "frank@toasttab.com" else "fmoda3@mac.com";
+
       aliases = {
         # add
         a = "add"; # add
