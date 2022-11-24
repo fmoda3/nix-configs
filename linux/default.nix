@@ -82,7 +82,13 @@ in
     # Enable Flakes
     nix = {
       package = pkgs.nixStable;
-      settings.auto-optimise-store = cfg.enableNixOptimise;
+      settings = {
+        auto-optimise-store = cfg.enableNixOptimise;
+        substituters = [ "https://nix-community.cachix.org" ];
+        trusted-public-keys = [
+          "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        ];
+      };
       gc = optionalAttrs cfg.enableNixOptimise {
         automatic = true;
         dates = "weekly";
