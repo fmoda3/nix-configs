@@ -79,27 +79,27 @@ in
         };
       };
     };
-  };
 
-  vmware = lib.mkOption {
-    description = "vmware tools";
-    default = { };
-    type = types.submodule {
-      options = {
-        enable = lib.mkOption {
-          type = types.bool;
-          default = false;
-          description = ''
-            Enable vmware tools
-          '';
-        };
+    vmware = lib.mkOption {
+      description = "vmware tools";
+      default = { };
+      type = types.submodule {
+        options = {
+          enable = lib.mkOption {
+            type = types.bool;
+            default = false;
+            description = ''
+              Enable vmware tools
+            '';
+          };
 
-        headless = {
-          type = types.bool;
-          default = false;
-          description = ''
-            Enable headless mode
-          '';
+          headless = {
+            type = types.bool;
+            default = false;
+            description = ''
+              Enable headless mode
+            '';
+          };
         };
       };
     };
