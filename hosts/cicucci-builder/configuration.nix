@@ -8,7 +8,7 @@
       };
       efi.canTouchEfiVariables = true;
     };
-    binfmt.emulatedSystems = ["x86_64-linux"];
+    binfmt.emulatedSystems = [ "x86_64-linux" ];
   };
 
   imports = [
@@ -24,6 +24,8 @@
     networkmanager = {
       enable = true;
     };
+    # Interface is this on M1
+    interfaces.ens160.useDHCP = true;
   };
 
   time.timeZone = "America/New_York";
@@ -36,14 +38,17 @@
   # customizations to make this work on aarch64.
   disabledModules = [ "virtualisation/vmware-guest.nix" ];
 
-  # Interface is this on M1
-  networking.interfaces.ens160.useDHCP = true;
-
   # Lots of stuff that uses aarch64 that claims doesn't work, but actually works.
-  nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.allowUnsupportedSystem = true;
+  nixpkgs.config = {
+    allowUnfree = true;
+    allowUnsupportedSystem = true;
+  };
 
   # This works through our custom module imported above
-  virtualisation.vmware.guest.enable = true;
-  virtualisation.vmware.guest.headless = true;  
+  my-linux = {
+    vmware = {
+      enable = true;
+      headless = true;
+    };
+  };
 }
