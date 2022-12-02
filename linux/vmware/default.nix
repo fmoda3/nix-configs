@@ -11,10 +11,6 @@ let
   xf86inputvmmouse = pkgs.xorg.xf86inputvmmouse;
 in
 {
-  imports = [
-    (mkRenamedOptionModule [ "services" "vmwareGuest" ] [ "my-linux" "vmware" ])
-  ];
-
   config = mkIf cfg.enable {
     assertions = [{
       assertion = pkgs.stdenv.isi686 || pkgs.stdenv.isx86_64 || pkgs.stdenv.isAarch64;

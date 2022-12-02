@@ -30,8 +30,15 @@
         flake-utils.follows = "flake-utils";
       };
     };
+    deploy-rs = {
+      url = "github:serokell/deploy-rs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        utils.follows = "flake-utils";
+      };
+    };
   };
-  outputs = inputs@{ self, nixpkgs, darwin, home-manager, flake-utils, devshell, ... }:
+  outputs = inputs@{ self, nixpkgs, darwin, home-manager, flake-utils, deploy-rs, devshell, ... }:
     let
       nixpkgsConfig = with inputs; {
         config = {
@@ -149,17 +156,38 @@
           specialArgs = { inherit inputs nixpkgs; };
         };
       };
+      deploy = {
+        nodes = {
+          cicucci-dns = {
+            hostname = "192.168.1.251";
+            profiles.system = {
+              user = "fmoda3";
+              path = deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.cicucci-dns;
+            };
+          };
+        };
+      };
+      checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
     } // flake-utils.lib.eachDefaultSystem (system: {
       devShell =
         let
           pkgs = import nixpkgs {
             inherit system;
-
             overlays = [ devshell.overlay ];
           };
         in
         pkgs.devshell.mkShell {
-          imports = [ (pkgs.devshell.importTOML ./devshell.toml) ];
+          packages = with pkgs; [
+            nixpkgs-fmt
+            deploy-rs.packages.${system}.deploy-rs
+          ];
+          commands = [
+            {
+              name = "format";
+              help = "Format nix files with nixpkgs-fmt";
+              command = "nixpkgs-fmt .";
+            }
+          ];
         };
     });
 }

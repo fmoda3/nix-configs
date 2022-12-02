@@ -38,6 +38,13 @@ in
         ];
       };
       extraOptions = "experimental-features = nix-command flakes";
+      buildMachines = [
+        {
+          hostName = "cicucci-aarch64-linux-builder";
+          systems = [ "aarch64-linux" "x86_64-linux" ];
+        }
+      ];
+      distributedBuilds = true;
     };
 
     # Create /etc/zshrc that loads the nix-darwin environment.
