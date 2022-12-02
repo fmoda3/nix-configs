@@ -140,6 +140,14 @@
           };
           specialArgs = { inherit inputs nixpkgs; };
         };
+        cicucci-builder = nixpkgs.lib.nixosSystem {
+          system = "aarch64-linux";
+          modules = nixosModules {
+            user = "fmoda3";
+            host = "cicucci-builder";
+          };
+          specialArgs = { inherit inputs nixpkgs; };
+        };
       };
     } // flake-utils.lib.eachDefaultSystem (system: {
       devShell =

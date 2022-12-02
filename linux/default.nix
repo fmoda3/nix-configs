@@ -11,6 +11,7 @@ in
     ./unbound
     ./tailscale
     ./tailscale-autoconnect
+    ./vmware
   ];
 
   options.my-linux = {
@@ -24,6 +25,7 @@ in
 
     tailscale = lib.mkOption {
       description = "tailscale submodile";
+      default = { };
       type = types.submodule {
         options = {
           enable = lib.mkOption {
@@ -56,6 +58,7 @@ in
 
     adblocker = lib.mkOption {
       description = "adblocker submodule";
+      default = { };
       type = types.submodule {
         options = {
           enable = lib.mkOption {
