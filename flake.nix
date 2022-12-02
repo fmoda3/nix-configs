@@ -170,7 +170,7 @@
       };
       checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
     } // flake-utils.lib.eachDefaultSystem (system: {
-      devShell =
+      devShells.default =
         let
           pkgs = import nixpkgs {
             inherit system;
