@@ -93,7 +93,7 @@ in
             '';
           };
 
-          headless = {
+          headless = lib.mkOption {
             type = types.bool;
             default = false;
             description = ''

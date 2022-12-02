@@ -6,13 +6,13 @@
 { config, lib, pkgs, ... }:
 with lib;
 let
-  cfg = config.vmware;
+  cfg = config.my-linux.vmware;
   open-vm-tools = if cfg.headless then pkgs.open-vm-tools-headless else pkgs.open-vm-tools;
   xf86inputvmmouse = pkgs.xorg.xf86inputvmmouse;
 in
 {
   imports = [
-    (mkRenamedOptionModule [ "services" "vmwareGuest" ] [ "virtualisation" "vmware" "guest" ])
+    (mkRenamedOptionModule [ "services" "vmwareGuest" ] [ "my-linux" "vmware" ])
   ];
 
   config = mkIf cfg.enable {
