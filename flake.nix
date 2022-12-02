@@ -161,7 +161,8 @@
           cicucci-dns = {
             hostname = "192.168.1.251";
             profiles.system = {
-              user = "fmoda3";
+              user = "root";
+              sshUser = "root";
               path = deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.cicucci-dns;
             };
           };

@@ -40,7 +40,8 @@ in
       extraOptions = "experimental-features = nix-command flakes";
       buildMachines = [
         {
-          hostName = "cicucci-aarch64-linux-builder";
+          hostName = "192.168.123.128";
+          sshUser = "root";
           systems = [ "aarch64-linux" "x86_64-linux" ];
         }
       ];
