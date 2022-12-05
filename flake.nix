@@ -80,11 +80,12 @@
           };
         }
       ];
-      nixosModules = { user, host }: with inputs; [
+      nixosModules = { user, host, image ? null }: with inputs; [
         # Main `nixos` config
         (./. + "/hosts/${host}/configuration.nix")
         # `home-manager` module
         home-manager.nixosModules.home-manager
+        image
         {
           nixpkgs = nixpkgsConfig;
           # `home-manager` config
@@ -144,6 +145,7 @@
           modules = nixosModules {
             user = "fmoda3";
             host = "cicucci-dns";
+            image = "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix";
           };
           specialArgs = { inherit inputs nixpkgs; };
         };
@@ -155,6 +157,29 @@
           };
           specialArgs = { inherit inputs nixpkgs; };
         };
+        bootable-aarch64-iso = nixpkgs.lib.nixosSystem {
+          system = "aarch64-linux";
+          modules = nixosModules {
+            user = "fmoda3";
+            host = "bootable-iso";
+            image = "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix";
+          };
+          specialArgs = { inherit inputs nixpkgs; };
+        };
+        bootable-x86_64-iso = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = nixosModules {
+            user = "fmoda3";
+            host = "bootable-iso";
+            image = "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix";
+          };
+          specialArgs = { inherit inputs nixpkgs; };
+        };
+      };
+      images = {
+        cicucci-dns = self.nixosConfigurations.cicucci-dns.config.system.build.sdImage;
+        bootable-aarch64-iso = self.nixosConfigurations.bootable-aarch64-iso.config.system.build.isoImage;
+        bootable-x86_64-iso = self.nixosConfigurations.bootable-x86_64-iso.config.system.build.isoImage;
       };
       deploy = {
         nodes = {
@@ -187,6 +212,21 @@
               name = "format";
               help = "Format nix files with nixpkgs-fmt";
               command = "nixpkgs-fmt .";
+            }
+            {
+              name = "create-aarch64-iso";
+              help = "Creates an iso image for aarch64 with my configs";
+              command = "GC_DONT_GC=1 nix build \".#images.bootable-aarch64-iso\"";
+            }
+            {
+              name = "create-x86_64-iso";
+              help = "Creates an iso image for aarch64 with my configs";
+              command = "GC_DONT_GC=1 nix build \".#images.bootable-x86_64-iso\"";
+            }
+            {
+              name = "create-cicucci-dns-sd";
+              help = "Creates an sd card image for cicucci-dns";
+              command = "nix build \".#images.cicucci-dns\"";
             }
           ];
         };

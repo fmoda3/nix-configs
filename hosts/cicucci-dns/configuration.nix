@@ -3,12 +3,8 @@
   boot = {
     kernelPackages = pkgs.linuxPackages;
     loader = {
-      raspberryPi = {
-        enable = true;
-        version = 3;
-        uboot.enable = true;
-      };
       grub.enable = false;
+      generic-extlinux-compatible.enable = true;
     };
   };
 
