@@ -85,7 +85,6 @@
         (./. + "/hosts/${host}/configuration.nix")
         # `home-manager` module
         home-manager.nixosModules.home-manager
-        image
         {
           nixpkgs = nixpkgsConfig;
           # `home-manager` config
@@ -102,7 +101,7 @@
             users.${user} = import (./. + "/hosts/${host}/home.nix");
           };
         }
-      ];
+      ] ++ (nixpkgs.lib.optional (image != null) image);
     in
     {
       darwinConfigurations = {
