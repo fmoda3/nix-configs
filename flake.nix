@@ -22,7 +22,25 @@
 
     # Other sources
     flake-utils.url = "github:numtide/flake-utils";
-    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+    flake-compat = {
+      url = "github:edolstra/flake-compat";
+      flake = false;
+    };
+    neovim-flake = {
+      url = "github:neovim/neovim?dir=contrib";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
+    };
+    neovim-nightly-overlay = {
+      url = "github:nix-community/neovim-nightly-overlay";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-compat.follows = "flake-compat";
+        neovim-flake.follows = "neovim-flake";
+      };
+    };
     devshell = {
       url = "github:numtide/devshell";
       inputs = {
@@ -35,6 +53,7 @@
       inputs = {
         nixpkgs.follows = "nixpkgs";
         utils.follows = "flake-utils";
+        flake-compat.follows = "flake-compat";
       };
     };
   };

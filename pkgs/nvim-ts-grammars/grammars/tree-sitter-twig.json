@@ -1,9 +1,9 @@
 {
   "url": "https://github.com/gbprod/tree-sitter-twig",
-  "rev": "035f549ec8c043e734f04341d7ccdc669bb2ba91",
-  "date": "2022-10-31T09:47:26+01:00",
-  "path": "/nix/store/353s0wdgb3md8nsklnzgy0nhg6cbvlc3-tree-sitter-twig-035f549",
-  "sha256": "0vagxpqh1jl73s2xg4w86smmbkrpnixmq233pslyb8xxlq9k88ax",
+  "rev": "2457993b13a06dec2706e6a6c3d5b65bb23024b8",
+  "date": "2022-11-28T09:00:32+01:00",
+  "path": "/nix/store/lqf62vz5h8ka8xf6q1kkbqxdldyvhvvq-tree-sitter-twig-2457993",
+  "sha256": "12lkr8r21bzc1ddc3w87w46vwfg27902zxb305v9njb3kfwaazgh",
   "fetchLFS": false,
   "fetchSubmodules": false,
   "deepClone": false,

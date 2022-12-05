@@ -1,9 +1,9 @@
 {
   "url": "https://github.com/Isopod/tree-sitter-pascal.git",
-  "rev": "2fd40f477d3e2794af152618ccfac8d92eb72a66",
-  "date": "2021-12-23T11:44:17+01:00",
-  "path": "/nix/store/kmcgfhqxhkn6z9kk8y0472jn3wn15wzz-tree-sitter-pascal-2fd40f4",
-  "sha256": "11zjwk8wpx2b565sf82mh02bp5iswhmfykzdqfk0qwasr9ka2w7y",
+  "rev": "9e995404ddff8319631d72d4b46552e737206912",
+  "date": "2022-11-28T17:07:47+01:00",
+  "path": "/nix/store/c1ax89ryfc8f8kdh4i4dp1wj0qs3sd5h-tree-sitter-pascal-9e99540",
+  "sha256": "0q3j3a7x42wqi9dkyvwa0hp1n0p7s9l4ijrsks0fgrvmasflzk6b",
   "fetchLFS": false,
   "fetchSubmodules": false,
   "deepClone": false,

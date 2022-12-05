@@ -130,6 +130,7 @@
   tree-sitter-nickel = builtins.fromJSON (builtins.readFile ./tree-sitter-nickel.json);
   tree-sitter-gitattributes = builtins.fromJSON (builtins.readFile ./tree-sitter-gitattributes.json);
   tree-sitter-git_rebase = builtins.fromJSON (builtins.readFile ./tree-sitter-git_rebase.json);
+  tree-sitter-gitcommit = builtins.fromJSON (builtins.readFile ./tree-sitter-gitcommit.json);
   tree-sitter-blueprint = builtins.fromJSON (builtins.readFile ./tree-sitter-blueprint.json);
   tree-sitter-twig = builtins.fromJSON (builtins.readFile ./tree-sitter-twig.json);
   tree-sitter-diff = builtins.fromJSON (builtins.readFile ./tree-sitter-diff.json);
@@ -137,4 +138,6 @@
   tree-sitter-awk = builtins.fromJSON (builtins.readFile ./tree-sitter-awk.json);
   tree-sitter-arduino = builtins.fromJSON (builtins.readFile ./tree-sitter-arduino.json);
   tree-sitter-jq = builtins.fromJSON (builtins.readFile ./tree-sitter-jq.json);
+  tree-sitter-mermaid = builtins.fromJSON (builtins.readFile ./tree-sitter-mermaid.json);
+  tree-sitter-ebnf = builtins.fromJSON (builtins.readFile ./tree-sitter-ebnf.json);
 }

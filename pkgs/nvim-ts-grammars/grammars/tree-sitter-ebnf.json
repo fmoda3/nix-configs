@@ -1,0 +1,11 @@
+{
+  "url": "https://github.com/RubixDev/ebnf.git",
+  "rev": "ef241bc09f2f105c35f5e4f2ccd8a522dd99071c",
+  "date": "2022-10-27T16:53:01+02:00",
+  "path": "/nix/store/8pi9njc8rj0sm75h12nn9aam7k5hl1s2-ebnf-ef241bc",
+  "sha256": "0lia29yf6a72cg3nbjl9179ncd3lzrls9v2mfh43cdnqk5hcd51p",
+  "fetchLFS": false,
+  "fetchSubmodules": false,
+  "deepClone": false,
+  "leaveDotGit": false
+}
