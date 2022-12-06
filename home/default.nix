@@ -76,8 +76,10 @@ in
         toast-services
         pizzabox
         heroku
-        podman
-        qemu
+        colima
+        docker
+        docker-compose
+        docker-credential-helpers
       ];
     };
 

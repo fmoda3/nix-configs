@@ -19,7 +19,7 @@
 
     sessionVariables = lib.optionalAttrs config.my-home.isWork {
       TOAST_GIT = "/Users/frank/Development";
-      DOCKER_HOST = "unix:///Users/frank/.local/share/containers/podman/machine/podman-machine-default/podman.sock";
+      DOCKER_HOST = "unix:///Users/frank/.colima/default/docker.sock";
     };
 
     shellAliases = {
