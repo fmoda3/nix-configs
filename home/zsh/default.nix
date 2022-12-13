@@ -20,6 +20,7 @@
     sessionVariables = lib.optionalAttrs config.my-home.isWork {
       TOAST_GIT = "/Users/frank/Development";
       DOCKER_HOST = "unix:///Users/frank/.colima/default/docker.sock";
+      TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE = "/var/run/docker.sock";
     };
 
     shellAliases = {
