@@ -122,6 +122,12 @@
       eval "$(direnv hook zsh)"
       path+="/opt/homebrew/bin"
 
+      setopt HIST_IGNORE_ALL_DUPS
+      setopt HIST_FIND_NO_DUPS
+      setopt HIST_SAVE_NO_DUPS
+      setopt BANG_HIST
+      setopt HIST_VERIFY
+
       setopt COMPLETE_IN_WORD     # Complete from both ends of a word.
       setopt ALWAYS_TO_END        # Move cursor to the end of a completed word.
       setopt PATH_DIRS            # Perform path search even on command names with slashes.
