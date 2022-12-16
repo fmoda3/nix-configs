@@ -1,9 +1,9 @@
 {
   "url": "https://github.com/the-mikedavis/tree-sitter-diff",
-  "rev": "330eb648bbc257b4e91621e82a85372be7dde27a",
-  "date": "2022-09-16T12:31:14+02:00",
-  "path": "/nix/store/k72chkip8b7m406acbjy90nv7y2h2ish-tree-sitter-diff-330eb64",
-  "sha256": "1jdv115wlrj88xwni48dm54fwqim6bjvll9fngqabfy89c8skbjq",
+  "rev": "1d63cd49529ef3153393cf8f620718b274bba715",
+  "date": "2022-12-09T18:48:25-06:00",
+  "path": "/nix/store/vdx2kh0m6ijwn19pbga6lvdvk40acqgd-tree-sitter-diff-1d63cd4",
+  "sha256": "0j88140ma256gimpai6azvp4jyr5in51d77xqyhcmi9calh3f1cw",
   "fetchLFS": false,
   "fetchSubmodules": false,
   "deepClone": false,

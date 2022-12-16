@@ -1,9 +1,9 @@
 {
   "url": "https://github.com/camdencheek/tree-sitter-dockerfile",
-  "rev": "f913be9bb8689af22114605012693146fbe9ddaa",
-  "date": "2022-11-05T10:22:31-06:00",
-  "path": "/nix/store/5d2idm2d3zfrmn4a47h310rq020h4p3c-tree-sitter-dockerfile-f913be9",
-  "sha256": "0db6bm839gxnmf2jq0yvrmphl3xrmg9aygd12cqd3qcb9j6l71hj",
+  "rev": "09e316dba307b869831e9399b11a83bbf0f2a24b",
+  "date": "2022-12-03T14:21:21-07:00",
+  "path": "/nix/store/i08nsza9c39sd83ksvb8yxcgljkldl2x-tree-sitter-dockerfile-09e316d",
+  "sha256": "17iqrpc82r0lbjdp9pkjkdwlp6vv20xjv8wn2kqyl9j5vw1g1xqm",
   "fetchLFS": false,
   "fetchSubmodules": false,
   "deepClone": false,

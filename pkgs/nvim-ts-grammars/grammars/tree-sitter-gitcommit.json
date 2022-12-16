@@ -1,9 +1,9 @@
 {
   "url": "https://github.com/gbprod/tree-sitter-gitcommit",
-  "rev": "d3c15bdf0165c89872cc1345c5f8815be3cad9cc",
-  "date": "2022-11-25T14:06:14+01:00",
-  "path": "/nix/store/8pgq88sajs2y1d8lwpqk51h2fv8px3ci-tree-sitter-gitcommit-d3c15bd",
-  "sha256": "1pgsffy8fnvqylf3lb3gpd1bgbvwrkzg3yh8nbj742fya2wybryy",
+  "rev": "f838621d00831967a39ac8293cd3c23b0f49252e",
+  "date": "2022-12-05T15:58:14+01:00",
+  "path": "/nix/store/2mld6s9l32id1wg0f5xn3qskyk9kav51-tree-sitter-gitcommit-f838621",
+  "sha256": "0gx8fllb0dyi7sq4kdm46pcmf5dlvhbi9kl355izsc03sl1abszl",
   "fetchLFS": false,
   "fetchSubmodules": false,
   "deepClone": false,

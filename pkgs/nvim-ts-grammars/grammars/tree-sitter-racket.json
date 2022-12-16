@@ -1,9 +1,9 @@
 {
   "url": "https://github.com/6cdh/tree-sitter-racket",
-  "rev": "09cb27a06415bce529a26774a842f5a80d50d362",
-  "date": "2022-11-06T17:26:49+08:00",
-  "path": "/nix/store/5rvx4r06fxc27j2qmqi1v8ykwkrbjfjs-tree-sitter-racket-09cb27a",
-  "sha256": "00iggv8ds43kwhp5ag6drkbjiiqcaz0zlxlw299y1qg1j7749j7r",
+  "rev": "dc9c33451fefc2d84d226e55c828adc8a66f2e37",
+  "date": "2022-12-06T08:35:05+08:00",
+  "path": "/nix/store/bfx00qwgrk7pjkvfw3f0i8sh4ld96c6x-tree-sitter-racket-dc9c334",
+  "sha256": "0kylak0mk2dzywjz7m9l012352kkl9wha6i6n4bd0kkqiygbivl9",
   "fetchLFS": false,
   "fetchSubmodules": false,
   "deepClone": false,

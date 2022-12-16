@@ -1,9 +1,9 @@
 {
   "url": "https://github.com/FoamScience/tree-sitter-foam",
-  "rev": "fdb7f14b885abfc4df57728c9b2a2f2ad24d3cb7",
-  "date": "2022-01-16T18:25:46+01:00",
-  "path": "/nix/store/2ldlrbskapxm21nfhf3rnazwzc48vjjg-tree-sitter-foam-fdb7f14",
-  "sha256": "0x8l02nr13fbwvkix1z9a1zia3c5cm7hr251j5drdjirbzrnp48k",
+  "rev": "c238f4af9a5723a212cf1a4c9b31dd5c1d5270a2",
+  "date": "2022-12-04T19:26:37+01:00",
+  "path": "/nix/store/kpclr6k3yy5acd0668xm2xy503j0nn55-tree-sitter-foam-c238f4a",
+  "sha256": "024ynpqqf9i21iicikqnklw0bryqy2l32wp7imv2vrgy93p5a98q",
   "fetchLFS": false,
   "fetchSubmodules": false,
   "deepClone": false,

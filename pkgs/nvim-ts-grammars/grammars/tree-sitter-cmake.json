@@ -1,9 +1,9 @@
 {
   "url": "https://github.com/uyha/tree-sitter-cmake",
-  "rev": "6e51463ef3052dd3b328322c22172eda093727ad",
-  "date": "2022-08-26T09:50:26+02:00",
-  "path": "/nix/store/m7p3snjqc796b3pxvbbb6iga7bnrrs3h-tree-sitter-cmake-6e51463",
-  "sha256": "14l7l6cc9pdqinff9hjda7rakzfvwk0qcbv6djl0s9f21875l4nv",
+  "rev": "a32265307aa2d31941056d69e8b6633e61750b2f",
+  "date": "2022-12-03T13:09:00+01:00",
+  "path": "/nix/store/0gp5a0ai5znpnl5d8cv6vij3kf45zv64-tree-sitter-cmake-a322653",
+  "sha256": "19pzhi6kgclf2fccn7vylwik2d0m8jbp8kppmxcxrmd6qx47f5rc",
   "fetchLFS": false,
   "fetchSubmodules": false,
   "deepClone": false,

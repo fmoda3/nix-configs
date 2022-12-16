@@ -1,9 +1,9 @@
 {
   "url": "https://github.com/Decodetalkers/tree-sitter-meson",
-  "rev": "153d22588fb5c1eee16a165a084f9ea30f29d941",
-  "date": "2022-10-17T14:20:56+08:00",
-  "path": "/nix/store/mwpq1lg42aiyvj01qncc12mhn2qgcxhb-tree-sitter-meson-153d225",
-  "sha256": "0q5biy122h1nq0jvsmkwp72gj4lahvqylm9n6xpk3yvqxx2rqjmb",
+  "rev": "6c5f7ef944f9c6ae8a0fc28b9071a4b493652238",
+  "date": "2022-12-11T23:10:28+08:00",
+  "path": "/nix/store/as14izjg4hqz680sy5pni7v3ck2bv7hb-tree-sitter-meson-6c5f7ef",
+  "sha256": "0vvwbgsgrgggq59cqbkphn5zd1yba0gwfhfmklg5nvmmlszzpwdg",
   "fetchLFS": false,
   "fetchSubmodules": false,
   "deepClone": false,
