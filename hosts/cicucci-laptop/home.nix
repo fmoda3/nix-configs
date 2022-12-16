@@ -6,5 +6,6 @@
   my-home = {
     includeFonts = true;
     useNeovim = true;
+    includeGames = true;
   };
 }

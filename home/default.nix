@@ -13,6 +13,7 @@ in
     ./nvim
     ./tmux
     ./direnv
+    ./games
   ];
 
   options.my-home = {
@@ -37,6 +38,14 @@ in
       default = false;
       description = ''
         Whether this is a work profile
+      '';
+    };
+
+    includeGames = lib.mkOption {
+      type = types.bool;
+      default = false;
+      description = ''
+        Include games
       '';
     };
   };
