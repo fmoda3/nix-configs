@@ -1,5 +1,8 @@
 { config, pkgs, lib, ... }:
 with lib;
+let 
+  advertiseExitNode = optionalString config.my-linux.tailscale.advertiseExitNode "--advertise-exit-node";
+in
 {
   config = mkIf config.my-linux.tailscale.enable {
     systemd.services.tailscale-autoconnect = {
@@ -21,13 +24,9 @@ with lib;
         # check if we are already authenticated to tailscale
         status="$(${tailscale}/bin/tailscale status -json | ${jq}/bin/jq -r .BackendState)"
         if [ $status != "Running" ]; then # if not, authenticate
-          ${tailscale}/bin/tailscale up -authkey ${config.my-linux.tailscale.authkey}
+          ${tailscale}/bin/tailscale up -authkey ${config.my-linux.tailscale.authkey} ${advertiseExitNode}
           sleep 2
         fi
-
-        ${optionalString config.my-linux.tailscale.advertiseExitNode ''
-          ${tailscale}/bin/tailscale up --advertise-exit-node
-        ''}
 
         exit 0
       '';
