@@ -1,0 +1,77 @@
+{ config, pkgs, lib, ... }: {
+  boot = {
+    kernelPackages = pkgs.linuxPackages_latest;
+    loader = {
+      systemd-boot = {
+        enable = true;
+        consoleMode = "0";
+      };
+      efi.canTouchEfiVariables = true;
+    };
+    binfmt.emulatedSystems = [ "x86_64-linux" ];
+  };
+
+  imports = [
+    ./hardware-configuration.nix
+    ../../linux
+  ];
+
+  hardware.video.hidpi.enable = true;
+
+  networking = {
+    hostName = "cicucci-devvm";
+    useDHCP = false;
+    networkmanager = {
+      enable = true;
+    };
+    # Interface is this on M1
+    interfaces.ens160.useDHCP = true;
+  };
+
+  time.timeZone = "America/New_York";
+
+  security.sudo.wheelNeedsPassword = false;
+
+  i18n.defaultLocale = "en_US.UTF-8";
+
+  # Disable the default module and import our override. We have
+  # customizations to make this work on aarch64.
+  disabledModules = [ "virtualisation/vmware-guest.nix" ];
+
+  # Lots of stuff that uses aarch64 that claims doesn't work, but actually works.
+  nixpkgs.config = {
+    allowUnfree = true;
+    allowUnsupportedSystem = true;
+  };
+
+  # This works through our custom module imported above
+  my-linux = {
+    vmware = {
+      enable = true;
+      headless = true;
+    };
+  };
+
+  programs.hyprland.enable = true;
+
+  environment = {
+    systemPackages = with pkgs; [
+      wofi
+      mako
+      pipewire
+      wireplumber
+      waybar-hyprland
+      slurp
+    ];
+  };
+
+  services = {
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32bit = true;
+      pulse.enable = true;
+    };
+  };
+
+}

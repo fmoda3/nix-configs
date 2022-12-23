@@ -19,6 +19,7 @@
         utils.follows = "flake-utils";
       };
     };
+    hyprland.url = "github:hyprwm/Hyprland";
 
     # Other sources
     flake-utils.url = "github:numtide/flake-utils";
@@ -57,7 +58,7 @@
       };
     };
   };
-  outputs = inputs@{ self, nixpkgs, darwin, home-manager, flake-utils, deploy-rs, devshell, ... }:
+  outputs = inputs@{ self, nixpkgs, darwin, home-manager, hyprland, flake-utils, deploy-rs, devshell, ... }:
     let
       nixpkgsConfig = with inputs; {
         config = {
@@ -68,6 +69,7 @@
           # The following overlay allows you to specify "stable.pkgs" for stable versions
           # and "master.pkgs" for versions on master
           neovim-nightly-overlay.overlay
+          hyprland.overlays.default
           (
             final: prev:
               let
@@ -104,6 +106,8 @@
         (./. + "/hosts/${host}/configuration.nix")
         # `home-manager` module
         home-manager.nixosModules.home-manager
+        hyprland.nixosModules.default
+        hyprland.homeManagerModules.default
         {
           nixpkgs = nixpkgsConfig;
           # `home-manager` config
