@@ -1,0 +1,11 @@
+{
+  "url": "https://github.com/briot/tree-sitter-ada",
+  "rev": "e9e2ec9d3b6302e9b455901bec00036e29d1c121",
+  "date": "2022-12-15T09:58:32+01:00",
+  "path": "/nix/store/n99nxyq6jzk62zn8zw2nvdiv7mlai7ff-tree-sitter-ada-e9e2ec9",
+  "sha256": "1s5lgyfyx7464g9d67pjwrd9zf7ipjd93qi3w5r2a9fsd3ad1r3f",
+  "fetchLFS": false,
+  "fetchSubmodules": false,
+  "deepClone": false,
+  "leaveDotGit": false
+}

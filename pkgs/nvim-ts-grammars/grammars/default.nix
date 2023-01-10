@@ -1,4 +1,5 @@
 {
+  tree-sitter-ada = builtins.fromJSON (builtins.readFile ./tree-sitter-ada.json);
   tree-sitter-agda = builtins.fromJSON (builtins.readFile ./tree-sitter-agda.json);
   tree-sitter-meson = builtins.fromJSON (builtins.readFile ./tree-sitter-meson.json);
   tree-sitter-qmljs = builtins.fromJSON (builtins.readFile ./tree-sitter-qmljs.json);
@@ -60,6 +61,7 @@
   tree-sitter-slint = builtins.fromJSON (builtins.readFile ./tree-sitter-slint.json);
   tree-sitter-haskell = builtins.fromJSON (builtins.readFile ./tree-sitter-haskell.json);
   tree-sitter-hcl = builtins.fromJSON (builtins.readFile ./tree-sitter-hcl.json);
+  tree-sitter-terraform = builtins.fromJSON (builtins.readFile ./tree-sitter-terraform.json);
   tree-sitter-markdown = builtins.fromJSON (builtins.readFile ./tree-sitter-markdown.json);
   tree-sitter-markdown_inline = builtins.fromJSON (builtins.readFile ./tree-sitter-markdown_inline.json);
   tree-sitter-tlaplus = builtins.fromJSON (builtins.readFile ./tree-sitter-tlaplus.json);
@@ -121,10 +123,12 @@
   tree-sitter-elvish = builtins.fromJSON (builtins.readFile ./tree-sitter-elvish.json);
   tree-sitter-astro = builtins.fromJSON (builtins.readFile ./tree-sitter-astro.json);
   tree-sitter-wgsl = builtins.fromJSON (builtins.readFile ./tree-sitter-wgsl.json);
+  tree-sitter-wgsl_bevy = builtins.fromJSON (builtins.readFile ./tree-sitter-wgsl_bevy.json);
   tree-sitter-m68k = builtins.fromJSON (builtins.readFile ./tree-sitter-m68k.json);
   tree-sitter-proto = builtins.fromJSON (builtins.readFile ./tree-sitter-proto.json);
   tree-sitter-v = builtins.fromJSON (builtins.readFile ./tree-sitter-v.json);
   tree-sitter-tiger = builtins.fromJSON (builtins.readFile ./tree-sitter-tiger.json);
+  tree-sitter-t32 = builtins.fromJSON (builtins.readFile ./tree-sitter-t32.json);
   tree-sitter-sxhkdrc = builtins.fromJSON (builtins.readFile ./tree-sitter-sxhkdrc.json);
   tree-sitter-gitignore = builtins.fromJSON (builtins.readFile ./tree-sitter-gitignore.json);
   tree-sitter-nickel = builtins.fromJSON (builtins.readFile ./tree-sitter-nickel.json);
