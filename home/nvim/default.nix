@@ -133,8 +133,8 @@ in
         fd
       ];
 
+      # let g:python_debug_home = "${python-debug}"
       extraConfig = ''
-        let g:python_debug_home = "${python-debug}"
         let g:elixir_ls_home = "${pkgs.beam.packages.erlang.elixir_ls}"
         :luafile ~/.config/nvim/lua/init.lua
       '';

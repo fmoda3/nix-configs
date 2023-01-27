@@ -1,0 +1,11 @@
+{
+  "url": "https://github.com/mgramigna/tree-sitter-fsh",
+  "rev": "fa3347712f7a59ed02ccf508284554689c6cde28",
+  "date": "2022-12-28T12:28:00-05:00",
+  "path": "/nix/store/00ik2hbilv027a86230j1cf1y1l4g7mz-tree-sitter-fsh-fa33477",
+  "sha256": "15ckd9k41rixalanb2s5hd2vr46ymalkn9sh8niqyyjhwzcwccp9",
+  "fetchLFS": false,
+  "fetchSubmodules": false,
+  "deepClone": false,
+  "leaveDotGit": false
+}

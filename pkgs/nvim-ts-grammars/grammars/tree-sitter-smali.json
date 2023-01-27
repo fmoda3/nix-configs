@@ -1,0 +1,11 @@
+{
+  "url": "https://github.com/amaanq/tree-sitter-smali",
+  "rev": "d7f535e176c928d33b0e202dd808ac247cacf2ff",
+  "date": "2023-01-08T03:18:04-05:00",
+  "path": "/nix/store/0np2bm55pdwi1kcdb3cch63mw0sny2hk-tree-sitter-smali-d7f535e",
+  "sha256": "07j5n0i9yk0bfg0x7nsrsjyj7x141nivxid7p8bx4nk90z6hf9f1",
+  "fetchLFS": false,
+  "fetchSubmodules": false,
+  "deepClone": false,
+  "leaveDotGit": false
+}

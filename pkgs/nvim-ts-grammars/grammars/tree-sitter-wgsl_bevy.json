@@ -1,9 +1,9 @@
 {
   "url": "https://github.com/theHamsta/tree-sitter-wgsl-bevy",
-  "rev": "c81dc770310795caea5e00996505deba024ec698",
-  "date": "2022-12-25T17:36:12+01:00",
-  "path": "/nix/store/kn0qczra4yqlriscl2kys5fc099igp0n-tree-sitter-wgsl-bevy-c81dc77",
-  "sha256": "0jcxlq70qxf7i8b6py3c8qbqbbgj8i0shsyr75c3wwczcbq1kl88",
+  "rev": "7cd38d6895060b023353e04f7af099ec64add5d1",
+  "date": "2023-01-09T21:24:24+01:00",
+  "path": "/nix/store/gcml8x3ksh3anfsqkd3lxivd2shy0pnx-tree-sitter-wgsl-bevy-7cd38d6",
+  "sha256": "0z9hmqfrllacxn264x7yq5k5s6kmksn7i32zza1r2n5164bxwds3",
   "fetchLFS": false,
   "fetchSubmodules": false,
   "deepClone": false,

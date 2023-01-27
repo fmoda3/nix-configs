@@ -1,0 +1,11 @@
+{
+  "url": "https://github.com/justinmk/tree-sitter-ini",
+  "rev": "1a0ce072ebf3afac7d5603d9a95bb7c9a6709b44",
+  "date": "2022-11-01T03:06:54+01:00",
+  "path": "/nix/store/cd3iiycd19nrfxfrkh9k25hlg2pk1kxh-tree-sitter-ini-1a0ce07",
+  "sha256": "0rdji9s6rjvd17z3s9jyj42c2b4z1qcpbf7mrh6km0jk9ai4myx4",
+  "fetchLFS": false,
+  "fetchSubmodules": false,
+  "deepClone": false,
+  "leaveDotGit": false
+}
