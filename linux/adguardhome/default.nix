@@ -5,10 +5,11 @@ with lib;
     services.adguardhome = {
       enable = config.my-linux.adblocker.enable;
       settings = {
+	bind_host = "0.0.0.0";
+	bind_port = 80;
         dns = {
           bind_host = "0.0.0.0";
           bind_hosts = [ "0.0.0.0" ];
-          bind_port = 80;
           bootstrap_dns =
             if config.my-linux.adblocker.useUnbound then [
               "127.0.0.1:5335"
