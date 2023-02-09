@@ -64,10 +64,10 @@
           allowUnfree = true;
         };
         overlays = [
-          # "pkgs" currently points to unstable
-          # The following overlay allows you to specify "stable.pkgs" for stable versions
-          # and "master.pkgs" for versions on master
           neovim-nightly-overlay.overlay
+          # "pkgs" currently points to unstable
+          # The following overlay allows you to specify "pkgs.stable" for stable versions
+          # and "pkgs.master" for versions on master
           (
             final: prev:
               let
@@ -79,6 +79,7 @@
                 stable = nixpkgs-stable.legacyPackages.${system};
               }
           )
+          # Add in custom defined packages in the pkgs directory
           (
             final: prev: { flake = self; } // import ./pkgs final prev
           )
@@ -238,7 +239,7 @@
             }
             {
               name = "create-x86_64-iso";
-              help = "Creates an iso image for aarch64 with my configs";
+              help = "Creates an iso image for x86_64 with my configs";
               command = "GC_DONT_GC=1 nix build \".#images.bootable-x86_64-iso\"";
             }
             {

@@ -1,4 +1,5 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
+with lib;
 {
   # Hide the dock and menu bar, for Yabai
   system.defaults = {
@@ -10,7 +11,7 @@
     };
   };
 
-  services.yabai.enable = true;
+  services.yabai.enable = false;
   services.yabai.package = pkgs.yabai;
   services.yabai.enableScriptingAddition = true;
   services.yabai.config = {
@@ -38,6 +39,16 @@
     left_padding = "20";
     right_padding = "20";
     window_gap = "10";
+  } // optionalAttrs (config.my-darwin.theme == "nord") {
+    external_bar = "all:26:0"; # let simple-bar handle bar
+    active_window_border_color = "0xFF5E81AC";
+    normal_window_border_color = "0xFF4C566A";
+    insert_window_border_color = "0xFFBF616A";
+  } // optionalAttrs (config.my-darwin.theme == "onedark") {
+    external_bar = "all:10:0"; # let simple-bar handle bar
+    active_window_border_color = "0xFF8877FF";
+    normal_window_border_color = "0xFF282828";
+    insert_window_border_color = "0xFFBF616A";
   };
   services.yabai.extraConfig = ''
     yabai -m rule --add app="choose" manage=off
@@ -64,6 +75,8 @@
   services.spacebar.enable = true;
   services.spacebar.package = pkgs.spacebar;
   services.spacebar.config = {
+    text_font = ''"TerminessTTF Nerd Font:Medium:12.0"'';
+    icon_font = ''"TerminessTTF Nerd Font:Medium:12.0"'';
     position = "top";
     height = 26;
     spacing_left = 25;
@@ -74,7 +87,23 @@
     clock_icon = "";
     dnd_icon = "";
     clock_format = ''"%d/%m/%y %R"'';
-  };
+  } // optionalAttrs (config.my-darwin.theme == "nord") {
+    background_color = "0xff2e3440";
+    foreground_color = "0xff5e81ac";
+    space_icon_color = "0xffbf616a";
+    power_icon_color = "0xffd08770";
+    battery_icon_color = "0xffebcb8b";
+    dnd_icon_color = "0xffa3be8c";
+    clock_icon_color = "0xffb48ead";
+   } // optionalAttrs (config.my-darwin.theme == "onedark") {
+    background_color = "0x002e3440";
+    foreground_color = "0xff8877ff";
+    space_icon_color = "0xff56b6c2";
+    power_icon_color = "0xff8877ff";
+    battery_icon_color = "0xff8877ff";
+    dnd_icon_color = "0xff8877ff";
+    clock_icon_color = "0xff8877ff";
+   };
 
   services.skhd.enable = true;
   services.skhd.package = pkgs.skhd;

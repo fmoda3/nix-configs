@@ -106,11 +106,11 @@ in
   };
 
   config = {
-    # Enable Flakes
     nix = {
       package = pkgs.nixStable;
       settings = {
         auto-optimise-store = cfg.enableNixOptimise;
+        # Add cache for nix-community, used mainly for neovim nightly
         substituters = [ "https://nix-community.cachix.org" ];
         trusted-public-keys = [
           "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
@@ -121,6 +121,7 @@ in
         dates = "weekly";
         options = "--delete-older-than 30d";
       };
+      # Enable Flakes
       extraOptions = ''
         experimental-features = nix-command flakes
         ${optionalString cfg.enableNixOptimise ''

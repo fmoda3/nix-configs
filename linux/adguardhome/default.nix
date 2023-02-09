@@ -5,8 +5,8 @@ with lib;
     services.adguardhome = {
       enable = config.my-linux.adblocker.enable;
       settings = {
-	bind_host = "0.0.0.0";
-	bind_port = 80;
+	      bind_host = "0.0.0.0";
+	      bind_port = 80;
         dns = {
           bind_host = "0.0.0.0";
           bind_hosts = [ "0.0.0.0" ];
