@@ -1,0 +1,11 @@
+{
+  "url": "https://github.com/amaanq/tree-sitter-go-sum",
+  "rev": "14da5c2a34861eb2d97ed89f39324156031e8878",
+  "date": "2023-02-21T23:59:54-05:00",
+  "path": "/nix/store/c1dzdl1nmzn90y2nq234clxv8iphny1n-tree-sitter-go-sum-14da5c2",
+  "sha256": "1r17p5aawns929ic9r9j87yk75nv4aql33jvnicq0c25rf7jxzrw",
+  "fetchLFS": false,
+  "fetchSubmodules": false,
+  "deepClone": false,
+  "leaveDotGit": false
+}

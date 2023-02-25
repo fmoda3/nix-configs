@@ -1,9 +1,9 @@
 {
   "url": "https://github.com/duskmoon314/tree-sitter-thrift",
-  "rev": "999a27d87b8f90a74306d4e79c5e22db3ab61633",
-  "date": "2023-01-22T05:00:03-05:00",
-  "path": "/nix/store/xamqzr476jssrmxvq9c5x4brr4mpsrh5-tree-sitter-thrift-999a27d",
-  "sha256": "0v7am7i3jrhdkblsbqhw3l2gnvps0wk1q4nfh7s1ny2ah40rv9pm",
+  "rev": "e0c3e50e17846230e88becdce28fbb1b41dcabba",
+  "date": "2023-02-19T22:21:33-05:00",
+  "path": "/nix/store/8xg13n2bawxyaifvsii76c99z5l5m8aa-tree-sitter-thrift-e0c3e50",
+  "sha256": "1x4vlqzrxzai0mmprxdk8d65gi7w6zhrfpmljfkmn4y4lr0ld9ya",
   "fetchLFS": false,
   "fetchSubmodules": false,
   "deepClone": false,

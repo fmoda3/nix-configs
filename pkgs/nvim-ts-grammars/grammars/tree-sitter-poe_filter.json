@@ -1,0 +1,11 @@
+{
+  "url": "https://github.com/ObserverOfTime/tree-sitter-poe-filter",
+  "rev": "80dc10195e26c72598ed1ab02cdf2d8e4c792e7b",
+  "date": "2023-01-24T09:34:24+02:00",
+  "path": "/nix/store/7wi255dndsyyszivipaixlvb7yyddsbs-tree-sitter-poe-filter-80dc101",
+  "sha256": "0i5w57ri7l9yi09mmp6yg8s83nbrp1fwiw6m1xd7ckpbwbqj4fr8",
+  "fetchLFS": false,
+  "fetchSubmodules": false,
+  "deepClone": false,
+  "leaveDotGit": false
+}

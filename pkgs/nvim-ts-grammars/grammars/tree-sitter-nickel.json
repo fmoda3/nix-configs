@@ -1,9 +1,9 @@
 {
   "url": "https://github.com/nickel-lang/tree-sitter-nickel",
-  "rev": "092e90142667482996880044d2c04837d3d1c266",
-  "date": "2023-01-17T08:46:13+01:00",
-  "path": "/nix/store/xjkm1a78rfp7ksvh2l8z2dz9y4k2arka-tree-sitter-nickel-092e901",
-  "sha256": "0wb87y3fk22lgc3v0yxappmpljq5rgkprg1r7gmjx834fzlg2hnb",
+  "rev": "d6c7eeb751038f934b5b1aa7ff236376d0235c56",
+  "date": "2023-01-27T10:31:38+01:00",
+  "path": "/nix/store/b8lwpx6480gc9pyh510j7lxcnkjrk6lw-tree-sitter-nickel-d6c7eeb",
+  "sha256": "1qdhggiprs1z5nnans2a876znfga95az3nafl4qp7j0ngg0m3x0g",
   "fetchLFS": false,
   "fetchSubmodules": false,
   "deepClone": false,

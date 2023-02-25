@@ -1,9 +1,9 @@
 {
   "url": "https://github.com/ObserverOfTime/tree-sitter-arduino",
-  "rev": "c473c09f23b13d9404ec5208fad3eddea89d70f8",
-  "date": "2022-11-16T17:26:40+02:00",
-  "path": "/nix/store/qm5fw3ywprx8idsycaa28y1aim90hjng-tree-sitter-arduino-c473c09",
-  "sha256": "190d3yqnnrw03zfn86nj338dahbnci43b11r8crnlcdf09k3a338",
+  "rev": "257efffa387da3283a37816b71dedfecf4af5222",
+  "date": "2023-02-04T13:03:53+02:00",
+  "path": "/nix/store/fbpvc5ipxmlbfh4d1h8401zycaiyv9wl-tree-sitter-arduino-257efff",
+  "sha256": "1zsj2mxy7r452k7nn9xx1cs03b3vi0s16wj4v4b0rjcc6cbyikb1",
   "fetchLFS": false,
   "fetchSubmodules": false,
   "deepClone": false,

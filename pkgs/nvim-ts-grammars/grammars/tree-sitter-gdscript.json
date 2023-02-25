@@ -1,9 +1,9 @@
 {
   "url": "https://github.com/PrestonKnopp/tree-sitter-gdscript",
-  "rev": "a8fa839150d05baaf4d5a472520ee71e9b1d8b3c",
-  "date": "2022-12-20T12:50:50-08:00",
-  "path": "/nix/store/xvx0lgy2791xk2rbismzyyq1f74p26pr-tree-sitter-gdscript-a8fa839",
-  "sha256": "06lq9va93v6y8sffm4cq4gbak48hz7cirkmjlxszjchaqdrn4amr",
+  "rev": "31ebb7cd0b880ea53a152eaf9d4df73f737181cc",
+  "date": "2023-02-13T16:19:41-08:00",
+  "path": "/nix/store/avr7rc3z5w830v69g8y4x345n18fzabd-tree-sitter-gdscript-31ebb7c",
+  "sha256": "0k65qq64cwpbydlagrkg4nzl5sca186wcjnd2k4wh376rm9gmwzm",
   "fetchLFS": false,
   "fetchSubmodules": false,
   "deepClone": false,

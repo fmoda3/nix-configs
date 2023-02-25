@@ -1,9 +1,9 @@
 {
   "url": "https://github.com/polarmutex/tree-sitter-beancount",
-  "rev": "4cbd1f09cd07c1f1fabf867c2cf354f9da53cc4c",
-  "date": "2022-07-02T10:47:24-04:00",
-  "path": "/nix/store/7xiav635il58690q5ivjsxmh78hm6f9v-tree-sitter-beancount-4cbd1f0",
-  "sha256": "0igv4nal56d4ppj9zpdjc9i49r755dcvz3csfrps0d0p2v47y7sj",
+  "rev": "f3741a3a68ade59ec894ed84a64673494d2ba8f3",
+  "date": "2023-02-01T10:19:07-05:00",
+  "path": "/nix/store/vp3kx3dl2h5mip0kzq3fgs31xsyalghk-tree-sitter-beancount-f3741a3",
+  "sha256": "04dlhffhzg6gaj6i5ias20zshhrapm98lryrdv5f6sfx54b7gmjs",
   "fetchLFS": false,
   "fetchSubmodules": false,
   "deepClone": false,

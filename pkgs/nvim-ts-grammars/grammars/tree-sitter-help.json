@@ -1,9 +1,9 @@
 {
   "url": "https://github.com/neovim/tree-sitter-vimdoc",
-  "rev": "9dee68e3912d16e9878b06e3cd87e21ada3d9029",
-  "date": "2023-01-01T20:10:31-08:00",
-  "path": "/nix/store/k8vcq1fy42180bwsfg7namxwv39jxdkd-tree-sitter-vimdoc-9dee68e",
-  "sha256": "1nf2cihmrbgd9kgr6diyhgrmfiyh9ryi8qy7np7jdb0axh5h8xp9",
+  "rev": "8f75ef3ec86bc315d5fdb939899b397289389181",
+  "date": "2023-02-01T11:27:42+01:00",
+  "path": "/nix/store/pdpkixxdnfr6qbjav51w4r62scdfkm7h-tree-sitter-vimdoc-8f75ef3",
+  "sha256": "0l7rr7frqcc0qg8yl2ibla0i0wf0pjl8p90hzps5jjffsvvzqc6g",
   "fetchLFS": false,
   "fetchSubmodules": false,
   "deepClone": false,

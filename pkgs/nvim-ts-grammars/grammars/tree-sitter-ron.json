@@ -1,0 +1,11 @@
+{
+  "url": "https://github.com/amaanq/tree-sitter-ron",
+  "rev": "ce6086b2c9e8e71065b8129d6c2289c5f66d1879",
+  "date": "2023-02-22T01:20:24-05:00",
+  "path": "/nix/store/4gw9pfkhq52a75p85h7ckyb658lniqdr-tree-sitter-ron-ce6086b",
+  "sha256": "1xv1lsw66nb7dyckfnq1yh7ff1rzl2x285h26l46qadgg8ks34p1",
+  "fetchLFS": false,
+  "fetchSubmodules": false,
+  "deepClone": false,
+  "leaveDotGit": false
+}
