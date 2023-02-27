@@ -115,7 +115,7 @@ in
         # Kotlin
         kotlin-language-server
         # Lua
-        sumneko-lua-language-server
+        lua-language-server
         # Nix
         rnix-lsp
         nixpkgs-fmt
