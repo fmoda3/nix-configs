@@ -1,9 +1,9 @@
 {
   "url": "https://github.com/amaanq/tree-sitter-kdl",
-  "rev": "c3c4856464842e05366b1f3ebc4434c9194cad43",
-  "date": "2023-02-21T23:36:16-05:00",
-  "path": "/nix/store/qs31cihpnnjn5rmabnx2a8knvwyi7yqq-tree-sitter-kdl-c3c4856",
-  "sha256": "1j3dz80kr0dhcas0rhi4js3l20fs6ych6vqnjcb5n82nsdgz52xx",
+  "rev": "e36f054a60c4d9e5ae29567d439fdb8790b53b30",
+  "date": "2023-02-28T18:06:10-05:00",
+  "path": "/nix/store/8x61jdcrddv97m7c2azs9bl79hqi4f02-tree-sitter-kdl-e36f054",
+  "sha256": "0zpys4anzmq57sq7hnykcmhpg7wrcm6irbjrsrqps8a3c3nxx4k5",
   "fetchLFS": false,
   "fetchSubmodules": false,
   "deepClone": false,

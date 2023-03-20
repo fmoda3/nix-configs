@@ -1,9 +1,9 @@
 {
   "url": "https://github.com/yuja/tree-sitter-qmljs",
-  "rev": "ab75be9750e6f2f804638824d1790034286a830c",
-  "date": "2022-12-31T15:06:43+09:00",
-  "path": "/nix/store/1x7cfl0q0kvca0vs425hbcrz8pyy6v0y-tree-sitter-qmljs-ab75be9",
-  "sha256": "1lqk3grzh34v2zbdi5a8sriwyc5lraak53f971acjj4fy6rgxzsh",
+  "rev": "35ead5b9955cdb29bcf709d622fa960ff33992b6",
+  "date": "2023-03-18T15:37:02+09:00",
+  "path": "/nix/store/dgh1rxkzak7vnfjri7ls0n78f5sg9gi9-tree-sitter-qmljs-35ead5b",
+  "sha256": "1i6b572z3ys8nwk28s4lmhzbjy1g6a9x3hf1ilaad4xf86a3ngld",
   "fetchLFS": false,
   "fetchSubmodules": false,
   "deepClone": false,

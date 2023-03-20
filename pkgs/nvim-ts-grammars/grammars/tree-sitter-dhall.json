@@ -1,0 +1,11 @@
+{
+  "url": "https://github.com/jbellerb/tree-sitter-dhall",
+  "rev": "affb6ee38d629c9296749767ab832d69bb0d9ea8",
+  "date": "2022-06-26T01:12:29-04:00",
+  "path": "/nix/store/f2ikmhfxpx1zpfg5wyw772arfjz6ph2z-tree-sitter-dhall-affb6ee",
+  "sha256": "0r4f4w2jhm2hyvh3r3phdjhigsh0an8g4p21cbz8ldkld8ma9lxb",
+  "fetchLFS": false,
+  "fetchSubmodules": false,
+  "deepClone": false,
+  "leaveDotGit": false
+}

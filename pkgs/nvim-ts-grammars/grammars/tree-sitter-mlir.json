@@ -1,0 +1,11 @@
+{
+  "url": "https://github.com/artagnon/tree-sitter-mlir",
+  "rev": "e2053f7c8856d91bc36c87604f697784845cee69",
+  "date": "2023-02-25T14:50:27+01:00",
+  "path": "/nix/store/ncv17s5fh5c05pa27dclifwb4kc2fsvd-tree-sitter-mlir-e2053f7",
+  "sha256": "1h2fbdsq7056rnqss9z9ldzfyqjvns555lrp0bfdcv5x5g5m13dv",
+  "fetchLFS": false,
+  "fetchSubmodules": false,
+  "deepClone": false,
+  "leaveDotGit": false
+}

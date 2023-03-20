@@ -1,0 +1,11 @@
+{
+  "url": "https://github.com/the-mikedavis/tree-sitter-git-config",
+  "rev": "a01b498b25003d97a5f93b0da0e6f28307454347",
+  "date": "2022-08-31T13:22:00+00:00",
+  "path": "/nix/store/4bnv1xkkb9g2l8798rg0q47i27kvayj4-tree-sitter-git-config-a01b498",
+  "sha256": "10350sz710d0h5njlar44bvhd03brh49wszcxqikd61kirmfc0pn",
+  "fetchLFS": false,
+  "fetchSubmodules": false,
+  "deepClone": false,
+  "leaveDotGit": false
+}

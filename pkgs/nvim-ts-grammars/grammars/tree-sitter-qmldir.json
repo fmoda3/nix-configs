@@ -1,0 +1,11 @@
+{
+  "url": "https://github.com/Decodetalkers/tree-sitter-qmldir",
+  "rev": "6b2b5e41734bd6f07ea4c36ac20fb6f14061c841",
+  "date": "2023-03-01T01:20:01-05:00",
+  "path": "/nix/store/6hkx20irr7mhxjfs5nfvdajb7dp5swkv-tree-sitter-qmldir-6b2b5e4",
+  "sha256": "13myaymagivm4pmr2msd3rkrigp61pzx3n4nvd6446xmvxfks9zf",
+  "fetchLFS": false,
+  "fetchSubmodules": false,
+  "deepClone": false,
+  "leaveDotGit": false
+}

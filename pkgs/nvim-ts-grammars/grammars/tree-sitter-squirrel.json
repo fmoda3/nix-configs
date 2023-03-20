@@ -1,0 +1,11 @@
+{
+  "url": "https://github.com/amaanq/tree-sitter-squirrel",
+  "rev": "3fefc6b9bb2b4de1b1c461783f675918cd957546",
+  "date": "2023-03-07T03:59:52-05:00",
+  "path": "/nix/store/qnbmc9hwayr8glmwh8xln8lk5ccz60rd-tree-sitter-squirrel-3fefc6b",
+  "sha256": "13x34vzz2s1xwhqf0hkc9k323prsfwgrk786bb8bc05m4cfgl643",
+  "fetchLFS": false,
+  "fetchSubmodules": false,
+  "deepClone": false,
+  "leaveDotGit": false
+}

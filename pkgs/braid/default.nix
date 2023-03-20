@@ -6,7 +6,7 @@ pkgs.python3Packages.buildPythonPackage rec {
 
   src = fetchGit {
     url = "git@github.com:toasttab/braid.git";
-    rev = "519b9d194fbf8081e9fb923f0cd47b051aa9f5fa";
+    rev = "a3d19434201ae3ef138f7bb3794d9d2f878a8a6d";
     ref = "main";
   };
 
@@ -22,5 +22,10 @@ pkgs.python3Packages.buildPythonPackage rec {
     toast-tools
     psutil
   ];
+
+  postPatch = ''
+    substituteInPlace setup.py \
+      --replace "version=Version().version," "version='0.1.0',"
+  '';
 
 }

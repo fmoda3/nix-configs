@@ -1,9 +1,9 @@
 {
   "url": "https://github.com/alex-pinkus/tree-sitter-swift",
-  "rev": "0c32d2948b79939b6464d9ced40fca43912cd486",
-  "date": "2023-02-21T07:03:40-08:00",
-  "path": "/nix/store/w8bka2rkfjj97p0v47qph8qmjyha2afq-tree-sitter-swift-0c32d29",
-  "sha256": "1kjnkagglirpgqnkw8pf9pyy8v5yhs65vhjidrsfs14hygyql9rg",
+  "rev": "4cf4bb67c27f5c5a75f634fe941c588660e69ab3",
+  "date": "2023-03-18T23:34:13-07:00",
+  "path": "/nix/store/25vd2wscavajvdkjddrh96am6013rsgk-tree-sitter-swift-4cf4bb6",
+  "sha256": "0pld3cfpal25cxzv28abwbbjs5wjvz6kdbd5s9g42clnar8f85bm",
   "fetchLFS": false,
   "fetchSubmodules": false,
   "deepClone": false,

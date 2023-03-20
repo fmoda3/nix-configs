@@ -1,0 +1,11 @@
+{
+  "url": "https://github.com/Philipp-M/tree-sitter-yuck",
+  "rev": "c348825d3f86dec71dee0e1223c6bd73114e3579",
+  "date": "2023-03-10T16:31:55+01:00",
+  "path": "/nix/store/xb1j1cdx0mjyifj4hdrpxgixm09j4gpw-tree-sitter-yuck-c348825",
+  "sha256": "1ljvk2kn05789r1l0g3iacy70bzlb4770ilnk9shl4ix78n6r2qz",
+  "fetchLFS": false,
+  "fetchSubmodules": false,
+  "deepClone": false,
+  "leaveDotGit": false
+}

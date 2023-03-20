@@ -218,7 +218,7 @@
         let
           pkgs = import nixpkgs {
             inherit system;
-            overlays = [ devshell.overlay ];
+            overlays = [ devshell.overlays.default ];
           };
         in
         pkgs.devshell.mkShell {
