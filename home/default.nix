@@ -17,37 +17,10 @@ in
   ];
 
   options.my-home = {
-    includeFonts = lib.mkOption {
-      type = types.bool;
-      default = false;
-      description = ''
-        Include my favorite fonts
-      '';
-    };
-
-    useNeovim = lib.mkOption {
-      type = types.bool;
-      default = false;
-      description = ''
-        Include neovim with my customizations
-      '';
-    };
-
-    isWork = lib.mkOption {
-      type = types.bool;
-      default = false;
-      description = ''
-        Whether this is a work profile
-      '';
-    };
-
-    includeGames = lib.mkOption {
-      type = types.bool;
-      default = false;
-      description = ''
-        Include games
-      '';
-    };
+    includeFonts = lib.mkEnableOption "fonts";
+    useNeovim = lib.mkEnableOption "neovim";
+    isWork = lib.mkEnableOption "work profile";
+    includeGames = lib.mkEnableOption "games";
   };
 
   config = {

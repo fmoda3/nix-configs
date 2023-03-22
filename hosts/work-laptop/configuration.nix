@@ -5,5 +5,6 @@
 
   my-darwin = {
     isWork = true;
+    enableSudoTouch = true;
   };
 }

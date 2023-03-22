@@ -3,5 +3,7 @@
     ../../darwin
   ];
 
-  my-darwin = { };
+  my-darwin = { 
+    enableSudoTouch = true;
+  };
 }

@@ -15,26 +15,15 @@ in
   ];
 
   options.my-linux = {
-    enableNixOptimise = lib.mkOption {
-      type = types.bool;
-      default = false;
-      description = ''
-        Whether we should enable nix auto optimizations
-      '';
-    };
+    enableNixOptimise = lib.mkEnableOption "nix auto optimizations";
 
     tailscale = lib.mkOption {
       description = "tailscale submodile";
       default = { };
       type = types.submodule {
         options = {
-          enable = lib.mkOption {
-            type = types.bool;
-            default = false;
-            description = ''
-              Whether we should run tailscale
-            '';
-          };
+          enable = lib.mkEnableOption "tailscale";
+          advertiseExitNode = mkEnableOption "advertise exit node";
 
           authkey = mkOption {
             type = types.str;
@@ -42,14 +31,6 @@ in
             example = "tskey-kveqY12CNTRL-wQHntvWh7JgruYi1iwVgy";
             description = ''
               A one-time use tailscale key
-            '';
-          };
-
-          advertiseExitNode = mkOption {
-            type = types.bool;
-            default = false;
-            description = ''
-              Should tailscale advertise as an exit node
             '';
           };
         };
@@ -61,21 +42,9 @@ in
       default = { };
       type = types.submodule {
         options = {
-          enable = lib.mkOption {
-            type = types.bool;
-            default = false;
-            description = ''
-              Whether we should run an adblocker
-            '';
-          };
-
-          useUnbound = lib.mkOption {
-            type = types.bool;
-            default = false;
-            description = ''
-              Should the adblocker run unbound as the backing dns provider
-            '';
-          };
+          enable = lib.mkEnableOption "adblocker";
+          # Should the adblocker run unbound as the backing dns provider
+          useUnbound = lib.mkEnableOption "unbound";
         };
       };
     };
@@ -85,21 +54,8 @@ in
       default = { };
       type = types.submodule {
         options = {
-          enable = lib.mkOption {
-            type = types.bool;
-            default = false;
-            description = ''
-              Enable vmware tools
-            '';
-          };
-
-          headless = lib.mkOption {
-            type = types.bool;
-            default = false;
-            description = ''
-              Enable headless mode
-            '';
-          };
+          enable = lib.mkEnableOption "vmware tools";
+          headless = lib.mkEnableOption "headless mode";
         };
       };
     };

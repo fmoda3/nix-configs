@@ -14,13 +14,8 @@ in
   ];
 
   options.my-darwin = {
-    isWork = lib.mkOption {
-      type = types.bool;
-      default = false;
-      description = ''
-        Whether this is a work profile
-      '';
-    };
+    isWork = lib.mkEnableOption "work profile";
+    enableSudoTouch = lib.mkEnableOption "sudo touch id";
 
     theme = lib.mkOption {
       type = types.str;
@@ -68,6 +63,8 @@ in
       enableCompletion = false;
       promptInit = "";
     };
+
+    security.pam.enableSudoTouchIdAuth = cfg.enableSudoTouch;
 
     # Used for backwards compatibility, please read the changelog before changing.
     # $ darwin-rebuild changelog
