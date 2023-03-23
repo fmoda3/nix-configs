@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }:
 with lib;
-let 
+let
   advertiseExitNode = optionalString config.my-linux.tailscale.advertiseExitNode "--advertise-exit-node";
 in
 {

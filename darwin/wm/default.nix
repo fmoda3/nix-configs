@@ -95,7 +95,7 @@ with lib;
     battery_icon_color = "0xffebcb8b";
     dnd_icon_color = "0xffa3be8c";
     clock_icon_color = "0xffb48ead";
-   } // optionalAttrs (config.my-darwin.theme == "onedark") {
+  } // optionalAttrs (config.my-darwin.theme == "onedark") {
     background_color = "0x002e3440";
     foreground_color = "0xff8877ff";
     space_icon_color = "0xff56b6c2";
@@ -103,7 +103,7 @@ with lib;
     battery_icon_color = "0xff8877ff";
     dnd_icon_color = "0xff8877ff";
     clock_icon_color = "0xff8877ff";
-   };
+  };
 
   services.skhd.enable = true;
   services.skhd.package = pkgs.skhd;
