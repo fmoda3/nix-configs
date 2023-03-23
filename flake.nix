@@ -56,8 +56,12 @@
         flake-compat.follows = "flake-compat";
       };
     };
+    nixos-generators = {
+      url = "github:nix-community/nixos-generators";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
-  outputs = inputs@{ self, nixpkgs, darwin, home-manager, flake-utils, deploy-rs, devshell, ... }:
+  outputs = inputs@{ self, nixpkgs, darwin, home-manager, flake-utils, deploy-rs, devshell, nixos-generators, ... }:
     let
       nixpkgsConfig = with inputs; {
         config = {
@@ -100,7 +104,7 @@
           };
         }
       ];
-      nixosModules = { user, host, image ? null }: with inputs; [
+      nixosModules = { user, host }: with inputs; [
         # Main `nixos` config
         (./. + "/hosts/${host}/configuration.nix")
         # `home-manager` module
@@ -121,7 +125,7 @@
             users.${user} = import (./. + "/hosts/${host}/home.nix");
           };
         }
-      ] ++ (nixpkgs.lib.optional (image != null) image);
+      ];
     in
     {
       darwinConfigurations = {
@@ -164,7 +168,6 @@
           modules = nixosModules {
             user = "fmoda3";
             host = "cicucci-dns";
-            image = "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix";
           };
           specialArgs = { inherit inputs nixpkgs; };
         };
@@ -176,29 +179,35 @@
           };
           specialArgs = { inherit inputs nixpkgs; };
         };
-        bootable-aarch64-iso = nixpkgs.lib.nixosSystem {
+      };
+      images = {
+        bootable-aarch64-sd = nixos-generators.nixosGenerate {
+          system = "aarch64-linux";
+          modules = nixosModules {
+            user = "fmoda3";
+            host = "bootable-sd";
+          };
+          specialArgs = { inherit inputs nixpkgs; };
+          format = "sd-aarch64-installer";
+        };
+        bootable-aarch64-iso = nixos-generators.nixosGenerate {
           system = "aarch64-linux";
           modules = nixosModules {
             user = "fmoda3";
             host = "bootable-iso";
-            image = "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix";
           };
           specialArgs = { inherit inputs nixpkgs; };
+          format = "install-iso";
         };
-        bootable-x86_64-iso = nixpkgs.lib.nixosSystem {
+        bootable-x86_64-iso = nixos-generators.nixosGenerate {
           system = "x86_64-linux";
           modules = nixosModules {
             user = "fmoda3";
             host = "bootable-iso";
-            image = "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix";
           };
           specialArgs = { inherit inputs nixpkgs; };
+          format = "install-iso";
         };
-      };
-      images = {
-        cicucci-dns = self.nixosConfigurations.cicucci-dns.config.system.build.sdImage;
-        bootable-aarch64-iso = self.nixosConfigurations.bootable-aarch64-iso.config.system.build.isoImage;
-        bootable-x86_64-iso = self.nixosConfigurations.bootable-x86_64-iso.config.system.build.isoImage;
       };
       deploy = {
         nodes = {
@@ -243,9 +252,9 @@
               command = "GC_DONT_GC=1 nix build \".#images.bootable-x86_64-iso\"";
             }
             {
-              name = "create-cicucci-dns-sd";
-              help = "Creates an sd card image for cicucci-dns";
-              command = "nix build \".#images.cicucci-dns\"";
+              name = "create-aarch64-sd";
+              help = "Creates an sd card image for aarch64 with my configs";
+              command = "nix build \".#images.bootable-aarch64-sd\"";
             }
           ];
         };
