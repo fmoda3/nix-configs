@@ -18,7 +18,7 @@ in
     }];
 
     boot.initrd.availableKernelModules = [ "mptspi" ];
-    # boot.initrd.kernelModules = [ "vmw_pvscsi" ];
+    boot.initrd.kernelModules = optionals (!pkgs.stdenv.isAarch64) [ "vmw_pvscsi" ];
 
     environment.systemPackages = [ open-vm-tools ];
 
@@ -57,7 +57,7 @@ in
 
     services.xserver = mkIf (!cfg.headless) {
       # TODO: does not build on aarch64
-      # modules = [ xf86inputvmmouse ];
+      modules = optionals (!pkgs.stdenv.isAarch64) [ xf86inputvmmouse ];
 
       config = ''
         Section "InputClass"

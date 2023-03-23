@@ -208,6 +208,15 @@
           specialArgs = { inherit inputs nixpkgs; };
           format = "install-iso";
         };
+        cicucci-builder-vm = nixos-generators.nixosGenerate {
+          system = "aarch64-linux";
+          modules = nixosModules {
+            user = "fmoda3";
+            host = "cicucci-builder";
+          };
+          specialArgs = { inherit inputs nixpkgs; };
+          format = "vmware";
+        };
       };
       deploy = {
         nodes = {
@@ -255,6 +264,11 @@
               name = "create-aarch64-sd";
               help = "Creates an sd card image for aarch64 with my configs";
               command = "nix build \".#images.bootable-aarch64-sd\"";
+            }
+            {
+              name = "create-builder-vm";
+              help = "Creates a vmware image for cicucci-builder";
+              command = "nix build \".#images.cicucci-builder-vm\"";
             }
           ];
         };

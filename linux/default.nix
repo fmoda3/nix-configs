@@ -12,6 +12,8 @@ in
     ./tailscale
     ./tailscale-autoconnect
     ./vmware
+    # Remaps enabling vmware guest to our custom module which supports aarch64
+    (mkRenamedOptionModule [ "virtualisation" "vmware" "guest" ] [ "my-linux" "vmware" ])
   ];
 
   options.my-linux = {
