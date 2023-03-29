@@ -41,6 +41,7 @@ in
         neofetch
         tldr
         wget
+        comma
       ] ++ optionals cfg.includeFonts [
         # Fonts
         nerdfonts

@@ -95,6 +95,8 @@ in
       promptInit = "";
     };
 
+    programs.nix-index.enable = true;
+
     users.defaultUserShell = pkgs.zsh;
 
     system.stateVersion = "22.05";

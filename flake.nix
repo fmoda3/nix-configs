@@ -60,8 +60,16 @@
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    comma = {
+      url = "github:nix-community/comma";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        utils.follows = "flake-utils";
+        flake-compat.follows = "flake-compat";
+      };
+    };
   };
-  outputs = inputs@{ self, nixpkgs, darwin, home-manager, flake-utils, deploy-rs, devshell, nixos-generators, ... }:
+  outputs = inputs@{ self, nixpkgs, darwin, home-manager, flake-utils, deploy-rs, devshell, nixos-generators, comma, ... }:
     let
       nixpkgsConfig = with inputs; {
         config = {
@@ -69,6 +77,7 @@
         };
         overlays = [
           neovim-nightly-overlay.overlay
+          comma.overlays.default
           # "pkgs" currently points to unstable
           # The following overlay allows you to specify "pkgs.stable" for stable versions
           # and "pkgs.master" for versions on master

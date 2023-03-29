@@ -64,6 +64,8 @@ in
       promptInit = "";
     };
 
+    programs.nix-index.enable = true;
+
     security.pam.enableSudoTouchIdAuth = cfg.enableSudoTouch;
 
     # Used for backwards compatibility, please read the changelog before changing.
