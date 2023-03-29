@@ -5,6 +5,7 @@
   tree-sitter-astro = builtins.fromJSON (builtins.readFile ./tree-sitter-astro.json);
   tree-sitter-awk = builtins.fromJSON (builtins.readFile ./tree-sitter-awk.json);
   tree-sitter-bash = builtins.fromJSON (builtins.readFile ./tree-sitter-bash.json);
+  tree-sitter-bass = builtins.fromJSON (builtins.readFile ./tree-sitter-bass.json);
   tree-sitter-beancount = builtins.fromJSON (builtins.readFile ./tree-sitter-beancount.json);
   tree-sitter-bibtex = builtins.fromJSON (builtins.readFile ./tree-sitter-bibtex.json);
   tree-sitter-bicep = builtins.fromJSON (builtins.readFile ./tree-sitter-bicep.json);
@@ -39,6 +40,7 @@
   tree-sitter-embedded_template = builtins.fromJSON (builtins.readFile ./tree-sitter-embedded_template.json);
   tree-sitter-erlang = builtins.fromJSON (builtins.readFile ./tree-sitter-erlang.json);
   tree-sitter-fennel = builtins.fromJSON (builtins.readFile ./tree-sitter-fennel.json);
+  tree-sitter-firrtl = builtins.fromJSON (builtins.readFile ./tree-sitter-firrtl.json);
   tree-sitter-fish = builtins.fromJSON (builtins.readFile ./tree-sitter-fish.json);
   tree-sitter-foam = builtins.fromJSON (builtins.readFile ./tree-sitter-foam.json);
   tree-sitter-fortran = builtins.fromJSON (builtins.readFile ./tree-sitter-fortran.json);
@@ -89,6 +91,7 @@
   tree-sitter-ledger = builtins.fromJSON (builtins.readFile ./tree-sitter-ledger.json);
   tree-sitter-llvm = builtins.fromJSON (builtins.readFile ./tree-sitter-llvm.json);
   tree-sitter-lua = builtins.fromJSON (builtins.readFile ./tree-sitter-lua.json);
+  tree-sitter-luadoc = builtins.fromJSON (builtins.readFile ./tree-sitter-luadoc.json);
   tree-sitter-luap = builtins.fromJSON (builtins.readFile ./tree-sitter-luap.json);
   tree-sitter-m68k = builtins.fromJSON (builtins.readFile ./tree-sitter-m68k.json);
   tree-sitter-make = builtins.fromJSON (builtins.readFile ./tree-sitter-make.json);
@@ -115,6 +118,7 @@
   tree-sitter-pioasm = builtins.fromJSON (builtins.readFile ./tree-sitter-pioasm.json);
   tree-sitter-po = builtins.fromJSON (builtins.readFile ./tree-sitter-po.json);
   tree-sitter-poe_filter = builtins.fromJSON (builtins.readFile ./tree-sitter-poe_filter.json);
+  tree-sitter-pony = builtins.fromJSON (builtins.readFile ./tree-sitter-pony.json);
   tree-sitter-prisma = builtins.fromJSON (builtins.readFile ./tree-sitter-prisma.json);
   tree-sitter-proto = builtins.fromJSON (builtins.readFile ./tree-sitter-proto.json);
   tree-sitter-prql = builtins.fromJSON (builtins.readFile ./tree-sitter-prql.json);

@@ -1,9 +1,9 @@
 {
   "url": "https://github.com/Beaglefoot/tree-sitter-awk",
-  "rev": "e559793754c60c2cdf00cbb0409842d75f0a41dc",
-  "date": "2022-11-17T00:10:39+03:00",
-  "path": "/nix/store/zxi6g9ybqp8zs7bfpykim1nlwnkzhvwf-tree-sitter-awk-e559793",
-  "sha256": "0805jjjsrgqais745zzxmsafxrsc06y4hs6whjm35llgjyb3rdm8",
+  "rev": "b8e81f62109e65adca1ab51ab9d414411db5a37f",
+  "date": "2023-03-24T19:15:40+03:00",
+  "path": "/nix/store/13bbhw9v6k867xk4gibh5liwym3cq992-tree-sitter-awk-b8e81f6",
+  "sha256": "13f1g2l4g507hvi3hy3hfpw8pcksq3jgs6m3hgyy7a1iydbrmw6x",
   "fetchLFS": false,
   "fetchSubmodules": false,
   "deepClone": false,

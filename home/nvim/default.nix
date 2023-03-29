@@ -105,7 +105,7 @@ in
         # Dart
         dart
         # Elixir
-        beam.packages.erlang.elixir_ls
+        beam.packages.erlang.elixir-ls
         # Erlang
         beam.packages.erlang.erlang-ls
         # Haskell
@@ -135,7 +135,7 @@ in
 
       # let g:python_debug_home = "${python-debug}"
       extraConfig = ''
-        let g:elixir_ls_home = "${pkgs.beam.packages.erlang.elixir_ls}"
+        let g:elixir_ls_home = "${pkgs.beam.packages.erlang.elixir-ls}"
         :luafile ~/.config/nvim/lua/init.lua
       '';
     };

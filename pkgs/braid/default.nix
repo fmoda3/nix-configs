@@ -6,7 +6,7 @@ pkgs.python3Packages.buildPythonPackage rec {
 
   src = fetchGit {
     url = "git@github.com:toasttab/braid.git";
-    rev = "a3d19434201ae3ef138f7bb3794d9d2f878a8a6d";
+    rev = "63b807c04a35a305a224a917df97c19bcf8078aa";
     ref = "main";
   };
 
@@ -21,6 +21,8 @@ pkgs.python3Packages.buildPythonPackage rec {
     pyyaml
     toast-tools
     psutil
+    dateutil
+    boto3
   ];
 
   postPatch = ''

@@ -26,20 +26,9 @@
       url = "github:edolstra/flake-compat";
       flake = false;
     };
-    neovim-flake = {
-      url = "github:neovim/neovim?dir=contrib";
-      inputs = {
-        nixpkgs.url = "github:nixos/nixpkgs?rev=fad51abd42ca17a60fc1d4cb9382e2d79ae31836";
-        flake-utils.follows = "flake-utils";
-      };
-    };
     neovim-nightly-overlay = {
+      # Don't follow nixpkgs for this, so that binary cache can be used.
       url = "github:nix-community/neovim-nightly-overlay";
-      inputs = {
-        nixpkgs.url = "github:nixos/nixpkgs?rev=fad51abd42ca17a60fc1d4cb9382e2d79ae31836";
-        flake-compat.follows = "flake-compat";
-        neovim-flake.follows = "neovim-flake";
-      };
     };
     devshell = {
       url = "github:numtide/devshell";

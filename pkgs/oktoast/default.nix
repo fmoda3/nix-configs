@@ -5,7 +5,7 @@ stdenv.mkDerivation {
 
   src = fetchGit {
     url = "git@github.com:toasttab/oktoast-setup.git";
-    rev = "4483eed915198aa2cb70ad1bf238c59ddc1610c7";
+    rev = "1bdfe6fcadeb4a0f539138d3fab3f7a8068eae27";
   };
 
   nativeBuildInputs = [
