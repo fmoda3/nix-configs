@@ -16,8 +16,6 @@
     ../../linux
   ];
 
-  hardware.video.hidpi.enable = true;
-
   networking = {
     hostName = "cicucci-aarch64-linux-builder";
     useDHCP = false;
