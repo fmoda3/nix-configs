@@ -60,6 +60,10 @@
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-index-database = {
+      url = "github:Mic92/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     comma = {
       url = "github:nix-community/comma";
       inputs = {
@@ -69,7 +73,7 @@
       };
     };
   };
-  outputs = inputs@{ self, nixpkgs, darwin, home-manager, flake-utils, deploy-rs, devshell, nixos-generators, comma, ... }:
+  outputs = inputs@{ self, nixpkgs, darwin, home-manager, flake-utils, deploy-rs, devshell, nixos-generators, nix-index-database, comma, ... }:
     let
       nixpkgsConfig = with inputs; {
         config = {
@@ -110,6 +114,9 @@
           home-manager = {
             useGlobalPkgs = true;
             users.${user} = import (./. + "/hosts/${host}/home.nix");
+            sharedModules = [
+              nix-index-database.hmModules.nix-index
+            ];
           };
         }
       ];
@@ -132,6 +139,9 @@
             useGlobalPkgs = true;
             useUserPackages = true;
             users.${user} = import (./. + "/hosts/${host}/home.nix");
+            sharedModules = [
+              nix-index-database.hmModules.nix-index
+            ];
           };
         }
       ];
