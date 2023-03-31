@@ -2,7 +2,6 @@ final: prev:
 {
   # Adding packages here, makes them accessible from "pkgs"
   braid = prev.callPackage ./braid { };
-  nvim-ts-grammars = prev.callPackage ./nvim-ts-grammars { };
   oktoast = prev.callPackage ./oktoast { };
   pizzabox = prev.callPackage ./pizzabox { };
   python3Packages = prev.python3Packages // {

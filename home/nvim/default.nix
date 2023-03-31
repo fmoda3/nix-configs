@@ -57,9 +57,7 @@ in
         comment-nvim
 
         # Syntax highlighting
-        (nvim-treesitter.withPlugins
-          (plugins: pkgs.nvim-ts-grammars.allGrammars)
-        )
+        nvim-treesitter.withAllGrammars
 
         # LSP
         nvim-lspconfig
