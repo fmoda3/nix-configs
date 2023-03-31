@@ -120,7 +120,7 @@ in
         statix
         # Python
         pyright
-        # python-debug
+        python-debug
         black
         # Typescript
         nodePackages.typescript-language-server
@@ -131,9 +131,9 @@ in
         fd
       ];
 
-      # let g:python_debug_home = "${python-debug}"
       extraConfig = ''
         let g:elixir_ls_home = "${pkgs.beam.packages.erlang.elixir-ls}"
+        let g:python_debug_home = "${python-debug}"
         :luafile ~/.config/nvim/lua/init.lua
       '';
     };

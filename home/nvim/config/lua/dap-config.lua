@@ -89,38 +89,38 @@ dap.configurations.elixir = {
 }
 
 -- Python
--- local python_debug_home = vim.api.nvim_get_var("python_debug_home")
--- dap.adapters.python = {
---     type = 'executable',
---     command = python_debug_home .. '/bin/python',
---     args = { '-m', 'debugpy.adapter' }
--- }
+local python_debug_home = vim.api.nvim_get_var("python_debug_home")
+dap.adapters.python = {
+    type = 'executable',
+    command = python_debug_home .. '/bin/python',
+    args = { '-m', 'debugpy.adapter' }
+}
 
--- dap.configurations.python = {
---     {
---         type = 'python',
---         request = 'launch',
---         name = "Launch file",
+dap.configurations.python = {
+    {
+        type = 'python',
+        request = 'launch',
+        name = "Launch file",
 
---         -- Options below are for debugpy, see https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings for supported options
---         program = "${file}", -- This configuration will launch the current file if used.
---         python = {"python"}
---     },
---     {
---         type = 'python',
---         request = 'launch',
---         name = "Django",
+        -- Options below are for debugpy, see https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings for supported options
+        program = "${file}", -- This configuration will launch the current file if used.
+        python = {"python"}
+    },
+    {
+        type = 'python',
+        request = 'launch',
+        name = "Django",
 
---         program = "${workspaceFolder}/manage.py",
---         args = { "runserver", "--noreload" },
---         python = {"python"}
---     },
---     {
---         type = 'python',
---         request = 'attach',
---         name = "Attach remote",
+        program = "${workspaceFolder}/manage.py",
+        args = { "runserver", "--noreload" },
+        python = {"python"}
+    },
+    {
+        type = 'python',
+        request = 'attach',
+        name = "Attach remote",
 
---         host = "127.0.0.1",
---         port = 5678
---     }
--- }
+        host = "127.0.0.1",
+        port = 5678
+    }
+}
