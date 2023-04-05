@@ -98,7 +98,6 @@
         home-manager.darwinModules.home-manager
         {
           nixpkgs = nixpkgsConfig;
-          nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
           # `home-manager` config
           users.users.${user}.home = "/Users/${user}";
           home-manager = {
@@ -117,7 +116,6 @@
         home-manager.nixosModules.home-manager
         {
           nixpkgs = nixpkgsConfig;
-          nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
           # `home-manager` config
           users.users.${user} = {
             home = "/home/${user}";
