@@ -64,6 +64,7 @@ in
         docker
         docker-compose
         docker-credential-helpers
+        android-tools
       ];
     };
 
