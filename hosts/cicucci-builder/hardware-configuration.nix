@@ -4,7 +4,9 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  imports = [ ];
+  imports = [
+    ./disko-config.nix
+  ];
 
   boot.loader.grub = {
     version = 2;
@@ -19,16 +21,4 @@
   boot.extraModulePackages = [ ];
   boot.growPartition = true;
 
-  fileSystems."/" =
-    {
-      device = "/dev/disk/by-label/nixos";
-      autoResize = true;
-      fsType = "ext4";
-    };
-
-  fileSystems."/boot" =
-    {
-      device = "/dev/disk/by-label/ESP";
-      fsType = "vfat";
-    };
 }
