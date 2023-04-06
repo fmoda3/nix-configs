@@ -1,4 +1,4 @@
 .direnv
 .vscode
 .nix-mix
-
+.pre-commit-config.yaml

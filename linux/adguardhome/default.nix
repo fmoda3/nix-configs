@@ -3,7 +3,7 @@ with lib;
 {
   config = mkIf config.my-linux.adblocker.enable {
     services.adguardhome = {
-      enable = config.my-linux.adblocker.enable;
+      inherit (config.my-linux.adblocker) enable;
       settings = {
         bind_host = "0.0.0.0";
         bind_port = 80;

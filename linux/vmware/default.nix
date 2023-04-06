@@ -8,7 +8,7 @@ with lib;
 let
   cfg = config.my-linux.vmware;
   open-vm-tools = if cfg.headless then pkgs.open-vm-tools-headless else pkgs.open-vm-tools;
-  xf86inputvmmouse = pkgs.xorg.xf86inputvmmouse;
+  inherit (pkgs.xorg) xf86inputvmmouse;
 in
 {
   config = mkIf cfg.enable {

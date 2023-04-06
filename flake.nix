@@ -61,8 +61,17 @@
         flake-compat.follows = "flake-compat";
       };
     };
+    pre-commit-hooks = {
+      url = "github:cachix/pre-commit-hooks.nix";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        nixpkgs-stable.follows = "nixos-stable";
+        flake-utils.follows = "flake-utils";
+        flake-compat.follows = "flake-compat";
+      };
+    };
   };
-  outputs = inputs@{ self, nixpkgs, darwin, home-manager, flake-utils, deploy-rs, devshell, nixos-generators, nix-index-database, comma, ... }:
+  outputs = inputs@{ self, nixpkgs, darwin, home-manager, flake-utils, deploy-rs, devshell, nixos-generators, nix-index-database, comma, pre-commit-hooks, ... }:
     let
       nixpkgsConfig = with inputs; {
         config = {
@@ -240,6 +249,15 @@
       };
       checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
     } // flake-utils.lib.eachDefaultSystem (system: {
+      checks = {
+        pre-commit-check = pre-commit-hooks.lib.${system}.run {
+          src = ./.;
+          hooks = {
+            nixpkgs-fmt.enable = true;
+            statix.enable = true;
+          };
+        };
+      };
       devShells.default =
         let
           pkgs = import nixpkgs {
@@ -248,15 +266,22 @@
           };
         in
         pkgs.devshell.mkShell {
+          devshell.startup.pre-commit.text = self.checks.${system}.pre-commit-check.shellHook;
           packages = with pkgs; [
             nixpkgs-fmt
+            statix
             deploy-rs.packages.${system}.deploy-rs
           ];
           commands = [
             {
               name = "format";
               help = "Format nix files with nixpkgs-fmt";
-              command = "nixpkgs-fmt .";
+              command = "nixpkgs-fmt $PRJ_ROOT";
+            }
+            {
+              name = "lint";
+              help = "Run lint checker with statix";
+              command = "statix fix $PRJ_ROOT";
             }
             {
               name = "create-aarch64-iso";
