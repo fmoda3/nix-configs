@@ -49,6 +49,10 @@
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nix-index-database = {
       url = "github:Mic92/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -121,6 +125,7 @@
       nixosModules = { user, host }: with inputs; [
         # Main `nixos` config
         (./. + "/hosts/${host}/configuration.nix")
+        disko.nixosModules.disko
         # `home-manager` module
         home-manager.nixosModules.home-manager
         {

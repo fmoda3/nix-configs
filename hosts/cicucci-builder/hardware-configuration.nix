@@ -19,16 +19,7 @@
   boot.extraModulePackages = [ ];
   boot.growPartition = true;
 
-  fileSystems."/" =
-    {
-      device = "/dev/disk/by-label/nixos";
-      autoResize = true;
-      fsType = "ext4";
-    };
-
-  fileSystems."/boot" =
-    {
-      device = "/dev/disk/by-label/ESP";
-      fsType = "vfat";
-    };
+  imports = [
+    ./disko.nix
+  ];
 }
