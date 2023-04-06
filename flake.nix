@@ -71,7 +71,7 @@
       };
     };
   };
-  outputs = inputs@{ self, nixpkgs, darwin, home-manager, flake-utils, deploy-rs, devshell, nixos-generators, nix-index-database, comma, pre-commit-hooks, ... }:
+  outputs = inputs@{ self, nixpkgs, darwin, flake-utils, deploy-rs, devshell, nixos-generators, pre-commit-hooks, ... }:
     let
       nixpkgsConfig = with inputs; {
         config = {
