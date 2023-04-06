@@ -4,7 +4,9 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  imports = [ ];
+  imports = [
+    ./disko.nix
+  ];
 
   boot.loader.grub = {
     version = 2;
@@ -19,7 +21,4 @@
   boot.extraModulePackages = [ ];
   boot.growPartition = true;
 
-  imports = [
-    ./disko.nix
-  ];
 }
