@@ -45,7 +45,7 @@ in
       # on it and deploy remotely.  Building on the rpi3 directly is super slow.
       buildMachines = [
         {
-          hostName = "192.168.123.128";
+          hostName = "192.168.123.132";
           sshUser = "root";
           systems = [ "aarch64-linux" "x86_64-linux" ];
           supportedFeatures = [ "big-parallel" ];
