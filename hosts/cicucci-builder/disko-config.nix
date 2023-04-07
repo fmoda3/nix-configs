@@ -26,6 +26,7 @@ _: {
               start = "-8GiB";
               end = "100%";
               part-type = "primary";
+              fs-type = "linux-swap";
               content = {
                 type = "swap";
               };
