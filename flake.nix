@@ -210,7 +210,7 @@
         bootable-aarch64-sd = nixos-generators.nixosGenerate {
           system = "aarch64-linux";
           modules = nixosModules {
-            user = "fmoda3";
+            user = "nixos";
             host = "bootable-sd";
           };
           specialArgs = { inherit inputs nixpkgs; };
@@ -219,7 +219,7 @@
         bootable-aarch64-iso = nixos-generators.nixosGenerate {
           system = "aarch64-linux";
           modules = nixosModules {
-            user = "fmoda3";
+            user = "nixos";
             host = "bootable-iso";
           };
           specialArgs = { inherit inputs nixpkgs; };
@@ -228,17 +228,26 @@
         bootable-x86_64-iso = nixos-generators.nixosGenerate {
           system = "x86_64-linux";
           modules = nixosModules {
-            user = "fmoda3";
+            user = "nixos";
             host = "bootable-iso";
           };
           specialArgs = { inherit inputs nixpkgs; };
           format = "install-iso";
         };
+        cicucci-dns-sd = nixos-generators.nixosGenerate {
+          system = "aarch64-linux";
+          modules = nixosModules {
+            user = "fmoda3";
+            host = "cicucci-dns";
+          };
+          specialArgs = { inherit inputs nixpkgs; };
+          format = "sd-aarch64";
+        };
         cicucci-builder-iso = nixos-generators.nixosGenerate {
           system = "aarch64-linux";
           modules = nixpkgs.lib.flatten [
             (nixosModules {
-              user = "fmoda3";
+              user = "nixos";
               host = "bootable-iso";
             })
             (installerModules {
@@ -320,6 +329,11 @@
               name = "create-aarch64-sd";
               help = "Creates an sd card image for aarch64 with my configs";
               command = "nix build \".#images.bootable-aarch64-sd\"";
+            }
+            {
+              name = "create-dns-sd";
+              help = "Creates a vmware image for cicucci-builder";
+              command = "nix build \".#images.cicucci-dns-sd\"";
             }
             {
               name = "create-builder-iso";
