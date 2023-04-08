@@ -115,7 +115,7 @@ in
         # Lua
         lua-language-server
         # Nix
-        rnix-lsp
+        nil
         nixpkgs-fmt
         statix
         # Python
