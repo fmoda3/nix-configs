@@ -280,6 +280,7 @@
         };
       };
       checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
+      templates = import ./templates;
     } // flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs {
