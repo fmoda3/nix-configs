@@ -280,72 +280,74 @@
         };
       };
       checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
-    } // flake-utils.lib.eachDefaultSystem (system: {
-      checks = {
-        pre-commit-check = pre-commit-hooks.lib.${system}.run {
-          src = ./.;
-          hooks = {
-            nixpkgs-fmt.enable = true;
-            statix.enable = true;
+    } // flake-utils.lib.eachDefaultSystem (system:
+      let
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [ devshell.overlays.default ];
+        };
+      in
+      {
+        formatter = pkgs.nixpkgs-fmt;
+        checks = {
+          pre-commit-check = pre-commit-hooks.lib.${system}.run {
+            src = ./.;
+            hooks = {
+              nixpkgs-fmt.enable = true;
+              statix.enable = true;
+            };
           };
         };
-      };
-      devShells.default =
-        let
-          pkgs = import nixpkgs {
-            inherit system;
-            overlays = [ devshell.overlays.default ];
+        devShells.default =
+          pkgs.devshell.mkShell {
+            devshell.startup.pre-commit.text = self.checks.${system}.pre-commit-check.shellHook;
+            packages = with pkgs; [
+              statix
+              deploy-rs.packages.${system}.deploy-rs
+            ];
+            commands = [
+              {
+                name = "format";
+                help = "Format nix files with nixpkgs-fmt";
+                command = "nix fmt";
+              }
+              {
+                name = "lint";
+                help = "Run lint checker with statix";
+                command = "statix fix $PRJ_ROOT";
+              }
+              {
+                name = "create-aarch64-iso";
+                help = "Creates an iso image for aarch64 with my configs";
+                command = "GC_DONT_GC=1 nix build \".#images.bootable-aarch64-iso\"";
+              }
+              {
+                name = "create-x86_64-iso";
+                help = "Creates an iso image for x86_64 with my configs";
+                command = "GC_DONT_GC=1 nix build \".#images.bootable-x86_64-iso\"";
+              }
+              {
+                name = "create-aarch64-sd";
+                help = "Creates an sd card image for aarch64 with my configs";
+                command = "nix build \".#images.bootable-aarch64-sd\"";
+              }
+              {
+                name = "create-dns-sd";
+                help = "Creates a vmware image for cicucci-builder";
+                command = "nix build \".#images.cicucci-dns-sd\"";
+              }
+              {
+                name = "create-builder-iso";
+                help = "Creates a vmware image for cicucci-builder";
+                command = "nix build \".#images.cicucci-builder-iso\"";
+              }
+              {
+                name = "create-builder-vm";
+                help = "Creates a vmware image for cicucci-builder";
+                command = "nix build \".#images.cicucci-builder-vm\"";
+              }
+            ];
           };
-        in
-        pkgs.devshell.mkShell {
-          devshell.startup.pre-commit.text = self.checks.${system}.pre-commit-check.shellHook;
-          packages = with pkgs; [
-            nixpkgs-fmt
-            statix
-            deploy-rs.packages.${system}.deploy-rs
-          ];
-          commands = [
-            {
-              name = "format";
-              help = "Format nix files with nixpkgs-fmt";
-              command = "nixpkgs-fmt $PRJ_ROOT";
-            }
-            {
-              name = "lint";
-              help = "Run lint checker with statix";
-              command = "statix fix $PRJ_ROOT";
-            }
-            {
-              name = "create-aarch64-iso";
-              help = "Creates an iso image for aarch64 with my configs";
-              command = "GC_DONT_GC=1 nix build \".#images.bootable-aarch64-iso\"";
-            }
-            {
-              name = "create-x86_64-iso";
-              help = "Creates an iso image for x86_64 with my configs";
-              command = "GC_DONT_GC=1 nix build \".#images.bootable-x86_64-iso\"";
-            }
-            {
-              name = "create-aarch64-sd";
-              help = "Creates an sd card image for aarch64 with my configs";
-              command = "nix build \".#images.bootable-aarch64-sd\"";
-            }
-            {
-              name = "create-dns-sd";
-              help = "Creates a vmware image for cicucci-builder";
-              command = "nix build \".#images.cicucci-dns-sd\"";
-            }
-            {
-              name = "create-builder-iso";
-              help = "Creates a vmware image for cicucci-builder";
-              command = "nix build \".#images.cicucci-builder-iso\"";
-            }
-            {
-              name = "create-builder-vm";
-              help = "Creates a vmware image for cicucci-builder";
-              command = "nix build \".#images.cicucci-builder-vm\"";
-            }
-          ];
-        };
-    });
+      }
+    );
 }
