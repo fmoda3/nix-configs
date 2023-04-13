@@ -4,14 +4,10 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
-    flake-compat = {
-      url = "github:edolstra/flake-compat";
-      flake = false;
-    };
     mach-nix.url = "github:DavHau/mach-nix?ref=3.4.0";
   };
 
-  outputs = { self, nixpkgs, flake-utils, flake-compat, mach-nix }:
+  outputs = { self, nixpkgs, flake-utils, mach-nix }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};

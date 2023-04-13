@@ -4,13 +4,9 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
-    flake-compat = {
-      url = "github:edolstra/flake-compat";
-      flake = false;
-    };
   };
 
-  outputs = { self, nixpkgs, flake-utils, flake-compat }:
+  outputs = { self, nixpkgs, flake-utils }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
@@ -21,9 +17,9 @@
         ];
 
         inputs = with pkgs;
-          basePackages ++ lib.optionals stdenv.isLinux [ inotify-tools ]
-          ++ lib.optionals stdenv.isDarwin
-            (with darwin.apple_sdk.frameworks; [ CoreFoundation CoreServices ]);
+          basePackages ++ lib.optionals stdenv.isLinux [ gigalixir inotify-tools libnotify ]
+          ++ lib.optionals stdenv.isDarwin [ terminal-notifier ] ++
+          (with darwin.apple_sdk.frameworks; [ CoreFoundation CoreServices ]);
 
         hooks = ''
           # this allows mix to work on the local directory
@@ -39,7 +35,7 @@
       in
       {
         devShell = pkgs.mkShell {
-          buildInputs = inputs;
+          packages = inputs;
           shellHook = hooks;
         };
       });
