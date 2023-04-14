@@ -146,7 +146,7 @@ I use [deploy-rs](https://github.com/serokell/deploy-rs) to deploy the `cicucci-
 
 1. Ensure a `aarch64-linux` machine is available to build.  I run an `aarch64-linux` NixOS vm with the `cicucci-builder` configuration inside vmware on a `aarch64-darwin` machine.
 2. If the `aarch64-linux` machine is a remote builder (i.e., not your current machine), ensure that your current machine's `root` user can ssh into the `root` user of the remote builder, via ssh key authentication (add your computer's public rsa key into the `authorized_keys` file of the remote builder)
-3. Ensure that your current machine's `root` user can ssh into the `root` user of the Raspberry Pi, also via ssh key authentication explained above.
+3. Ensure that the user you are going to deploy from on your current machine can ssh into the `root` user of the Raspberry Pi, also via ssh key authentication explained above.
 
 ## Deploy
 
