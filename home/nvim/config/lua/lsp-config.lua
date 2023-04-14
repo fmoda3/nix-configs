@@ -135,7 +135,7 @@ nvim_lsp.lua_ls.setup{
     capabilities = capabilities
 }
 -- Nix
-nvim_lsp.rnix_lsp.setup{
+nvim_lsp.rnix.setup{
     on_attach = function(client, bufnr)
         on_attach(client, bufnr)
 
