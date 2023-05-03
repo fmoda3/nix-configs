@@ -14,10 +14,7 @@
     };
     home-manager = {
       url = "github:nix-community/home-manager";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        utils.follows = "flake-utils";
-      };
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # Other sources
@@ -111,6 +108,8 @@
         home-manager.darwinModules.home-manager
         {
           nixpkgs = nixpkgsConfig;
+          # Pins channels and flake registry to use the same nixpkgs as this flake.
+          nix.registry = nixpkgs.lib.mapAttrs (_: value: { flake = value; }) inputs;
           # `home-manager` config
           users.users.${user}.home = "/Users/${user}";
           home-manager = {
@@ -130,6 +129,8 @@
         home-manager.nixosModules.home-manager
         {
           nixpkgs = nixpkgsConfig;
+          # Pins channels and flake registry to use the same nixpkgs as this flake.
+          nix.registry = nixpkgs.lib.mapAttrs (_: value: { flake = value; }) inputs;
           # `home-manager` config
           users.users.${user} = {
             home = "/home/${user}";
