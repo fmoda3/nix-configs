@@ -10,7 +10,6 @@ _: {
           partitions = [
             {
               name = "nixos";
-              type = "partition";
               start = "512MiB";
               end = "-8GiB";
               part-type = "primary";
@@ -22,7 +21,6 @@ _: {
             }
             {
               name = "swap";
-              type = "partition";
               start = "-8GiB";
               end = "100%";
               part-type = "primary";
@@ -33,7 +31,6 @@ _: {
             }
             {
               name = "ESP";
-              type = "partition";
               start = "1MiB";
               end = "512MiB";
               fs-type = "fat32";
