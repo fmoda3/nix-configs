@@ -21,6 +21,10 @@
     };
   };
 
+  # These are buggy, and work around is to disable them
+  systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
+  systemd.services.systemd-networkd-wait-online.enable = lib.mkForce false;
+
   time.timeZone = "America/New_York";
 
   users.users."root".openssh.authorizedKeys.keys = [
