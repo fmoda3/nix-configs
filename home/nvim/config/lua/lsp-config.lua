@@ -34,6 +34,8 @@ local on_attach = function(client, bufnr)
         { '[u', function() require('illuminate').next_reference({ reverse = true, wrap = true }) end, description = "Illuminate: Previous reference", opts = opts }
     })
 
+    client.server_capabilities.semanticTokensProvider = nil
+
     -- if client.server_capabilities.document_formatting then
     --     vim.cmd([[
     --         augroup LspFormatting
@@ -135,7 +137,7 @@ nvim_lsp.lua_ls.setup{
     capabilities = capabilities
 }
 -- Nix
-nvim_lsp.rnix.setup{
+nvim_lsp.nil_ls.setup{
     on_attach = function(client, bufnr)
         on_attach(client, bufnr)
 
