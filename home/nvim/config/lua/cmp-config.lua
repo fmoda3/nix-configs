@@ -64,7 +64,9 @@ cmp.setup({
         format = lspkind.cmp_format(),
     },
     experimental = {
-        ghost_text = true;
+        ghost_text = {
+            hl_group = 'Comment',
+        },
     }
 })
 

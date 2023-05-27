@@ -11,7 +11,7 @@ local on_attach = function(client, bufnr)
     require('illuminate').on_attach(client)
 
     -- Mappings.
-    local opts = { noremap=true, silent=true, buffer=true }
+    local opts = { noremap=true, silent=true, buffer=bufnr }
     require('legendary').keymaps({
         { 'gD', vim.lsp.buf.declaration, description = 'LSP: Go to declaration', opts = opts },
         { 'gd', vim.lsp.buf.definition, description = 'LSP: Go to definition', opts = opts },

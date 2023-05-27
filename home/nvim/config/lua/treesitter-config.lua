@@ -1,7 +1,7 @@
 -- Treesitter
 require'nvim-treesitter.configs'.setup {
     highlight = {
-	    enable = true
+        enable = true
     },
     rainbow = {
         enable = true,

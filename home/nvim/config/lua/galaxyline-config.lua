@@ -186,7 +186,7 @@ gls.right[6] = {
 gls.right[7] = {
     rightStart = {
         provider = function()
-            return "" 
+            return ""
         end,
         separator = " ",
         separator_highlight = {colors.nord0_gui, colors.nord0_gui},

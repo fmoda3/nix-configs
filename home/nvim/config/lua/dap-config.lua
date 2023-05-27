@@ -46,7 +46,7 @@ require("dapui").setup({
         }
     }
 })
-require("nvim-dap-virtual-text").setup()
+require("nvim-dap-virtual-text").setup({})
 
 local colors = require('nord-colors')
 local util = require('util')
