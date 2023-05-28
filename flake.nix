@@ -19,6 +19,7 @@
 
     # Other sources
     flake-parts.url = "github:hercules-ci/flake-parts";
+    flake-root.url = "github:srid/flake-root";
     flake-utils.url = "github:numtide/flake-utils";
     flake-compat = {
       url = "github:edolstra/flake-compat";
@@ -74,7 +75,7 @@
       };
     };
   };
-  outputs = inputs@{ self, nixpkgs, darwin, flake-parts, deploy-rs, treefmt-nix, devshell, nixos-generators, pre-commit-hooks, ... }:
+  outputs = inputs@{ self, nixpkgs, darwin, flake-parts, flake-root, deploy-rs, treefmt-nix, devshell, nixos-generators, pre-commit-hooks, ... }:
     let
       nixpkgsConfig = with inputs; {
         config = {
@@ -159,6 +160,7 @@
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
         devshell.flakeModule
+        flake-root.flakeModule
         pre-commit-hooks.flakeModule
         treefmt-nix.flakeModule
       ];
@@ -294,7 +296,7 @@
       systems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
       perSystem = { config, self', inputs', pkgs, system, ... }: {
         treefmt.config = {
-          projectRootFile = "flake.nix";
+          inherit (config.flake-root) projectRootFile;
           programs.nixpkgs-fmt.enable = true;
           programs.stylua.enable = true;
         };

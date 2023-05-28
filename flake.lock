@@ -241,6 +241,21 @@
         "type": "github"
       }
     },
+    "flake-root": {
+      "locked": {
+        "lastModified": 1680964220,
+        "narHash": "sha256-dIdTYcf+KW9a4pKHsEbddvLVSfR1yiAJynzg2x0nfWg=",
+        "owner": "srid",
+        "repo": "flake-root",
+        "rev": "f1c0b93d05bdbea6c011136ba1a135c80c5b326c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "srid",
+        "repo": "flake-root",
+        "type": "github"
+      }
+    },
     "flake-utils": {
       "inputs": {
         "systems": "systems_2"
@@ -776,6 +791,7 @@
         "disko": "disko",
         "flake-compat": "flake-compat",
         "flake-parts": "flake-parts",
+        "flake-root": "flake-root",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
