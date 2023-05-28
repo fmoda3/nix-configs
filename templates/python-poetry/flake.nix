@@ -3,21 +3,20 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
+    flake-parts.url = "github:hercules-ci/flake-parts";
   };
 
-  outputs = { self, nixpkgs, flake-utils }:
-    flake-utils.lib.eachDefaultSystem (system:
-      let pkgs = nixpkgs.legacyPackages.${system};
-      in
-      {
-        packages = pkgs.poetry2nix.mkPoetryApplication { projectDir = self; };
-        devShell = pkgs.mkShell {
+  outputs = inputs@{ self, nixpkgs, flake-parts }:
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
+      perSystem = { config, self', inputs', pkgs, system, ... }: {
+        packages.default = pkgs.poetry2nix.mkPoetryApplication { projectDir = self; };
+        devShells.default = pkgs.mkShell {
           packages = with pkgs; [
             (poetry2nix.mkPoetryEnv { projectDir = self; })
             poetry
           ];
         };
-      }
-    );
+      };
+    };
 }

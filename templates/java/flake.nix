@@ -3,32 +3,31 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
+    flake-parts.url = "github:hercules-ci/flake-parts";
   };
 
-  outputs = { self, nixpkgs, flake-utils }:
-    flake-utils.lib.eachDefaultSystem (system:
-      let
-        overlays = [
-          (final: prev: rec {
-            jdk = prev.jdk11;
-            gradle = prev.gradle.override {
-              java = jdk;
-            };
-            maven = prev.maven.override {
-              inherit jdk;
-            };
-          })
-        ];
-
-        pkgs = import nixpkgs {
-          inherit system overlays;
+  outputs = inputs@{ self, nixpkgs, flake-parts }:
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
+      perSystem = { config, self', inputs', pkgs, system, ... }: {
+        _module.args.pkgs = import inputs.nixpkgs {
+          inherit system;
+          overlays = [
+            (final: prev: rec {
+              jdk = prev.jdk11;
+              gradle = prev.gradle.override {
+                java = jdk;
+              };
+              maven = prev.maven.override {
+                inherit jdk;
+              };
+            })
+          ];
+          config = { };
         };
-      in
-      {
-        devShell = pkgs.mkShell {
+        devShells.default = pkgs.mkShell {
           packages = with pkgs; [ jdk gradle maven ];
         };
-      }
-    );
+      };
+    };
 }
