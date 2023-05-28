@@ -1,1 +1,1 @@
-require('numb').setup()
+require("numb").setup()

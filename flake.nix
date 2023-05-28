@@ -18,6 +18,7 @@
     };
 
     # Other sources
+    flake-parts.url = "github:hercules-ci/flake-parts";
     flake-utils.url = "github:numtide/flake-utils";
     flake-compat = {
       url = "github:edolstra/flake-compat";
@@ -26,6 +27,10 @@
     neovim-nightly-overlay = {
       # Don't follow nixpkgs for this, so that binary cache can be used.
       url = "github:nix-community/neovim-nightly-overlay?rev=88a6c749a7d126c49f3374f9f28ca452ea9419b8";
+    };
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     devshell = {
       url = "github:numtide/devshell";
@@ -69,7 +74,7 @@
       };
     };
   };
-  outputs = inputs@{ self, nixpkgs, darwin, flake-utils, deploy-rs, devshell, nixos-generators, pre-commit-hooks, ... }:
+  outputs = inputs@{ self, nixpkgs, darwin, flake-parts, deploy-rs, treefmt-nix, devshell, nixos-generators, pre-commit-hooks, ... }:
     let
       nixpkgsConfig = with inputs; {
         config = {
@@ -146,207 +151,213 @@
           };
         }
       ];
-      installerModules = { targetSystem }: with inputs; [
+      installerModules = { targetSystem }: [
         (./installer/system-installer.nix)
         { installer.targetSystem = targetSystem; }
       ];
     in
-    {
-      darwinConfigurations = {
-        cicucci-imac = darwin.lib.darwinSystem {
-          system = "x86_64-darwin";
-          modules = darwinModules {
-            user = "fmoda3";
-            host = "cicucci-imac";
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      imports = [
+        devshell.flakeModule
+        pre-commit-hooks.flakeModule
+        treefmt-nix.flakeModule
+      ];
+      flake = {
+        darwinConfigurations = {
+          cicucci-imac = darwin.lib.darwinSystem {
+            system = "x86_64-darwin";
+            modules = darwinModules {
+              user = "fmoda3";
+              host = "cicucci-imac";
+            };
+            specialArgs = { inherit inputs nixpkgs; };
           };
-          specialArgs = { inherit inputs nixpkgs; };
-        };
-        cicucci-laptop = darwin.lib.darwinSystem {
-          system = "aarch64-darwin";
-          modules = darwinModules {
-            user = "fmoda3";
-            host = "cicucci-laptop";
+          cicucci-laptop = darwin.lib.darwinSystem {
+            system = "aarch64-darwin";
+            modules = darwinModules {
+              user = "fmoda3";
+              host = "cicucci-laptop";
+            };
+            specialArgs = { inherit inputs nixpkgs; };
           };
-          specialArgs = { inherit inputs nixpkgs; };
-        };
-        work-laptop = darwin.lib.darwinSystem {
-          system = "aarch64-darwin";
-          modules = darwinModules {
-            user = "frank";
-            host = "work-laptop";
+          work-laptop = darwin.lib.darwinSystem {
+            system = "aarch64-darwin";
+            modules = darwinModules {
+              user = "frank";
+              host = "work-laptop";
+            };
+            specialArgs = { inherit inputs nixpkgs; };
           };
-          specialArgs = { inherit inputs nixpkgs; };
-        };
-        macvm = darwin.lib.darwinSystem {
-          system = "x86_64-darwin";
-          modules = darwinModules {
-            user = "fmoda3";
-            host = "macvm";
+          macvm = darwin.lib.darwinSystem {
+            system = "x86_64-darwin";
+            modules = darwinModules {
+              user = "fmoda3";
+              host = "macvm";
+            };
+            specialArgs = { inherit inputs nixpkgs; };
           };
-          specialArgs = { inherit inputs nixpkgs; };
         };
-      };
-      nixosConfigurations = {
-        cicucci-dns = nixpkgs.lib.nixosSystem {
-          system = "aarch64-linux";
-          modules = nixosModules {
-            user = "fmoda3";
-            host = "cicucci-dns";
+        nixosConfigurations = {
+          cicucci-dns = nixpkgs.lib.nixosSystem {
+            system = "aarch64-linux";
+            modules = nixosModules {
+              user = "fmoda3";
+              host = "cicucci-dns";
+            };
+            specialArgs = { inherit inputs nixpkgs; };
           };
-          specialArgs = { inherit inputs nixpkgs; };
-        };
-        cicucci-builder = nixpkgs.lib.nixosSystem {
-          system = "aarch64-linux";
-          modules = nixosModules {
-            user = "fmoda3";
-            host = "cicucci-builder";
+          cicucci-builder = nixpkgs.lib.nixosSystem {
+            system = "aarch64-linux";
+            modules = nixosModules {
+              user = "fmoda3";
+              host = "cicucci-builder";
+            };
+            specialArgs = { inherit inputs nixpkgs; };
           };
-          specialArgs = { inherit inputs nixpkgs; };
         };
-      };
-      images = {
-        bootable-aarch64-sd = nixos-generators.nixosGenerate {
-          system = "aarch64-linux";
-          modules = nixosModules {
-            user = "nixos";
-            host = "bootable-sd";
+        images = {
+          bootable-aarch64-sd = nixos-generators.nixosGenerate {
+            system = "aarch64-linux";
+            modules = nixosModules {
+              user = "nixos";
+              host = "bootable-sd";
+            };
+            specialArgs = { inherit inputs nixpkgs; };
+            format = "sd-aarch64-installer";
           };
-          specialArgs = { inherit inputs nixpkgs; };
-          format = "sd-aarch64-installer";
-        };
-        bootable-aarch64-iso = nixos-generators.nixosGenerate {
-          system = "aarch64-linux";
-          modules = nixosModules {
-            user = "nixos";
-            host = "bootable-iso";
-          };
-          specialArgs = { inherit inputs nixpkgs; };
-          format = "install-iso";
-        };
-        bootable-x86_64-iso = nixos-generators.nixosGenerate {
-          system = "x86_64-linux";
-          modules = nixosModules {
-            user = "nixos";
-            host = "bootable-iso";
-          };
-          specialArgs = { inherit inputs nixpkgs; };
-          format = "install-iso";
-        };
-        cicucci-dns-sd = nixos-generators.nixosGenerate {
-          system = "aarch64-linux";
-          modules = nixosModules {
-            user = "fmoda3";
-            host = "cicucci-dns";
-          };
-          specialArgs = { inherit inputs nixpkgs; };
-          format = "sd-aarch64";
-        };
-        cicucci-builder-iso = nixos-generators.nixosGenerate {
-          system = "aarch64-linux";
-          modules = nixpkgs.lib.flatten [
-            (nixosModules {
+          bootable-aarch64-iso = nixos-generators.nixosGenerate {
+            system = "aarch64-linux";
+            modules = nixosModules {
               user = "nixos";
               host = "bootable-iso";
-            })
-            (installerModules {
-              targetSystem = self.nixosConfigurations.cicucci-builder;
-            })
-          ];
-          specialArgs = { inherit inputs nixpkgs; };
-          format = "install-iso";
-        };
-        cicucci-builder-vm = nixos-generators.nixosGenerate {
-          system = "aarch64-linux";
-          modules = nixosModules {
-            user = "fmoda3";
-            host = "cicucci-builder";
+            };
+            specialArgs = { inherit inputs nixpkgs; };
+            format = "install-iso";
           };
-          specialArgs = { inherit inputs nixpkgs; };
-          format = "vmware";
+          bootable-x86_64-iso = nixos-generators.nixosGenerate {
+            system = "x86_64-linux";
+            modules = nixosModules {
+              user = "nixos";
+              host = "bootable-iso";
+            };
+            specialArgs = { inherit inputs nixpkgs; };
+            format = "install-iso";
+          };
+          cicucci-dns-sd = nixos-generators.nixosGenerate {
+            system = "aarch64-linux";
+            modules = nixosModules {
+              user = "fmoda3";
+              host = "cicucci-dns";
+            };
+            specialArgs = { inherit inputs nixpkgs; };
+            format = "sd-aarch64";
+          };
+          cicucci-builder-iso = nixos-generators.nixosGenerate {
+            system = "aarch64-linux";
+            modules = nixpkgs.lib.flatten [
+              (nixosModules {
+                user = "nixos";
+                host = "bootable-iso";
+              })
+              (installerModules {
+                targetSystem = self.nixosConfigurations.cicucci-builder;
+              })
+            ];
+            specialArgs = { inherit inputs nixpkgs; };
+            format = "install-iso";
+          };
+          cicucci-builder-vm = nixos-generators.nixosGenerate {
+            system = "aarch64-linux";
+            modules = nixosModules {
+              user = "fmoda3";
+              host = "cicucci-builder";
+            };
+            specialArgs = { inherit inputs nixpkgs; };
+            format = "vmware";
+          };
         };
-      };
-      deploy = {
-        nodes = {
-          cicucci-dns = {
-            hostname = "192.168.1.251";
-            profiles.system = {
-              user = "root";
-              sshUser = "root";
-              path = deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.cicucci-dns;
+        deploy = {
+          nodes = {
+            cicucci-dns = {
+              hostname = "192.168.1.251";
+              profiles.system = {
+                user = "root";
+                sshUser = "root";
+                path = deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.cicucci-dns;
+              };
             };
           };
         };
+        checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
+        templates = import ./templates;
       };
-      checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
-      templates = import ./templates;
-    } // flake-utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = import nixpkgs {
-          inherit system;
-          overlays = [ devshell.overlays.default ];
+      systems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
+      perSystem = { config, self', inputs', pkgs, system, ... }: {
+        treefmt.config = {
+          projectRootFile = "flake.nix";
+          programs.nixpkgs-fmt.enable = true;
+          programs.stylua.enable = true;
         };
-      in
-      {
-        formatter = pkgs.nixpkgs-fmt;
-        checks = {
-          pre-commit-check = pre-commit-hooks.lib.${system}.run {
+        pre-commit = {
+          check.enable = true;
+          settings = {
             src = ./.;
             hooks = {
               nixpkgs-fmt.enable = true;
               statix.enable = true;
+              stylua.enable = true;
             };
           };
         };
-        devShells.default =
-          pkgs.devshell.mkShell {
-            devshell.startup.pre-commit.text = self.checks.${system}.pre-commit-check.shellHook;
-            packages = with pkgs; [
-              statix
-              deploy-rs.packages.${system}.deploy-rs
-            ];
-            commands = [
-              {
-                name = "format";
-                help = "Format nix files with nixpkgs-fmt";
-                command = "nix fmt";
-              }
-              {
-                name = "lint";
-                help = "Run lint checker with statix";
-                command = "statix fix $PRJ_ROOT";
-              }
-              {
-                name = "create-aarch64-iso";
-                help = "Creates an iso image for aarch64 with my configs";
-                command = "GC_DONT_GC=1 nix build \".#images.bootable-aarch64-iso\"";
-              }
-              {
-                name = "create-x86_64-iso";
-                help = "Creates an iso image for x86_64 with my configs";
-                command = "GC_DONT_GC=1 nix build \".#images.bootable-x86_64-iso\"";
-              }
-              {
-                name = "create-aarch64-sd";
-                help = "Creates an sd card image for aarch64 with my configs";
-                command = "nix build \".#images.bootable-aarch64-sd\"";
-              }
-              {
-                name = "create-dns-sd";
-                help = "Creates a vmware image for cicucci-builder";
-                command = "nix build \".#images.cicucci-dns-sd\"";
-              }
-              {
-                name = "create-builder-iso";
-                help = "Creates a vmware image for cicucci-builder";
-                command = "nix build \".#images.cicucci-builder-iso\"";
-              }
-              {
-                name = "create-builder-vm";
-                help = "Creates a vmware image for cicucci-builder";
-                command = "nix build \".#images.cicucci-builder-vm\"";
-              }
-            ];
-          };
-      }
-    );
+        devshells.default = {
+          devshell.startup.pre-commit.text = config.pre-commit.installationScript;
+          packages = with pkgs; [
+            statix
+            inputs'.deploy-rs.packages.default
+          ];
+          commands = [
+            {
+              name = "format";
+              help = "Format nix files with nixpkgs-fmt";
+              command = "nix fmt";
+            }
+            {
+              name = "lint";
+              help = "Run lint checker with statix";
+              command = "statix fix $PRJ_ROOT";
+            }
+            {
+              name = "create-aarch64-iso";
+              help = "Creates an iso image for aarch64 with my configs";
+              command = "GC_DONT_GC=1 nix build \".#images.bootable-aarch64-iso\"";
+            }
+            {
+              name = "create-x86_64-iso";
+              help = "Creates an iso image for x86_64 with my configs";
+              command = "GC_DONT_GC=1 nix build \".#images.bootable-x86_64-iso\"";
+            }
+            {
+              name = "create-aarch64-sd";
+              help = "Creates an sd card image for aarch64 with my configs";
+              command = "nix build \".#images.bootable-aarch64-sd\"";
+            }
+            {
+              name = "create-dns-sd";
+              help = "Creates a vmware image for cicucci-builder";
+              command = "nix build \".#images.cicucci-dns-sd\"";
+            }
+            {
+              name = "create-builder-iso";
+              help = "Creates a vmware image for cicucci-builder";
+              command = "nix build \".#images.cicucci-builder-iso\"";
+            }
+            {
+              name = "create-builder-vm";
+              help = "Creates a vmware image for cicucci-builder";
+              command = "nix build \".#images.cicucci-builder-vm\"";
+            }
+          ];
+        };
+      };
+    };
 }

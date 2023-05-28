@@ -8,7 +8,7 @@ final: prev:
     toast-tools = prev.callPackage ./toast-tools { };
   };
   toast-services = prev.callPackage ./toast-services { };
-  # vimPlugins = prev.vimPlugins // {
-  #   gitsigns-nvim = prev.callPackage ./gitsigns-nvim { };
-  # };
+  vimPlugins = prev.vimPlugins // {
+    cmp-cmdline = prev.callPackage ./cmp-cmdline { };
+  };
 }
