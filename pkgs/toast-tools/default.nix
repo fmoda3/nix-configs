@@ -6,7 +6,7 @@ pkgs.python3Packages.buildPythonPackage rec {
 
   src = fetchGit {
     url = "git@github.com:toasttab/devtools-python-common.git";
-    rev = "2ed33f21d9e8c78d0f8a700fd6fff638d9d1afe3";
+    rev = "0738a908d8c03d9ff042ce44027f70cc4c77040a";
     ref = "master";
   };
 
