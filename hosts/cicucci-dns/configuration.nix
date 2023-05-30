@@ -38,7 +38,7 @@
     enableNixOptimise = true;
     tailscale = {
       enable = true;
-      authkey = "tskey-kveqY12CNTRL-wQHntvWh7JgruYi1iwVgy";
+      authkey = "tskey-auth-kEesdE3CNTRL-emfEGqxsLf8xnFzmowN6Y8uvmEqkJDqDP";
       advertiseExitNode = true;
     };
     adblocker = {
