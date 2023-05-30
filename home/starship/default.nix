@@ -13,12 +13,14 @@
         "$kubernetes"
         "$directory"
         "$vcsh"
+        "$fossil_branch"
         "$git_branch"
         "$git_commit"
         "$git_state"
         "$git_metrics"
         "$git_status"
         "$hg_branch"
+        "$pijul_channel"
         "$docker_context"
         "$package"
         "$c"
@@ -32,16 +34,21 @@
         "\${custom.elixir}"
         "$elm"
         "$erlang"
+        "$fennel"
         "$golang"
+        "$guix_shell"
         "$haskell"
+        "$haxe"
         "$helm"
         "$java"
         "$julia"
         "$kotlin"
+        "$gradle"
         "$lua"
         "$nim"
         "$nodejs"
         "$ocaml"
+        "$opa"
         "$perl"
         "$php"
         "$pulumi"
@@ -78,6 +85,7 @@
         "$battery"
         "$time"
         "$status"
+        "$os"
         "$container"
         "$shell"
         "$character"
@@ -101,7 +109,7 @@
         format = "\\[[$symbol($version)]($style)\\]";
       };
       cmd_duration = {
-        format = "\\[[$duration]($style)\\]";
+        format = "\\[[⏱ $duration]($style)\\]";
       };
       cobol = {
         format = "\\[[$symbol($version)]($style)\\]";
@@ -153,6 +161,13 @@
       erlang = {
         format = "\\[[$symbol($version)]($style)\\]";
       };
+      fennel = {
+        format = "\\[[$symbol($version)]($style)\\]";
+      };
+      fossil_branch = {
+        symbol = " ";
+        format = "\\[[$symbol$branch]($style)\\]";
+      };
       gcloud = {
         format = "\\[[$symbol$account(@$domain)(\\($region\\))]($style)\\]";
       };
@@ -168,8 +183,19 @@
         symbol = " ";
         format = "\\[[$symbol($version)]($style)\\]";
       };
+      gradle = {
+        format = "\\[[$symbol($version)]($style)\\]";
+      };
+      guix_shell = {
+        symbol = " ";
+        format = "\\[[$symbol]($style)\\]";
+      };
       haskell = {
         symbol = " ";
+        format = "\\[[$symbol($version)]($style)\\]";
+      };
+      haxe = {
+        symbol = "⌘ ";
         format = "\\[[$symbol($version)]($style)\\]";
       };
       helm = {
@@ -178,6 +204,9 @@
       hg_branch = {
         symbol = " ";
         format = "\\[[$symbol$branch]($style)\\]";
+      };
+      hostname = {
+        ssh_symbol = " ";
       };
       java = {
         symbol = " ";
@@ -220,8 +249,55 @@
       ocaml = {
         format = "\\[[$symbol($version)(\\($switch_indicator$switch_name\\))]($style)\\]";
       };
+      opa = {
+        format = "\\[[$symbol($version)]($style)\\]";
+      };
       openstack = {
         format = "\\[[$symbol$cloud(\\($project\\))]($style)\\]";
+      };
+      os = {
+        symbols = {
+          Alpaquita = " ";
+          Alpine = " ";
+          Amazon = " ";
+          Android = " ";
+          Arch = " ";
+          Artix = " ";
+          CentOS = " ";
+          Debian = " ";
+          DragonFly = " ";
+          Emscripten = " ";
+          EndeavourOS = " ";
+          Fedora = " ";
+          FreeBSD = " ";
+          Garuda = "﯑ ";
+          Gentoo = " ";
+          HardenedBSD = "ﲊ ";
+          Illumos = " ";
+          Linux = " ";
+          Mabox = " ";
+          Macos = " ";
+          Manjaro = " ";
+          Mariner = " ";
+          MidnightBSD = " ";
+          Mint = " ";
+          NetBSD = " ";
+          NixOS = " ";
+          OpenBSD = " ";
+          openSUSE = " ";
+          OracleLinux = " ";
+          Pop = " ";
+          Raspbian = " ";
+          Redhat = " ";
+          RedHatEnterprise = " ";
+          Redox = " ";
+          Solus = "ﴱ ";
+          SUSE = " ";
+          Ubuntu = " ";
+          Unknown = " ";
+          Windows = " ";
+        };
+        format = "\\[[$symbol]($style)\\]";
       };
       package = {
         disabled = true;
@@ -233,6 +309,10 @@
       };
       php = {
         format = "\\[[$symbol($version)]($style)\\]";
+      };
+      pijul_channel = {
+        symbol = "🪺 ";
+        format = "\\[[$symbol$channel]($style)\\]";
       };
       pulumi = {
         format = "\\[[$symbol$stack]($style)\\]";
