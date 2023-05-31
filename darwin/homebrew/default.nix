@@ -10,11 +10,15 @@
         name = "toasttab/toast";
         clone_target = "git@github.com:toasttab/homebrew-toast";
       }
+      {
+        name = "snyk/tap";
+      }
     ];
     brews = [
       "libffi"
       "cocoapods"
       "lunchbox"
+      "snyk"
     ];
   };
 }
