@@ -5,8 +5,8 @@ vimUtils.buildVimPluginFrom2Nix {
   src = fetchFromGitHub {
     owner = "hrsh7th";
     repo = "cmp-cmdline";
-    rev = "ba382eee7f21022f0bcbf1a83cd6d4766c1033a5";
-    sha256 = "sha256-FHs5RGkBoz4VYsqeX522x3lm2M/y86njdRMv/0gwYuU=";
+    rev = "8ee981b4a91f536f52add291594e89fb6645e451";
+    sha256 = "sha256-W8v/XhPjbvKSwCrfOAPihO2N9PEVnH5Cp/Fa25lNRw4=";
   };
   meta.homepage = "https://github.com/hrsh7th/cmp-cmdline/";
 }
