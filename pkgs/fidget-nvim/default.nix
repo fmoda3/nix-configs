@@ -1,4 +1,6 @@
-{ fetchFromGitHub, vimUtils, ... }:
+{ fetchFromGitHub
+, vimUtils
+}:
 vimUtils.buildVimPluginFrom2Nix {
   pname = "fidget-nvim";
   version = "2023-06-10";

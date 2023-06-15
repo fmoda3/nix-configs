@@ -42,6 +42,7 @@ in
         tldr
         wget
         comma
+        nix-cleanup
       ] ++ optionals cfg.includeFonts [
         # Fonts
         nerdfonts

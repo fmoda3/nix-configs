@@ -1,6 +1,10 @@
-{ lib, pkgs, ... }:
+{ lib
+, python3Packages
+, terminal-notifier
+, rsync
+}:
 
-pkgs.python3Packages.buildPythonPackage rec {
+python3Packages.buildPythonPackage rec {
   pname = "pizzabox";
   version = "0.1.0";
 
@@ -12,7 +16,7 @@ pkgs.python3Packages.buildPythonPackage rec {
 
   doCheck = false;
 
-  propagatedBuildInputs = with pkgs; with python3Packages; [
+  propagatedBuildInputs = with python3Packages; [
     terminal-notifier
     rsync
     click

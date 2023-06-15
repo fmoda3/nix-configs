@@ -1,6 +1,9 @@
-{ lib, pkgs, ... }:
+{ lib
+, python3Packages
+, autossh
+}:
 
-pkgs.python3Packages.buildPythonPackage rec {
+python3Packages.buildPythonPackage rec {
   pname = "braid";
   version = "0.1.0";
 
@@ -12,7 +15,7 @@ pkgs.python3Packages.buildPythonPackage rec {
 
   doCheck = false;
 
-  propagatedBuildInputs = with pkgs; with python3Packages; [
+  propagatedBuildInputs = with python3Packages; [
     autossh
     click
     docker
@@ -21,11 +24,11 @@ pkgs.python3Packages.buildPythonPackage rec {
     pyyaml
     toast-tools
     psutil
-    # PyInquirer
+    inquirerpy
     dateutil
     parameterized
     boto3
-    # environment-variables
+    environs
     gitpython
   ];
 

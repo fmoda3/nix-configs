@@ -2,6 +2,7 @@ final: prev:
 {
   # Adding packages here, makes them accessible from "pkgs"
   braid = prev.callPackage ./braid { };
+  nix-cleanup = prev.callPackage ./nix-cleanup { };
   oktoast = prev.callPackage ./oktoast { };
   pizzabox = prev.callPackage ./pizzabox { };
   python3Packages = prev.python3Packages // {

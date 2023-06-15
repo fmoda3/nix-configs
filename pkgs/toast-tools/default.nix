@@ -1,6 +1,8 @@
-{ lib, pkgs, ... }:
+{ lib
+, python3Packages
+}:
 
-pkgs.python3Packages.buildPythonPackage rec {
+python3Packages.buildPythonPackage rec {
   pname = "toast-tools";
   version = "0.1.0";
 
@@ -12,7 +14,7 @@ pkgs.python3Packages.buildPythonPackage rec {
 
   doCheck = false;
 
-  propagatedBuildInputs = with pkgs; with python3Packages; [
+  propagatedBuildInputs = with python3Packages; [
     boto3
     click
     docker
