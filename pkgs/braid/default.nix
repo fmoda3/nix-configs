@@ -9,7 +9,7 @@ python3Packages.buildPythonPackage rec {
 
   src = fetchGit {
     url = "git@github.com:toasttab/braid.git";
-    rev = "a3d34ea829d4707516096cb76827f70c1ffbfeb0";
+    rev = "40d052b6ab48d86ab8b8f1b8a906730ae0cbafc7";
     ref = "main";
   };
 

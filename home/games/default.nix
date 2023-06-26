@@ -5,9 +5,6 @@ let
   dwarf-fortress-custom = dwarf-fortress-package.override {
     theme = "mayday";
     enableSoundSense = true;
-    settings = {
-      init.PRINT_MODE = "STANDARD";
-    };
   };
 in
 {
