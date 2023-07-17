@@ -5,7 +5,7 @@ with lib;
     enable = true;
     enableCompletion = true;
     enableAutosuggestions = true;
-    enableSyntaxHighlighting = true;
+    syntaxHighlighting.enable = true;
     dotDir = ".config/zsh";
 
     historySubstringSearch.enable = true;
