@@ -136,14 +136,6 @@ nvim_lsp.elixirls.setup({
 default_lsp_setup("erlangls")
 -- Haskell
 default_lsp_setup("hls")
--- Java
-nvim_lsp.java_language_server.setup({
-	cmd = { "java-language-server" },
-	on_attach = on_attach,
-	capabilities = capabilities,
-})
--- Kotlin
-default_lsp_setup("kotlin_language_server")
 -- Lua
 local runtime_path = vim.split(package.path, ";")
 table.insert(runtime_path, "lua/?.lua")

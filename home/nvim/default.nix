@@ -108,10 +108,6 @@ in
         beam.packages.erlang.erlang-ls
         # Haskell
         stable.haskellPackages.haskell-language-server
-        # Java
-        java-language-server
-        # Kotlin
-        kotlin-language-server
         # Lua
         lua-language-server
         # Nix
