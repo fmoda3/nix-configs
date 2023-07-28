@@ -7,6 +7,9 @@ with lib;
       settings = {
         bind_host = "0.0.0.0";
         bind_port = 80;
+        http = {
+          address = "0.0.0.0:80";
+        };
         dns = {
           bind_host = "0.0.0.0";
           bind_hosts = [ "0.0.0.0" ];
