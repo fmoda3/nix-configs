@@ -10,7 +10,7 @@ stdenv.mkDerivation {
 
   src = fetchGit {
     url = "git@github.com:toasttab/toast-services.git";
-    rev = "f0fd18d1df6f050d9e3ec6b6a7a7d702ef275fcc";
+    rev = "5705cab71bb1f1a9585bdb7e17cd47bb13b2db0a";
     ref = "development";
   };
 
