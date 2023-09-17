@@ -10,8 +10,10 @@
     ];
 
   boot = {
-    initrd.availableKernelModules = [ "usbhid" ];
-    initrd.kernelModules = [ ];
+    initrd = {
+      availableKernelModules = [ "usbhid" ];
+      kernelModules = [ ];
+    };
     kernelModules = [ ];
     extraModulePackages = [ ];
   };

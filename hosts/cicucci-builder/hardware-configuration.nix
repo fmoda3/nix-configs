@@ -8,12 +8,16 @@
     ./disko-config.nix
   ];
 
-  boot.loader.grub = {
-    device = "nodev";
-    efiSupport = true;
-    efiInstallAsRemovable = true;
-    initrd.availableKernelModules = [ "ahci" "xhci_pci" "nvme" "usbhid" "sr_mod" ];
-    initrd.kernelModules = [ ];
+  boot = {
+    loader.grub = {
+      device = "nodev";
+      efiSupport = true;
+      efiInstallAsRemovable = true;
+    };
+    initrd = {
+      availableKernelModules = [ "ahci" "xhci_pci" "nvme" "usbhid" "sr_mod" ];
+      kernelModules = [ ];
+    };
     kernelModules = [ ];
     extraModulePackages = [ ];
     growPartition = true;
