@@ -45,6 +45,7 @@
       enable = true;
       useUnbound = true;
     };
+    unifi.enable = true;
   };
 
 }

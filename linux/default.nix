@@ -11,6 +11,7 @@ in
     ./unbound
     ./tailscale
     ./tailscale-autoconnect
+    ./unifi
     ./vmware
     # Remaps enabling vmware guest to our custom module which supports aarch64
     (mkRenamedOptionModule [ "virtualisation" "vmware" "guest" ] [ "my-linux" "vmware" ])
@@ -47,6 +48,16 @@ in
           enable = lib.mkEnableOption "adblocker";
           # Should the adblocker run unbound as the backing dns provider
           useUnbound = lib.mkEnableOption "unbound";
+        };
+      };
+    };
+
+    unifi = lib.mkOption {
+      description = "unifi submodule";
+      default = { };
+      type = types.submodule {
+        options = {
+          enable = lib.mkEnableOption "unifi";
         };
       };
     };
