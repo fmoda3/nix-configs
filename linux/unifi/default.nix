@@ -7,5 +7,11 @@ with lib;
       unifiPackage = pkgs.unifi7;
       openFirewall = true;
     };
+
+    networking = {
+      firewall = {
+        allowedTCPPorts = [ 8443 ];
+      };
+    };
   };
 }
