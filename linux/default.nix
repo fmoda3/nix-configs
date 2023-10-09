@@ -13,6 +13,7 @@ in
     ./tailscale-autoconnect
     ./unifi
     ./vmware
+    ./arcade
     # Remaps enabling vmware guest to our custom module which supports aarch64
     (mkRenamedOptionModule [ "virtualisation" "vmware" "guest" ] [ "my-linux" "vmware" ])
   ];
@@ -69,6 +70,16 @@ in
         options = {
           enable = lib.mkEnableOption "vmware tools";
           headless = lib.mkEnableOption "headless mode";
+        };
+      };
+    };
+
+    arcade = lib.mkOption {
+      description = "arcade submodule";
+      default = { };
+      type = types.submodule {
+        options = {
+          enable = lib.mkEnableOption "arcade";
         };
       };
     };

@@ -216,6 +216,14 @@
             };
             specialArgs = { inherit inputs nixpkgs; };
           };
+          cicucci-arcade = nixpkgs.lib.nixosSystem {
+            system = "aarch64-linux";
+            modules = nixosModules {
+              user = "fmoda3";
+              host = "cicucci-arcade";
+            };
+            specialArgs = { inherit inputs nixpkgs; };
+          };
         };
         images = {
           bootable-aarch64-sd = nixos-generators.nixosGenerate {
@@ -276,6 +284,20 @@
             };
             specialArgs = { inherit inputs nixpkgs; };
             format = "vmware";
+          };
+          cicucci-arcade-iso = nixos-generators.nixosGenerate {
+            system = "aarch64-linux";
+            modules = nixpkgs.lib.flatten [
+              (nixosModules {
+                user = "nixos";
+                host = "bootable-iso";
+              })
+              (installerModules {
+                targetSystem = self.nixosConfigurations.cicucci-arcade;
+              })
+            ];
+            specialArgs = { inherit inputs nixpkgs; };
+            format = "install-iso";
           };
         };
         deploy = {
@@ -357,6 +379,11 @@
               name = "create-builder-vm";
               help = "Creates a vmware image for cicucci-builder";
               command = "nix build \".#images.cicucci-builder-vm\"";
+            }
+            {
+              name = "create-arcade-iso";
+              help = "Creates a vmware image for cicucci-arcade";
+              command = "nix build \".#images.cicucci-arcade-iso\"";
             }
           ];
         };

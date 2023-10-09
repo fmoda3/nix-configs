@@ -6,7 +6,7 @@ let
   inherit (cfg.targetSystem.config.system) build;
 
   # disko
-  disko = pkgs.writeShellScriptBin "disko" ''${build.disko}'';
+  disko = pkgs.writeShellScriptBin "disko" ''${build.diskoScript}'';
   disko-mount = pkgs.writeShellScriptBin "disko-mount" "${build.mountScript}";
   disko-format = pkgs.writeShellScriptBin "disko-format" "${build.formatScript}";
 
