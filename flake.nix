@@ -27,7 +27,7 @@
     };
     neovim-nightly-overlay = {
       # Don't follow nixpkgs for this, so that binary cache can be used.
-      url = "github:nix-community/neovim-nightly-overlay?rev=88a6c749a7d126c49f3374f9f28ca452ea9419b8";
+      url = "github:nix-community/neovim-nightly-overlay";
     };
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
