@@ -37,6 +37,14 @@
       url = "github:numtide/devshell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        darwin.follows = "darwin";
+        home-manager.follows = "home-manager";
+      };
+    };
     deploy-rs = {
       url = "github:serokell/deploy-rs";
       inputs = {
@@ -107,6 +115,7 @@
       darwinModules = { user, host }: with inputs; [
         # Main `nix-darwin` config
         (./. + "/hosts/${host}/configuration.nix")
+        agenix.darwinModules.default
         # `home-manager` module
         home-manager.darwinModules.home-manager
         {
@@ -120,6 +129,7 @@
             users.${user} = import (./. + "/hosts/${host}/home.nix");
             sharedModules = [
               nix-index-database.hmModules.nix-index
+              agenix.homeManagerModules.default
             ];
           };
         }
@@ -128,6 +138,7 @@
         # Main `nixos` config
         (./. + "/hosts/${host}/configuration.nix")
         disko.nixosModules.disko
+        agenix.nixosModules.default
         # `home-manager` module
         home-manager.nixosModules.home-manager
         {
@@ -148,6 +159,7 @@
             users.${user} = import (./. + "/hosts/${host}/home.nix");
             sharedModules = [
               nix-index-database.hmModules.nix-index
+              agenix.homeManagerModules.default
             ];
           };
         }
@@ -338,51 +350,79 @@
           packages = with pkgs; [
             statix
             inputs'.deploy-rs.packages.default
+            inputs'.agenix.packages.default
           ];
           commands = [
             {
               name = "format";
+              category = "style";
               help = "Format nix files with nixpkgs-fmt";
               command = "nix fmt";
             }
             {
               name = "lint";
+              category = "style";
               help = "Run lint checker with statix";
               command = "statix fix $PRJ_ROOT";
             }
             {
+              name = "age-edit";
+              category = "secrets";
+              help = "Edit an age file";
+              command = "agenix -e $@";
+            }
+            {
+              name = "age-rekey";
+              category = "secrets";
+              help = "Rekey all age files";
+              command = "agenix -r";
+            }
+            {
+              name = "age-decrypt";
+              category = "secrets";
+              help = "Decrypt an age file";
+              command = "agenix -d $@";
+            }
+            {
               name = "create-aarch64-iso";
+              category = "image builds";
               help = "Creates an iso image for aarch64 with my configs";
               command = "GC_DONT_GC=1 nix build \".#images.bootable-aarch64-iso\"";
             }
             {
               name = "create-x86_64-iso";
+              category = "image builds";
               help = "Creates an iso image for x86_64 with my configs";
               command = "GC_DONT_GC=1 nix build \".#images.bootable-x86_64-iso\"";
             }
             {
               name = "create-aarch64-sd";
+              category = "image builds";
               help = "Creates an sd card image for aarch64 with my configs";
               command = "nix build \".#images.bootable-aarch64-sd\"";
             }
             {
               name = "create-dns-sd";
-              help = "Creates a vmware image for cicucci-builder";
+              category = "image builds";
+              help = "Creates an sd image for cicucci-dns";
               command = "nix build \".#images.cicucci-dns-sd\"";
             }
             {
               name = "create-builder-iso";
-              help = "Creates a vmware image for cicucci-builder";
+              category = "image builds";
+              help = "Creates an iso image for cicucci-builder";
               command = "nix build \".#images.cicucci-builder-iso\"";
             }
             {
               name = "create-builder-vm";
+              category = "image builds";
               help = "Creates a vmware image for cicucci-builder";
               command = "nix build \".#images.cicucci-builder-vm\"";
             }
             {
               name = "create-arcade-iso";
-              help = "Creates a vmware image for cicucci-arcade";
+              category = "image builds";
+              help = "Creates an iso image for cicucci-arcade";
               command = "nix build \".#images.cicucci-arcade-iso\"";
             }
           ];
