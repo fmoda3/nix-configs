@@ -18,9 +18,13 @@
     };
 
     # Other sources
+    systems.url = "github:nix-systems/default";
     flake-parts.url = "github:hercules-ci/flake-parts";
     flake-root.url = "github:srid/flake-root";
-    flake-utils.url = "github:numtide/flake-utils";
+    flake-utils = {
+      url = "github:numtide/flake-utils";
+      inputs.systems.follows = "systems";
+    };
     flake-compat = {
       url = "github:edolstra/flake-compat";
       flake = false;
@@ -35,7 +39,10 @@
     };
     devshell = {
       url = "github:numtide/devshell";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        systems.follows = "systems";
+      };
     };
     agenix = {
       url = "github:ryantm/agenix";
@@ -62,7 +69,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-index-database = {
-      url = "github:Mic92/nix-index-database";
+      url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     comma = {
@@ -331,8 +338,10 @@
       perSystem = { config, self', inputs', pkgs, system, ... }: {
         treefmt.config = {
           inherit (config.flake-root) projectRootFile;
-          programs.nixpkgs-fmt.enable = true;
-          programs.stylua.enable = true;
+          programs = {
+            nixpkgs-fmt.enable = true;
+            stylua.enable = true;
+          };
         };
         pre-commit = {
           check.enable = true;
