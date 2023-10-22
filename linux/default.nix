@@ -10,7 +10,6 @@ in
     ./adguardhome
     ./unbound
     ./tailscale
-    ./tailscale-autoconnect
     ./unifi
     ./vmware
     ./arcade
@@ -30,9 +29,9 @@ in
           advertiseExitNode = mkEnableOption "advertise exit node";
 
           authkey = mkOption {
-            type = types.str;
+            type = types.nullOr types.path;
             default = null;
-            example = "tskey-kveqY12CNTRL-wQHntvWh7JgruYi1iwVgy";
+            example = "/run/secrets/tailscale_key";
             description = ''
               A one-time use tailscale key
             '';
