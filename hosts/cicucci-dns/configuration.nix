@@ -43,11 +43,6 @@
       authkey = config.age.secrets.dns_tailscale_key.path;
       advertiseExitNode = true;
     };
-    adblocker = {
-      enable = true;
-      useUnbound = true;
-    };
-    unifi.enable = true;
   };
 
 }
