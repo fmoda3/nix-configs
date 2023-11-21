@@ -13,7 +13,8 @@ in
       packages = with pkgs; [
         dwarf-fortress-custom
         freesweep
-        gnuchess
+        # Broken build
+        # gnuchess
         nethack
         ninvaders
         nudoku
