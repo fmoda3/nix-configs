@@ -21,4 +21,5 @@ let
 in
 {
   "dns_tailscale_key.age".publicKeys = all;
+  "flaggy_token.age".publicKeys = all;
 }

@@ -19,6 +19,7 @@
       "cocoapods"
       "lunchbox"
       "snyk"
+      "flaggy"
     ];
   };
 }

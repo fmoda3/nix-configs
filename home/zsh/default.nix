@@ -22,6 +22,7 @@ with lib;
       TOAST_GIT = "/Users/frank/Development";
       DOCKER_HOST = "unix:///Users/frank/.colima/default/docker.sock";
       TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE = "/var/run/docker.sock";
+      FLAGGY_TOKEN = ''$(${pkgs.coreutils}/bin/cat ${config.age.secrets."flaggy_token".path})'';
     };
 
     shellAliases = {
