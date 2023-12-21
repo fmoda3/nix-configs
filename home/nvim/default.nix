@@ -50,7 +50,7 @@ in
         # Fast navigation
         leap-nvim
         # Rainbow brackets
-        nvim-ts-rainbow
+        rainbow-delimiters-nvim
         # Notify window
         nvim-notify
         # Commenting
