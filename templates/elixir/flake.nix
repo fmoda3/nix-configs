@@ -25,7 +25,7 @@
             # this allows mix to work on the local directory
             mkdir -p .nix-mix .nix-hex
             export MIX_HOME=$PWD/.nix-mix
-            export HEX_HOME=$PWD/.nix-mix
+            export HEX_HOME=$PWD/.nix-hex
             export PATH=$MIX_HOME/bin:$MIX_HOME/escripts:$HEX_HOME/bin:$PATH
             # TODO: not sure how to make hex available without installing it afterwards.
             mix local.hex --if-missing
