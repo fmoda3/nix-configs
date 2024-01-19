@@ -13,6 +13,7 @@ in
     ./unifi
     ./vmware
     ./arcade
+    ./homebridge
     # Remaps enabling vmware guest to our custom module which supports aarch64
     (mkRenamedOptionModule [ "virtualisation" "vmware" "guest" ] [ "my-linux" "vmware" ])
   ];

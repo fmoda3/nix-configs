@@ -227,6 +227,14 @@
             };
             specialArgs = { inherit inputs nixpkgs; };
           };
+          cicucci-homelab = nixpkgs.lib.nixosSystem {
+            system = "x86_64-linux";
+            modules = nixosModules {
+              user = "fmoda3";
+              host = "cicucci-homelab";
+            };
+            specialArgs = { inherit inputs nixpkgs; };
+          };
           cicucci-builder = nixpkgs.lib.nixosSystem {
             system = "aarch64-linux";
             modules = nixosModules {
@@ -290,6 +298,20 @@
               })
               (installerModules {
                 targetSystem = self.nixosConfigurations.cicucci-builder;
+              })
+            ];
+            specialArgs = { inherit inputs nixpkgs; };
+            format = "install-iso";
+          };
+          cicucci-homelab-iso = nixos-generators.nixosGenerate {
+            system = "x86_64-linux";
+            modules = nixpkgs.lib.flatten [
+              (nixosModules {
+                user = "nixos";
+                host = "bootable-iso";
+              })
+              (installerModules {
+                targetSystem = self.nixosConfigurations.cicucci-homelab;
               })
             ];
             specialArgs = { inherit inputs nixpkgs; };
@@ -415,6 +437,12 @@
               category = "image builds";
               help = "Creates an sd image for cicucci-dns";
               command = "nix build \".#images.cicucci-dns-sd\"";
+            }
+            {
+              name = "create-homelab-iso";
+              category = "image builds";
+              help = "Creates an iso image for cicucci-homelab";
+              command = "nix build \".#images.cicucci-homelab-iso\"";
             }
             {
               name = "create-builder-iso";

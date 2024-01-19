@@ -2,6 +2,8 @@ final: prev:
 {
   # Adding packages here, makes them accessible from "pkgs"
   braid = prev.callPackage ./braid { };
+  homebridge = prev.callPackage ./homebridge { };
+  homebridge-config-ui-x = prev.callPackage ./homebridge-config-ui-x { };
   nix-cleanup = prev.callPackage ./nix-cleanup { };
   oktoast = prev.callPackage ./oktoast { };
   pizzabox = prev.callPackage ./pizzabox { };
