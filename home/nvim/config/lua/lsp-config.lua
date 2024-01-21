@@ -246,6 +246,8 @@ require("null-ls").setup({
 	},
 })
 
+vim.api.nvim_exec_autocmds("FileType", {})
+
 local util = require("util")
 util.colorize({
 	["@lsp.type.boolean"] = { link = "@boolean" },
