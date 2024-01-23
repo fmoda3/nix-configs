@@ -452,6 +452,9 @@ in
         chown homebridge "${cfg.userStoragePath}/config.json"
         chgrp homebridge "${cfg.userStoragePath}/config.json"
         chmod 600 "${cfg.userStoragePath}/config.json"
+        mkdir -p "${cfg.pluginPath}"
+        chown homebridge "${cfg.pluginPath}"
+        chgrp homebridge "${cfg.pluginPath}"
       '';
 
       # Settings found from standalone mode docs and hb-service code

@@ -5,15 +5,15 @@
 
 buildNpmPackage rec {
   pname = "homebridge";
-  version = "1.6.1";
+  version = "1.7.0";
   src = fetchFromGitHub {
     owner = "homebridge";
     repo = "homebridge";
     rev = "v${version}";
-    hash = "sha256-U6cxnoqScwBrL+PN4regNSAZP97N9+whRNPpAtUBRc8=";
+    hash = "sha256-FYwIMQrJ/QNrwEfvI7MMKaiCYJS5E7s90yNVYwk6SS4=";
   };
 
-  npmDepsHash = "sha256-/iOu8bnyoP7DdwJBrR6XXIMQuuwf4mP7m8FacuK3FuU=";
+  npmDepsHash = "sha256-g95wdWVnJf8UQDNuiFZ8/Dv6sMvNzGfdo7Ww+VqO71A=";
 
   meta = {
     description = "Homebridge";

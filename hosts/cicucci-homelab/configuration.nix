@@ -39,7 +39,11 @@
 
   # age.secrets.dns_tailscale_key.file = ../../secrets/dns_tailscale_key.age;
 
-  services.homebridge.enable = true;
+  services.homebridge = {
+    enable = true;
+    openFirewall = true;
+    allowInsecure = true;
+  };
 
   my-linux = {
     enableNixOptimise = true;
