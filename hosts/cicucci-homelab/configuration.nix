@@ -37,7 +37,7 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  # age.secrets.dns_tailscale_key.file = ../../secrets/dns_tailscale_key.age;
+  age.secrets.homelab_tailscale_key.file = ../../secrets/homelab_tailscale_key.age;
 
   services.homebridge = {
     enable = true;
@@ -47,11 +47,11 @@
 
   my-linux = {
     enableNixOptimise = true;
-    # tailscale = {
-    #   enable = true;
-    #   authkey = config.age.secrets.dns_tailscale_key.path;
-    #   advertiseExitNode = true;
-    # };
+    tailscale = {
+      enable = true;
+      authkey = config.age.secrets.homelab_tailscale_key.path;
+      advertiseExitNode = true;
+    };
   };
 
 }
