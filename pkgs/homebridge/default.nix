@@ -1,6 +1,7 @@
 { lib
 , buildNpmPackage
 , fetchFromGitHub
+, nodejs_20
 }:
 
 buildNpmPackage rec {
@@ -12,6 +13,8 @@ buildNpmPackage rec {
     rev = "v${version}";
     hash = "sha256-FYwIMQrJ/QNrwEfvI7MMKaiCYJS5E7s90yNVYwk6SS4=";
   };
+
+  nodejs = nodejs_20;
 
   npmDepsHash = "sha256-g95wdWVnJf8UQDNuiFZ8/Dv6sMvNzGfdo7Ww+VqO71A=";
 

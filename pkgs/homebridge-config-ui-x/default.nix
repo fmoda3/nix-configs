@@ -4,6 +4,7 @@
 , fetchFromGitHub
 , fetchNpmDeps
 , npmHooks
+, nodejs_20
 }:
 
 let
@@ -25,6 +26,8 @@ in
 buildNpmPackage rec {
   pname = "homebridge-config-ui-x";
   inherit version src;
+
+  nodejs = nodejs_20;
 
   # Deps hash for the root package
   npmDepsHash = "sha256-zYy6LsZJ9ztds9q7aNQit9yOATYY8W5AgJNO8eMICcs=";
