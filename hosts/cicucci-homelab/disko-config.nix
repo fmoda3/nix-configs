@@ -9,6 +9,18 @@ _: {
           format = "gpt";
           partitions = [
             {
+              name = "ESP";
+              start = "1MiB";
+              end = "512MiB";
+              fs-type = "fat32";
+              bootable = true;
+              content = {
+                type = "filesystem";
+                format = "vfat";
+                mountpoint = "/boot";
+              };
+            }
+            {
               name = "nixos";
               start = "512MiB";
               end = "-18GiB";
@@ -27,18 +39,6 @@ _: {
               fs-type = "linux-swap";
               content = {
                 type = "swap";
-              };
-            }
-            {
-              name = "ESP";
-              start = "1MiB";
-              end = "512MiB";
-              fs-type = "fat32";
-              bootable = true;
-              content = {
-                type = "filesystem";
-                format = "vfat";
-                mountpoint = "/boot";
               };
             }
           ];

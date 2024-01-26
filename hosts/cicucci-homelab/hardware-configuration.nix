@@ -6,6 +6,7 @@
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
+    ./disko-config.nix
   ];
 
   boot = {
@@ -16,21 +17,6 @@
     kernelModules = [ "kvm-intel" ];
     extraModulePackages = [ ];
   };
-
-  fileSystems."/" =
-    {
-      device = "/dev/disk/by-label/nixos";
-      fsType = "ext4";
-    };
-
-  fileSystems."/boot" =
-    {
-      device = "/dev/disk/by-label/ESP";
-      fsType = "vfat";
-    };
-
-  swapDevices =
-    [{ device = "/dev/disk/by-label/swap"; }];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
