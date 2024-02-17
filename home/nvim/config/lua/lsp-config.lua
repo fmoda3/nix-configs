@@ -231,18 +231,19 @@ default_lsp_setup("html")
 default_lsp_setup("jsonls")
 
 -- NULL
-require("null-ls").setup({
+local null_ls = require("null-ls")
+null_ls.setup({
 	sources = {
 		-- Elixir
-		require("null-ls").builtins.diagnostics.credo,
+		null_ls.builtins.diagnostics.credo,
 
 		-- Nix
-		require("null-ls").builtins.formatting.nixpkgs_fmt,
-		require("null-ls").builtins.diagnostics.statix,
-		require("null-ls").builtins.code_actions.statix,
+		null_ls.builtins.formatting.nixpkgs_fmt,
+		null_ls.builtins.diagnostics.statix,
+		null_ls.builtins.code_actions.statix,
 
 		-- Python
-		require("null-ls").builtins.formatting.black,
+		null_ls.builtins.formatting.black,
 	},
 })
 
