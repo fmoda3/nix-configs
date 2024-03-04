@@ -10,7 +10,7 @@ python3Packages.buildPythonPackage rec {
 
   src = fetchGit {
     url = "git@github.com:toasttab/pizzabox.git";
-    rev = "8307fdff5cc125a449fba1fedfa6356143a5f8c3";
+    rev = "6bc630ddd9eb5a292db8d489051c24d784df4997";
     ref = "main";
   };
 

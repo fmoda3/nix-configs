@@ -8,7 +8,7 @@ python3Packages.buildPythonPackage rec {
 
   src = fetchGit {
     url = "git@github.com:toasttab/devtools-python-common.git";
-    rev = "a5fcac406eeef56119bba0ae5a04f14fc382443b";
+    rev = "3b70424860eef69caf50bbeda91ec26c5b9885df";
     ref = "master";
   };
 
@@ -19,10 +19,12 @@ python3Packages.buildPythonPackage rec {
     click
     docker
     psycopg2
+    pylint
     pyyaml
     gitpython
     texttable
     packaging
+    psutil
     pync
     arrow
     requests

@@ -9,7 +9,7 @@ stdenv.mkDerivation {
   version = "1.0";
 
   src = fetchGit {
-    url = "git@github.com:toasttab/toast-services.git";
+    url = "git@github.toasttab.com:toasttab/toast-services.git";
     rev = "5705cab71bb1f1a9585bdb7e17cd47bb13b2db0a";
     ref = "development";
   };

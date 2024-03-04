@@ -9,7 +9,7 @@ python3Packages.buildPythonPackage rec {
 
   src = fetchGit {
     url = "git@github.com:toasttab/braid.git";
-    rev = "add018dcff41e2a7ed8d4c753e3749d8b099677e";
+    rev = "5cd87e6a88c5151821f315dc37057b2dea687672";
     ref = "main";
   };
 
@@ -31,6 +31,8 @@ python3Packages.buildPythonPackage rec {
     environs
     gitpython
     cachetools
+    pylint
+    texttable
   ];
 
   postPatch = ''
