@@ -18,6 +18,7 @@
       "libffi"
       "cocoapods"
       "lunchbox"
+      "braid"
       "snyk"
       "flaggy"
     ];
