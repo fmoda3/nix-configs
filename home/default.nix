@@ -65,6 +65,7 @@ in
         docker-compose
         docker-credential-helpers
         android-tools
+        autossh
       ];
     };
 
