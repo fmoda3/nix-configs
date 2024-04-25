@@ -11,7 +11,7 @@ in
   config = mkIf config.my-home.includeGames {
     home = {
       packages = with pkgs; [
-        dwarf-fortress-custom
+        # dwarf-fortress-custom
         freesweep
         # gnuchess
         nethack
