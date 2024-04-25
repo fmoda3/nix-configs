@@ -8,19 +8,19 @@
 }:
 
 let
-  version = "4.55.1";
+  version = "4.56.1";
   src = fetchFromGitHub {
     owner = "homebridge";
     repo = "homebridge-config-ui-x";
     rev = "${version}";
-    hash = "sha256-suCpj461tTN2L70eR9A7dkWE0sRz99SbS1rwYcOKnak=";
+    hash = "sha256-AdnnHIAI11NGkWtymZsX99ECl+h3hIs7+CuskcDbFH0=";
   };
 
   # Deps src and hash for ui subdirectory
   npmDeps_ui = fetchNpmDeps {
     name = "npm-deps-ui";
     src = "${src}/ui";
-    hash = "sha256-Dln+xdvikYuUu+KqtZco4KooY5n7u++3dkMucwOkNPE=";
+    hash = "sha256-FazRZhHAopAcYZNcrchw0rx0sJ149Bje5+9bDf6Q7Aw=";
   };
 in
 buildNpmPackage rec {
@@ -30,7 +30,7 @@ buildNpmPackage rec {
   nodejs = nodejs_20;
 
   # Deps hash for the root package
-  npmDepsHash = "sha256-zYy6LsZJ9ztds9q7aNQit9yOATYY8W5AgJNO8eMICcs=";
+  npmDepsHash = "sha256-L3NgtXmRywmdVPNTT6VrNw+nJbov1PnSkhqcDeeh0Jo=";
 
   # Need to also run npm ci in the ui subdirectory
   preBuild = ''
