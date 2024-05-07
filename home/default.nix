@@ -14,6 +14,7 @@ in
     ./tmux
     ./direnv
     ./games
+    ./gh
   ];
 
   options.my-home = {
@@ -66,6 +67,7 @@ in
         docker-credential-helpers
         android-tools
         autossh
+        gh
       ];
     };
 
