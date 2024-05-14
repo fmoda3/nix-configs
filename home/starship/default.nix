@@ -259,6 +259,7 @@
         symbols = {
           Alpaquita = " ";
           Alpine = " ";
+          AlmaLinux = " ";
           Amazon = " ";
           Android = " ";
           Arch = " ";
@@ -274,6 +275,7 @@
           Gentoo = " ";
           HardenedBSD = "ﲊ ";
           Illumos = " ";
+          Kali = " ";
           Linux = " ";
           Mabox = " ";
           Macos = " ";
@@ -290,11 +292,13 @@
           Raspbian = " ";
           Redhat = " ";
           RedHatEnterprise = " ";
+          RockyLinux = " ";
           Redox = " ";
           Solus = "ﴱ ";
           SUSE = " ";
           Ubuntu = " ";
           Unknown = " ";
+          Void = " ";
           Windows = " ";
         };
         format = "\\[[$symbol]($style)\\]";
@@ -305,9 +309,11 @@
         format = "\\[[$symbol$version]($style)\\]";
       };
       perl = {
+        symbol = " ";
         format = "\\[[$symbol($version)]($style)\\]";
       };
       php = {
+        symbol = " ";
         format = "\\[[$symbol($version)]($style)\\]";
       };
       pijul_channel = {
@@ -353,6 +359,7 @@
         format = "\\[[as $symbol]\\]";
       };
       swift = {
+        symbol = " ";
         format = "\\[[$symbol($version)]($style)\\]";
       };
       terraform = {
@@ -371,6 +378,7 @@
         format = "\\[[$symbol($version)]($style)\\]";
       };
       zig = {
+        symbol = " ";
         format = "\\[[$symbol($version)]($style)\\]";
       };
     };
