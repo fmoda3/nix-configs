@@ -10,7 +10,7 @@ stdenv.mkDerivation {
 
   src = fetchGit {
     url = "git@github.toasttab.com:toasttab/toast-services.git";
-    rev = "5705cab71bb1f1a9585bdb7e17cd47bb13b2db0a";
+    rev = "c3eabb716ec50da0ed8ebd80058674f2fac6131f";
     ref = "development";
   };
 
@@ -27,7 +27,7 @@ stdenv.mkDerivation {
     cp destroy_spa.sh $out/bin/destroy_spa.sh
     cp lib/check_aws_env.bash $out/bin/lib/check_aws_env.bash
     cp lib/countdown.bash $out/bin/lib/countdown.bash
-    cp lib/codebuild_libs.bash $out/bin/lib/codebuild_libs.bash
+    cp lib/aws_libs.bash $out/bin/lib/aws_libs.bash
   '';
 
   postFixup = ''
