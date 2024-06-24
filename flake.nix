@@ -41,7 +41,7 @@
       url = "github:numtide/devshell";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        systems.follows = "systems";
+        flake-utils.follows = "flake-utils";
       };
     };
     agenix = {
@@ -80,24 +80,23 @@
         flake-compat.follows = "flake-compat";
       };
     };
-    pre-commit-hooks = {
-      url = "github:cachix/pre-commit-hooks.nix";
+    git-hooks = {
+      url = "github:cachix/git-hooks.nix";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         nixpkgs-stable.follows = "nixos-stable";
-        flake-utils.follows = "flake-utils";
         flake-compat.follows = "flake-compat";
       };
     };
   };
-  outputs = inputs@{ self, nixpkgs, darwin, flake-parts, flake-root, deploy-rs, treefmt-nix, devshell, nixos-generators, pre-commit-hooks, ... }:
+  outputs = inputs@{ self, nixpkgs, darwin, flake-parts, flake-root, deploy-rs, treefmt-nix, devshell, nixos-generators, git-hooks, ... }:
     let
       nixpkgsConfig = with inputs; {
         config = {
           allowUnfree = true;
         };
         overlays = [
-          neovim-nightly-overlay.overlay
+          neovim-nightly-overlay.overlays.default
           comma.overlays.default
           # "pkgs" currently points to unstable
           # The following overlay allows you to specify "pkgs.stable" for stable versions
@@ -180,7 +179,7 @@
       imports = [
         devshell.flakeModule
         flake-root.flakeModule
-        pre-commit-hooks.flakeModule
+        git-hooks.flakeModule
         treefmt-nix.flakeModule
       ];
       flake = {

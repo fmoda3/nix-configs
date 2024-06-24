@@ -6,7 +6,6 @@ in
 {
   config = mkIf config.my-home.useNeovim {
     programs.neovim = {
-      package = pkgs.neovim-nightly;
       enable = true;
       viAlias = true;
       vimAlias = true;
