@@ -6,17 +6,17 @@
 
 buildNpmPackage rec {
   pname = "homebridge";
-  version = "1.8.0";
+  version = "1.8.3";
   src = fetchFromGitHub {
     owner = "homebridge";
     repo = "homebridge";
     rev = "v${version}";
-    hash = "sha256-hnwnzlhFnE4FS9ly6BoJr4HqAXbhzWqGTGe7BgqczD4=";
+    hash = "sha256-fkIIZ0JbF/wdBWUIxoCP2Csv0w0I/3Xi/A+s79vcNWU=";
   };
 
   nodejs = nodejs_20;
 
-  npmDepsHash = "sha256-3jxsBtOSR2J1kqOf1X0yGx/W0CPNb8adg+6tpmfGY6M=";
+  npmDepsHash = "sha256-11f+RDrGtdbXX0U7oJT3Pp6w4ILCG36BPDXzmjkpppU=";
 
   meta = {
     description = "Homebridge";
