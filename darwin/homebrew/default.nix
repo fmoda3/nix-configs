@@ -8,7 +8,7 @@
     taps = [
       {
         name = "toasttab/toast";
-        clone_target = "git@github.com:toasttab/homebrew-toast";
+        clone_target = "git@github.toasttab.com:toasttab/homebrew-toast";
       }
       {
         name = "snyk/tap";
