@@ -123,8 +123,6 @@
         home-manager.darwinModules.home-manager
         {
           nixpkgs = nixpkgsConfig;
-          # Pins channels and flake registry to use the same nixpkgs as this flake.
-          nix.registry = nixpkgs.lib.mapAttrs (_: value: { flake = value; }) inputs;
           # `home-manager` config
           users.users.${user}.home = "/Users/${user}";
           home-manager = {
@@ -146,8 +144,6 @@
         home-manager.nixosModules.home-manager
         {
           nixpkgs = nixpkgsConfig;
-          # Pins channels and flake registry to use the same nixpkgs as this flake.
-          nix.registry = nixpkgs.lib.mapAttrs (_: value: { flake = value; }) inputs;
           # `home-manager` config
           users.users.${user} = {
             home = "/home/${user}";

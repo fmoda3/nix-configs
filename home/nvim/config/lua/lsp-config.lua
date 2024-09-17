@@ -183,7 +183,7 @@ nvim_lsp.nil_ls.setup({
 -- Python
 default_lsp_setup("pyright")
 -- Typescript
-nvim_lsp.tsserver.setup({
+nvim_lsp.ts_ls.setup({
 	init_options = require("nvim-lsp-ts-utils").init_options,
 	on_attach = function(client, bufnr)
 		on_attach(client, bufnr)
