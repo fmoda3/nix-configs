@@ -41,10 +41,7 @@ let
     inherit (cfg.ui) sessionTimeout;
   } // optionalAttrs (cfg.ui.ssl != null) {
     ssl = {
-      inherit (cfg.ui.ssl) key;
-      inherit (cfg.ui.ssl) cert;
-      inherit (cfg.ui.ssl) pfx;
-      inherit (cfg.ui.ssl) passphrase;
+      inherit (cfg.ui.ssl) key cert pfx passphrase;
     };
   } // optionalAttrs (cfg.ui.tempUnits != null) {
     inherit (cfg.ui) tempUnits;
@@ -67,8 +64,7 @@ let
   defaultConfig = {
     description = "Homebridge";
     bridge = {
-      inherit (cfg.bridge) name;
-      inherit (cfg.bridge) port;
+      inherit (cfg.bridge) name port;
       username = if (cfg.bridge.username != null) then cfg.bridge.username else "CC:22:3D:E3:CE:30";
       pin = if (cfg.bridge.pin != null) then cfg.bridge.pin else "031-45-154";
     } // optionalAttrs (cfg.bridge.advertiser != null) {

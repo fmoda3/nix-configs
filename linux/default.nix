@@ -22,7 +22,7 @@ in
     enableNixOptimise = lib.mkEnableOption "nix auto optimizations";
 
     tailscale = lib.mkOption {
-      description = "tailscale submodile";
+      description = "tailscale submodule";
       default = { };
       type = types.submodule {
         options = {

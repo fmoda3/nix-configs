@@ -34,41 +34,47 @@ in
         PAGER = "less";
       };
 
-      packages = with pkgs; [
-        # command line utilities
-        ack
-        curl
-        htop
-        neofetch
-        tldr
-        wget
-        comma
-        nix-cleanup
-      ] ++ optionals cfg.includeFonts [
-        # Fonts
-        nerdfonts
-        cozette
-        scientifica
-        monocraft
-      ] ++ optionals (!cfg.useNeovim) [
-        # Add vim if not setting up neovim
-        vim
-      ] ++ optionals cfg.isWork [
-        # Work packages
-        postgresql
-        awscli2
-        oktoast
-        toast-services
-        pizzabox
-        heroku
-        colima
-        docker
-        docker-compose
-        docker-credential-helpers
-        android-tools
-        autossh
-        gh
-      ];
+      packages = with pkgs; let
+        commonPackages = [
+          # command line utilities
+          ack
+          curl
+          htop
+          neofetch
+          tldr
+          wget
+          comma
+          nix-cleanup
+        ];
+        fontPackages = [
+          # Fonts
+          nerdfonts
+          cozette
+          scientifica
+          monocraft
+        ];
+        vimPackage = [ vim ];
+        workPackages = [
+          # Work packages
+          postgresql
+          awscli2
+          oktoast
+          toast-services
+          pizzabox
+          heroku
+          colima
+          docker
+          docker-compose
+          docker-credential-helpers
+          android-tools
+          autossh
+          gh
+        ];
+      in
+      commonPackages
+      ++ (lib.optionals cfg.includeFonts fontPackages)
+      ++ (lib.optionals (!cfg.useNeovim) vimPackage)
+      ++ (lib.optionals cfg.isWork workPackages);
     };
 
     fonts.fontconfig.enable = cfg.includeFonts;

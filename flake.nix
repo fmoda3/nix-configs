@@ -102,7 +102,7 @@
             final: prev:
               let
                 inherit (prev.stdenv) system;
-                nixpkgs-stable = if system == "x86_64-darwin" || system == "aarch64-darwin" then nixpkgs-stable-darwin else nixos-stable;
+                nixpkgs-stable = if prev.stdenv.isDarwin then nixpkgs-stable-darwin else nixos-stable;
               in
               {
                 master = nixpkgs-master.legacyPackages.${system};
@@ -115,16 +115,13 @@
           )
         ];
       };
-      darwinModules = { user, host }: with inputs; [
-        # Main `nix-darwin` config
+      commonModules = { user, host }: with inputs; [
+        # Main config
         (./. + "/hosts/${host}/configuration.nix")
         agenix.darwinModules.default
         # `home-manager` module
-        home-manager.darwinModules.home-manager
         {
           nixpkgs = nixpkgsConfig;
-          # `home-manager` config
-          users.users.${user}.home = "/Users/${user}";
           home-manager = {
             useGlobalPkgs = true;
             users.${user} = import (./. + "/hosts/${host}/home.nix");
@@ -135,34 +132,30 @@
           };
         }
       ];
-      nixosModules = { user, host }: with inputs; [
-        # Main `nixos` config
-        (./. + "/hosts/${host}/configuration.nix")
-        disko.nixosModules.disko
-        agenix.nixosModules.default
-        # `home-manager` module
-        home-manager.nixosModules.home-manager
-        {
-          nixpkgs = nixpkgsConfig;
-          # `home-manager` config
-          users.users.${user} = {
-            home = "/home/${user}";
-            isNormalUser = true;
-            group = "${user}";
-            extraGroups = [ "wheel" ];
-          };
-          users.groups.${user} = { };
-          home-manager = {
-            useGlobalPkgs = true;
-            useUserPackages = true;
-            users.${user} = import (./. + "/hosts/${host}/home.nix");
-            sharedModules = [
-              nix-index-database.hmModules.nix-index
-              agenix.homeManagerModules.default
-            ];
-          };
-        }
-      ];
+      darwinModules = { user, host }: with inputs;
+        commonModules { inherit user host; } ++ [
+          home-manager.darwinModules.home-manager
+          {
+            # `home-manager` config
+            users.users.${user}.home = "/Users/${user}";
+          }
+        ];
+      nixosModules = { user, host }: with inputs;
+        commonModules { inherit user host; } ++ [
+          disko.nixosModules.disko
+          home-manager.nixosModules.home-manager
+          {
+            # `home-manager` config
+            users.users.${user} = {
+              home = "/home/${user}";
+              isNormalUser = true;
+              group = "${user}";
+              extraGroups = [ "wheel" ];
+            };
+            users.groups.${user} = { };
+            home-manager.useUserPackages = true;
+          }
+        ];
       installerModules = { targetSystem }: [
         (./installer/system-installer.nix)
         { installer.targetSystem = targetSystem; }
@@ -283,29 +276,25 @@
           };
           cicucci-builder-iso = nixos-generators.nixosGenerate {
             system = "aarch64-linux";
-            modules = nixpkgs.lib.flatten [
-              (nixosModules {
+            modules = nixosModules
+              {
                 user = "nixos";
                 host = "bootable-iso";
-              })
-              (installerModules {
-                targetSystem = self.nixosConfigurations.cicucci-builder;
-              })
-            ];
+              } ++ installerModules {
+              targetSystem = self.nixosConfigurations.cicucci-builder;
+            };
             specialArgs = { inherit inputs nixpkgs; };
             format = "install-iso";
           };
           cicucci-homelab-iso = nixos-generators.nixosGenerate {
             system = "x86_64-linux";
-            modules = nixpkgs.lib.flatten [
-              (nixosModules {
+            modules = nixosModules
+              {
                 user = "nixos";
                 host = "bootable-iso";
-              })
-              (installerModules {
-                targetSystem = self.nixosConfigurations.cicucci-homelab;
-              })
-            ];
+              } ++ installerModules {
+              targetSystem = self.nixosConfigurations.cicucci-homelab;
+            };
             specialArgs = { inherit inputs nixpkgs; };
             format = "install-iso";
           };
@@ -320,15 +309,13 @@
           };
           cicucci-arcade-iso = nixos-generators.nixosGenerate {
             system = "aarch64-linux";
-            modules = nixpkgs.lib.flatten [
-              (nixosModules {
+            modules = nixosModules
+              {
                 user = "nixos";
                 host = "bootable-iso";
-              })
-              (installerModules {
-                targetSystem = self.nixosConfigurations.cicucci-arcade;
-              })
-            ];
+              } ++ installerModules {
+              targetSystem = self.nixosConfigurations.cicucci-arcade;
+            };
             specialArgs = { inherit inputs nixpkgs; };
             format = "install-iso";
           };
