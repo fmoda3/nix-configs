@@ -17,6 +17,9 @@
     ];
 
     extraConfig = ''
+      # Need to override sensible
+      set -g default-command '$SHELL'
+
       # splitting panes
       # START:panesplit
       bind | split-window -h
