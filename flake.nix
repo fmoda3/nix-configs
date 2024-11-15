@@ -128,6 +128,9 @@
             sharedModules = [
               nix-index-database.hmModules.nix-index
               agenix.homeManagerModules.default
+              {
+                age.secrets.openrouter_key.file = secrets/openrouter_key.age;
+              }
             ];
           };
         }

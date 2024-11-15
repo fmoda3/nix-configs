@@ -18,7 +18,11 @@ with lib;
       GREP_COLOR = "1;33";
     };
 
-    sessionVariables = optionalAttrs config.my-home.isWork {
+    sessionVariables = {
+      # Common variables
+      OPENROUTER_API_KEY = ''$(${pkgs.coreutils}/bin/cat ${config.age.secrets."openrouter_key".path})'';
+    } // optionalAttrs config.my-home.isWork {
+      # Work-specific variables
       TOAST_GIT = "/Users/frank/Development";
       DOCKER_HOST = "unix:///Users/frank/.colima/default/docker.sock";
       TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE = "/var/run/docker.sock";

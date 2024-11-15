@@ -25,4 +25,5 @@ in
   "dns_tailscale_key.age".publicKeys = all;
   "homelab_tailscale_key.age".publicKeys = all;
   "flaggy_token.age".publicKeys = all;
+  "openrouter_key.age".publicKeys = all;
 }

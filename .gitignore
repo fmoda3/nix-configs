@@ -3,3 +3,5 @@
 .nix-mix
 .pre-commit-config.yaml
 result
+.aider*
+.env

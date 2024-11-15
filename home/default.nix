@@ -45,6 +45,7 @@ in
           wget
           comma
           nix-cleanup
+          aider-chat
         ];
         fontPackages = [
           # Fonts
