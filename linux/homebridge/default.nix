@@ -488,6 +488,8 @@ in
         systemd
         # Required for access to sudo
         "/run/wrappers"
+        # Some plugins need bash to download tools
+        bash
       ];
 
       environment = {
