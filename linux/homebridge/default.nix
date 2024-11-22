@@ -89,10 +89,6 @@ let
     name = "config.json";
     text = builtins.toJSON defaultConfig;
   };
-
-  runJqConfig = query: ''
-    ${pkgs.jq}/bin/jq -c '${query}' "${cfg.userStoragePath}/config.json" > tmp.$$.json && mv tmp.$$.json "${cfg.userStoragePath}/config.json"
-  '';
 in
 {
   options.services.homebridge = with types; {
@@ -417,41 +413,63 @@ in
         if [ ! -e "${cfg.userStoragePath}/config.json" ]; then
           cp --force "${defaultConfigFile}" "${cfg.userStoragePath}/config.json"
         else
-          ${runJqConfig ".bridge.name = \"${cfg.bridge.name}\"" }
-          ${runJqConfig ".bridge.port = ${toString cfg.bridge.port}" }
-          ${optionalString (cfg.bridge.username != null) (runJqConfig ".bridge.username = \"${cfg.bridge.username}\"") }
-          ${optionalString (cfg.bridge.pin != null) (runJqConfig ".bridge.pin = \"${cfg.bridge.pin}\"") }
-          ${optionalString (cfg.bridge.advertiser != null) (runJqConfig ".bridge.advertiser = \"${cfg.bridge.advertiser}\"") }
-          ${optionalString (cfg.bridge.bind != null) (runJqConfig ".bridge.bind = ${builtins.toJSON cfg.bridge.bind}") }
-          ${optionalString (cfg.bridge.setupID != null) (runJqConfig ".bridge.setupID = \"${cfg.bridge.setupID}\"") }
-          ${optionalString (cfg.bridge.manufacturer != null) (runJqConfig ".bridge.manufacturer = \"${cfg.bridge.manufacturer}\"") }
-          ${optionalString (cfg.bridge.model != null) (runJqConfig ".bridge.model = \"${cfg.bridge.model}\"") }
-          ${optionalString (cfg.bridge.disableIpc != null) (runJqConfig ".bridge.disableIpc = ${toString cfg.bridge.disableIpc}") }
-          ${runJqConfig ".platforms |= map(select(.platform == \"config\").port |= ${toString cfg.ui.port})" }
-          ${runJqConfig ".platforms |= map(select(.platform == \"config\").standalone |= true)" }
-          ${runJqConfig ".platforms |= map(select(.platform == \"config\").restart |= \"${restartCommand}\")" }
-          ${runJqConfig ".platforms |= map(select(.platform == \"config\").homebridgePackagePath |= \"${homebridgePackagePath}\")" }
-          ${runJqConfig ".platforms |= map(select(.platform == \"config\").sudo |= false)" }
-          ${runJqConfig ".platforms |= map(select(.platform == \"config\").log.method |= \"systemd\")" }
-          ${runJqConfig ".platforms |= map(select(.platform == \"config\").log.service |= \"homebridge\")" }
-          ${optionalString (cfg.ui.host != null) (runJqConfig ".platforms |= map(select(.platform == \"config\").host |= \"${cfg.ui.host}\")") }
-          ${optionalString (cfg.ui.proxyHost != null) (runJqConfig ".platforms |= map(select(.platform == \"config\").host |= \"${cfg.ui.proxyHost}\")") }
-          ${optionalString (cfg.ui.auth != null) (runJqConfig ".platforms |= map(select(.platform == \"config\").auth |= \"${cfg.ui.auth}\")") }
-          ${optionalString (cfg.ui.sessionTimeout != null) (runJqConfig ".platforms |= map(select(.platform == \"config\").sessionTimeout |= ${toString cfg.ui.sessionTimeout})") }
-          ${optionalString (cfg.ui.ssl != null) (runJqConfig ".platforms |= map(select(.platform == \"config\").ssl.key |= \"${cfg.ui.ssl.key}\")") }
-          ${optionalString (cfg.ui.ssl != null) (runJqConfig ".platforms |= map(select(.platform == \"config\").ssl.cert |= \"${cfg.ui.ssl.cert}\")") }
-          ${optionalString (cfg.ui.ssl != null) (runJqConfig ".platforms |= map(select(.platform == \"config\").ssl.pfx |= \"${cfg.ui.ssl.pfx}\")") }
-          ${optionalString (cfg.ui.ssl != null) (runJqConfig ".platforms |= map(select(.platform == \"config\").ssl.passphrase |= \"${cfg.ui.ssl.passphrase}\")") }
-          ${optionalString (cfg.ui.tempUnits != null) (runJqConfig ".platforms |= map(select(.platform == \"config\").tempUnits |= \"${cfg.ui.tempUnits}\")") }
-          ${optionalString (cfg.ui.theme != null) (runJqConfig ".platforms |= map(select(.platform == \"config\").theme |= \"${cfg.ui.theme}\")") }
-          ${optionalString (cfg.ui.lang != null) (runJqConfig ".platforms |= map(select(.platform == \"config\").lang |= \"${cfg.ui.lang}\")") }
-          ${optionalString (cfg.ui.loginWallpaper != null) (runJqConfig ".platforms |= map(select(.platform == \"config\").loginWallpaper |= \"${cfg.ui.loginWallpaper}\")") }
-          ${optionalString (cfg.ui.scheduledBackupDisable != null) (runJqConfig ".platforms |= map(select(.platform == \"config\").scheduledBackupDisable |= ${toString cfg.ui.scheduledBackupDisable})") }
-          ${optionalString (cfg.ui.scheduledBackupPath != null) (runJqConfig ".platforms |= map(select(.platform == \"config\").scheduledBackupPath |= \"${cfg.ui.scheduledBackupPath}\")") }
-          ${optionalString (cfg.ui.debug != null) (runJqConfig ".platforms |= map(select(.platform == \"config\").debug |= ${toString cfg.ui.debug})") }
-          ${optionalString (cfg.ui.disableServerMetricsMonitoring != null) (runJqConfig ".platforms |= map(select(.platform == \"config\").disableServerMetricsMonitoring |= ${toString cfg.ui.disableServerMetricsMonitoring})") }
-          rm -f tmp.*.json
+          # Create a single jq filter that updates all fields at once
+          jq_filter=$(cat <<EOF
+            .bridge = (.bridge // {}) * {
+              name: "${cfg.bridge.name}",
+              port: ${toString cfg.bridge.port}
+              ${optionalString (cfg.bridge.username != null) '',"username": "${cfg.bridge.username}"''}
+              ${optionalString (cfg.bridge.pin != null) '',"pin": "${cfg.bridge.pin}"''}
+              ${optionalString (cfg.bridge.advertiser != null) '',"advertiser": "${cfg.bridge.advertiser}"''}
+              ${optionalString (cfg.bridge.bind != null) '',"bind": ${builtins.toJSON cfg.bridge.bind}''}
+              ${optionalString (cfg.bridge.setupID != null) '',"setupID": "${cfg.bridge.setupID}"''}
+              ${optionalString (cfg.bridge.manufacturer != null) '',"manufacturer": "${cfg.bridge.manufacturer}"''}
+              ${optionalString (cfg.bridge.model != null) '',"model": "${cfg.bridge.model}"''}
+              ${optionalString (cfg.bridge.disableIpc != null) '',"disableIpc": ${toString cfg.bridge.disableIpc}''}
+            } |
+            .platforms |= map(
+              if .platform == "config" then
+                . * {
+                  port: ${toString cfg.ui.port},
+                  standalone: true,
+                  restart: "${restartCommand}",
+                  homebridgePackagePath: "${homebridgePackagePath}",
+                  sudo: false,
+                  log: {
+                    method: "systemd",
+                    service: "homebridge"
+                  }
+                  ${optionalString (cfg.ui.host != null) '',"host": "${cfg.ui.host}"''}
+                  ${optionalString (cfg.ui.proxyHost != null) '',"proxyHost": "${cfg.ui.proxyHost}"''}
+                  ${optionalString (cfg.ui.auth != null) '',"auth": "${cfg.ui.auth}"''}
+                  ${optionalString (cfg.ui.sessionTimeout != null) '',"sessionTimeout": ${toString cfg.ui.sessionTimeout}''}
+                  ${optionalString (cfg.ui.ssl != null) '',"ssl": {
+                    "key": "${cfg.ui.ssl.key}",
+                    "cert": "${cfg.ui.ssl.cert}",
+                    "pfx": "${cfg.ui.ssl.pfx}",
+                    "passphrase": "${cfg.ui.ssl.passphrase}"
+                  }''}
+                  ${optionalString (cfg.ui.tempUnits != null) '',"tempUnits": "${cfg.ui.tempUnits}"''}
+                  ${optionalString (cfg.ui.theme != null) '',"theme": "${cfg.ui.theme}"''}
+                  ${optionalString (cfg.ui.lang != null) '',"lang": "${cfg.ui.lang}"''}
+                  ${optionalString (cfg.ui.loginWallpaper != null) '',"loginWallpaper": "${cfg.ui.loginWallpaper}"''}
+                  ${optionalString (cfg.ui.scheduledBackupDisable != null) '',"scheduledBackupDisable": ${toString cfg.ui.scheduledBackupDisable}''}
+                  ${optionalString (cfg.ui.scheduledBackupPath != null) '',"scheduledBackupPath": "${cfg.ui.scheduledBackupPath}"''}
+                  ${optionalString (cfg.ui.debug != null) '',"debug": ${toString cfg.ui.debug}''}
+                  ${optionalString (cfg.ui.disableServerMetricsMonitoring != null) '',"disableServerMetricsMonitoring": ${toString cfg.ui.disableServerMetricsMonitoring}''}
+                }
+              else
+                .
+            )
+          EOF
+          )
+          
+          # Apply all changes in a single jq operation
+          jq "$jq_filter" "${cfg.userStoragePath}/config.json" | jq . > "${cfg.userStoragePath}/config.json.tmp"
+          mv "${cfg.userStoragePath}/config.json.tmp" "${cfg.userStoragePath}/config.json"
         fi
+
+        # Set proper permissions
         chown homebridge "${cfg.userStoragePath}/config.json"
         chgrp homebridge "${cfg.userStoragePath}/config.json"
         chmod 600 "${cfg.userStoragePath}/config.json"
