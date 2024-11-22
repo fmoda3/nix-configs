@@ -461,11 +461,11 @@ in
               else
                 .
             )
-          EOF
+        EOF
           )
           
           # Apply all changes in a single jq operation
-          jq "$jq_filter" "${cfg.userStoragePath}/config.json" | jq . > "${cfg.userStoragePath}/config.json.tmp"
+          ${pkgs.jq}/bin/jq "$jq_filter" "${cfg.userStoragePath}/config.json" | ${pkgs.jq}/bin/jq . > "${cfg.userStoragePath}/config.json.tmp"
           mv "${cfg.userStoragePath}/config.json.tmp" "${cfg.userStoragePath}/config.json"
         fi
 
