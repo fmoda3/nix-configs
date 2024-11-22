@@ -101,6 +101,11 @@ in
     bridge = mkOption {
       description = "Homebridge Bridge options";
       default = { };
+      example = {
+        enable = true;
+        openFirewall = true;
+        allowInsecure = true;
+      };
       type = submodule {
         options = {
           name = mkOption {
@@ -202,6 +207,8 @@ in
       description = lib.mdDoc ''
         Allow unauthenticated requests (for easier hacking).
         In homebridge's own installer, this is enabled by default.
+        Needs to be enabled if you want to control accessories:
+        https://github.com/homebridge/homebridge-config-ui-x/wiki/Enabling-Accessory-Control
       '';
     };
 
