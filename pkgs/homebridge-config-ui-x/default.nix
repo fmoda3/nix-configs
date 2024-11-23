@@ -45,6 +45,13 @@ buildNpmPackage rec {
     export CI=true
   '';
 
+  # Needed for dependency `@homebridge/node-pty-prebuilt-multiarch`
+  # On Darwin systems the build fails with,
+  #
+  # npm error ../src/unix/pty.cc:413:13: error: use of undeclared identifier 'openpty'
+  # npm error   int ret = openpty(&master, &slave, nullptr, NULL, static_cast<winsize*>(&winp));
+  #
+  # when `node-gyp` tries to build the dep. The below allows `npm` to download the prebuilt binary.
   makeCacheWritable = stdenv.hostPlatform.isDarwin;
   nativeBuildInputs = with pkgs; [
     python3
