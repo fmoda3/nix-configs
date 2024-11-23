@@ -1,10 +1,11 @@
 { lib
 , pkgs
+, stdenv
 , buildNpmPackage
 , fetchFromGitHub
 , fetchNpmDeps
 , npmHooks
-, nodejs_20
+, nodejs_22
 }:
 
 let
@@ -27,7 +28,7 @@ buildNpmPackage rec {
   pname = "homebridge-config-ui-x";
   inherit version src;
 
-  nodejs = nodejs_20;
+  nodejs = nodejs_22;
 
   # Deps hash for the root package
   npmDepsHash = "sha256-ZLuIzzr4vuYWIfeacNvVbVR8lDlUf8TjZio7+o0CwP0=";
@@ -44,10 +45,11 @@ buildNpmPackage rec {
     export CI=true
   '';
 
+  makeCacheWritable = stdenv.hostPlatform.isDarwin;
   nativeBuildInputs = with pkgs; [
     python3
-  ] ++ lib.optionals stdenv.isDarwin [
-    darwin.cctools
+  ] ++ lib.optionals stdenv.hostPlatform.isDarwin [
+    cacert
   ];
 
   meta = {

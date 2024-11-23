@@ -2,7 +2,7 @@
 , pkgs
 , buildNpmPackage
 , fetchFromGitHub
-, nodejs_20
+, nodejs_22
 }:
 
 buildNpmPackage rec {
@@ -15,12 +15,13 @@ buildNpmPackage rec {
     hash = "sha256-zBzrfn4d6nPuotXIS97cX2H5GD/FSYfALrRv7LDIEis=";
   };
 
-  nodejs = nodejs_20;
+  nodejs = nodejs_22;
 
   npmDepsHash = "sha256-oQcotnMhw5MdlMm7le7nZ1dbJrHdlFZwsIeVAiMGBBw=";
 
-  # Homebridge's clean phase attempts to install rimraf directly, which fails
+  # Homebridge's clean phase attempts to install rimraf directly, which fails in nix builds
   # rimraf is already in the declared dependencies, so we just don't need to do it.
+  # This will replace "npm install rimraf && rimraf lib/" with "rimraf lib/".
   buildPhase = ''
     cat package.json | ${pkgs.jq}/bin/jq '.scripts.clean = "rimraf lib/"' > package.json.tmp
     mv package.json.tmp package.json
