@@ -3,12 +3,12 @@
 with lib;
 
 let
-  cfg = config.services.homebridge;
+  cfg = config.services.scrypted;
 
   nodeOptions = "--dns-result-order=ipv4first";
 in
 {
-  options.services.homebridge = with types; {
+  options.services.scrypted = with types; {
     enable = mkEnableOption "Scrypted: Home Automation";
 
     configPath = mkOption {
@@ -45,12 +45,14 @@ in
         User = "scrypted";
         Group = "scrypted";
         WorkingDirectory = cfg.configPath;
-        ExecStart = "${pkgs.scrypted}/bin/scrypted-serve ${args}";
+        ExecStart = "${pkgs.scrypted}/bin/scrypted-serve";
         Restart = "on-failure";
         RestartSec = 3;
         KillMode = "process";
-        Environment = "NODE_OPTIONS=${nodeOptions}";
-        Environment = "SCRYPTED_INSTALL_ENVIRONMENT=local";
+        Environment = [
+          "NODE_OPTIONS=${nodeOptions}"
+          "SCRYPTED_INSTALL_ENVIRONMENT=local"
+        ];
         StandardOutput = null;
         StandardError = null;
       };
