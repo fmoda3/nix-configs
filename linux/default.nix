@@ -14,6 +14,7 @@ in
     ./vmware
     ./arcade
     ./homebridge
+    ./scrypted
     # Remaps enabling vmware guest to our custom module which supports aarch64
     (mkRenamedOptionModule [ "virtualisation" "vmware" "guest" ] [ "my-linux" "vmware" ])
   ];
