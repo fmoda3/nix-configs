@@ -10,6 +10,7 @@ final: prev:
   python3Packages = prev.python3Packages // {
     toast-tools = prev.callPackage ./toast-tools { };
   };
+  scrypted = prev.callPackage ./scrypted { };
   toast-services = prev.callPackage ./toast-services { };
   # vimPlugins = prev.vimPlugins // {
   #   fidget-nvim = prev.callPackage ./fidget-nvim { };
