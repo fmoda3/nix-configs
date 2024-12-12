@@ -2,6 +2,8 @@
 with lib;
 let
   cfg = config.my-home;
+
+  all-nerd-fonts = builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
 in
 {
 
@@ -49,11 +51,10 @@ in
         ];
         fontPackages = [
           # Fonts
-          nerdfonts
           cozette
           scientifica
           monocraft
-        ];
+        ] ++ all-nerd-fonts;
         vimPackage = [ vim ];
         workPackages = [
           # Work packages
