@@ -103,8 +103,6 @@ in
         dart
         # Elixir
         beam.packages.erlang.elixir-ls
-        # Erlang
-        beam.packages.erlang.erlang-ls
         # Haskell
         stable.haskellPackages.haskell-language-server
         # Lua

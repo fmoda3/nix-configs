@@ -132,8 +132,6 @@ nvim_lsp.elixirls.setup({
 	on_attach = on_attach,
 	capabilities = capabilities,
 })
--- Erlang
-default_lsp_setup("erlangls")
 -- Haskell
 default_lsp_setup("hls")
 -- Lua
