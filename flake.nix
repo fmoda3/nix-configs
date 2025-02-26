@@ -128,6 +128,7 @@
               nix-index-database.hmModules.nix-index
               agenix.homeManagerModules.default
               {
+                age.secrets.anthropic_ai_key.file = secrets/anthropic_ai_key.age;
                 age.secrets.openrouter_key.file = secrets/openrouter_key.age;
               }
             ];

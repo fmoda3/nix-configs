@@ -22,6 +22,7 @@ let
   all = users ++ systems;
 in
 {
+  "anthropic_ai_key.age".publicKeys = all;
   "codestral_ai_key.age".publicKeys = all;
   "dns_tailscale_key.age".publicKeys = all;
   "homelab_tailscale_key.age".publicKeys = all;

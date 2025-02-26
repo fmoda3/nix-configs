@@ -20,6 +20,7 @@ with lib;
 
     sessionVariables = {
       # Common variables
+      ANTHROPIC_API_KEY = ''$(${pkgs.coreutils}/bin/cat ${config.age.secrets."anthropic_ai_key".path})'';
       OPENROUTER_API_KEY = ''$(${pkgs.coreutils}/bin/cat ${config.age.secrets."openrouter_key".path})'';
     } // optionalAttrs config.my-home.isWork {
       # Work-specific variables
