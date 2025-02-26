@@ -7,17 +7,17 @@
 
 buildNpmPackage rec {
   pname = "homebridge";
-  version = "1.8.5";
+  version = "1.9.0";
   src = fetchFromGitHub {
     owner = "homebridge";
     repo = "homebridge";
     rev = "v${version}";
-    hash = "sha256-zBzrfn4d6nPuotXIS97cX2H5GD/FSYfALrRv7LDIEis=";
+    hash = "sha256-Ofj1QzDIeu4hjuonOlAHqrFDeU81gCEbMQaymyae8Pk=";
   };
 
   nodejs = nodejs_22;
 
-  npmDepsHash = "sha256-oQcotnMhw5MdlMm7le7nZ1dbJrHdlFZwsIeVAiMGBBw=";
+  npmDepsHash = "sha256-inWQray0Vhl0xEil54C0HC92+D59oLbWYMl+7lpUsjI=";
 
   # Homebridge's clean phase attempts to install rimraf directly, which fails in nix builds
   # rimraf is already in the declared dependencies, so we just don't need to do it.
