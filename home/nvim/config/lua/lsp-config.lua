@@ -101,7 +101,7 @@ vim.lsp.handlers["window/showMessage"] = function(_, result, ctx)
 	})
 end
 
-local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
 for type, icon in pairs(signs) do
 	local hl = "DiagnosticSign" .. type
 	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
@@ -169,14 +169,29 @@ nvim_lsp.lua_ls.setup({
 	capabilities = capabilities,
 })
 -- Nix
-nvim_lsp.nil_ls.setup({
-	on_attach = function(client, bufnr)
-		on_attach(client, bufnr)
-
-		-- Let statix format
-		client.server_capabilities.document_formatting = false
-		client.server_capabilities.document_range_formatting = false
-	end,
+nvim_lsp.nixd.setup({
+	settings = {
+		nixd = {
+			nixpkgs = {
+				expr = 'import (builtins.getFlake "${builtins.getEnv "HOME"}/.nix-configs").inputs.nixpkgs { }',
+			},
+			formatting = {
+				command = { "nixfmt" },
+			},
+			options = {
+				nixos = {
+					expr = '(builtins.getFlake "${builtins.getEnv "HOME"}/.nix-configs").nixosConfigurations.cicucci-homelab.options',
+				},
+				darwin = {
+					expr = '(builtins.getFlake "${builtins.getEnv "HOME"}/.nix-configs").darwinConfigurations.cicucci-laptop.options',
+				},
+				home_manager = {
+					expr = '(builtins.getFlake "${builtins.getEnv "HOME"}/.nix-configs").darwinConfigurations.cicucci-laptop.options.home-manager.users.type.getSubOptions []',
+				},
+			},
+		},
+	},
+	on_attach = on_attach,
 })
 -- Python
 default_lsp_setup("pyright")
@@ -236,7 +251,6 @@ null_ls.setup({
 		null_ls.builtins.diagnostics.credo,
 
 		-- Nix
-		null_ls.builtins.formatting.nixpkgs_fmt,
 		null_ls.builtins.diagnostics.statix,
 		null_ls.builtins.code_actions.statix,
 

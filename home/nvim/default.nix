@@ -25,7 +25,7 @@ in
         nvim-web-devicons
         nvim-tree-lua
         # Status line
-        feline-nvim
+        galaxyline-nvim
         # Git info
         gitsigns-nvim
         # Indent lines
@@ -108,7 +108,7 @@ in
         # Lua
         lua-language-server
         # Nix
-        nil
+        nixd
         nixpkgs-fmt
         statix
         # Python

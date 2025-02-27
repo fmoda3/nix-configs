@@ -1,5 +1,5 @@
 require("settings")
-require("feline-config")
+require("galaxyline-config")
 require("nvim-tree-config")
 require("indent-blankline-config")
 require("autopairs-config")

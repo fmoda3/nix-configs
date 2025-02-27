@@ -27,9 +27,6 @@ in
   };
 
   config = {
-    # Make sure nix always runs in multi-user mode on Mac
-    services.nix-daemon.enable = true;
-
     nix = {
       package = pkgs.nixStable;
       # Add cache for nix-community, used mainly for neovim nightly
@@ -64,7 +61,10 @@ in
       promptInit = "";
     };
 
-    security.pam.enableSudoTouchIdAuth = cfg.enableSudoTouch;
+    security.pam.services.sudo_local = {
+      touchIdAuth = cfg.enableSudoTouch;
+      reattach = cfg.enableSudoTouch;
+    };
 
     # Used for backwards compatibility, please read the changelog before changing.
     # $ darwin-rebuild changelog

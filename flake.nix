@@ -29,10 +29,6 @@
       url = "github:edolstra/flake-compat";
       flake = false;
     };
-    neovim-nightly-overlay = {
-      # Don't follow nixpkgs for this, so that binary cache can be used.
-      url = "github:nix-community/neovim-nightly-overlay";
-    };
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -92,7 +88,6 @@
           allowUnfree = true;
         };
         overlays = [
-          neovim-nightly-overlay.overlays.default
           comma.overlays.default
           # "pkgs" currently points to unstable
           # The following overlay allows you to specify "pkgs.stable" for stable versions

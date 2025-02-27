@@ -8,7 +8,7 @@ local condition = require("galaxyline.condition")
 
 gl.short_line_list = { "NvimTree", "minimap" }
 
-vim.api.nvim_command("hi GalaxyLineFillSection guibg=NONE")
+vim.api.nvim_command("hi StatusLine guibg=#00000000")
 
 local colors = require("nord-colors")
 
@@ -129,7 +129,7 @@ gls.mid[9] = {
 gls.right[1] = {
 	GitIcon = {
 		provider = function()
-			return ""
+			return ""
 		end,
 		condition = require("galaxyline.providers.vcs").check_git_workspace,
 		highlight = { colors.nord10_gui, colors.nord0_gui },
