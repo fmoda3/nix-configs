@@ -12,7 +12,9 @@
       perSystem = { config, self', inputs', pkgs, system, ... }:
         let
           inputs = with pkgs; [
+            erlang
             gleam
+            rebar3
           ];
         in
         {
