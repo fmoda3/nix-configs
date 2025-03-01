@@ -132,6 +132,8 @@ nvim_lsp.elixirls.setup({
 	on_attach = on_attach,
 	capabilities = capabilities,
 })
+-- Gleam
+default_lsp_setup("gleam")
 -- Haskell
 default_lsp_setup("hls")
 -- Lua
