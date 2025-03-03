@@ -107,7 +107,7 @@ for type, icon in pairs(signs) do
 	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
 
-local capabilities = require("cmp_nvim_lsp").default_capabilities()
+local capabilities = require("blink.cmp").get_lsp_capabilities()
 -- Enable Language Servers
 local function default_lsp_setup(module)
 	nvim_lsp[module].setup({

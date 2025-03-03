@@ -71,17 +71,7 @@ in
         vim-illuminate
 
         # Completions
-        cmp-nvim-lsp
-        cmp-buffer
-        cmp-path
-        cmp-cmdline
-        cmp-nvim-lsp-signature-help
-        nvim-cmp
-        lspkind-nvim
-
-        # Snippets
-        luasnip
-        cmp_luasnip
+        blink-cmp
 
         # Debug adapter protocol
         nvim-dap
