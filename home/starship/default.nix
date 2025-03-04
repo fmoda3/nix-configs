@@ -14,6 +14,7 @@
         "$directory"
         "$vcsh"
         "$fossil_branch"
+        "$fossil_metrics"
         "$git_branch"
         "$git_commit"
         "$git_state"
@@ -35,6 +36,7 @@
         "$elm"
         "$erlang"
         "$fennel"
+        "$gleam"
         "$golang"
         "$guix_shell"
         "$haskell"
@@ -54,14 +56,17 @@
         "$pulumi"
         "$purescript"
         "$python"
+        "$quarto"
         "$raku"
         "$rlang"
         "$red"
         "$ruby"
         "$rust"
         "$scala"
+        "$solidity"
         "$swift"
         "$terraform"
+        "$typst"
         "$vlang"
         "$vagrant"
         "$zig"
@@ -75,6 +80,8 @@
         "$gcloud"
         "$openstack"
         "$azure"
+        "$nats"
+        "$direnv"
         "$env_var"
         "$crystal"
         "$custom"
@@ -106,6 +113,7 @@
         format = "\\[[$symbol($version(-$name))]($style)\\]";
       };
       cmake = {
+        symbol = " ";
         format = "\\[[$symbol($version)]($style)\\]";
       };
       cmd_duration = {
@@ -119,6 +127,7 @@
         format = "\\[[$symbol$environment]($style)\\]";
       };
       crystal = {
+        symbol = " ";
         format = "\\[[$symbol($version)]($style)\\]";
       };
       daml = {
@@ -132,7 +141,11 @@
         format = "\\[[$symbol($version)]($style)\\]";
       };
       directory = {
-        read_only = " ";
+        read_only = " 󰌾";
+      };
+      direnv = {
+        disabled = false;
+        format = "\\[[$symbol$loaded/$allowed]($style)\\]";
       };
       docker_context = {
         disabled = true;
@@ -162,6 +175,7 @@
         format = "\\[[$symbol($version)]($style)\\]";
       };
       fennel = {
+        symbol = " ";
         format = "\\[[$symbol($version)]($style)\\]";
       };
       fossil_branch = {
@@ -175,6 +189,9 @@
         symbol = " ";
         format = "\\[[$symbol$branch]($style)\\]";
       };
+      git_commit = {
+        tag_symbol = "  ";
+      };
       git_status = {
         stashed = "";
         format = "([\\[$all_status$ahead_behind\\]]($style))";
@@ -184,6 +201,7 @@
         format = "\\[[$symbol($version)]($style)\\]";
       };
       gradle = {
+        symbol = " ";
         format = "\\[[$symbol($version)]($style)\\]";
       };
       guix_shell = {
@@ -195,7 +213,7 @@
         format = "\\[[$symbol($version)]($style)\\]";
       };
       haxe = {
-        symbol = "⌘ ";
+        symbol = " ";
         format = "\\[[$symbol($version)]($style)\\]";
       };
       helm = {
@@ -217,6 +235,7 @@
         format = "\\[[$symbol($version)]($style)\\]";
       };
       kotlin = {
+        symbol = " ";
         format = "\\[[$symbol($version)]($style)\\]";
       };
       kubernetes = {
@@ -227,15 +246,15 @@
         format = "\\[[$symbol($version)]($style)\\]";
       };
       memory_usage = {
-        symbol = " ";
+        symbol = "󰍛 ";
         format = "\\[$symbol[$ram( | $swap)]($style)\\]";
       };
       meson = {
-        symbol = "喝 ";
+        symbol = "󰔷 ";
         format = "\\[[$symbol$project]($style)\\]";
       };
       nim = {
-        symbol = " ";
+        symbol = "󰆥 ";
         format = "\\[[$symbol($version)]($style)\\]";
       };
       nix_shell = {
@@ -247,6 +266,7 @@
         format = "\\[[$symbol($version)]($style)\\]";
       };
       ocaml = {
+        symbol = " ";
         format = "\\[[$symbol($version)(\\($switch_indicator$switch_name\\))]($style)\\]";
       };
       opa = {
@@ -264,6 +284,7 @@
           Android = " ";
           Arch = " ";
           Artix = " ";
+          CachyOS = " ";
           CentOS = " ";
           Debian = " ";
           DragonFly = " ";
@@ -273,8 +294,8 @@
           FreeBSD = " ";
           Garuda = "﯑ ";
           Gentoo = " ";
-          HardenedBSD = "ﲊ ";
-          Illumos = " ";
+          HardenedBSD = "󰞌 ";
+          Illumos = "󰈸 ";
           Kali = " ";
           Linux = " ";
           Mabox = " ";
@@ -285,27 +306,28 @@
           Mint = " ";
           NetBSD = " ";
           NixOS = " ";
-          OpenBSD = " ";
+          Nobara = " ";
+          OpenBSD = "󰈺 ";
           openSUSE = " ";
-          OracleLinux = " ";
+          OracleLinux = "󰌷 ";
           Pop = " ";
           Raspbian = " ";
           Redhat = " ";
           RedHatEnterprise = " ";
           RockyLinux = " ";
-          Redox = " ";
-          Solus = "ﴱ ";
+          Redox = "󰀘 ";
+          Solus = "󰠳 ";
           SUSE = " ";
           Ubuntu = " ";
           Unknown = " ";
           Void = " ";
-          Windows = " ";
+          Windows = "󰍲 ";
         };
         format = "\\[[$symbol]($style)\\]";
       };
       package = {
         disabled = true;
-        symbol = " ";
+        symbol = "󰏗 ";
         format = "\\[[$symbol$version]($style)\\]";
       };
       perl = {
@@ -317,7 +339,7 @@
         format = "\\[[$symbol($version)]($style)\\]";
       };
       pijul_channel = {
-        symbol = "🪺 ";
+        symbol = " ";
         format = "\\[[$symbol$channel]($style)\\]";
       };
       pulumi = {
@@ -337,7 +359,7 @@
         format = "\\[[$symbol($version)]($style)\\]";
       };
       rlang = {
-        symbol = "ﳒ ";
+        symbol = "󰟔 ";
       };
       ruby = {
         symbol = " ";
@@ -355,8 +377,11 @@
         symbol = "🅢 ";
         format = "\\[[$symbol$environment]($style)\\]";
       };
+      solidity = {
+        format = "\\[[$symbol($version)]($style)\\]";
+      };
       sudo = {
-        format = "\\[[as $symbol]\\]";
+        format = "\\[[as $symbol]($style)\\]";
       };
       swift = {
         symbol = " ";
