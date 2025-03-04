@@ -19,5 +19,3 @@ util.colorize = function(color_groups)
 		util.highlight(group, colors)
 	end
 end
-
-return util

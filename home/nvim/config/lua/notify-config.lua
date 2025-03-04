@@ -1,7 +1,5 @@
 require("notify").setup({})
 
-local colors = require("nord-colors")
-local util = require("util")
 util.colorize({
 	-- Error
 	NotifyERRORBorder = { fg = colors.nord11_gui },

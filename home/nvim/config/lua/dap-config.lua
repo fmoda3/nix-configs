@@ -92,8 +92,6 @@ require("dapui").setup({
 })
 require("nvim-dap-virtual-text").setup({})
 
-local colors = require("nord-colors")
-local util = require("util")
 util.colorize({
 	DapBreakpointColor = { fg = colors.nord11_gui },
 	DapBreakpointConditionColor = { fg = colors.nord11_gui },
@@ -115,10 +113,9 @@ vim.fn.sign_define(
 
 local dap = require("dap")
 -- Elixir
-local elixir_ls_home = vim.api.nvim_get_var("elixir_ls_home")
 dap.adapters.mix_task = {
 	type = "executable",
-	command = elixir_ls_home .. "/lib/debugger.sh",
+	command = "@elixir_ls_home@" .. "/lib/debugger.sh",
 	args = {},
 }
 
@@ -139,10 +136,9 @@ dap.configurations.elixir = {
 }
 
 -- Python
-local python_debug_home = vim.api.nvim_get_var("python_debug_home")
 dap.adapters.python = {
 	type = "executable",
-	command = python_debug_home .. "/bin/python",
+	command = "@python_debug_home@" .. "/bin/python",
 	args = { "-m", "debugpy.adapter" },
 }
 

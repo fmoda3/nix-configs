@@ -1,5 +1,3 @@
-local colors = require("nord-colors")
-
 local components = {
 	active = { {}, {}, {} },
 	inactive = {},

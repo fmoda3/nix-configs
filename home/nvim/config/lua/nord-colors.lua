@@ -1,4 +1,4 @@
-local nord = {
+local colors = {
 	--16 colors
 	-- Dark
 	nord0_gui = "#2E3440", -- Black
@@ -23,4 +23,3 @@ local nord = {
 	nord15_gui = "#B48EAD", -- Purple
 	none = "NONE",
 }
-return nord

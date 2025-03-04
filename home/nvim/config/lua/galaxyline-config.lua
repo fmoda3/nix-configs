@@ -10,8 +10,6 @@ gl.short_line_list = { "NvimTree", "minimap" }
 
 vim.api.nvim_command("hi StatusLine guibg=#00000000")
 
-local colors = require("nord-colors")
-
 gls.left[1] = {
 	leftStart = {
 		provider = function()
