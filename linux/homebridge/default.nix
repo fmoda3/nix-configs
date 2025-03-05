@@ -91,24 +91,19 @@ let
   };
 in
 {
-  meta = {
-    doc = ''
-      ## Basic Example
-      ```nix
-      {
-        services.homebridge = {
-          enable = true;
-          # Necessary for service to be reachable
-          openFirewall = true;
-          # Most accessories need unauthenticated access
-          allowInsecure = true;
-        };
-      }
-      ```
-    '';
-  };
-
   options.services.homebridge = with types; {
+
+    # Basic Example
+    # {
+    #   services.homebridge = {
+    #     enable = true;
+    #     # Necessary for service to be reachable
+    #     openFirewall = true;
+    #     # Most accessories need unauthenticated access
+    #     allowInsecure = true;
+    #   };
+    # }
+
     enable = mkEnableOption (lib.mdDoc "Homebridge: Homekit home automation");
 
     bridge = mkOption {
