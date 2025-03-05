@@ -91,17 +91,29 @@ let
   };
 in
 {
+  meta = {
+    doc = ''
+      ## Basic Example
+      ```nix
+      {
+        services.homebridge = {
+          enable = true;
+          # Necessary for service to be reachable
+          openFirewall = true;
+          # Most accessories need unauthenticated access
+          allowInsecure = true;
+        };
+      }
+      ```
+    '';
+  };
+
   options.services.homebridge = with types; {
     enable = mkEnableOption (lib.mdDoc "Homebridge: Homekit home automation");
 
     bridge = mkOption {
       description = "Homebridge Bridge options";
       default = { };
-      example = {
-        enable = true;
-        openFirewall = true;
-        allowInsecure = true;
-      };
       type = submodule {
         options = {
           name = mkOption {
@@ -193,7 +205,7 @@ in
       type = bool;
       default = false;
       description = lib.mdDoc ''
-        Open ports in the firewall for the Homebridge web interface.
+        Open ports in the firewall for the Homebridge web interface and service.
       '';
     };
 
@@ -405,7 +417,7 @@ in
       wantedBy = [ "multi-user.target" ];
 
       # On start, if the config file is missing, create a default one
-      # Otherwise, make ensure that the config file is using the
+      # Otherwise, ensure that the config file is using the
       # properties as specified by nix.
       # Not sure if there is a better way to do this than to use jq
       # to replace sections of json.
@@ -460,11 +472,11 @@ in
                 }
               else
                 .
-              end        
+              end
             )
         EOF
           )
-          
+
           # Apply all changes in a single jq operation
           ${pkgs.jq}/bin/jq "$jq_filter" "${cfg.userStoragePath}/config.json" | ${pkgs.jq}/bin/jq . > "${cfg.userStoragePath}/config.json.tmp"
           mv "${cfg.userStoragePath}/config.json.tmp" "${cfg.userStoragePath}/config.json"
