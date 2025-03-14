@@ -176,6 +176,14 @@
             };
             specialArgs = { inherit inputs nixpkgs; };
           };
+          cicucci-desktop = darwin.lib.darwinSystem {
+            system = "aarch64-darwin";
+            modules = darwinModules {
+              user = "fmoda3";
+              host = "cicucci-desktop";
+            };
+            specialArgs = { inherit inputs nixpkgs; };
+          };
           cicucci-laptop = darwin.lib.darwinSystem {
             system = "aarch64-darwin";
             modules = darwinModules {
