@@ -61,6 +61,10 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    naersk = {
+      url = "github:nix-community/naersk/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -69,6 +73,7 @@
       url = "github:nix-community/comma";
       inputs = {
         nixpkgs.follows = "nixpkgs";
+        naersk.follows = "naersk";
         utils.follows = "flake-utils";
         flake-compat.follows = "flake-compat";
       };
