@@ -36,6 +36,7 @@ buildNpmPackage {
     homepage = "https://github.com/homebridge/homebridge";
     license = lib.licenses.asl20;
     mainProgram = "homebridge";
+    platforms = lib.platforms.linux ++ lib.platforms.darwin;
     maintainers = with lib.maintainers; [ fmoda3 ];
   };
 }
