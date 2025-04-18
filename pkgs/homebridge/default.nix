@@ -5,8 +5,7 @@
 , nodejs_22
 }:
 
-buildNpmPackage {
-  pname = "homebridge";
+let
   version = "1.9.0";
   src = fetchFromGitHub {
     owner = "homebridge";
@@ -14,6 +13,10 @@ buildNpmPackage {
     tag = "v${version}";
     hash = "sha256-Ofj1QzDIeu4hjuonOlAHqrFDeU81gCEbMQaymyae8Pk=";
   };
+in
+buildNpmPackage {
+  pname = "homebridge";
+  inherit version src;
 
   nodejs = nodejs_22;
 
