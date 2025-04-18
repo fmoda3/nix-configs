@@ -172,7 +172,7 @@ in
             description = "Homebridge Platforms";
             default = [ ];
             apply = validatePlatforms;
-            type = listOf submodule {
+            type = listOf (submodule {
               freeformType = settingsFormat.type;
               options = {
                 name = mkOption {
@@ -184,13 +184,13 @@ in
                   description = "Platform type";
                 };
               };
-            };
+            });
           };
 
           accessories = mkOption {
             description = "Homebridge Accessories";
             default = [ ];
-            type = listOf submodule {
+            type = listOf (submodule {
               freeformType = settingsFormat.type;
               options = {
                 name = mkOption {
@@ -202,7 +202,7 @@ in
                   description = "Accessory type";
                 };
               };
-            };
+            });
           };
         };
       };
