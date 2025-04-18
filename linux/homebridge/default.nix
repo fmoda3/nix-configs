@@ -97,7 +97,7 @@ in
     #   };
     # }
 
-    enable = mkEnableOption (lib.mdDoc "Homebridge: Homekit home automation");
+    enable = mkEnableOption "Homebridge: Homekit home automation";
 
     user = mkOption {
       type = str;
@@ -114,7 +114,7 @@ in
     openFirewall = mkOption {
       type = bool;
       default = false;
-      description = lib.mdDoc ''
+      description = ''
         Open ports in the firewall for the Homebridge web interface and service.
       '';
     };
@@ -122,7 +122,7 @@ in
     allowInsecure = mkOption {
       type = bool;
       default = false;
-      description = lib.mdDoc ''
+      description = ''
         Allow unauthenticated requests (for easier hacking).
         In homebridge's own installer, this is enabled by default.
         Needs to be enabled if you want to control accessories:
@@ -133,7 +133,7 @@ in
     userStoragePath = mkOption {
       type = str;
       default = "/var/lib/homebridge";
-      description = lib.mdDoc ''
+      description = ''
         Path to store homebridge user files (needs to be writeable).
       '';
     };
@@ -141,7 +141,7 @@ in
     pluginPath = mkOption {
       type = str;
       default = "/var/lib/homebridge/node_modules";
-      description = lib.mdDoc ''
+      description = ''
         Path to the plugin download directory (needs to be writeable).
         Seems this needs to end with node_modules, as Homebridge will run npm
         on the parent directory.
@@ -151,7 +151,7 @@ in
     environmentFile = mkOption {
       type = types.nullOr types.str;
       default = null;
-      description = lib.mdDoc ''
+      description = ''
         Path to an environment-file which may contain secrets.
       '';
     };
@@ -178,17 +178,13 @@ in
                 name = mkOption {
                   type = str;
                   default = "Homebridge";
-                  description = lib.mdDoc ''
-                    Name of the homebridge.
-                  '';
+                  description = "Name of the homebridge";
                 };
 
                 port = mkOption {
                   type = port;
                   default = 51826;
-                  description = lib.mdDoc ''
-                    The port homebridge listens on.
-                  '';
+                  description = "The port homebridge listens on";
                 };
               };
             };
@@ -250,14 +246,14 @@ in
           platform = mkOption {
             type = str;
             default = "config";
-            description = "Type of the homebridge UI platform.";
+            description = "Type of the homebridge UI platform";
             readOnly = true;
           };
 
           name = mkOption {
             type = str;
             default = "Config";
-            description = "Name of the homebridge UI platform.";
+            description = "Name of the homebridge UI platform";
             readOnly = true;
           };
 
@@ -274,7 +270,7 @@ in
           restart = mkOption {
             type = str;
             default = restartCommand;
-            description = "Command to restart the homebridge UI service.";
+            description = "Command to restart the homebridge UI service";
             readOnly = true;
           };
 
@@ -282,7 +278,7 @@ in
           homebridgePackagePath = mkOption {
             type = str;
             default = homebridgePackagePath;
-            description = "Path to the homebridge package.";
+            description = "Path to the homebridge package";
             readOnly = true;
           };
 
@@ -321,9 +317,7 @@ in
           port = mkOption {
             type = port;
             default = 8581;
-            description = lib.mdDoc ''
-              The port the UI web service should listen on.
-            '';
+            description = "The port the UI web service should listen on";
           };
         };
       };
