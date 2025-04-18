@@ -55,6 +55,32 @@ let
     then throw "The platforms list must not contain any platform with platform type 'config'.  Use the uiSettings attribute instead."
     else platforms;
 
+  # Create a single jq filter that updates all fields at once
+  # Platforms need to be unique by "platform"
+  # Accessories need to be unique by "name"
+  jqMergeFilter = ''
+    reduce .[] as $item (
+      {};
+      . * $item + {
+        "plugins": (
+          ((.plugins // []) + ($item.plugins // [])) | 
+          group_by(.name) | 
+          map(reduce .[] as $plugin ({}; . * $plugin))
+        ),
+        "platforms": (
+          ((.platforms // []) + ($item.platforms // [])) | 
+          group_by(.name) | 
+          map(reduce .[] as $platform ({}; . * $platform))
+        )
+      }
+    )
+  '';
+
+  jqMergeFilterFile = pkgs.writeTextFile {
+    name = "jqMergeFilter.jq";
+    text = jqMergeFilter;
+  };
+
   settingsFormat = pkgs.formats.json { };
 in
 {
@@ -138,7 +164,7 @@ in
         options = {
           description = mkOption {
             type = str;
-            default = "config";
+            default = "Homebridge";
             description = "Description of the homebridge instance.";
             readOnly = true;
           };
@@ -322,39 +348,14 @@ in
           install -D -m 600 -o ${cfg.user} -g ${cfg.group} "${defaultConfigFile}" "${cfg.userStoragePath}/config.json"
         fi
 
-        # Create a single jq filter that updates all fields at once
-        # Platforms need to be unique by "platform"
-        # Accessories need to be unique by "name"
-        jq_filter=$(cat <<EOF
-          # Start with an empty object that will hold our merged result
-          reduce .[] as $item (
-            {}; 
-            
-            # Copy over non-array properties (bridge, description, etc.)
-            . * $item + {
-              # Special handling for platforms list
-              "platforms": (
-                ((.platforms // []) + ($item.platforms // [])) | 
-                group_by(.platform) | 
-                map(reduce .[] as $platform ({}; . * $platform))
-              ),
-              
-              # Special handling for accessories list
-              "accessories": (
-                ((.accessories // []) + ($item.accessories // [])) | 
-                group_by(.name) | 
-                map(reduce .[] as $accessory ({}; . * $accessory))
-              )
-            }
-          )
-        EOF
-        )
+        # Write the jq merge filter file to a temporary file
+        install -D -m 600 -o ${cfg.user} -g ${cfg.group} "${jqMergeFilterFile}" "${cfg.userStoragePath}/jqMergeFilter.jq"
 
         # Write the nix override config to a temporary file
         install -D -m 600 -o ${cfg.user} -g ${cfg.group} "${nixOverrideConfigFile}" "${cfg.userStoragePath}/nixOverrideConfig.json"
 
         # Apply all nix override settings to config.json in a single jq operation
-        ${pkgs.jq}/bin/jq -s "$jq_filter" "${cfg.userStoragePath}/config.json" "${cfg.userStoragePath}/nixOverrideConfig.json" | ${pkgs.jq}/bin/jq . > "${cfg.userStoragePath}/config.json.tmp"
+        ${pkgs.jq}/bin/jq -s -f "${cfg.userStoragePath}/jqMergeFilter.jq" "${cfg.userStoragePath}/config.json" "${cfg.userStoragePath}/nixOverrideConfig.json" | ${pkgs.jq}/bin/jq . > "${cfg.userStoragePath}/config.json.tmp"
         # install -D -m 600 -o ${cfg.user} -g ${cfg.group} "${cfg.userStoragePath}/config.json.tmp" "${cfg.userStoragePath}/config.json"
         # rm "${cfg.userStoragePath}/config.json.tmp"
         # rm "${cfg.userStoragePath}/nixOverrideConfig.json"
