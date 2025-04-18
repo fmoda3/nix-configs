@@ -62,15 +62,15 @@ let
     reduce .[] as $item (
       {};
       . * $item + {
-        "plugins": (
-          ((.plugins // []) + ($item.plugins // [])) | 
-          group_by(.name) | 
-          map(reduce .[] as $plugin ({}; . * $plugin))
-        ),
         "platforms": (
           ((.platforms // []) + ($item.platforms // [])) | 
-          group_by(.name) | 
+          group_by(.platform) | 
           map(reduce .[] as $platform ({}; . * $platform))
+        ),
+        "accessories": (
+          ((.accessories // []) + ($item.accessories // [])) | 
+          group_by(.name) | 
+          map(reduce .[] as $accessory ({}; . * $accessory))
         )
       }
     )
