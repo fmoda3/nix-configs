@@ -486,6 +486,7 @@ in
           # Apply all changes in a single jq operation
           ${pkgs.jq}/bin/jq "$jq_filter" "${cfg.userStoragePath}/config.json" | ${pkgs.jq}/bin/jq . > "${cfg.userStoragePath}/config.json.tmp"
           install -D -m 600 -o ${cfg.user} -g ${cfg.group} "${cfg.userStoragePath}/config.json.tmp" "${cfg.userStoragePath}/config.json"
+          rm "${cfg.userStoragePath}/config.json.tmp"
         fi
 
         # Make sure plugin directory exists
