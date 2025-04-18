@@ -106,6 +106,18 @@ in
 
     enable = mkEnableOption (lib.mdDoc "Homebridge: Homekit home automation");
 
+    user = mkOption {
+      type = types.str;
+      default = "homebridge";
+      description = "User to run homebridge as.";
+    };
+
+    group = mkOption {
+      type = types.str;
+      default = "homebridge";
+      description = "Group to run homebridge as.";
+    };
+
     bridge = mkOption {
       description = "Homebridge Bridge options";
       default = { };
@@ -404,7 +416,6 @@ in
   };
 
   config = mkIf cfg.enable {
-
     systemd.services.homebridge = {
       description = "Homebridge";
       wants = [ "network-online.target" ];
@@ -418,7 +429,7 @@ in
       # to replace sections of json.
       preStart = ''
         if [ ! -e "${cfg.userStoragePath}/config.json" ]; then
-          cp --force "${defaultConfigFile}" "${cfg.userStoragePath}/config.json"
+          install -D -m 600 -o ${cfg.user} -g ${cfg.group} "${defaultConfigFile}" "${cfg.userStoragePath}/config.json"
         else
           # Create a single jq filter that updates all fields at once
           jq_filter=$(cat <<EOF
@@ -474,16 +485,11 @@ in
 
           # Apply all changes in a single jq operation
           ${pkgs.jq}/bin/jq "$jq_filter" "${cfg.userStoragePath}/config.json" | ${pkgs.jq}/bin/jq . > "${cfg.userStoragePath}/config.json.tmp"
-          mv "${cfg.userStoragePath}/config.json.tmp" "${cfg.userStoragePath}/config.json"
+          install -D -m 600 -o ${cfg.user} -g ${cfg.group} "${cfg.userStoragePath}/config.json.tmp" "${cfg.userStoragePath}/config.json"
         fi
 
-        # Set proper permissions
-        chown homebridge "${cfg.userStoragePath}/config.json"
-        chgrp homebridge "${cfg.userStoragePath}/config.json"
-        chmod 600 "${cfg.userStoragePath}/config.json"
-        mkdir -p "${cfg.pluginPath}"
-        chown homebridge "${cfg.pluginPath}"
-        chgrp homebridge "${cfg.pluginPath}"
+        # Make sure plugin directory exists
+        install -d -m 755 -o ${cfg.user} -g ${cfg.group} "${cfg.pluginPath}"
       '';
 
       # Settings found from standalone mode docs and hb-service code
@@ -493,7 +499,7 @@ in
         Type = "simple";
         User = "homebridge";
         PermissionsStartOnly = true;
-        WorkingDirectory = cfg.userStoragePath;
+        StateDirectory = "homebridge";
         EnvironmentFile = mkIf (cfg.environmentFile != null) [ cfg.environmentFile ];
         ExecStart = "${pkgs.homebridge}/bin/homebridge ${args}";
         Restart = "always";
@@ -539,7 +545,7 @@ in
         Type = "simple";
         User = "homebridge";
         PermissionsStartOnly = true;
-        WorkingDirectory = cfg.userStoragePath;
+        StateDirectory = "homebridge";
         EnvironmentFile = mkIf (cfg.environmentFile != null) [ cfg.environmentFile ];
         ExecStart = "${pkgs.homebridge-config-ui-x}/bin/homebridge-config-ui-x ${args}";
         Restart = "always";
@@ -551,16 +557,20 @@ in
     };
 
     # Create a user whose home folder is the user storage path
-    users.users.homebridge = {
-      home = cfg.userStoragePath;
-      createHome = true;
-      group = "homebridge";
-      # Necessary so that this user can run journalctl
-      extraGroups = [ "systemd-journal" ];
-      isSystemUser = true;
+    users.users = lib.mkIf (cfg.user == "homebridge") {
+      homebridge = {
+        inherit (cfg) group;
+        # Necessary so that this user can run journalctl
+        extraGroups = [ "systemd-journal" ];
+        description = "homebridge user";
+        isSystemUser = true;
+        home = cfg.userStoragePath;
+      };
     };
 
-    users.groups.homebridge = { };
+    users.groups = lib.mkIf (cfg.group == "homebridge") {
+      homebridge = { };
+    };
 
     # Need passwordless sudo for a few commands
     # homebridge-config-ui-x needs for some features
