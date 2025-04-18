@@ -45,16 +45,6 @@ let
     text = builtins.toJSON nixOverrideConfig;
   };
 
-  # Validation function to ensure no platform has the platform "config".
-  # We want to make sure settings for the "config" platform are set in uiSettings.
-  validatePlatforms = platforms:
-    let
-      conflictingPlatforms = builtins.filter (p: p.platform == "config") platforms;
-    in
-    if builtins.length conflictingPlatforms > 0
-    then throw "The platforms list must not contain any platform with platform type 'config'.  Use the uiSettings attribute instead."
-    else platforms;
-
   # Create a single jq filter that updates all fields at once
   # Platforms need to be unique by "platform"
   # Accessories need to be unique by "name"
@@ -80,6 +70,16 @@ let
     name = "jqMergeFilter.jq";
     text = jqMergeFilter;
   };
+
+  # Validation function to ensure no platform has the platform "config".
+  # We want to make sure settings for the "config" platform are set in uiSettings.
+  validatePlatforms = platforms:
+    let
+      conflictingPlatforms = builtins.filter (p: p.platform == "config") platforms;
+    in
+    if builtins.length conflictingPlatforms > 0
+    then throw "The platforms list must not contain any platform with platform type 'config'.  Use the uiSettings attribute instead."
+    else platforms;
 
   settingsFormat = pkgs.formats.json { };
 in
@@ -356,9 +356,12 @@ in
 
         # Apply all nix override settings to config.json in a single jq operation
         ${pkgs.jq}/bin/jq -s -f "${cfg.userStoragePath}/jqMergeFilter.jq" "${cfg.userStoragePath}/config.json" "${cfg.userStoragePath}/nixOverrideConfig.json" | ${pkgs.jq}/bin/jq . > "${cfg.userStoragePath}/config.json.tmp"
-        # install -D -m 600 -o ${cfg.user} -g ${cfg.group} "${cfg.userStoragePath}/config.json.tmp" "${cfg.userStoragePath}/config.json"
-        # rm "${cfg.userStoragePath}/config.json.tmp"
-        # rm "${cfg.userStoragePath}/nixOverrideConfig.json"
+        install -D -m 600 -o ${cfg.user} -g ${cfg.group} "${cfg.userStoragePath}/config.json.tmp" "${cfg.userStoragePath}/config.json"
+        
+        # Remove temporary files
+        rm "${cfg.userStoragePath}/jqMergeFilter.jq"
+        rm "${cfg.userStoragePath}/nixOverrideConfig.json"
+        rm "${cfg.userStoragePath}/config.json.tmp"
 
         # Make sure plugin directory exists
         install -d -m 755 -o ${cfg.user} -g ${cfg.group} "${cfg.pluginPath}"
