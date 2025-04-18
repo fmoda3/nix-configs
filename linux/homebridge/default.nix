@@ -14,74 +14,20 @@ let
   restartCommand = "sudo -n systemctl restart homebridge homebridge-config-ui-x";
   homebridgePackagePath = "${pkgs.homebridge}/lib/node_modules/homebridge";
 
-  defaultConfigPlatform = {
-    platform = "config";
-    name = "Config";
-    inherit (cfg.ui) port;
-    # Required to be true to run Homebridge UI as a separate service
-    standalone = true;
-    # Homebridge can be installed many ways, but we're forcing a double service systemd setup
-    restart = restartCommand;
-    # Tell Homebridge UI where homebridge is so it can pull package information
-    inherit homebridgePackagePath;
-    # If sudo is true, homebridge will download plugins as root
-    sudo = false;
-    # We're using systemd, so make sure logs is setup to pull from systemd
-    log = {
-      method = "systemd";
-      service = "homebridge";
-    };
-  } // optionalAttrs (cfg.ui.host != null) {
-    inherit (cfg.ui) host;
-  } // optionalAttrs (cfg.ui.proxyHost != null) {
-    inherit (cfg.ui) proxyHost;
-  } // optionalAttrs (cfg.ui.auth != null) {
-    inherit (cfg.ui) auth;
-  } // optionalAttrs (cfg.ui.sessionTimeout != null) {
-    inherit (cfg.ui) sessionTimeout;
-  } // optionalAttrs (cfg.ui.ssl != null) {
-    ssl = {
-      inherit (cfg.ui.ssl) key cert pfx passphrase;
-    };
-  } // optionalAttrs (cfg.ui.tempUnits != null) {
-    inherit (cfg.ui) tempUnits;
-  } // optionalAttrs (cfg.ui.theme != null) {
-    inherit (cfg.ui) theme;
-  } // optionalAttrs (cfg.ui.lang != null) {
-    inherit (cfg.ui) lang;
-  } // optionalAttrs (cfg.ui.loginWallpaper != null) {
-    inherit (cfg.ui) loginWallpaper;
-  } // optionalAttrs (cfg.ui.scheduledBackupDisable != null) {
-    inherit (cfg.ui) scheduledBackupDisable;
-  } // optionalAttrs (cfg.ui.scheduledBackupPath != null) {
-    inherit (cfg.ui) scheduledBackupPath;
-  } // optionalAttrs (cfg.ui.debug != null) {
-    inherit (cfg.ui) debug;
-  } // optionalAttrs (cfg.ui.disableServerMetricsMonitoring != null) {
-    inherit (cfg.ui) disableServerMetricsMonitoring;
+  defaultConfigUIPlatform = {
+    inherit (cfg.uiSettings) platform name port standalone resolution homebridgePackagePath sudo log;
   };
 
   defaultConfig = {
     description = "Homebridge";
     bridge = {
       inherit (cfg.bridge) name port;
-      username = if (cfg.bridge.username != null) then cfg.bridge.username else "CC:22:3D:E3:CE:30";
-      pin = if (cfg.bridge.pin != null) then cfg.bridge.pin else "031-45-154";
-    } // optionalAttrs (cfg.bridge.advertiser != null) {
-      inherit (cfg.bridge) advertiser;
-    } // optionalAttrs (cfg.bridge.bind != null) {
-      inherit (cfg.bridge) bind;
-    } // optionalAttrs (cfg.bridge.setupID != null) {
-      inherit (cfg.bridge) setupID;
-    } // optionalAttrs (cfg.bridge.manufacturer != null) {
-      inherit (cfg.bridge) manufacturer;
-    } // optionalAttrs (cfg.bridge.model != null) {
-      inherit (cfg.bridge) model;
-    } // optionalAttrs (cfg.bridge.disableIpc != null) {
-      inherit (cfg.bridge) disableIpc;
+      # These have to be set at least once, otherwise the homebridge will not work
+      username = "CC:22:3D:E3:CE:30";
+      pin = "031-45-154";
     };
     platforms = [
-      defaultConfigPlatform
+      defaultConfigUIPlatform
     ];
   };
 
@@ -89,6 +35,27 @@ let
     name = "config.json";
     text = builtins.toJSON defaultConfig;
   };
+
+  nixOverrideConfig = cfg.settings // {
+    platforms = [ cfg.uiSettings ] ++ cfg.settings.platforms;
+  };
+
+  nixOverrideConfigFile = pkgs.writeTextFile {
+    name = "nixOverrideConfig.json";
+    text = builtins.toJSON nixOverrideConfig;
+  };
+
+  # Validation function to ensure no platform has the platform "config".
+  # We want to make sure settings for the "config" platform are set in uiSettings.
+  validatePlatforms = platforms:
+    let
+      conflictingPlatforms = builtins.filter (p: p.platform == "config") platforms;
+    in
+    if builtins.length conflictingPlatforms > 0
+    then throw "The platforms list must not contain any platform with platform type 'config'.  Use the uiSettings attribute instead."
+    else platforms;
+
+  settingsFormat = pkgs.formats.json { };
 in
 {
   options.services.homebridge = with types; {
@@ -107,105 +74,15 @@ in
     enable = mkEnableOption (lib.mdDoc "Homebridge: Homekit home automation");
 
     user = mkOption {
-      type = types.str;
+      type = str;
       default = "homebridge";
       description = "User to run homebridge as.";
     };
 
     group = mkOption {
-      type = types.str;
+      type = str;
       default = "homebridge";
       description = "Group to run homebridge as.";
-    };
-
-    bridge = mkOption {
-      description = "Homebridge Bridge options";
-      default = { };
-      type = submodule {
-        options = {
-          name = mkOption {
-            type = str;
-            default = "Homebridge";
-            description = lib.mdDoc ''
-              Name of the homebridge.
-            '';
-          };
-
-          port = mkOption {
-            type = port;
-            default = 51826;
-            description = lib.mdDoc ''
-              The port homebridge listens on.
-            '';
-          };
-
-          username = mkOption {
-            type = nullOr str;
-            default = null;
-            description = lib.mdDoc ''
-              The username for the homebridge service.
-            '';
-          };
-
-          pin = mkOption {
-            type = nullOr str;
-            default = null;
-            description = lib.mdDoc ''
-              The pin for the homebridge service.
-            '';
-          };
-
-          advertiser = mkOption {
-            type = nullOr (enum [ "ciao" "bonjour-hap" "avahi" "resolved" ]);
-            default = null;
-            description = lib.mdDoc ''
-              Which mDNS advertiser homebridge should use.
-              Accepts "ciao", "bonjour-hap", "avahi", or "resolved".
-            '';
-          };
-
-          bind = mkOption {
-            type = nullOr (listOf str);
-            default = null;
-            description = lib.mdDoc ''
-              The network interfaces Homebridge should advertise / listen from
-              Accepts an array of network interface names or IP addresses
-            '';
-          };
-
-          setupID = mkOption {
-            type = nullOr str;
-            default = null;
-            description = lib.mdDoc ''
-              The setup ID for the homebridge service.
-            '';
-          };
-
-          manufacturer = mkOption {
-            type = nullOr str;
-            default = null;
-            description = lib.mdDoc ''
-              The manufacturer of the homebridge device.
-            '';
-          };
-
-          model = mkOption {
-            type = nullOr str;
-            default = null;
-            description = lib.mdDoc ''
-              The model of the homebridge device.
-            '';
-          };
-
-          disableIpc = mkOption {
-            type = nullOr bool;
-            default = null;
-            description = lib.mdDoc ''
-              Disable the homebridge IPC service.
-            '';
-          };
-        };
-      };
     };
 
     openFirewall = mkOption {
@@ -253,161 +130,173 @@ in
       '';
     };
 
-    ui = mkOption {
+    settings = mkOption {
+      # Full list of settings can be found here: https://github.com/homebridge/homebridge/wiki/Homebridge-Config-JSON-Explained
+      default = { };
+      type = submodule {
+        freeformType = settingsFormat.type;
+        options = {
+          description = mkOption {
+            type = str;
+            default = "config";
+            description = "Description of the homebridge instance.";
+            readOnly = true;
+          };
+
+          bridge = mkOption {
+            description = "Homebridge Bridge options";
+            default = { };
+            type = submodule {
+              freeformType = settingsFormat.type;
+              options = {
+                name = mkOption {
+                  type = str;
+                  default = "Homebridge";
+                  description = lib.mdDoc ''
+                    Name of the homebridge.
+                  '';
+                };
+
+                port = mkOption {
+                  type = port;
+                  default = 51826;
+                  description = lib.mdDoc ''
+                    The port homebridge listens on.
+                  '';
+                };
+              };
+            };
+          };
+
+          platforms = mkOption {
+            description = "Homebridge Platforms";
+            default = [ ];
+            apply = validatePlatforms;
+            type = listOf submodule {
+              freeformType = settingsFormat.type;
+              options = {
+                name = mkOption {
+                  type = str;
+                  description = "Name of the platform";
+                };
+                platform = mkOption {
+                  type = str;
+                  description = "Platform type";
+                };
+              };
+            };
+          };
+
+          accessories = mkOption {
+            description = "Homebridge Accessories";
+            default = [ ];
+            type = listOf submodule {
+              freeformType = settingsFormat.type;
+              options = {
+                name = mkOption {
+                  type = str;
+                  description = "Name of the accessory";
+                };
+                accessory = mkOption {
+                  type = str;
+                  description = "Accessory type";
+                };
+              };
+            };
+          };
+        };
+      };
+    };
+
+    # Defines the parameters for the Homebridge UI Plugin.
+    # This submodule will get merged into the "platforms" array
+    # inside settings.
+    uiSettings = mkOption {
+      # Full list of UI settings can be found here: https://github.com/homebridge/homebridge-config-ui-x/wiki/Config-Options
       description = "Homebridge UI options";
       default = { };
       type = submodule {
+        freeformType = settingsFormat.type;
         options = {
+          ## Following parameters must be set, and can't be changed.
+
+          # Must be "config" for UI service to see its config
+          platform = mkOption {
+            type = str;
+            default = "config";
+            description = "Type of the homebridge UI platform.";
+            readOnly = true;
+          };
+
+          name = mkOption {
+            type = str;
+            default = "Config";
+            description = "Name of the homebridge UI platform.";
+            readOnly = true;
+          };
+
+          # Required to be true to run Homebridge UI as a separate service
+          standalone = mkOption {
+            type = bool;
+            default = true;
+            description = "Whether to run the UI as a standalone service";
+            readOnly = true;
+          };
+
+          # Homebridge can be installed many ways, but we're forcing a double service systemd setup
+          # This command will restart both services
+          restart = mkOption {
+            type = str;
+            default = restartCommand;
+            description = "Command to restart the homebridge UI service.";
+            readOnly = true;
+          };
+
+          # Tell Homebridge UI where homebridge is so it can pull package information
+          homebridgePackagePath = mkOption {
+            type = str;
+            default = homebridgePackagePath;
+            description = "Path to the homebridge package.";
+            readOnly = true;
+          };
+
+          # If sudo is true, homebridge will download plugins as root
+          sudo = mkOption {
+            type = bool;
+            default = false;
+            description = "Whether to run the UI with sudo";
+            readOnly = true;
+          };
+
+          # We're using systemd, so make sure logs is setup to pull from systemd
+          log = mkOption {
+            default = { };
+            type = submodule {
+              freeformType = settingsFormat.type;
+              options = {
+                method = mkOption {
+                  type = str;
+                  default = "systemd";
+                  description = "Method to use for logging";
+                  readOnly = true;
+                };
+
+                service = mkOption {
+                  type = str;
+                  default = "homebridge";
+                  description = "Name of the systemd service to log to";
+                  readOnly = true;
+                };
+              };
+            };
+          };
+
+          # The following options are allowed to be changed.
           port = mkOption {
             type = port;
             default = 8581;
             description = lib.mdDoc ''
               The port the UI web service should listen on.
-            '';
-          };
-
-          host = mkOption {
-            type = nullOr str;
-            default = null;
-            description = lib.mdDoc ''
-              The IP address of the interface the UI should listen on.
-              By default the UI will listen on all interfaces.
-              In most cases this will be '::' or '0.0.0.0'
-            '';
-          };
-
-          proxyHost = mkOption {
-            type = nullOr str;
-            default = null;
-            description = lib.mdDoc ''
-              The host and port "example.com:8080" you will be accessing the UI on.
-              This is only required if you are accessing the UI behind a reverse proxy
-              and are not passing through the host from the browser.
-            '';
-          };
-
-          auth = mkOption {
-            type = nullOr (enum [ "form" "none" ]);
-            default = null;
-            description = lib.mdDoc ''
-              The authentication method the UI should use.
-              Accepts "form" or "none".
-            '';
-          };
-
-          sessionTimeout = mkOption {
-            type = nullOr int;
-            default = null;
-            description = lib.mdDoc ''
-              The number of seconds a login session will last for. The default is equal to 8 hours.
-            '';
-          };
-
-          ssl = mkOption {
-            description = "Homebridge UI SSL options";
-            default = null;
-            type = nullOr (submodule {
-              options = {
-                key = mkOption {
-                  type = nullOr str;
-                  default = null;
-                  description = lib.mdDoc ''
-                    Path To Private Key
-                  '';
-                };
-
-                cert = mkOption {
-                  type = nullOr str;
-                  default = null;
-                  description = lib.mdDoc ''
-                    Path To Certificate
-                  '';
-                };
-
-                pfx = mkOption {
-                  type = nullOr str;
-                  default = null;
-                  description = lib.mdDoc ''
-                    Path To PKCS#12 Certificate
-                  '';
-                };
-
-                passphrase = mkOption {
-                  type = nullOr str;
-                  default = null;
-                  description = lib.mdDoc ''
-                    PKCS#12 Certificate Passphrase
-                  '';
-                };
-              };
-            });
-          };
-
-          tempUnits = mkOption {
-            type = nullOr (enum [ "c" "f" ]);
-            default = null;
-            description = lib.mdDoc ''
-              The temperature units that will be used in the UI.
-              Accepts "c" or "f".
-            '';
-          };
-
-          theme = mkOption {
-            type = nullOr (enum [ "auto" "red" "pink" "purple" "deep-purple" "indigo" "blue" "navi-blue" "blue-grey" "cyan" "green" "teal" "orange" "amber" "grey" "brown" "dark-mode" "dark-mode-red" "dark-mode-pink" "dark-mode-purple" "dark-mode-indigo" "dark-mode-blue" "dark-mode-blue-grey" "dark-mode-green" "dark-mode-grey" "dark-mode-brown" "dark-mode-teal" "dark-mode-cyan" ]);
-            default = null;
-            description = lib.mdDoc ''
-              The color scheme / theme the user interface should use.
-              Accepts "auto", "red", "pink", "purple", "deep-purple", "indigo", "blue", "navi-blue", "blue-grey", "cyan", "green", "teal", "orange", "amber", "grey", "brown", "dark-mode", "dark-mode-red", "dark-mode-pink", "dark-mode-purple", "dark-mode-indigo", "dark-mode-blue", "dark-mode-blue-grey", "dark-mode-green", "dark-mode-grey", "dark-mode-brown", "dark-mode-teal", or "dark-mode-cyan".
-            '';
-          };
-
-          lang = mkOption {
-            type = nullOr (enum [ "bg" "ca" "cs" "de" "en" "es" "fr" "he" "hu" "id" "it" "ja" "ko" "mk" "nl" "no" "pl" "pt-BR" "pt" "ru" "sl" "sv" "th" "tr" "uk" "zh-CN" "zh-TW" ]);
-            default = null;
-            description = lib.mdDoc ''
-              Set the Language the UI should use. If not set the browser's lanugage settings will be used instead.
-              Accepts "bg", "ca", "cs", "de", "en", "es", "fr", "he", "hu", "id", "it", "ja", "ko", "mk", "nl", "no", "pl", "pt-BR", "pt", "ru", "sl", "sv", "th", "tr", "uk", "zh-CN", or "zh-TW".
-            '';
-          };
-
-          loginWallpaper = mkOption {
-            type = nullOr str;
-            default = null;
-            description = lib.mdDoc ''
-              The path to an image that should be used on the UI login page. If this is not defined the default login wallpaper will be used.
-            '';
-          };
-
-          scheduledBackupDisable = mkOption {
-            type = nullOr bool;
-            default = null;
-            description = lib.mdDoc ''
-              Set to true to disable the daily scheduled backups.
-            '';
-          };
-
-          scheduledBackupPath = mkOption {
-            type = nullOr str;
-            default = null;
-            description = lib.mdDoc ''
-              The full path to an existing directory where the automated daily backup archives
-              should be saved. The "homebridge" user MUST have read / write access to this directory.
-            '';
-          };
-
-          debug = mkOption {
-            type = nullOr bool;
-            default = null;
-            description = lib.mdDoc ''
-              Enable debug logging
-            '';
-          };
-
-          disableServerMetricsMonitoring = mkOption {
-            type = nullOr bool;
-            default = null;
-            description = lib.mdDoc ''
-              When enabled, the Homebridge UI will not collect or report cpu / memory stats
             '';
           };
         };
@@ -428,66 +317,47 @@ in
       # Not sure if there is a better way to do this than to use jq
       # to replace sections of json.
       preStart = ''
+        # If there is no config file, create a placeholder default
         if [ ! -e "${cfg.userStoragePath}/config.json" ]; then
           install -D -m 600 -o ${cfg.user} -g ${cfg.group} "${defaultConfigFile}" "${cfg.userStoragePath}/config.json"
-        else
-          # Create a single jq filter that updates all fields at once
-          jq_filter=$(cat <<EOF
-            .bridge = (.bridge // {}) * {
-              name: "${cfg.bridge.name}",
-              port: ${toString cfg.bridge.port}
-              ${optionalString (cfg.bridge.username != null) '',"username": "${cfg.bridge.username}"''}
-              ${optionalString (cfg.bridge.pin != null) '',"pin": "${cfg.bridge.pin}"''}
-              ${optionalString (cfg.bridge.advertiser != null) '',"advertiser": "${cfg.bridge.advertiser}"''}
-              ${optionalString (cfg.bridge.bind != null) '',"bind": ${builtins.toJSON cfg.bridge.bind}''}
-              ${optionalString (cfg.bridge.setupID != null) '',"setupID": "${cfg.bridge.setupID}"''}
-              ${optionalString (cfg.bridge.manufacturer != null) '',"manufacturer": "${cfg.bridge.manufacturer}"''}
-              ${optionalString (cfg.bridge.model != null) '',"model": "${cfg.bridge.model}"''}
-              ${optionalString (cfg.bridge.disableIpc != null) '',"disableIpc": ${toString cfg.bridge.disableIpc}''}
-            } |
-            .platforms |= map(
-              if .platform == "config" then
-                . * {
-                  port: ${toString cfg.ui.port},
-                  standalone: true,
-                  restart: "${restartCommand}",
-                  homebridgePackagePath: "${homebridgePackagePath}",
-                  sudo: false,
-                  log: {
-                    method: "systemd",
-                    service: "homebridge"
-                  }
-                  ${optionalString (cfg.ui.host != null) '',"host": "${cfg.ui.host}"''}
-                  ${optionalString (cfg.ui.proxyHost != null) '',"proxyHost": "${cfg.ui.proxyHost}"''}
-                  ${optionalString (cfg.ui.auth != null) '',"auth": "${cfg.ui.auth}"''}
-                  ${optionalString (cfg.ui.sessionTimeout != null) '',"sessionTimeout": ${toString cfg.ui.sessionTimeout}''}
-                  ${optionalString (cfg.ui.ssl != null) '',"ssl": {
-                    "key": "${cfg.ui.ssl.key}",
-                    "cert": "${cfg.ui.ssl.cert}",
-                    "pfx": "${cfg.ui.ssl.pfx}",
-                    "passphrase": "${cfg.ui.ssl.passphrase}"
-                  }''}
-                  ${optionalString (cfg.ui.tempUnits != null) '',"tempUnits": "${cfg.ui.tempUnits}"''}
-                  ${optionalString (cfg.ui.theme != null) '',"theme": "${cfg.ui.theme}"''}
-                  ${optionalString (cfg.ui.lang != null) '',"lang": "${cfg.ui.lang}"''}
-                  ${optionalString (cfg.ui.loginWallpaper != null) '',"loginWallpaper": "${cfg.ui.loginWallpaper}"''}
-                  ${optionalString (cfg.ui.scheduledBackupDisable != null) '',"scheduledBackupDisable": ${toString cfg.ui.scheduledBackupDisable}''}
-                  ${optionalString (cfg.ui.scheduledBackupPath != null) '',"scheduledBackupPath": "${cfg.ui.scheduledBackupPath}"''}
-                  ${optionalString (cfg.ui.debug != null) '',"debug": ${toString cfg.ui.debug}''}
-                  ${optionalString (cfg.ui.disableServerMetricsMonitoring != null) '',"disableServerMetricsMonitoring": ${toString cfg.ui.disableServerMetricsMonitoring}''}
-                }
-              else
-                .
-              end
-            )
-        EOF
-          )
-
-          # Apply all changes in a single jq operation
-          ${pkgs.jq}/bin/jq "$jq_filter" "${cfg.userStoragePath}/config.json" | ${pkgs.jq}/bin/jq . > "${cfg.userStoragePath}/config.json.tmp"
-          install -D -m 600 -o ${cfg.user} -g ${cfg.group} "${cfg.userStoragePath}/config.json.tmp" "${cfg.userStoragePath}/config.json"
-          rm "${cfg.userStoragePath}/config.json.tmp"
         fi
+
+        # Create a single jq filter that updates all fields at once
+        # Platforms need to be unique by "platform"
+        # Accessories need to be unique by "name"
+        jq_filter=$(cat <<EOF
+          # Start with an empty object that will hold our merged result
+          reduce .[] as $item (
+            {}; 
+            
+            # Copy over non-array properties (bridge, description, etc.)
+            . * $item + {
+              # Special handling for platforms list
+              "platforms": (
+                ((.platforms // []) + ($item.platforms // [])) | 
+                group_by(.platform) | 
+                map(reduce .[] as $platform ({}; . * $platform))
+              ),
+              
+              # Special handling for accessories list
+              "accessories": (
+                ((.accessories // []) + ($item.accessories // [])) | 
+                group_by(.name) | 
+                map(reduce .[] as $accessory ({}; . * $accessory))
+              )
+            }
+          )
+        EOF
+        )
+
+        # Write the nix override config to a temporary file
+        install -D -m 600 -o ${cfg.user} -g ${cfg.group} "${nixOverrideConfigFile}" "${cfg.userStoragePath}/nixOverrideConfig.json"
+
+        # Apply all nix override settings to config.json in a single jq operation
+        ${pkgs.jq}/bin/jq -s "$jq_filter" "${cfg.userStoragePath}/config.json" "${cfg.userStoragePath}/nixOverrideConfig.json" | ${pkgs.jq}/bin/jq . > "${cfg.userStoragePath}/config.json.tmp"
+        # install -D -m 600 -o ${cfg.user} -g ${cfg.group} "${cfg.userStoragePath}/config.json.tmp" "${cfg.userStoragePath}/config.json"
+        # rm "${cfg.userStoragePath}/config.json.tmp"
+        # rm "${cfg.userStoragePath}/nixOverrideConfig.json"
 
         # Make sure plugin directory exists
         install -d -m 755 -o ${cfg.user} -g ${cfg.group} "${cfg.pluginPath}"
@@ -501,6 +371,7 @@ in
         User = "homebridge";
         PermissionsStartOnly = true;
         StateDirectory = "homebridge";
+        WorkingDirectory = cfg.userStoragePath;
         EnvironmentFile = mkIf (cfg.environmentFile != null) [ cfg.environmentFile ];
         ExecStart = "${pkgs.homebridge}/bin/homebridge ${args}";
         Restart = "always";
@@ -547,6 +418,7 @@ in
         User = "homebridge";
         PermissionsStartOnly = true;
         StateDirectory = "homebridge";
+        WorkingDirectory = cfg.userStoragePath;
         EnvironmentFile = mkIf (cfg.environmentFile != null) [ cfg.environmentFile ];
         ExecStart = "${pkgs.homebridge-config-ui-x}/bin/homebridge-config-ui-x ${args}";
         Restart = "always";
@@ -577,7 +449,7 @@ in
     # homebridge-config-ui-x needs for some features
     security.sudo.extraRules = [
       {
-        users = [ "homebridge" ];
+        users = [ cfg.user ];
         commands = [
           {
             # Ability to restart homebridge services
@@ -599,7 +471,7 @@ in
     ];
 
     networking.firewall = {
-      allowedTCPPorts = mkIf cfg.openFirewall [ cfg.bridge.port cfg.ui.port ];
+      allowedTCPPorts = mkIf cfg.openFirewall [ cfg.bridge.port cfg.uiSettings.port ];
       allowedUDPPorts = mkIf cfg.openFirewall [ 5353 ];
     };
   };
