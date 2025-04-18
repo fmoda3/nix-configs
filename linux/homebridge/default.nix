@@ -471,7 +471,7 @@ in
     ];
 
     networking.firewall = {
-      allowedTCPPorts = mkIf cfg.openFirewall [ cfg.bridge.port cfg.uiSettings.port ];
+      allowedTCPPorts = mkIf cfg.openFirewall [ cfg.settings.bridge.port cfg.uiSettings.port ];
       allowedUDPPorts = mkIf cfg.openFirewall [ 5353 ];
     };
   };
