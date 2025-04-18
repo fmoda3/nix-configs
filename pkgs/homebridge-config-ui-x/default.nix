@@ -13,7 +13,7 @@ let
   src = fetchFromGitHub {
     owner = "homebridge";
     repo = "homebridge-config-ui-x";
-    rev = "v${version}";
+    tag = "v${version}";
     hash = "sha256-+fdu9M/P9nF3xSGNADc5VoFwfcoqgYVaSzOioVl7AYg=";
   };
 
@@ -24,7 +24,7 @@ let
     hash = "sha256-QAPM8Z8dZNNVWwbC2I7R/ropfxo6rouk8ZPoav13OTA=";
   };
 in
-buildNpmPackage rec {
+buildNpmPackage {
   pname = "homebridge-config-ui-x";
   inherit version src;
 

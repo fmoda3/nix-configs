@@ -5,13 +5,13 @@
 , nodejs_22
 }:
 
-buildNpmPackage rec {
+buildNpmPackage {
   pname = "homebridge";
   version = "1.9.0";
   src = fetchFromGitHub {
     owner = "homebridge";
     repo = "homebridge";
-    rev = "v${version}";
+    tag = "v${version}";
     hash = "sha256-Ofj1QzDIeu4hjuonOlAHqrFDeU81gCEbMQaymyae8Pk=";
   };
 
