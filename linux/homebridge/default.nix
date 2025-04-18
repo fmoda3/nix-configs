@@ -21,7 +21,7 @@ let
   defaultConfig = {
     description = "Homebridge";
     bridge = {
-      inherit (cfg.bridge) name port;
+      inherit (cfg.settings.bridge) name port;
       # These have to be set at least once, otherwise the homebridge will not work
       username = "CC:22:3D:E3:CE:30";
       pin = "031-45-154";
