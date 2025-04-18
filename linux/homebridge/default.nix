@@ -15,7 +15,7 @@ let
   homebridgePackagePath = "${pkgs.homebridge}/lib/node_modules/homebridge";
 
   defaultConfigUIPlatform = {
-    inherit (cfg.uiSettings) platform name port standalone resolution homebridgePackagePath sudo log;
+    inherit (cfg.uiSettings) platform name port standalone restart homebridgePackagePath sudo log;
   };
 
   defaultConfig = {
