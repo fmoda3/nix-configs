@@ -5,15 +5,18 @@
 , nodejs_22
 }:
 
-buildNpmPackage rec {
-  pname = "homebridge";
+let
   version = "1.9.0";
   src = fetchFromGitHub {
     owner = "homebridge";
     repo = "homebridge";
-    rev = "v${version}";
+    tag = "v${version}";
     hash = "sha256-Ofj1QzDIeu4hjuonOlAHqrFDeU81gCEbMQaymyae8Pk=";
   };
+in
+buildNpmPackage {
+  pname = "homebridge";
+  inherit version src;
 
   nodejs = nodejs_22;
 
@@ -33,6 +36,7 @@ buildNpmPackage rec {
     homepage = "https://github.com/homebridge/homebridge";
     license = lib.licenses.asl20;
     mainProgram = "homebridge";
+    platforms = lib.platforms.linux ++ lib.platforms.darwin;
     maintainers = with lib.maintainers; [ fmoda3 ];
   };
 }

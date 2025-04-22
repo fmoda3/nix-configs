@@ -13,7 +13,7 @@ let
   src = fetchFromGitHub {
     owner = "homebridge";
     repo = "homebridge-config-ui-x";
-    rev = "v${version}";
+    tag = "v${version}";
     hash = "sha256-+fdu9M/P9nF3xSGNADc5VoFwfcoqgYVaSzOioVl7AYg=";
   };
 
@@ -24,7 +24,7 @@ let
     hash = "sha256-QAPM8Z8dZNNVWwbC2I7R/ropfxo6rouk8ZPoav13OTA=";
   };
 in
-buildNpmPackage rec {
+buildNpmPackage {
   pname = "homebridge-config-ui-x";
   inherit version src;
 
@@ -38,25 +38,20 @@ buildNpmPackage rec {
     # Tricky way to run npmConfigHook multiple times
     (
       source ${npmHooks.npmConfigHook}/nix-support/setup-hook
-      npmRoot=ui npmDeps=${npmDeps_ui} npmConfigHook
+      npmRoot=ui npmDeps=${npmDeps_ui} makeCacheWritable= npmConfigHook
     )
     # Required to prevent "ng build" from failing due to
     # prompting user for autocompletion
     export CI=true
   '';
 
-  # Needed for dependency `@homebridge/node-pty-prebuilt-multiarch`
-  # On Darwin systems the build fails with,
-  #
-  # npm error ../src/unix/pty.cc:413:13: error: use of undeclared identifier 'openpty'
-  # npm error   int ret = openpty(&master, &slave, nullptr, NULL, static_cast<winsize*>(&winp));
-  #
-  # when `node-gyp` tries to build the dep. The below allows `npm` to download the prebuilt binary.
-  makeCacheWritable = stdenv.hostPlatform.isDarwin;
+  # On darwin, the build failed because openpty() is not declared
+  # Uses the prebuild version of @homebridge/node-pty-prebuilt-multiarch instead
+  makeCacheWritable = pkgs.stdenv.hostPlatform.isDarwin;
+
   nativeBuildInputs = with pkgs; [
     python3
-  ] ++ lib.optionals stdenv.hostPlatform.isDarwin [
-    cacert
+    (lib.optional stdenv.hostPlatform.isDarwin cacert)
   ];
 
   meta = {
@@ -64,6 +59,7 @@ buildNpmPackage rec {
     homepage = "https://github.com/homebridge/homebridge-config-ui-x";
     license = lib.licenses.mit;
     mainProgram = "homebridge-config-ui-x";
+    platforms = lib.platforms.linux ++ lib.platforms.darwin;
     maintainers = with lib.maintainers; [ fmoda3 ];
   };
 }
