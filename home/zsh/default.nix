@@ -126,7 +126,7 @@ with lib;
       caff = "caffeinate -d -i -m -s"; # Prevents computer from falling asleep
     };
 
-    initExtra = ''
+    initContent = ''
       eval "$(direnv hook zsh)"
       path+="/opt/homebrew/bin"
 
