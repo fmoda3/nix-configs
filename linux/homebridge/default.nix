@@ -1,21 +1,37 @@
-{ config, lib, pkgs, ... }:
+{ config
+, lib
+, pkgs
+, ...
+}:
 
 with lib;
 
 let
   cfg = config.services.homebridge;
 
-  args = concatStringsSep " " ([
-    "-U ${cfg.userStoragePath}"
-    "-P ${cfg.pluginPath}"
-    "--strict-plugin-resolution"
-  ] ++ optionals cfg.allowInsecure [ "-I" ]);
+  args = concatStringsSep " " (
+    [
+      "-U ${cfg.userStoragePath}"
+      "-P ${cfg.pluginPath}"
+      "--strict-plugin-resolution"
+    ]
+    ++ optionals cfg.allowInsecure [ "-I" ]
+  );
 
   restartCommand = "sudo -n systemctl restart homebridge homebridge-config-ui-x";
   homebridgePackagePath = "${pkgs.homebridge}/lib/node_modules/homebridge";
 
   defaultConfigUIPlatform = {
-    inherit (cfg.uiSettings) platform name port standalone restart homebridgePackagePath sudo log;
+    inherit (cfg.uiSettings)
+      platform
+      name
+      port
+      standalone
+      restart
+      homebridgePackagePath
+      sudo
+      log
+      ;
   };
 
   defaultConfig = {
@@ -53,13 +69,13 @@ let
       {};
       . * $item + {
         "platforms": (
-          ((.platforms // []) + ($item.platforms // [])) | 
-          group_by(.platform) | 
+          ((.platforms // []) + ($item.platforms // [])) |
+          group_by(.platform) |
           map(reduce .[] as $platform ({}; . * $platform))
         ),
         "accessories": (
-          ((.accessories // []) + ($item.accessories // [])) | 
-          group_by(.name) | 
+          ((.accessories // []) + ($item.accessories // [])) |
+          group_by(.name) |
           map(reduce .[] as $accessory ({}; . * $accessory))
         )
       }
@@ -73,13 +89,15 @@ let
 
   # Validation function to ensure no platform has the platform "config".
   # We want to make sure settings for the "config" platform are set in uiSettings.
-  validatePlatforms = platforms:
+  validatePlatforms =
+    platforms:
     let
       conflictingPlatforms = builtins.filter (p: p.platform == "config") platforms;
     in
-    if builtins.length conflictingPlatforms > 0
-    then throw "The platforms list must not contain any platform with platform type 'config'.  Use the uiSettings attribute instead."
-    else platforms;
+    if builtins.length conflictingPlatforms > 0 then
+      throw "The platforms list must not contain any platform with platform type 'config'.  Use the uiSettings attribute instead."
+    else
+      platforms;
 
   settingsFormat = pkgs.formats.json { };
 in
@@ -157,8 +175,12 @@ in
     };
 
     settings = mkOption {
-      # Full list of settings can be found here: https://github.com/homebridge/homebridge/wiki/Homebridge-Config-JSON-Explained
       default = { };
+      description = ''
+        Configuration options for homebridge.
+
+        For more details, see [the homebridge documentation](https://github.com/homebridge/homebridge/wiki/Homebridge-Config-JSON-Explained).
+      '';
       type = submodule {
         freeformType = settingsFormat.type;
         options = {
@@ -235,8 +257,12 @@ in
     # inside settings.
     uiSettings = mkOption {
       # Full list of UI settings can be found here: https://github.com/homebridge/homebridge-config-ui-x/wiki/Config-Options
-      description = "Homebridge UI options";
       default = { };
+      description = ''
+        Configuration options for homebridge config UI plugin.
+
+        For more details, see [the homebridge-config-ui-x documentation](https://github.com/homebridge/homebridge-config-ui-x/wiki/Config-Options).
+      '';
       type = submodule {
         freeformType = settingsFormat.type;
         options = {
@@ -278,6 +304,7 @@ in
           homebridgePackagePath = mkOption {
             type = str;
             default = homebridgePackagePath;
+            defaultText = "/path/to/homebridge";
             description = "Path to the homebridge package";
             readOnly = true;
           };
@@ -293,6 +320,7 @@ in
           # We're using systemd, so make sure logs is setup to pull from systemd
           log = mkOption {
             default = { };
+            description = "Log options for homebridge";
             type = submodule {
               freeformType = settingsFormat.type;
               options = {
@@ -328,7 +356,10 @@ in
     systemd.services.homebridge = {
       description = "Homebridge";
       wants = [ "network-online.target" ];
-      after = [ "syslog.target" "network-online.target" ];
+      after = [
+        "syslog.target"
+        "network-online.target"
+      ];
       wantedBy = [ "multi-user.target" ];
 
       # On start, if the config file is missing, create a default one
@@ -337,6 +368,10 @@ in
       # Not sure if there is a better way to do this than to use jq
       # to replace sections of json.
       preStart = ''
+        # If the user storage path does not exist, create it
+        if [ ! -d "${cfg.userStoragePath}" ]; then
+          install -d -m 700 -o ${cfg.user} -g ${cfg.group} "${cfg.userStoragePath}"
+        fi
         # If there is no config file, create a placeholder default
         if [ ! -e "${cfg.userStoragePath}/config.json" ]; then
           install -D -m 600 -o ${cfg.user} -g ${cfg.group} "${defaultConfigFile}" "${cfg.userStoragePath}/config.json"
@@ -351,7 +386,7 @@ in
         # Apply all nix override settings to config.json in a single jq operation
         ${pkgs.jq}/bin/jq -s -f "${cfg.userStoragePath}/jqMergeFilter.jq" "${cfg.userStoragePath}/config.json" "${cfg.userStoragePath}/nixOverrideConfig.json" | ${pkgs.jq}/bin/jq . > "${cfg.userStoragePath}/config.json.tmp"
         install -D -m 600 -o ${cfg.user} -g ${cfg.group} "${cfg.userStoragePath}/config.json.tmp" "${cfg.userStoragePath}/config.json"
-        
+
         # Remove temporary files
         rm "${cfg.userStoragePath}/jqMergeFilter.jq"
         rm "${cfg.userStoragePath}/nixOverrideConfig.json"
@@ -366,24 +401,43 @@ in
       # https://github.com/homebridge/homebridge-config-ui-x/blob/a12ad881fe6df62d817ecb56f9fc6b7e82b6d078/src/bin/platforms/linux.ts#L714
       serviceConfig = {
         Type = "simple";
-        User = "homebridge";
+        User = cfg.user;
         PermissionsStartOnly = true;
         StateDirectory = "homebridge";
-        WorkingDirectory = cfg.userStoragePath;
         EnvironmentFile = mkIf (cfg.environmentFile != null) [ cfg.environmentFile ];
         ExecStart = "${pkgs.homebridge}/bin/homebridge ${args}";
         Restart = "always";
         RestartSec = 3;
         KillMode = "process";
-        CapabilityBoundingSet = [ "CAP_IPC_LOCK" "CAP_NET_ADMIN" "CAP_NET_BIND_SERVICE" "CAP_NET_RAW" "CAP_SETGID" "CAP_SETUID" "CAP_SYS_CHROOT" "CAP_CHOWN" "CAP_FOWNER" "CAP_DAC_OVERRIDE" "CAP_AUDIT_WRITE" "CAP_SYS_ADMIN" ];
-        AmbientCapabilities = [ "CAP_NET_RAW" "CAP_NET_BIND_SERVICE" ];
+        CapabilityBoundingSet = [
+          "CAP_IPC_LOCK"
+          "CAP_NET_ADMIN"
+          "CAP_NET_BIND_SERVICE"
+          "CAP_NET_RAW"
+          "CAP_SETGID"
+          "CAP_SETUID"
+          "CAP_SYS_CHROOT"
+          "CAP_CHOWN"
+          "CAP_FOWNER"
+          "CAP_DAC_OVERRIDE"
+          "CAP_AUDIT_WRITE"
+          "CAP_SYS_ADMIN"
+        ];
+        AmbientCapabilities = [
+          "CAP_NET_RAW"
+          "CAP_NET_BIND_SERVICE"
+        ];
       };
     };
 
     systemd.services.homebridge-config-ui-x = {
       description = "Homebridge Config UI X";
       wants = [ "network-online.target" ];
-      after = [ "syslog.target" "network-online.target" "homebridge.service" ];
+      after = [
+        "syslog.target"
+        "network-online.target"
+        "homebridge.service"
+      ];
       requires = [ "homebridge.service" ];
       wantedBy = [ "multi-user.target" ];
       path = with pkgs; [
@@ -413,17 +467,32 @@ in
       # https://github.com/homebridge/homebridge-config-ui-x/blob/a12ad881fe6df62d817ecb56f9fc6b7e82b6d078/src/bin/platforms/linux.ts#L714
       serviceConfig = {
         Type = "simple";
-        User = "homebridge";
+        User = cfg.user;
         PermissionsStartOnly = true;
         StateDirectory = "homebridge";
-        WorkingDirectory = cfg.userStoragePath;
         EnvironmentFile = mkIf (cfg.environmentFile != null) [ cfg.environmentFile ];
         ExecStart = "${pkgs.homebridge-config-ui-x}/bin/homebridge-config-ui-x ${args}";
         Restart = "always";
         RestartSec = 3;
         KillMode = "process";
-        CapabilityBoundingSet = [ "CAP_IPC_LOCK" "CAP_NET_ADMIN" "CAP_NET_BIND_SERVICE" "CAP_NET_RAW" "CAP_SETGID" "CAP_SETUID" "CAP_SYS_CHROOT" "CAP_CHOWN" "CAP_FOWNER" "CAP_DAC_OVERRIDE" "CAP_AUDIT_WRITE" "CAP_SYS_ADMIN" ];
-        AmbientCapabilities = [ "CAP_NET_RAW" "CAP_NET_BIND_SERVICE" ];
+        CapabilityBoundingSet = [
+          "CAP_IPC_LOCK"
+          "CAP_NET_ADMIN"
+          "CAP_NET_BIND_SERVICE"
+          "CAP_NET_RAW"
+          "CAP_SETGID"
+          "CAP_SETUID"
+          "CAP_SYS_CHROOT"
+          "CAP_CHOWN"
+          "CAP_FOWNER"
+          "CAP_DAC_OVERRIDE"
+          "CAP_AUDIT_WRITE"
+          "CAP_SYS_ADMIN"
+        ];
+        AmbientCapabilities = [
+          "CAP_NET_RAW"
+          "CAP_NET_BIND_SERVICE"
+        ];
       };
     };
 
@@ -469,7 +538,10 @@ in
     ];
 
     networking.firewall = {
-      allowedTCPPorts = mkIf cfg.openFirewall [ cfg.settings.bridge.port cfg.uiSettings.port ];
+      allowedTCPPorts = mkIf cfg.openFirewall [
+        cfg.settings.bridge.port
+        cfg.uiSettings.port
+      ];
       allowedUDPPorts = mkIf cfg.openFirewall [ 5353 ];
     };
   };
