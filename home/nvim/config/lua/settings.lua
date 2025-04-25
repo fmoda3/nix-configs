@@ -35,3 +35,14 @@ require("legendary").keymaps({
 	{ "<C-k>", "<C-w>k", description = "Panes: Move up", opts = opts },
 	{ "<C-l>", "<C-w>l", description = "Panes: Move right", opts = opts },
 })
+
+vim.diagnostic.config({
+	signs = {
+		text = {
+			[vim.diagnostic.severity.ERROR] = "",
+			[vim.diagnostic.severity.WARN] = "",
+			[vim.diagnostic.severity.INFO] = "\u{f05a}",
+			[vim.diagnostic.severity.HINT] = "",
+		},
+	},
+})

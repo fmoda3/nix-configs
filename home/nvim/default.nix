@@ -38,9 +38,9 @@ in
 
         # Status line
         {
-          plugin = galaxyline-nvim;
+          plugin = heirline-nvim;
           type = "lua";
-          config = builtins.readFile ./config/lua/galaxyline-config.lua;
+          config = builtins.readFile ./config/lua/heirline-config.lua;
         }
         # File Tree
         {
