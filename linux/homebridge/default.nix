@@ -9,15 +9,6 @@ with lib;
 let
   cfg = config.services.homebridge;
 
-  args = concatStringsSep " " (
-    [
-      "-U ${cfg.userStoragePath}"
-      "-P ${cfg.pluginPath}"
-      "--strict-plugin-resolution"
-    ]
-    ++ optionals cfg.allowInsecure [ "-I" ]
-  );
-
   restartCommand = "sudo -n systemctl restart homebridge homebridge-config-ui-x";
   homebridgePackagePath = "${pkgs.homebridge}/lib/node_modules/homebridge";
 
@@ -47,19 +38,13 @@ let
     ];
   };
 
-  defaultConfigFile = pkgs.writeTextFile {
-    name = "config.json";
-    text = builtins.toJSON defaultConfig;
-  };
+  defaultConfigFile = settingsFormat.generate "config.json" defaultConfig;
 
   nixOverrideConfig = cfg.settings // {
     platforms = [ cfg.uiSettings ] ++ cfg.settings.platforms;
   };
 
-  nixOverrideConfigFile = pkgs.writeTextFile {
-    name = "nixOverrideConfig.json";
-    text = builtins.toJSON nixOverrideConfig;
-  };
+  nixOverrideConfigFile = settingsFormat.generate "nixOverrideConfig.json" nixOverrideConfig;
 
   # Create a single jq filter that updates all fields at once
   # Platforms need to be unique by "platform"
@@ -191,25 +176,16 @@ in
             readOnly = true;
           };
 
-          bridge = mkOption {
-            description = "Homebridge Bridge options";
-            default = { };
-            type = submodule {
-              freeformType = settingsFormat.type;
-              options = {
-                name = mkOption {
-                  type = str;
-                  default = "Homebridge";
-                  description = "Name of the homebridge";
-                };
+          bridge.name = mkOption {
+            type = str;
+            default = "Homebridge";
+            description = "Name of the homebridge";
+          };
 
-                port = mkOption {
-                  type = port;
-                  default = 51826;
-                  description = "The port homebridge listens on";
-                };
-              };
-            };
+          bridge.port = mkOption {
+            type = port;
+            default = 51826;
+            description = "The port homebridge listens on";
           };
 
           platforms = mkOption {
@@ -318,27 +294,18 @@ in
           };
 
           # We're using systemd, so make sure logs is setup to pull from systemd
-          log = mkOption {
-            default = { };
-            description = "Log options for homebridge";
-            type = submodule {
-              freeformType = settingsFormat.type;
-              options = {
-                method = mkOption {
-                  type = str;
-                  default = "systemd";
-                  description = "Method to use for logging";
-                  readOnly = true;
-                };
+          log.method = mkOption {
+            type = str;
+            default = "systemd";
+            description = "Method to use for logging";
+            readOnly = true;
+          };
 
-                service = mkOption {
-                  type = str;
-                  default = "homebridge";
-                  description = "Name of the systemd service to log to";
-                  readOnly = true;
-                };
-              };
-            };
+          log.service = mkOption {
+            type = str;
+            default = "homebridge";
+            description = "Name of the systemd service to log to";
+            readOnly = true;
           };
 
           # The following options are allowed to be changed.
@@ -377,19 +344,11 @@ in
           install -D -m 600 -o ${cfg.user} -g ${cfg.group} "${defaultConfigFile}" "${cfg.userStoragePath}/config.json"
         fi
 
-        # Write the jq merge filter file to a temporary file
-        install -D -m 600 -o ${cfg.user} -g ${cfg.group} "${jqMergeFilterFile}" "${cfg.userStoragePath}/jqMergeFilter.jq"
-
-        # Write the nix override config to a temporary file
-        install -D -m 600 -o ${cfg.user} -g ${cfg.group} "${nixOverrideConfigFile}" "${cfg.userStoragePath}/nixOverrideConfig.json"
-
         # Apply all nix override settings to config.json in a single jq operation
-        ${pkgs.jq}/bin/jq -s -f "${cfg.userStoragePath}/jqMergeFilter.jq" "${cfg.userStoragePath}/config.json" "${cfg.userStoragePath}/nixOverrideConfig.json" | ${pkgs.jq}/bin/jq . > "${cfg.userStoragePath}/config.json.tmp"
+        ${pkgs.jq}/bin/jq -s -f "${jqMergeFilterFile}" "${cfg.userStoragePath}/config.json" "${nixOverrideConfigFile}" | ${pkgs.jq}/bin/jq . > "${cfg.userStoragePath}/config.json.tmp"
         install -D -m 600 -o ${cfg.user} -g ${cfg.group} "${cfg.userStoragePath}/config.json.tmp" "${cfg.userStoragePath}/config.json"
 
         # Remove temporary files
-        rm "${cfg.userStoragePath}/jqMergeFilter.jq"
-        rm "${cfg.userStoragePath}/nixOverrideConfig.json"
         rm "${cfg.userStoragePath}/config.json.tmp"
 
         # Make sure plugin directory exists
@@ -405,7 +364,7 @@ in
         PermissionsStartOnly = true;
         StateDirectory = "homebridge";
         EnvironmentFile = mkIf (cfg.environmentFile != null) [ cfg.environmentFile ];
-        ExecStart = "${pkgs.homebridge}/bin/homebridge ${args}";
+        ExecStart = "${pkgs.homebridge}/bin/homebridge -U ${cfg.userStoragePath} -P ${cfg.pluginPath} --strict-plugin-resolution" + optionalString cfg.allowInsecure " -I";
         Restart = "always";
         RestartSec = 3;
         KillMode = "process";
@@ -471,7 +430,7 @@ in
         PermissionsStartOnly = true;
         StateDirectory = "homebridge";
         EnvironmentFile = mkIf (cfg.environmentFile != null) [ cfg.environmentFile ];
-        ExecStart = "${pkgs.homebridge-config-ui-x}/bin/homebridge-config-ui-x ${args}";
+        ExecStart = "${pkgs.homebridge-config-ui-x}/bin/homebridge-config-ui-x -U ${cfg.userStoragePath} -P ${cfg.pluginPath}" + optionalString cfg.allowInsecure " -I";
         Restart = "always";
         RestartSec = 3;
         KillMode = "process";
