@@ -148,8 +148,7 @@ in
         {
           plugin = nvim-dap;
           type = "lua";
-          config = builtins.readFile (pkgs.substituteAll {
-            src = ./config/lua/dap-config.lua;
+          config = builtins.readFile (pkgs.replaceVars ./config/lua/dap-config.lua {
             elixir_ls_home = "${pkgs.beam.packages.erlang.elixir-ls}";
             python_debug_home = "${python-debug}";
           });

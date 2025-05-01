@@ -1,7 +1,7 @@
 { writeShellApplication
 , lib
 , stdenv
-, substituteAll
+, replaceVars
 , coreutils
 , gawk
 , gnugrep
@@ -10,8 +10,7 @@
 writeShellApplication {
   name = "nix-cleanup";
 
-  text = lib.readFile (substituteAll {
-    src = ./nix-cleanup.sh;
+  text = lib.readFile (replaceVars ./nix-cleanup.sh {
     isNixOS = if stdenv.isLinux then "1" else "0";
   });
 
