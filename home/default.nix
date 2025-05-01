@@ -62,7 +62,6 @@ in
           awscli2
           oktoast
           toast-services
-          pizzabox
           heroku
           colima
           docker
