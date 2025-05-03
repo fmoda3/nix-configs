@@ -369,6 +369,7 @@
         devshells.default = {
           devshell.startup.pre-commit.text = config.pre-commit.installationScript;
           packages = with pkgs; [
+            nixd
             statix
             inputs'.deploy-rs.packages.default
             inputs'.agenix.packages.default
