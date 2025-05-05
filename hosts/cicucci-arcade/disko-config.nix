@@ -5,43 +5,36 @@ _: {
         type = "disk";
         device = "/dev/nvme0n1";
         content = {
-          type = "table";
-          format = "gpt";
-          partitions = [
-            {
-              name = "nixos";
-              start = "512MiB";
+          type = "gpt";
+          partitions = {
+            ESP = {
+              size = "512MiB";
+              type = "EF00";
+              priority = 3;
+              content = {
+                type = "filesystem";
+                format = "vfat";
+                mountpoint = "/boot";
+                mountOptions = [ "umask=0077" ];
+              };
+            };
+            nixos = {
               end = "-8GiB";
-              part-type = "primary";
+              priority = 1;
               content = {
                 type = "filesystem";
                 format = "ext4";
                 mountpoint = "/";
               };
-            }
-            {
-              name = "swap";
-              start = "-8GiB";
-              end = "100%";
-              part-type = "primary";
-              fs-type = "linux-swap";
+            };
+            swap = {
+              size = "100%";
+              priority = 2;
               content = {
                 type = "swap";
               };
-            }
-            {
-              name = "ESP";
-              start = "1MiB";
-              end = "512MiB";
-              fs-type = "fat32";
-              bootable = true;
-              content = {
-                type = "filesystem";
-                format = "vfat";
-                mountpoint = "/boot";
-              };
-            }
-          ];
+            };
+          };
         };
       };
     };
