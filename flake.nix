@@ -88,30 +88,29 @@
   };
   outputs = inputs@{ self, nixpkgs, darwin, flake-parts, flake-root, deploy-rs, treefmt-nix, devshell, nixos-generators, git-hooks, ... }:
     let
+      # "pkgs" currently points to unstable
+      # The following overlay allows you to specify "pkgs.stable" for stable versions
+      # and "pkgs.master" for versions on master
+      versionsOverlay = with inputs; (final: prev:
+        let
+          inherit (prev.stdenv) system;
+          nixpkgs-stable = if prev.stdenv.isDarwin then nixpkgs-stable-darwin else nixos-stable;
+        in
+        {
+          master = nixpkgs-master.legacyPackages.${system};
+          stable = nixpkgs-stable.legacyPackages.${system};
+        }
+      );
+      # Add in custom defined packages in the pkgs directory
+      customPackagesOverlay = final: prev: { flake = self; } // import ./pkgs final prev;
       nixpkgsConfig = with inputs; {
         config = {
           allowUnfree = true;
         };
         overlays = [
           comma.overlays.default
-          # "pkgs" currently points to unstable
-          # The following overlay allows you to specify "pkgs.stable" for stable versions
-          # and "pkgs.master" for versions on master
-          (
-            final: prev:
-              let
-                inherit (prev.stdenv) system;
-                nixpkgs-stable = if prev.stdenv.isDarwin then nixpkgs-stable-darwin else nixos-stable;
-              in
-              {
-                master = nixpkgs-master.legacyPackages.${system};
-                stable = nixpkgs-stable.legacyPackages.${system};
-              }
-          )
-          # Add in custom defined packages in the pkgs directory
-          (
-            final: prev: { flake = self; } // import ./pkgs final prev
-          )
+          versionsOverlay
+          customPackagesOverlay
         ];
       };
       commonModules = { user, host }: with inputs; [
@@ -160,9 +159,29 @@
           }
         ];
       installerModules = { targetSystem }: [
-        (./installer/system-installer.nix)
+        ./installer/system-installer.nix
         { installer.targetSystem = targetSystem; }
       ];
+      mkDarwinSystem = { user, host, system }: darwin.lib.darwinSystem {
+        inherit system;
+        modules = darwinModules { inherit user host; };
+        specialArgs = { inherit inputs nixpkgs; };
+      };
+      mkNixOSSystem = { user, host, system }: nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = nixosModules { inherit user host; };
+        specialArgs = { inherit inputs nixpkgs; };
+      };
+      mkImage = { user, host, system, format }: nixos-generators.nixosGenerate {
+        inherit system format;
+        modules = nixosModules { inherit user host; };
+        specialArgs = { inherit inputs nixpkgs; };
+      };
+      mkInstaller = { user, host, system, format, targetSystem }: nixos-generators.nixosGenerate {
+        inherit system format;
+        modules = nixosModules { inherit user host; } ++ installerModules { inherit targetSystem; };
+        specialArgs = { inherit inputs nixpkgs; };
+      };
     in
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
@@ -173,162 +192,105 @@
       ];
       flake = {
         darwinConfigurations = {
-          cicucci-imac = darwin.lib.darwinSystem {
+          cicucci-imac = mkDarwinSystem {
             system = "x86_64-darwin";
-            modules = darwinModules {
-              user = "fmoda3";
-              host = "cicucci-imac";
-            };
-            specialArgs = { inherit inputs nixpkgs; };
+            user = "fmoda3";
+            host = "cicucci-imac";
           };
-          cicucci-desktop = darwin.lib.darwinSystem {
+          cicucci-desktop = mkDarwinSystem {
             system = "aarch64-darwin";
-            modules = darwinModules {
-              user = "fmoda3";
-              host = "cicucci-desktop";
-            };
-            specialArgs = { inherit inputs nixpkgs; };
+            user = "fmoda3";
+            host = "cicucci-desktop";
           };
-          cicucci-laptop = darwin.lib.darwinSystem {
+          cicucci-laptop = mkDarwinSystem {
             system = "aarch64-darwin";
-            modules = darwinModules {
-              user = "fmoda3";
-              host = "cicucci-laptop";
-            };
-            specialArgs = { inherit inputs nixpkgs; };
+            user = "fmoda3";
+            host = "cicucci-laptop";
           };
-          work-laptop = darwin.lib.darwinSystem {
+          work-laptop = mkDarwinSystem {
             system = "aarch64-darwin";
-            modules = darwinModules {
-              user = "frank";
-              host = "work-laptop";
-            };
-            specialArgs = { inherit inputs nixpkgs; };
+            user = "frank";
+            host = "work-laptop";
           };
-          macvm = darwin.lib.darwinSystem {
+          macvm = mkDarwinSystem {
             system = "x86_64-darwin";
-            modules = darwinModules {
-              user = "fmoda3";
-              host = "macvm";
-            };
-            specialArgs = { inherit inputs nixpkgs; };
+            user = "fmoda3";
+            host = "macvm";
           };
         };
         nixosConfigurations = {
-          cicucci-dns = nixpkgs.lib.nixosSystem {
+          cicucci-dns = mkNixOSSystem {
             system = "aarch64-linux";
-            modules = nixosModules {
-              user = "fmoda3";
-              host = "cicucci-dns";
-            };
-            specialArgs = { inherit inputs nixpkgs; };
+            user = "fmoda3";
+            host = "cicucci-dns";
           };
-          cicucci-homelab = nixpkgs.lib.nixosSystem {
+          cicucci-homelab = mkNixOSSystem {
             system = "x86_64-linux";
-            modules = nixosModules {
-              user = "fmoda3";
-              host = "cicucci-homelab";
-            };
-            specialArgs = { inherit inputs nixpkgs; };
+            user = "fmoda3";
+            host = "cicucci-homelab";
           };
-          cicucci-builder = nixpkgs.lib.nixosSystem {
+          cicucci-builder = mkNixOSSystem {
             system = "aarch64-linux";
-            modules = nixosModules {
-              user = "fmoda3";
-              host = "cicucci-builder";
-            };
-            specialArgs = { inherit inputs nixpkgs; };
+            user = "fmoda3";
+            host = "cicucci-builder";
           };
-          cicucci-arcade = nixpkgs.lib.nixosSystem {
+          cicucci-arcade = mkNixOSSystem {
             system = "aarch64-linux";
-            modules = nixosModules {
-              user = "fmoda3";
-              host = "cicucci-arcade";
-            };
-            specialArgs = { inherit inputs nixpkgs; };
+            user = "fmoda3";
+            host = "cicucci-arcade";
           };
         };
         images = {
-          bootable-aarch64-sd = nixos-generators.nixosGenerate {
+          bootable-aarch64-sd = mkImage {
             system = "aarch64-linux";
-            modules = nixosModules {
-              user = "nixos";
-              host = "bootable-sd";
-            };
-            specialArgs = { inherit inputs nixpkgs; };
+            user = "nixos";
+            host = "bootable-sd";
             format = "sd-aarch64-installer";
           };
-          bootable-aarch64-iso = nixos-generators.nixosGenerate {
+          bootable-aarch64-iso = mkImage {
             system = "aarch64-linux";
-            modules = nixosModules {
-              user = "nixos";
-              host = "bootable-iso";
-            };
-            specialArgs = { inherit inputs nixpkgs; };
+            user = "nixos";
+            host = "bootable-iso";
             format = "install-iso";
           };
-          bootable-x86_64-iso = nixos-generators.nixosGenerate {
+          bootable-x86_64-iso = mkImage {
             system = "x86_64-linux";
-            modules = nixosModules {
-              user = "nixos";
-              host = "bootable-iso";
-            };
-            specialArgs = { inherit inputs nixpkgs; };
+            user = "nixos";
+            host = "bootable-iso";
             format = "install-iso";
           };
-          cicucci-dns-sd = nixos-generators.nixosGenerate {
+          cicucci-dns-sd = mkImage {
             system = "aarch64-linux";
-            modules = nixosModules {
-              user = "fmoda3";
-              host = "cicucci-dns";
-            };
-            specialArgs = { inherit inputs nixpkgs; };
+            user = "fmoda3";
+            host = "cicucci-dns";
             format = "sd-aarch64";
           };
-          cicucci-builder-iso = nixos-generators.nixosGenerate {
+          cicucci-builder-vm = mkImage {
             system = "aarch64-linux";
-            modules = nixosModules
-              {
-                user = "nixos";
-                host = "bootable-iso";
-              } ++ installerModules {
-              targetSystem = self.nixosConfigurations.cicucci-builder;
-            };
-            specialArgs = { inherit inputs nixpkgs; };
-            format = "install-iso";
-          };
-          cicucci-homelab-iso = nixos-generators.nixosGenerate {
-            system = "x86_64-linux";
-            modules = nixosModules
-              {
-                user = "nixos";
-                host = "bootable-iso";
-              } ++ installerModules {
-              targetSystem = self.nixosConfigurations.cicucci-homelab;
-            };
-            specialArgs = { inherit inputs nixpkgs; };
-            format = "install-iso";
-          };
-          cicucci-builder-vm = nixos-generators.nixosGenerate {
-            system = "aarch64-linux";
-            modules = nixosModules {
-              user = "fmoda3";
-              host = "cicucci-builder";
-            };
-            specialArgs = { inherit inputs nixpkgs; };
+            user = "fmoda3";
+            host = "cicucci-builder";
             format = "vmware";
           };
-          cicucci-arcade-iso = nixos-generators.nixosGenerate {
+          cicucci-builder-iso = mkInstaller {
             system = "aarch64-linux";
-            modules = nixosModules
-              {
-                user = "nixos";
-                host = "bootable-iso";
-              } ++ installerModules {
-              targetSystem = self.nixosConfigurations.cicucci-arcade;
-            };
-            specialArgs = { inherit inputs nixpkgs; };
+            user = "nixos";
+            host = "bootable-iso";
             format = "install-iso";
+            targetSystem = self.nixosConfigurations.cicucci-builder;
+          };
+          cicucci-homelab-iso = mkInstaller {
+            system = "x86_64-linux";
+            user = "nixos";
+            host = "bootable-iso";
+            format = "install-iso";
+            targetSystem = self.nixosConfigurations.cicucci-homelab;
+          };
+          cicucci-arcade-iso = mkInstaller {
+            system = "aarch64-linux";
+            user = "nixos";
+            host = "bootable-iso";
+            format = "install-iso";
+            targetSystem = self.nixosConfigurations.cicucci-arcade;
           };
         };
         deploy = {
