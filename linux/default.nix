@@ -10,7 +10,6 @@ in
     ./adguardhome
     ./unbound
     ./tailscale
-    ./unifi
     ./arcade
     ./homebridge
   ];
@@ -46,16 +45,6 @@ in
           enable = lib.mkEnableOption "adblocker";
           # Should the adblocker run unbound as the backing dns provider
           useUnbound = lib.mkEnableOption "unbound";
-        };
-      };
-    };
-
-    unifi = lib.mkOption {
-      description = "unifi submodule";
-      default = { };
-      type = types.submodule {
-        options = {
-          enable = lib.mkEnableOption "unifi";
         };
       };
     };
