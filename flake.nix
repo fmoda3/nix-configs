@@ -192,11 +192,6 @@
       ];
       flake = {
         darwinConfigurations = {
-          cicucci-imac = mkDarwinSystem {
-            system = "x86_64-darwin";
-            user = "fmoda3";
-            host = "cicucci-imac";
-          };
           cicucci-desktop = mkDarwinSystem {
             system = "aarch64-darwin";
             user = "fmoda3";
