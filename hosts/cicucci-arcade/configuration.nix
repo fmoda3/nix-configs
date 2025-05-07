@@ -30,21 +30,16 @@
 
   i18n.defaultLocale = "en_US.UTF-8";
 
-  # Disable the default module and import our override. We have
-  # customizations to make this work on aarch64.
-  disabledModules = [ "virtualisation/vmware-guest.nix" ];
-
   # Lots of stuff that uses aarch64 that claims doesn't work, but actually works.
   nixpkgs.config = {
     allowUnfree = true;
     allowUnsupportedSystem = true;
   };
 
+  virtualisation.vmware.guest.enable = true;
+
   # This works through our custom module imported above
   my-linux = {
-    vmware = {
-      enable = true;
-    };
     arcade.enable = true;
   };
 }

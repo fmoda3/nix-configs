@@ -11,11 +11,8 @@ in
     ./unbound
     ./tailscale
     ./unifi
-    ./vmware
     ./arcade
     ./homebridge
-    # Remaps enabling vmware guest to our custom module which supports aarch64
-    (mkRenamedOptionModule [ "virtualisation" "vmware" "guest" ] [ "my-linux" "vmware" ])
   ];
 
   options.my-linux = {
@@ -59,17 +56,6 @@ in
       type = types.submodule {
         options = {
           enable = lib.mkEnableOption "unifi";
-        };
-      };
-    };
-
-    vmware = lib.mkOption {
-      description = "vmware tools";
-      default = { };
-      type = types.submodule {
-        options = {
-          enable = lib.mkEnableOption "vmware tools";
-          headless = lib.mkEnableOption "headless mode";
         };
       };
     };
