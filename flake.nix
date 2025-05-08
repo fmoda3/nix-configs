@@ -292,6 +292,7 @@
           inherit (config.flake-root) projectRootFile;
           programs = {
             nixpkgs-fmt.enable = true;
+            statix.enable = true;
             stylua.enable = true;
           };
         };
