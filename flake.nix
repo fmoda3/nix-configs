@@ -229,11 +229,6 @@
             user = "fmoda3";
             host = "cicucci-builder";
           };
-          cicucci-arcade = mkNixOSSystem {
-            system = "aarch64-linux";
-            user = "fmoda3";
-            host = "cicucci-arcade";
-          };
         };
         images = {
           bootable-aarch64-sd = mkImage {
@@ -279,13 +274,6 @@
             host = "bootable-iso";
             format = "install-iso";
             targetSystem = self.nixosConfigurations.cicucci-homelab;
-          };
-          cicucci-arcade-iso = mkInstaller {
-            system = "aarch64-linux";
-            user = "nixos";
-            host = "bootable-iso";
-            format = "install-iso";
-            targetSystem = self.nixosConfigurations.cicucci-arcade;
           };
         };
         deploy = {
@@ -403,12 +391,6 @@
               category = "image builds";
               help = "Creates a vmware image for cicucci-builder";
               command = "nix build \".#images.cicucci-builder-vm\"";
-            }
-            {
-              name = "create-arcade-iso";
-              category = "image builds";
-              help = "Creates an iso image for cicucci-arcade";
-              command = "nix build \".#images.cicucci-arcade-iso\"";
             }
           ];
         };
