@@ -207,11 +207,6 @@
             user = "frank";
             host = "work-laptop";
           };
-          macvm = mkDarwinSystem {
-            system = "x86_64-darwin";
-            user = "fmoda3";
-            host = "macvm";
-          };
         };
         nixosConfigurations = {
           cicucci-dns = mkNixOSSystem {
