@@ -1,4 +1,3 @@
-{ config, pkgs, ... }:
 {
   system.keyboard = {
     enableKeyMapping = true;

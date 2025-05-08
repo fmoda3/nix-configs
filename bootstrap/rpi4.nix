@@ -1,14 +1,16 @@
-{ config, pkgs, lib, ... }:
+{ pkgs, ... }:
 {
-  imports = [ "${fetchTarball "https://github.com/NixOS/nixos-hardware/archive/master.tar.gz" }/raspberry-pi/4" ];
-
   # nixos-generate-config should normally set up file systems correctly
-  imports = [ ./hardware-configuration.nix ];
+  imports = [
+    "${fetchTarball "https://github.com/NixOS/nixos-hardware/archive/master.tar.gz" }/raspberry-pi/4"
+    ./hardware-configuration.nix
+  ];
+
   swapDevices = [{ device = "/swapfile"; size = 2048; }];
 
   environment.systemPackages = with pkgs; [ vim git ];
 
   services.openssh.enable = true;
 
-  system.stateVersion = "22.05";
+  system.stateVersion = "24.11";
 }

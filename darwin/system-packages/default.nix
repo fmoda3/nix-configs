@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 let
   extensions = (with pkgs.vscode-extensions; [
     bbenoist.nix

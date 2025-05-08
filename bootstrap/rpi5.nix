@@ -2,7 +2,7 @@
 {
   # nixos-generate-config should normally set up file systems correctly
   imports = [
-    "${fetchTarball "https://github.com/NixOS/nixos-hardware/archive/master.tar.gz" }/raspberry-pi/3"
+    "${fetchTarball "https://github.com/NixOS/nixos-hardware/archive/master.tar.gz" }/raspberry-pi/5"
     ./hardware-configuration.nix
   ];
 

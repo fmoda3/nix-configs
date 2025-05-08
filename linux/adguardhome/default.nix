@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, lib, ... }:
 with lib;
 {
   config = mkIf config.my-linux.adblocker.enable {

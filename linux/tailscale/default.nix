@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, lib, ... }:
 with lib;
 let
   advertiseExitNode = optionals config.my-linux.tailscale.advertiseExitNode [ "--advertise-exit-node" ];

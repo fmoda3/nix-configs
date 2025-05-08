@@ -6,10 +6,10 @@
     flake-parts.url = "github:hercules-ci/flake-parts";
   };
 
-  outputs = inputs@{ self, nixpkgs, flake-parts }:
+  outputs = inputs@{ self, flake-parts }:
     flake-parts.lib.mkFlake { inherit inputs; } {
       systems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
-      perSystem = { config, self', inputs', pkgs, system, ... }: {
+      perSystem = { pkgs, ... }: {
         packages.default = pkgs.poetry2nix.mkPoetryApplication { projectDir = self; };
         devShells.default = pkgs.mkShell {
           packages = with pkgs; [
