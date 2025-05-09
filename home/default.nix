@@ -48,6 +48,7 @@ in
           comma
           nix-cleanup
           aider-chat
+          claude-code
         ];
         fontPackages = [
           # Fonts
