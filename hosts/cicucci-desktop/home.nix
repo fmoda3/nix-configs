@@ -5,7 +5,7 @@
 
   home = {
     sessionVariables = {
-      NH_DARWIN_FLAKE = ".#darwinConfigurations.cicucci-laptop";
+      NH_DARWIN_FLAKE = ".#darwinConfigurations.cicucci-desktop";
     };
   };
 
