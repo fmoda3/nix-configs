@@ -49,6 +49,7 @@ in
           nix-cleanup
           aider-chat
           claude-code
+          nh
         ];
         fontPackages = [
           # Fonts
