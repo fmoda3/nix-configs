@@ -139,6 +139,7 @@
           home-manager.darwinModules.home-manager
           {
             # `home-manager` config
+            system.primaryUser = user;
             users.users.${user}.home = "/Users/${user}";
           }
         ];
