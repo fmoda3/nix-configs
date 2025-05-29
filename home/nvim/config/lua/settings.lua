@@ -22,10 +22,7 @@ opt.signcolumn = "yes:2"
 g.mapleader = ","
 
 -- Color Scheme Settings
--- vim.cmd("syntax enable")
-opt.background = "dark"
-g.nord_italic = false
-require("nord").set()
+vim.cmd.colorscheme("catppuccin-frappe")
 
 -- Movement keybinds
 local opts = { noremap = true }

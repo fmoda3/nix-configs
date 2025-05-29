@@ -3,6 +3,6 @@ vim.cmd([[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_li
 
 -- Change to yellow lightbulb icon
 util.colorize({
-	LightBulbSignColor = { fg = colors.nord13_gui },
+	LightBulbSignColor = { fg = colors.yellow },
 })
 vim.fn.sign_define("LightBulbSign", { text = "", texthl = "LightBulbSignColor", linehl = "", numhl = "" })

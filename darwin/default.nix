@@ -16,14 +16,6 @@ in
   options.my-darwin = {
     isWork = lib.mkEnableOption "work profile";
     enableSudoTouch = lib.mkEnableOption "sudo touch id";
-
-    theme = lib.mkOption {
-      type = types.str;
-      default = "nord";
-      description = ''
-        Theme to apply
-      '';
-    };
   };
 
   config = {

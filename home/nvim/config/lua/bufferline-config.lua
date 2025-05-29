@@ -5,6 +5,7 @@ require("bufferline").setup({
 		show_close_icon = false,
 		diagnostics = "nvim_lsp",
 	},
+	highlights = require("catppuccin.groups.integrations.bufferline").get(),
 })
 
 local opts = { silent = true, noremap = true }

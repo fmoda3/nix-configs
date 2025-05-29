@@ -4,6 +4,32 @@
     enable = true;
     enableZshIntegration = true;
     settings = {
+      palette = "catppuccin_frappe";
+      palettes = {
+        catppuccin_frappe = {
+          background = "#303446";
+          foreground = "#c6d0f5";
+          black = "#51576d";
+          red = "#e78284";
+          green = "#a6d189";
+          yellow = "#e5c890";
+          blue = "#8caaee";
+          purple = "#ca9ee6";
+          cyan = "#81c8be";
+          white = "#c6d0f5";
+          bright-black = "#626880";
+          bright-red = "#e78284";
+          bright-green = "#a6d189";
+          bright-yellow = "#e5c890";
+          bright-blue = "#8caaee";
+          bright-purple = "#ca9ee6";
+          bright-cyan = "#99d1db";
+          bright-white = "#f2d5cf";
+          dark_gray = "#737994";
+          light_gray = "#949cbb";
+          orange = "#ef9f76";
+        };
+      };
       format = lib.concatStrings [
         "$username"
         "$hostname"

@@ -13,10 +13,19 @@
 
     plugins = with pkgs.tmuxPlugins; [
       sensible
-      nord
     ];
 
     extraConfig = ''
+      # Set default terminal
+      set -g default-terminal "tmux-256color"
+
+      # Set theme
+      set -g @catppuccin_flavor 'frappe' # latte, frappe, macchiato or mocha
+      set -g @catppuccin_window_status_style "rounded"
+      set -g @catppuccin_window_text " #{b:pane_current_path}"
+      set -g @catppuccin_window_current_text " #{b:pane_current_path}"
+      run-shell ${pkgs.tmuxPlugins.catppuccin}/share/tmux-plugins/catppuccin/catppuccin.tmux
+      
       # Need to override sensible
       set -g default-command '$SHELL'
 
@@ -55,8 +64,14 @@
       bind e setw synchronize-panes
 
       # color scheme (styled as vim-powerline)
-      set -g status-left-length 52
-      set -g status-right-length 451
+      set -g status-right-length 100
+      set -g status-left-length 100
+      set -g status-left ""
+      set -g status-right "#{E:@catppuccin_status_application}"
+      set -agF status-right "#{E:@catppuccin_status_cpu}"
+      set -ag status-right "#{E:@catppuccin_status_session}"
+      set -ag status-right "#{E:@catppuccin_status_uptime}"
+      set -agF status-right "#{E:@catppuccin_status_battery}"
 
       # Screen like binding for last window
       bind C-a last-window
@@ -70,8 +85,12 @@
       set-option -sa terminal-overrides ',xterm-256color:RGB'
 
       # Auto rename windows to directory
+      set-option -g status-interval 1
       set-option -g automatic-rename on
-      set-option -g automatic-rename-format '#{b:pane_current_path}'
+      set-option -g automatic-rename-format ' #{b:pane_current_path}'
+
+      run-shell ${pkgs.tmuxPlugins.cpu}/share/tmux-plugins/cpu/cpu.tmux
+      run-shell ${pkgs.tmuxPlugins.battery}/share/tmux-plugins/battery/battery.tmux
     '';
   };
 }

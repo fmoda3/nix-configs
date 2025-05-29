@@ -14,7 +14,6 @@ in
       extraLuaConfig = ''
         ${builtins.readFile ./config/lua/settings.lua}
         ${builtins.readFile ./config/lua/util.lua}
-        ${builtins.readFile ./config/lua/nord-colors.lua}
       '';
 
       plugins = with pkgs.vimPlugins; [
@@ -28,7 +27,11 @@ in
         vim-flutter
 
         # theming
-        nord-nvim
+        {
+          plugin = catppuccin-nvim;
+          type = "lua";
+          config = builtins.readFile ./config/lua/catppuccin-config.lua;
+        }
 
         # Smooth scrolling
         vim-smoothie

@@ -92,13 +92,6 @@ require("dapui").setup({
 })
 require("nvim-dap-virtual-text").setup({})
 
-util.colorize({
-	DapBreakpointColor = { fg = colors.nord11_gui },
-	DapBreakpointConditionColor = { fg = colors.nord11_gui },
-	DapLogPointColor = { fg = colors.nord13_gui },
-	DapStoppedColor = { fg = colors.nord14_gui },
-	DapBreakpointRejectedColor = { fg = colors.nord11_gui },
-})
 vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "DapBreakpointColor", linehl = "", numhl = "" })
 vim.fn.sign_define(
 	"DapBreakpointCondition",

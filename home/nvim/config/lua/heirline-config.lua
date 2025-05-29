@@ -4,8 +4,8 @@ local utils = require("heirline.utils")
 local Align = {
 	provider = "%=",
 	hl = {
-		fg = colors.nord0_gui,
-		bg = colors.nord0_gui,
+		fg = colors.base,
+		bg = colors.base,
 	},
 }
 local Space = { provider = " " }
@@ -16,16 +16,16 @@ local CircleIcon = ""
 local WhiteSpace = {
 	provider = " ",
 	hl = {
-		fg = colors.nord3_gui,
-		bg = colors.nord5_gui,
+		fg = colors.surface1,
+		bg = colors.text,
 	},
 }
 
 local GreySpace = {
 	provider = " ",
 	hl = {
-		fg = colors.nord3_gui,
-		bg = colors.nord3_gui,
+		fg = colors.surface1,
+		bg = colors.surface1,
 	},
 }
 
@@ -33,16 +33,16 @@ local GreySpace = {
 local LeftSideLeftSeparator = {
 	provider = LeftSeparator,
 	hl = {
-		fg = colors.nord5_gui,
-		bg = colors.nord0_gui,
+		fg = colors.text,
+		bg = colors.base,
 	},
 }
 
 local CircleComponent = {
 	provider = CircleIcon,
 	hl = {
-		fg = colors.nord3_gui,
-		bg = colors.nord5_gui,
+		fg = colors.surface1,
+		bg = colors.text,
 	},
 }
 
@@ -65,7 +65,7 @@ local FileIcon = {
 	hl = function(self)
 		return {
 			fg = self.icon_color,
-			bg = colors.nord3_gui,
+			bg = colors.surface1,
 		}
 	end,
 }
@@ -82,8 +82,8 @@ local FileName = {
 		return filename
 	end,
 	hl = {
-		fg = colors.nord6_gui,
-		bg = colors.nord3_gui,
+		fg = colors.text,
+		bg = colors.surface1,
 	},
 }
 
@@ -94,8 +94,8 @@ local FileFlags = {
 		end,
 		provider = " ",
 		hl = {
-			fg = colors.nord6_gui,
-			bg = colors.nord3_gui,
+			fg = colors.text,
+			bg = colors.surface1,
 		},
 	},
 	{
@@ -104,8 +104,8 @@ local FileFlags = {
 		end,
 		provider = " ",
 		hl = {
-			fg = colors.nord6_gui,
-			bg = colors.nord3_gui,
+			fg = colors.text,
+			bg = colors.surface1,
 		},
 	},
 }
@@ -123,8 +123,8 @@ local FileSize = {
 		return string.format("%.2g%s", fsize / math.pow(1024, i), suffix[i + 1])
 	end,
 	hl = {
-		fg = colors.nord6_gui,
-		bg = colors.nord3_gui,
+		fg = colors.text,
+		bg = colors.surface1,
 	},
 }
 
@@ -134,8 +134,8 @@ FileNameBlock =
 local LeftSideRightSeparator = {
 	provider = RightSeparator,
 	hl = {
-		fg = colors.nord3_gui,
-		bg = colors.nord0_gui,
+		fg = colors.surface1,
+		bg = colors.base,
 	},
 }
 
@@ -151,8 +151,8 @@ local LeftComponent = {
 local MiddleLeftSeparator = {
 	provider = LeftSeparator,
 	hl = {
-		fg = colors.nord3_gui,
-		bg = colors.nord0_gui,
+		fg = colors.surface1,
+		bg = colors.base,
 	},
 }
 
@@ -167,8 +167,8 @@ local LSPActive = {
 		return " [" .. table.concat(names, " ") .. "]"
 	end,
 	hl = {
-		fg = colors.nord15_gui,
-		bg = colors.nord3_gui,
+		fg = colors.lavender,
+		bg = colors.surface1,
 	},
 }
 
@@ -192,8 +192,8 @@ local Diagnostics = {
 			return self.errors > 0 and (" " .. error_icon .. self.errors)
 		end,
 		hl = {
-			fg = colors.nord11_gui,
-			bg = colors.nord3_gui,
+			fg = colors.red,
+			bg = colors.surface1,
 		},
 	},
 	{
@@ -201,8 +201,8 @@ local Diagnostics = {
 			return self.warnings > 0 and (" " .. warn_icon .. self.warnings)
 		end,
 		hl = {
-			fg = colors.nord12_gui,
-			bg = colors.nord3_gui,
+			fg = colors.peach,
+			bg = colors.surface1,
 		},
 	},
 	{
@@ -210,8 +210,8 @@ local Diagnostics = {
 			return self.info > 0 and (" " .. info_icon .. self.info)
 		end,
 		hl = {
-			fg = colors.nord14_gui,
-			bg = colors.nord3_gui,
+			fg = colors.green,
+			bg = colors.surface1,
 		},
 	},
 	{
@@ -219,8 +219,8 @@ local Diagnostics = {
 			return self.hints > 0 and (" " .. hint_icon .. self.hints)
 		end,
 		hl = {
-			fg = colors.nord10_gui,
-			bg = colors.nord3_gui,
+			fg = colors.blue,
+			bg = colors.surface1,
 		},
 	},
 }
@@ -228,8 +228,8 @@ local Diagnostics = {
 local MiddleRightSeparator = {
 	provider = RightSeparator,
 	hl = {
-		fg = colors.nord3_gui,
-		bg = colors.nord0_gui,
+		fg = colors.surface1,
+		bg = colors.base,
 	},
 }
 
@@ -251,8 +251,8 @@ local Git = {
 		self.has_changes = self.status_dict.added ~= 0 or self.status_dict.removed ~= 0 or self.status_dict.changed ~= 0
 	end,
 	hl = {
-		fg = colors.nord10_gui,
-		bg = colors.nord0_gui,
+		fg = colors.blue,
+		bg = colors.base,
 	},
 	{ -- git branch name
 		provider = function(self)
@@ -266,8 +266,8 @@ local Git = {
 			return count > 0 and (" " .. count .. " ")
 		end,
 		hl = {
-			fg = colors.nord14_gui,
-			bg = colors.nord0_gui,
+			fg = colors.green,
+			bg = colors.base,
 		},
 	},
 	{
@@ -276,8 +276,8 @@ local Git = {
 			return count > 0 and (" " .. count .. " ")
 		end,
 		hl = {
-			fg = colors.nord13_gui,
-			bg = colors.nord0_gui,
+			fg = colors.yellow,
+			bg = colors.base,
 		},
 	},
 	{
@@ -286,8 +286,8 @@ local Git = {
 			return count > 0 and (" " .. count .. " ")
 		end,
 		hl = {
-			fg = colors.nord11_gui,
-			bg = colors.nord0_gui,
+			fg = colors.red,
+			bg = colors.base,
 		},
 	},
 }
@@ -330,19 +330,19 @@ local mode_names = {
 }
 
 local mode_colors = {
-	n = { fg = colors.nord3_gui, bg = colors.nord8_gui },
-	i = { fg = colors.nord3_gui, bg = colors.nord6_gui },
-	v = { fg = colors.nord3_gui, bg = colors.nord7_gui },
-	V = { fg = colors.nord3_gui, bg = colors.nord7_gui },
-	["\22"] = { fg = colors.nord3_gui, bg = colors.nord7_gui },
-	c = { fg = colors.nord3_gui, bg = colors.nord12_gui },
-	s = { fg = colors.nord3_gui, bg = colors.nord15_gui },
-	S = { fg = colors.nord3_gui, bg = colors.nord15_gui },
-	["\19"] = { fg = colors.nord3_gui, bg = colors.nord15_gui },
-	R = { fg = colors.nord3_gui, bg = colors.nord13_gui },
-	r = { fg = colors.nord3_gui, bg = colors.nord13_gui },
-	["!"] = { fg = colors.nord3_gui, bg = colors.nord11_gui },
-	t = { fg = colors.nord3_gui, bg = colors.nord11_gui },
+	n = { fg = colors.surface1, bg = colors.sapphire },
+	i = { fg = colors.surface1, bg = colors.text },
+	v = { fg = colors.surface1, bg = colors.teal },
+	V = { fg = colors.surface1, bg = colors.teal },
+	["\22"] = { fg = colors.surface1, bg = colors.teal },
+	c = { fg = colors.surface1, bg = colors.peach },
+	s = { fg = colors.surface1, bg = colors.lavender },
+	S = { fg = colors.surface1, bg = colors.lavender },
+	["\19"] = { fg = colors.surface1, bg = colors.lavender },
+	R = { fg = colors.surface1, bg = colors.yellow },
+	r = { fg = colors.surface1, bg = colors.yellow },
+	["!"] = { fg = colors.surface1, bg = colors.red },
+	t = { fg = colors.surface1, bg = colors.red },
 }
 
 local ViMode = {
@@ -360,7 +360,7 @@ local ViMode = {
 		provider = LeftSeparator,
 		hl = function(self)
 			local mode = self.mode:sub(1, 1) -- get only the first mode character
-			return { fg = mode_colors[mode].bg, bg = colors.nord0_gui }
+			return { fg = mode_colors[mode].bg, bg = colors.base }
 		end,
 	},
 	{
@@ -381,16 +381,16 @@ local Ruler = {
 	-- %P = percentage through file of displayed window
 	provider = " %(%-l/%3L%):%c %P ",
 	hl = {
-		fg = colors.nord3_gui,
-		bg = colors.nord5_gui,
+		fg = colors.surface1,
+		bg = colors.text,
 	},
 }
 
 local RideSideRightSeparator = {
 	provider = RightSeparator,
 	hl = {
-		fg = colors.nord5_gui,
-		bg = colors.nord0_gui,
+		fg = colors.text,
+		bg = colors.base,
 	},
 }
 
@@ -415,8 +415,8 @@ local TerminalName = {
 		return "  " .. tname
 	end,
 	hl = {
-		fg = colors.nord6_gui,
-		bg = colors.nord3_gui,
+		fg = colors.text,
+		bg = colors.surface1,
 	},
 }
 
@@ -429,8 +429,8 @@ local HelpFileName = {
 		return " " .. vim.fn.fnamemodify(filename, ":t")
 	end,
 	hl = {
-		fg = colors.nord6_gui,
-		bg = colors.nord3_gui,
+		fg = colors.text,
+		bg = colors.surface1,
 	},
 }
 
@@ -465,8 +465,8 @@ local HelpStatusline = {
 local SpecialLeftSideRightSeparator = {
 	provider = RightSeparator,
 	hl = {
-		fg = colors.nord5_gui,
-		bg = colors.nord0_gui,
+		fg = colors.text,
+		bg = colors.base,
 	},
 }
 

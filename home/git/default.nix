@@ -207,7 +207,7 @@
           plus-style = "syntax \"#004000\"";
           whitespace-error-style = "\"#280050\" reverse";
           zero-style = "syntax";
-          syntax-theme = "Nord";
+          syntax-theme = "catppuccin-frappe";
         };
       };
 
