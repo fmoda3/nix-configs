@@ -17,6 +17,7 @@ in
     ./direnv
     ./games
     ./gh
+    ./bat
   ];
 
   options.my-home = {
