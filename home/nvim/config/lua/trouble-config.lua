@@ -2,23 +2,20 @@ require("trouble").setup({})
 
 local opts = { silent = true, noremap = true }
 require("legendary").keymaps({
-	{ "<Leader>xx", "<cmd>TroubleToggle<cr>", description = "Trouble: Toggle", opts = opts },
-	{ "<Leader>xs", "<cmd>Trouble<cr>", description = "Trouble: Open", opts = opts },
-	{ "<Leader>xc", "<cmd>TroubleClose<cr>", description = "Trouble: Close", opts = opts },
-	{ "<Leader>xr", "<cmd>TroubleRefresh<cr>", description = "Trouble: Refresh", opts = opts },
+	{ "<Leader>xx", "<cmd>Trouble diagnostics toggle<cr>", description = "Trouble: Diagnostics", opts = opts },
 	{
-		"<Leader>xw",
-		"<cmd>Trouble workspace_diagnostics<cr>",
-		description = "Trouble: Workspace diagnostics",
+		"<Leader>xX",
+		"<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+		description = "Trouble: Buffer Diagnostics",
 		opts = opts,
 	},
+	{ "<Leader>xs", "<cmd>Trouble symbols toggle focus=false<cr>", description = "Trouble: Symbols", opts = opts },
 	{
-		"<Leader>xd",
-		"<cmd>Trouble document_diagnostics<cr>",
-		description = "Trouble: Document diagnostics",
+		"<Leader>xl",
+		"<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+		description = "Trouble: LSP Definitions / references / ...",
 		opts = opts,
 	},
-	{ "<Leader>xl", "<cmd>Trouble loclist<cr>", description = "Trouble: Loclist diagnostics", opts = opts },
-	{ "<Leader>xq", "<cmd>Trouble quickfix<cr>", description = "Trouble: Quickfix", opts = opts },
-	{ "gR", "<cmd>Trouble lsp_references<cr>", description = "Trouble: LSP references", opts = opts },
+	{ "<Leader>xL", "<cmd>Trouble loclist toggle<cr>", description = "Trouble: Location List", opts = opts },
+	{ "<Leader>xQ", "<cmd>Trouble qflist toggle<cr>", description = "Trouble: Quickfix List", opts = opts },
 })

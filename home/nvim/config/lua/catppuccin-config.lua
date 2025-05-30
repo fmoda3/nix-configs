@@ -31,6 +31,7 @@ require("catppuccin").setup({
 		notify = true,
 		nvimtree = true,
 		rainbow_delimiters = true,
+		semantic_tokens = true,
 		telescope = {
 			enabled = true,
 		},
