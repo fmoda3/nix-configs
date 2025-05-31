@@ -20,14 +20,9 @@ buildNpmPackage (finalAttrs: {
   # Homebridge's clean phase attempts to install rimraf directly, which fails in nix builds
   # rimraf is already in the declared dependencies, so we just don't need to do it.
   # This will replace "npm install rimraf && rimraf lib/" with "rimraf lib/".
-  buildPhase = ''
-    runHook preBuild
-
+  preBuild = ''
     cat package.json | ${pkgs.jq}/bin/jq '.scripts.clean = "rimraf lib/"' > package.json.tmp
     mv package.json.tmp package.json
-    npm run build
-
-    runHook postBuild
   '';
 
   meta = {
