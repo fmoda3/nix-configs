@@ -18,6 +18,7 @@ in
     ./games
     ./gh
     ./bat
+    ./btop
   ];
 
   options.my-home = {
