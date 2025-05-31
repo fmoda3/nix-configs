@@ -12,6 +12,9 @@ with lib;
     history = {
       expireDuplicatesFirst = true;
       extended = true;
+      findNoDups = true;
+      ignoreAllDups = true;
+      saveNoDups = true;
     };
 
     localVariables = {
@@ -132,9 +135,6 @@ with lib;
 
       source ${pkgs.catppuccin-zsh-syntax-highlighting}/themes/catppuccin_frappe-zsh-syntax-highlighting.zsh
 
-      setopt HIST_IGNORE_ALL_DUPS
-      setopt HIST_FIND_NO_DUPS
-      setopt HIST_SAVE_NO_DUPS
       setopt BANG_HIST
       setopt HIST_VERIFY
 
