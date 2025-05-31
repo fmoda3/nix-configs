@@ -2,23 +2,18 @@
 , pkgs
 , buildNpmPackage
 , fetchFromGitHub
-, nodejs_22
 }:
 
-let
+buildNpmPackage (finalAttrs: {
+  pname = "homebridge";
   version = "1.9.0";
+
   src = fetchFromGitHub {
     owner = "homebridge";
     repo = "homebridge";
-    tag = "v${version}";
+    tag = "v${finalAttrs.version}";
     hash = "sha256-Ofj1QzDIeu4hjuonOlAHqrFDeU81gCEbMQaymyae8Pk=";
   };
-in
-buildNpmPackage {
-  pname = "homebridge";
-  inherit version src;
-
-  nodejs = nodejs_22;
 
   npmDepsHash = "sha256-inWQray0Vhl0xEil54C0HC92+D59oLbWYMl+7lpUsjI=";
 
@@ -26,9 +21,13 @@ buildNpmPackage {
   # rimraf is already in the declared dependencies, so we just don't need to do it.
   # This will replace "npm install rimraf && rimraf lib/" with "rimraf lib/".
   buildPhase = ''
+    runHook preBuild
+
     cat package.json | ${pkgs.jq}/bin/jq '.scripts.clean = "rimraf lib/"' > package.json.tmp
     mv package.json.tmp package.json
     npm run build
+
+    runHook postBuild
   '';
 
   meta = {
@@ -39,4 +38,4 @@ buildNpmPackage {
     platforms = lib.platforms.linux ++ lib.platforms.darwin;
     maintainers = with lib.maintainers; [ fmoda3 ];
   };
-}
+})

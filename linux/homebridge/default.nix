@@ -114,17 +114,13 @@ in
       description = "Group to run homebridge as.";
     };
 
-    openFirewall = mkOption {
-      type = bool;
-      default = false;
+    openFirewall = mkEnableOption "" // {
       description = ''
         Open ports in the firewall for the Homebridge web interface and service.
       '';
     };
 
-    allowInsecure = mkOption {
-      type = bool;
-      default = false;
+    allowInsecure = mkEnableOption "" // {
       description = ''
         Allow unauthenticated requests (for easier hacking).
         In homebridge's own installer, this is enabled by default.
