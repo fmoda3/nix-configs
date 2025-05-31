@@ -1,6 +1,8 @@
 final: prev:
 {
   # Adding packages here, makes them accessible from "pkgs"
+  catppuccin-btop = prev.callPackage ./catppuccin-btop { };
+  catppuccin-zsh-syntax-highlighting = prev.callPackage ./catppuccin-zsh-syntax-highlighting { };
   homebridge = prev.callPackage ./homebridge { };
   homebridge-config-ui-x = prev.callPackage ./homebridge-config-ui-x { };
   nix-cleanup = prev.callPackage ./nix-cleanup { };

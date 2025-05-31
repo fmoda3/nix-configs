@@ -1,13 +1,5 @@
 { config, pkgs, lib, ... }:
 with lib;
-let
-  catppuccin-zsh-syntax-highlighting = pkgs.fetchFromGitHub {
-    owner = "catppuccin";
-    repo = "zsh-syntax-highlighting";
-    rev = "7926c3d3e17d26b3779851a2255b95ee650bd928";
-    sha256 = "sha256-l6tztApzYpQ2/CiKuLBf8vI2imM6vPJuFdNDSEi7T/o=";
-  };
-in
 {
   programs.zsh = {
     enable = true;
@@ -138,7 +130,7 @@ in
       eval "$(direnv hook zsh)"
       path+="/opt/homebrew/bin"
 
-      source ${catppuccin-zsh-syntax-highlighting}/themes/catppuccin_frappe-zsh-syntax-highlighting.zsh
+      source ${pkgs.catppuccin-zsh-syntax-highlighting}/themes/catppuccin_frappe-zsh-syntax-highlighting.zsh
 
       setopt HIST_IGNORE_ALL_DUPS
       setopt HIST_FIND_NO_DUPS
