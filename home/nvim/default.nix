@@ -37,7 +37,11 @@ in
         vim-smoothie
 
         # Syntax highlighting
-        nvim-treesitter.withAllGrammars
+        {
+          plugin = nvim-treesitter.withAllGrammars;
+          type = "lua";
+          config = builtins.readFile ./config/lua/treesitter-config.lua;
+        }
 
         # Status line
         {

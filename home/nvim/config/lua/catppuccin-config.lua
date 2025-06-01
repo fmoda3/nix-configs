@@ -6,6 +6,10 @@ require("catppuccin").setup({
 		dap_ui = true,
 		fidget = true,
 		gitsigns = true,
+		indent_blankline = {
+			enabled = true,
+			colored_indent_levels = true,
+		},
 		leap = true,
 		lsp_trouble = true,
 		native_lsp = {
