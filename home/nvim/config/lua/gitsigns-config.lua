@@ -3,7 +3,7 @@ require("gitsigns").setup({
 		local gitsigns = require("gitsigns")
 
 		-- Navigation
-		require("legendary").keymaps({
+		require("which-key").add({
 			{
 				"]c",
 				function()
@@ -13,7 +13,7 @@ require("gitsigns").setup({
 						gitsigns.nav_hunk("next")
 					end
 				end,
-				description = "Gitsigns: Next hunk",
+				desc = "Gitsigns: Next hunk",
 			},
 			{
 				"[c",
@@ -24,21 +24,21 @@ require("gitsigns").setup({
 						gitsigns.nav_hunk("prev")
 					end
 				end,
-				description = "Gitsigns: Previous hunk",
+				desc = "Gitsigns: Previous hunk",
 			},
 		})
 
 		-- Actions
-		require("legendary").keymaps({
-			{ "<leader>hs", gitsigns.stage_hunk, description = "Gitsigns: Stage hunk" },
-			{ "<leader>hr", gitsigns.reset_hunk, description = "Gitsigns: Reset hunk" },
+		require("which-key").add({
+			{ "<leader>hs", gitsigns.stage_hunk, desc = "Gitsigns: Stage hunk" },
+			{ "<leader>hr", gitsigns.reset_hunk, desc = "Gitsigns: Reset hunk" },
 			{
 				"<leader>hs",
 				function()
 					gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
 				end,
 				mode = { "v" },
-				description = "Gitsigns: Stage hunk (visual)",
+				desc = "Gitsigns: Stage hunk (visual)",
 			},
 			{
 				"<leader>hr",
@@ -46,46 +46,46 @@ require("gitsigns").setup({
 					gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
 				end,
 				mode = { "v" },
-				description = "Gitsigns: Reset hunk (visual)",
+				desc = "Gitsigns: Reset hunk (visual)",
 			},
-			{ "<leader>hS", gitsigns.stage_buffer, description = "Gitsigns: Stage buffer" },
-			{ "<leader>hR", gitsigns.reset_buffer, description = "Gitsigns: Reset buffer" },
-			{ "<leader>hp", gitsigns.preview_hunk, description = "Gitsigns: Preview hunk" },
-			{ "<leader>hi", gitsigns.preview_hunk_inline, description = "Gitsigns: Preview hunk inline" },
+			{ "<leader>hS", gitsigns.stage_buffer, desc = "Gitsigns: Stage buffer" },
+			{ "<leader>hR", gitsigns.reset_buffer, desc = "Gitsigns: Reset buffer" },
+			{ "<leader>hp", gitsigns.preview_hunk, desc = "Gitsigns: Preview hunk" },
+			{ "<leader>hi", gitsigns.preview_hunk_inline, desc = "Gitsigns: Preview hunk inline" },
 			{
 				"<leader>hb",
 				function()
 					gitsigns.blame_line({ full = true })
 				end,
-				description = "Gitsigns: Blame line",
+				desc = "Gitsigns: Blame line",
 			},
-			{ "<leader>hd", gitsigns.diffthis, description = "Gitsigns: Diff this" },
+			{ "<leader>hd", gitsigns.diffthis, desc = "Gitsigns: Diff this" },
 			{
 				"<leader>hD",
 				function()
 					gitsigns.diffthis("~")
 				end,
-				description = "Gitsigns: Diff this (cached)",
+				desc = "Gitsigns: Diff this (cached)",
 			},
 			{
 				"<leader>hQ",
 				function()
 					gitsigns.setqflist("all")
 				end,
-				description = "Gitsigns: Set qflist",
+				desc = "Gitsigns: Set qflist",
 			},
 		})
 
 		-- Toggles
-		require("legendary").keymaps({
-			{ "<leader>tb", gitsigns.toggle_current_line_blame, description = "Gitsigns: Toggle current line blame" },
-			{ "<leader>td", gitsigns.toggle_deleted, description = "Gitsigns: Toggle deleted" },
-			{ "<leader>tw", gitsigns.toggle_word_diff, description = "Gitsigns: Toggle word diff" },
+		require("which-key").add({
+			{ "<leader>tb", gitsigns.toggle_current_line_blame, desc = "Gitsigns: Toggle current line blame" },
+			{ "<leader>td", gitsigns.toggle_deleted, desc = "Gitsigns: Toggle deleted" },
+			{ "<leader>tw", gitsigns.toggle_word_diff, desc = "Gitsigns: Toggle word diff" },
 		})
 
 		-- Text object
-		require("legendary").keymaps({
-			{ "ih", gitsigns.select_hunk, description = "Gitsigns: Select hunk", mode = { "o", "x" } },
+		require("which-key").add({
+			{ "ih", gitsigns.select_hunk, desc = "Gitsigns: Select hunk", mode = { "o", "x" } },
 		})
 	end,
 })

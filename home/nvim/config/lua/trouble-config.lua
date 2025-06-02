@@ -1,21 +1,34 @@
 require("trouble").setup({})
 
-local opts = { silent = true, noremap = true }
-require("legendary").keymaps({
-	{ "<Leader>xx", "<cmd>Trouble diagnostics toggle<cr>", description = "Trouble: Diagnostics", opts = opts },
+require("which-key").add({
+	{
+		"<Leader>xx",
+		"<cmd>Trouble diagnostics toggle<cr>",
+		desc = "Trouble: Diagnostics",
+		silent = true,
+		noremap = true,
+	},
 	{
 		"<Leader>xX",
 		"<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
-		description = "Trouble: Buffer Diagnostics",
-		opts = opts,
+		desc = "Trouble: Buffer Diagnostics",
+		silent = true,
+		noremap = true,
 	},
-	{ "<Leader>xs", "<cmd>Trouble symbols toggle focus=false<cr>", description = "Trouble: Symbols", opts = opts },
+	{
+		"<Leader>xs",
+		"<cmd>Trouble symbols toggle focus=false<cr>",
+		desc = "Trouble: Symbols",
+		silent = true,
+		noremap = true,
+	},
 	{
 		"<Leader>xl",
 		"<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
-		description = "Trouble: LSP Definitions / references / ...",
-		opts = opts,
+		desc = "Trouble: LSP Definitions / references / ...",
+		silent = true,
+		noremap = true,
 	},
-	{ "<Leader>xL", "<cmd>Trouble loclist toggle<cr>", description = "Trouble: Location List", opts = opts },
-	{ "<Leader>xQ", "<cmd>Trouble qflist toggle<cr>", description = "Trouble: Quickfix List", opts = opts },
+	{ "<Leader>xL", "<cmd>Trouble loclist toggle<cr>", desc = "Trouble: Location List", silent = true, noremap = true },
+	{ "<Leader>xQ", "<cmd>Trouble qflist toggle<cr>", desc = "Trouble: Quickfix List", silent = true, noremap = true },
 })

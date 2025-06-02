@@ -8,20 +8,21 @@ require("bufferline").setup({
 	highlights = require("catppuccin.groups.integrations.bufferline").get(),
 })
 
-local opts = { silent = true, noremap = true }
-require("legendary").keymaps({
-	{ "[b", "<cmd>BufferLineCycleNext<cr>", description = "BufferLine: Next buffer", opts = opts },
-	{ "]b", "<cmd>BufferLineCyclePrev<cr>", description = "BufferLine: Previous buffer", opts = opts },
+require("which-key").add({
+	{ "[b", "<cmd>BufferLineCycleNext<cr>", desc = "BufferLine: Next buffer", silent = true, noremap = true },
+	{ "]b", "<cmd>BufferLineCyclePrev<cr>", desc = "BufferLine: Previous buffer", silent = true, noremap = true },
 	{
 		"<Leader>be",
 		"<cmd>BufferLineSortByExtension<cr>",
-		description = "BufferLine: Organize by extension",
-		opts = opts,
+		desc = "BufferLine: Organize by extension",
+		silent = true,
+		noremap = true,
 	},
 	{
 		"<Leader>bd",
 		"<cmd>BufferLineSortByDirectory<cr>",
-		description = "BufferLine: Organize by directory",
-		opts = opts,
+		desc = "BufferLine: Organize by directory",
+		silent = true,
+		noremap = true,
 	},
 })

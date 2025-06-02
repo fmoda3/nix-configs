@@ -6,68 +6,143 @@ local on_attach = function(client, bufnr)
 	require("illuminate").on_attach(client)
 
 	-- Mappings.
-	local opts = { noremap = true, silent = true, buffer = bufnr }
-	require("legendary").keymaps({
-		{ "gD", vim.lsp.buf.declaration, description = "LSP: Go to declaration", opts = opts },
-		{ "gd", vim.lsp.buf.definition, description = "LSP: Go to definition", opts = opts },
-		{ "K", vim.lsp.buf.hover, description = "LSP: Hover", opts = opts },
-		{ "gi", vim.lsp.buf.implementation, description = "LSP: Go to implementation", opts = opts },
-		{ "<C-s>", vim.lsp.buf.signature_help, description = "LSP: Signature help", mode = { "n", "i" }, opts = opts },
-		{ "<space>wa", vim.lsp.buf.add_workspace_folder, description = "LSP: Add workspace folder", opts = opts },
-		{ "<space>wr", vim.lsp.buf.remove_workspace_folder, description = "LSP: Remove workspace folder", opts = opts },
+	require("which-key").add({
+		{
+			"gD",
+			vim.lsp.buf.declaration,
+			desc = "LSP: Go to declaration",
+			noremap = true,
+			silent = true,
+			buffer = bufnr,
+		},
+		{ "gd", vim.lsp.buf.definition, desc = "LSP: Go to definition", noremap = true, silent = true, buffer = bufnr },
+		{ "K", vim.lsp.buf.hover, desc = "LSP: Hover", noremap = true, silent = true, buffer = bufnr },
+		{
+			"gi",
+			vim.lsp.buf.implementation,
+			desc = "LSP: Go to implementation",
+			noremap = true,
+			silent = true,
+			buffer = bufnr,
+		},
+		{
+			"<C-s>",
+			vim.lsp.buf.signature_help,
+			desc = "LSP: Signature help",
+			mode = { "n", "i" },
+			noremap = true,
+			silent = true,
+			buffer = bufnr,
+		},
+		{
+			"<space>wa",
+			vim.lsp.buf.add_workspace_folder,
+			desc = "LSP: Add workspace folder",
+			noremap = true,
+			silent = true,
+			buffer = bufnr,
+		},
+		{
+			"<space>wr",
+			vim.lsp.buf.remove_workspace_folder,
+			desc = "LSP: Remove workspace folder",
+			noremap = true,
+			silent = true,
+			buffer = bufnr,
+		},
 		{
 			"<space>wl",
 			function()
 				print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 			end,
-			description = "LSP: List workspaces",
-			opts = opts,
+			desc = "LSP: List workspaces",
+			noremap = true,
+			silent = true,
+			buffer = bufnr,
 		},
-		{ "<space>D", vim.lsp.buf.type_definition, description = "LSP: Show type definition", opts = opts },
-		{ "<space>rn", vim.lsp.buf.rename, description = "LSP: Rename", opts = opts },
-		{ "<space>ca", vim.lsp.buf.code_action, description = "LSP: Code Action", opts = opts },
-		{ "gr", vim.lsp.buf.references, description = "LSP: Show references", opts = opts },
+		{
+			"<space>D",
+			vim.lsp.buf.type_definition,
+			desc = "LSP: Show type definition",
+			noremap = true,
+			silent = true,
+			buffer = bufnr,
+		},
+		{ "<space>rn", vim.lsp.buf.rename, desc = "LSP: Rename", noremap = true, silent = true, buffer = bufnr },
+		{
+			"<space>ca",
+			vim.lsp.buf.code_action,
+			desc = "LSP: Code Action",
+			noremap = true,
+			silent = true,
+			buffer = bufnr,
+		},
+		{ "gr", vim.lsp.buf.references, desc = "LSP: Show references", noremap = true, silent = true, buffer = bufnr },
 		{
 			"<space>e",
 			function()
 				vim.diagnostic.open_float({ scope = "line" })
 			end,
-			description = "Diagnostics: Show window",
-			opts = opts,
+			desc = "Diagnostics: Show window",
+			noremap = true,
+			silent = true,
+			buffer = bufnr,
 		},
 		{
 			"[d",
 			function()
 				vim.diagnostic.jump({ count = -1, float = { border = "single" } })
 			end,
-			description = "Diagnostics: Previous",
-			opts = opts,
+			desc = "Diagnostics: Previous",
+			noremap = true,
+			silent = true,
+			buffer = bufnr,
 		},
 		{
 			"]d",
 			function()
 				vim.diagnostic.jump({ float = { border = "single" } })
 			end,
-			description = "Diagnostics: Next",
-			opts = opts,
+			desc = "Diagnostics: Next",
+			noremap = true,
+			silent = true,
+			buffer = bufnr,
 		},
-		{ "<space>q", vim.diagnostic.setloclist, description = "Diagnostic: Show location list", opts = opts },
-		{ "<space>f", vim.lsp.buf.formatting, description = "LSP: Format file", opts = opts },
+		{
+			"<space>q",
+			vim.diagnostic.setloclist,
+			desc = "Diagnostic: Show location list",
+			noremap = true,
+			silent = true,
+			buffer = bufnr,
+		},
+		{
+			"<space>f",
+			vim.lsp.buf.formatting,
+			desc = "LSP: Format file",
+			noremap = true,
+			silent = true,
+			buffer = bufnr,
+		},
 		{
 			"]u",
 			function()
 				require("illuminate").next_reference({ wrap = true })
 			end,
-			description = "Illuminate: Next reference",
-			opts = opts,
+			desc = "Illuminate: Next reference",
+			noremap = true,
+			silent = true,
+			buffer = bufnr,
 		},
 		{
 			"[u",
 			function()
 				require("illuminate").next_reference({ reverse = true, wrap = true })
 			end,
-			description = "Illuminate: Previous reference",
-			opts = opts,
+			desc = "Illuminate: Previous reference",
+			noremap = true,
+			silent = true,
+			buffer = bufnr,
 		},
 	})
 
@@ -207,11 +282,24 @@ nvim_lsp.ts_ls.setup({
 		ts_utils.setup_client(client)
 
 		-- Mappings.
-		local opts = { noremap = true, silent = true, buffer = true }
-		require("legendary").keymaps({
-			{ "gto", ":TSLspOrganize<CR>", description = "LSP: Organize imports", opts = opts },
-			{ "gtr", ":TSLspRenameFile<CR>", description = "LSP: Rename file", opts = opts },
-			{ "gti", ":TSLspImportAll<CR>", description = "LSP: Import missing imports", opts = opts },
+		require("which-key").add({
+			{
+				"gto",
+				":TSLspOrganize<CR>",
+				desc = "LSP: Organize imports",
+				noremap = true,
+				silent = true,
+				buffer = true,
+			},
+			{ "gtr", ":TSLspRenameFile<CR>", desc = "LSP: Rename file", noremap = true, silent = true, buffer = true },
+			{
+				"gti",
+				":TSLspImportAll<CR>",
+				desc = "LSP: Import missing imports",
+				noremap = true,
+				silent = true,
+				buffer = true,
+			},
 		})
 	end,
 	capabilities = capabilities,

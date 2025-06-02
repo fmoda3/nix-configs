@@ -7,6 +7,10 @@ require("catppuccin").setup({
 		dap_ui = true,
 		fidget = true,
 		gitsigns = true,
+		illuminate = {
+			enabled = true,
+			lsp = true,
+		},
 		indent_blankline = {
 			enabled = true,
 			colored_indent_levels = true,
@@ -42,10 +46,7 @@ require("catppuccin").setup({
 		},
 		treesitter = true,
 		treesitter_context = true,
-		illuminate = {
-			enabled = true,
-			lsp = true,
-		},
+		which_key = true,
 	},
 })
 

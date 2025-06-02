@@ -43,6 +43,13 @@ in
           config = builtins.readFile ./config/lua/alpha-config.lua;
         }
 
+        # Keybindings window
+        {
+          plugin = which-key-nvim;
+          type = "lua";
+          config = builtins.readFile ./config/lua/which-key-config.lua;
+        }
+
         # Syntax highlighting
         {
           plugin = nvim-treesitter.withAllGrammars;
@@ -126,12 +133,6 @@ in
           plugin = trouble-nvim;
           type = "lua";
           config = builtins.readFile ./config/lua/trouble-config.lua;
-        }
-        # Keybindings window
-        {
-          plugin = legendary-nvim;
-          type = "lua";
-          config = builtins.readFile ./config/lua/legendary-config.lua;
         }
         # Better native input/select windows
         {

@@ -39,8 +39,8 @@ require("nvim-tree").setup({
 	},
 })
 
-require("legendary").keymaps({
-	{ "<leader>tt", ":NvimTreeToggle<cr>", opts = { silent = true }, description = "Nvim Tree: Toggle" },
-	{ "<leader>tr", ":NvimTreeRefresh<cr>", opts = { silent = true }, description = "Nvim Tree: Refresh" },
-	{ "<leader>tf", ":NvimTreeFindFile<cr>", opts = { silent = true }, description = "Nvim Tree: Find file" },
+require("which-key").add({
+	{ "<leader>tt", ":NvimTreeToggle<cr>", desc = "Nvim Tree: Toggle", silent = true },
+	{ "<leader>tr", ":NvimTreeRefresh<cr>", desc = "Nvim Tree: Refresh", silent = true },
+	{ "<leader>tf", ":NvimTreeFindFile<cr>", desc = "Nvim Tree: Find file", silent = true },
 })
