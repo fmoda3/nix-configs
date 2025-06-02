@@ -193,6 +193,12 @@ in
           type = "lua";
           config = builtins.readFile ./config/lua/comment-config.lua;
         }
+        # AI
+        {
+          plugin = claude-code-nvim;
+          type = "lua";
+          config = builtins.readFile ./config/lua/claude-code-config.lua;
+        }
       ];
 
       extraPackages = with pkgs; [
@@ -226,6 +232,8 @@ in
         # Telescope tools
         ripgrep
         fd
+        # AI
+        claude-code
       ];
     };
   };
