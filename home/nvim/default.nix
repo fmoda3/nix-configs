@@ -42,6 +42,11 @@ in
           type = "lua";
           config = builtins.readFile ./config/lua/treesitter-config.lua;
         }
+        {
+          plugin = nvim-treesitter-context;
+          type = "lua";
+          config = builtins.readFile ./config/lua/treesitter-context-config.lua;
+        }
 
         # Status line
         {
