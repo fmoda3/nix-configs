@@ -17,6 +17,11 @@ require("blink.cmp").setup({
 			},
 		},
 	},
-	signature = { enabled = true },
+	signature = {
+		enabled = true,
+		window = {
+			show_documentation = true,
+		},
+	},
 })
 require("blink.cmp.fuzzy").set_implementation("rust")
