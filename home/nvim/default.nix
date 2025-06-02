@@ -104,6 +104,11 @@ in
         none-ls-nvim
         # Highlight selected symbol
         vim-illuminate
+        {
+          plugin = dropbar-nvim;
+          type = "lua";
+          config = builtins.readFile ./config/lua/dropbar-config.lua;
+        }
         # LSP status window
         {
           plugin = fidget-nvim;

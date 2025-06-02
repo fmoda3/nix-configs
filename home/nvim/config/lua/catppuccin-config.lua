@@ -5,6 +5,7 @@ require("catppuccin").setup({
 		blink_cmp = true,
 		dap = true,
 		dap_ui = true,
+		dropbar = true,
 		fidget = true,
 		gitsigns = true,
 		illuminate = {
