@@ -36,6 +36,13 @@ in
         # Smooth scrolling
         vim-smoothie
 
+        # Startup dashboard
+        {
+          plugin = alpha-nvim;
+          type = "lua";
+          config = builtins.readFile ./config/lua/alpha-config.lua;
+        }
+
         # Syntax highlighting
         {
           plugin = nvim-treesitter.withAllGrammars;
