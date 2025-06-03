@@ -114,6 +114,12 @@ in
           type = "lua";
           config = builtins.readFile ./config/lua/dropbar-config.lua;
         }
+        # Diagnostics virtual text
+        {
+          plugin = tiny-inline-diagnostic-nvim;
+          type = "lua";
+          config = builtins.readFile ./config/lua/tiny-inline-diagnostic-config.lua;
+        }
         # LSP status window
         {
           plugin = fidget-nvim;
