@@ -18,6 +18,8 @@ opt.relativenumber = true
 opt.number = true
 opt.signcolumn = "yes:2"
 
+vim.o.mousemoveevent = true
+
 -- Set leader key
 g.mapleader = ","
 

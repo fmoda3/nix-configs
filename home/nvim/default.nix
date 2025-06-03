@@ -105,6 +105,11 @@ in
         # Highlight selected symbol
         vim-illuminate
         {
+          plugin = eagle-nvim;
+          type = "lua";
+          config = builtins.readFile ./config/lua/eagle-config.lua;
+        }
+        {
           plugin = dropbar-nvim;
           type = "lua";
           config = builtins.readFile ./config/lua/dropbar-config.lua;

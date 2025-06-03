@@ -11,7 +11,7 @@ final: prev:
   #   toast-tools = prev.callPackage ./toast-tools { };
   # };
   toast-services = prev.callPackage ./toast-services { };
-  # vimPlugins = prev.vimPlugins // {
-  #   fidget-nvim = prev.callPackage ./fidget-nvim { };
-  # };
+  vimPlugins = prev.vimPlugins // {
+    eagle-nvim = prev.callPackage ./eagle-nvim { };
+  };
 }
