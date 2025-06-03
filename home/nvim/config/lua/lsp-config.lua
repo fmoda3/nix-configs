@@ -146,6 +146,10 @@ local on_attach = function(client, bufnr)
 		},
 	})
 
+	if client and client.supports_method("textDocument/inlayHint") then
+		vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+	end
+
 	-- if client.server_capabilities.document_formatting then
 	--     vim.cmd([[
 	--         augroup LspFormatting
