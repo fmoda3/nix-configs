@@ -17,11 +17,11 @@ with lib;
       saveNoDups = true;
     };
 
-    localVariables = {
-      GREP_COLOR = "1;33";
-    };
-
     sessionVariables = {
+      # Colors
+      GREP_COLOR = "38;2;202;158;230";
+      GREP_COLORS = "ms=38;2;202;158;230:mc=38;2;166;209;137:fn=38;2;153;209;219:ln=38;2;229;200;144:bn=38;2;186;187;241:se=38;2;129;200;190";
+      LS_COLORS = "di=38;2;140;170;238:ln=38;2;166;209;137:ex=38;2;231;130;132:*.tar=38;2;202;158;230:*.zip=38;2;202;158;230:*.gz=38;2;202;158;230:*.bz2=38;2;202;158;230:*.7z=38;2;202;158;230:*.rar=38;2;202;158;230:*.jpg=38;2;229;200;144:*.jpeg=38;2;229;200;144:*.png=38;2;229;200;144:*.gif=38;2;229;200;144:*.bmp=38;2;229;200;144:*.svg=38;2;229;200;144:*.mp4=38;2;239;159;118:*.mkv=38;2;239;159;118:*.avi=38;2;239;159;118:*.mov=38;2;239;159;118:*.webm=38;2;239;159;118:*.mp3=38;2;166;209;137:*.flac=38;2;166;209;137:*.wav=38;2;166;209;137:*.ogg=38;2;166;209;137:*.pdf=38;2;231;130;132:*.doc=38;2;231;130;132:*.txt=38;2;198;208;245";
       # Common variables
       ANTHROPIC_API_KEY = ''$(${pkgs.coreutils}/bin/cat ${config.age.secrets."anthropic_ai_key".path})'';
       OPENROUTER_API_KEY = ''$(${pkgs.coreutils}/bin/cat ${config.age.secrets."openrouter_key".path})'';
@@ -44,12 +44,15 @@ with lib;
 
       # Show human friendly numbers and colors
       df = "df -h";
-      ll = "ls -alGh";
-      ls = "ls -Gh";
+      ll = "ls --color=auto -alGh";
+      ls = "ls --color=auto -Gh";
       du = "du -h -d 2";
 
       # show me files matching "ls grep"
       lsg = "ll | grep";
+
+      # Grep
+      grep = "grep --color=auto";
 
       # Git Aliases
       # Don't try to glob with zsh so you can do
@@ -148,8 +151,6 @@ with lib;
       unsetopt MENU_COMPLETE      # Do not autoselect the first completion entry.
       unsetopt FLOW_CONTROL       # Disable start/stop characters in shell editor.
       unsetopt CASE_GLOB
-
-      LS_COLORS=''${LS_COLORS:-'di=34:ln=35:so=32:pi=33:ex=31:bd=36;01:cd=33;01:su=31;40;07:sg=36;40;07:tw=32;40;07:ow=33;40;07:'}
 
       # Defaults.
       zstyle ':completion:*:default' list-colors ''${(s.:.)LS_COLORS}
