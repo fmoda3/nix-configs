@@ -22,6 +22,7 @@ in
     ./yazi
     ./fzf
     ./zoxide
+    ./eza
   ];
 
   options.my-home = {
