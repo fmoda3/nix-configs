@@ -1,7 +1,9 @@
 final: prev:
 {
   # Adding packages here, makes them accessible from "pkgs"
+  catppuccin-bat = prev.callPackage ./catppuccin-bat { };
   catppuccin-btop = prev.callPackage ./catppuccin-btop { };
+  catppuccin-yazi = prev.callPackage ./catppuccin-yazi { };
   catppuccin-zsh-syntax-highlighting = prev.callPackage ./catppuccin-zsh-syntax-highlighting { };
   homebridge = prev.callPackage ./homebridge { };
   homebridge-config-ui-x = prev.callPackage ./homebridge-config-ui-x { };

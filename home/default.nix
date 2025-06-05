@@ -19,6 +19,7 @@ in
     ./gh
     ./bat
     ./btop
+    ./yazi
   ];
 
   options.my-home = {
