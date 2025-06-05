@@ -23,6 +23,7 @@ in
     ./fzf
     ./zoxide
     ./eza
+    ./lazygit
   ];
 
   options.my-home = {
