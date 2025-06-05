@@ -21,6 +21,7 @@ in
     ./btop
     ./yazi
     ./fzf
+    ./zoxide
   ];
 
   options.my-home = {
