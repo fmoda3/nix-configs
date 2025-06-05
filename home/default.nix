@@ -20,6 +20,7 @@ in
     ./bat
     ./btop
     ./yazi
+    ./fzf
   ];
 
   options.my-home = {
