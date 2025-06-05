@@ -57,6 +57,11 @@ in
           aider-chat
           claude-code
           nh
+          procs
+          dust
+          gping
+          tokei
+          duf
         ];
         fontPackages = [
           # Fonts
