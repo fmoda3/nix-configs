@@ -5,6 +5,7 @@ final: prev:
   catppuccin-btop = prev.callPackage ./catppuccin-btop { };
   catppuccin-yazi = prev.callPackage ./catppuccin-yazi { };
   catppuccin-zsh-syntax-highlighting = prev.callPackage ./catppuccin-zsh-syntax-highlighting { };
+  claude-code = prev.callPackage ./claude-code { };
   homebridge = prev.callPackage ./homebridge { };
   homebridge-config-ui-x = prev.callPackage ./homebridge-config-ui-x { };
   nix-cleanup = prev.callPackage ./nix-cleanup { };
