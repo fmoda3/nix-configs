@@ -217,6 +217,12 @@ in
           type = "lua";
           config = builtins.readFile ./config/lua/comment-config.lua;
         }
+        # Surround text objects
+        {
+          plugin = nvim-surround;
+          type = "lua";
+          config = builtins.readFile ./config/lua/surround-config.lua;
+        }
         # AI
         {
           plugin = claude-code-nvim;
