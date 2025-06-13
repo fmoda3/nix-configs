@@ -61,6 +61,7 @@ in
           type = "lua";
           config = builtins.readFile ./config/lua/treesitter-context-config.lua;
         }
+        nvim-treesitter-textobjects
 
         # Status line
         {
