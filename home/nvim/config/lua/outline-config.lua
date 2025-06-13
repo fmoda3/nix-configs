@@ -7,6 +7,7 @@ require("outline").setup({
 
 -- Register outline keybindings with which-key
 require("which-key").add({
-	{ "<leader>o", "<cmd>Outline<cr>", desc = "Toggle outline" },
-	{ "<leader>O", "<cmd>OutlineOpen<cr>", desc = "Open outline" },
+	{ "<leader>o", group = "Outline" },
+	{ "<leader>oo", "<cmd>Outline<cr>", desc = "Toggle outline" },
+	{ "<leader>oO", "<cmd>OutlineOpen<cr>", desc = "Open outline" },
 })

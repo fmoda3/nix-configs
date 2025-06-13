@@ -1,14 +1,15 @@
 require("telescope").load_extension("dap")
 
 require("which-key").add({
-	{ "<Leader>dct", require("dap").continue, desc = "DAP: Continue", noremap = true },
-	{ "<Leader>dsv", require("dap").step_over, desc = "DAP: Step over", noremap = true },
-	{ "<Leader>dsi", require("dap").step_into, desc = "DAP: Step into", noremap = true },
-	{ "<Leader>dso", require("dap").step_out, desc = "DAP: Step out", noremap = true },
-	{ "<Leader>dtb", require("dap").toggle_breakpoint, desc = "DAP: Toggle breakpoint", noremap = true },
-	{ "<Leader>duh", require("dap.ui.widgets").hover, desc = "DAP: Widgets Hover", noremap = true },
+	{ "<leader>d", group = "Debug" },
+	{ "<Leader>dc", require("dap").continue, desc = "DAP: Continue", noremap = true },
+	{ "<Leader>dn", require("dap").step_over, desc = "DAP: Step over", noremap = true },
+	{ "<Leader>di", require("dap").step_into, desc = "DAP: Step into", noremap = true },
+	{ "<Leader>do", require("dap").step_out, desc = "DAP: Step out", noremap = true },
+	{ "<Leader>db", require("dap").toggle_breakpoint, desc = "DAP: Toggle breakpoint", noremap = true },
+	{ "<Leader>dwh", require("dap.ui.widgets").hover, desc = "DAP: Widgets Hover", noremap = true },
 	{
-		"<Leader>duf",
+		"<Leader>dws",
 		function()
 			require("dap.ui.widgets").centered_float(require("dap.ui.widgets").scopes)
 		end,
@@ -16,7 +17,7 @@ require("which-key").add({
 		noremap = true,
 	},
 	{
-		"<Leader>dsbr",
+		"<Leader>dB",
 		function()
 			vim.ui.input({ prompt = "Breakpoint condition", default = "" }, function(input)
 				require("dap").set_breakpoint(input)
@@ -26,7 +27,7 @@ require("which-key").add({
 		noremap = true,
 	},
 	{
-		"<Leader>dsbm",
+		"<Leader>dm",
 		function()
 			vim.ui.input({ prompt = "Log point message", default = "" }, function(input)
 				require("dap").set_breakpoint(nil, nil, input)
@@ -35,28 +36,29 @@ require("which-key").add({
 		desc = "DAP: Log message",
 		noremap = true,
 	},
-	{ "<Leader>dro", require("dap").repl.open, desc = "DAP: Open repl", noremap = true },
-	{ "<Leader>drl", require("dap").repl.run_last, desc = "DAP: Run last", noremap = true },
+	{ "<Leader>dr", require("dap").repl.open, desc = "DAP: Open repl", noremap = true },
+	{ "<Leader>dl", require("dap").repl.run_last, desc = "DAP: Run last", noremap = true },
 	-- Telescope extension
-	{ "<Leader>dcc", require("telescope").extensions.dap.commands, desc = "DAP: Show commands", noremap = true },
+	{ "<leader>dt", group = "Telescope" },
+	{ "<Leader>dtc", require("telescope").extensions.dap.commands, desc = "DAP: Show commands", noremap = true },
 	{
-		"<Leader>dco",
+		"<Leader>dto",
 		require("telescope").extensions.dap.configurations,
 		desc = "DAP: Show configurations",
 		noremap = true,
 	},
 	{
-		"<Leader>dlb",
+		"<Leader>dtb",
 		require("telescope").extensions.dap.list_breakpoints,
 		desc = "DAP: Show breakpoints",
 		noremap = true,
 	},
-	{ "<Leader>dv", require("telescope").extensions.dap.variables, desc = "DAP: Show variables", noremap = true },
-	{ "<Leader>df", require("telescope").extensions.dap.frames, desc = "DAP: Show frames", noremap = true },
+	{ "<Leader>dtv", require("telescope").extensions.dap.variables, desc = "DAP: Show variables", noremap = true },
+	{ "<Leader>dtf", require("telescope").extensions.dap.frames, desc = "DAP: Show frames", noremap = true },
 	-- DAP UI
-	{ "<Leader>dui", require("dapui").toggle, desc = "DAP: Toggle UI", noremap = true },
+	{ "<Leader>du", require("dapui").toggle, desc = "DAP: Toggle UI", noremap = true },
 	{
-		"<Leader>dev",
+		"<Leader>de",
 		function()
 			vim.ui.input({ prompt = "Eval", default = "" }, function(input)
 				require("dapui").eval(input, { enter = true })
@@ -107,7 +109,7 @@ local dap = require("dap")
 -- Elixir
 dap.adapters.mix_task = {
 	type = "executable",
-	command = "@elixir_ls_home@" .. "/lib/debugger.sh",
+	command = "@elixir_ls_home@" .. "/lib/debug_adapter.sh",
 	args = {},
 }
 

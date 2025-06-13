@@ -1,12 +1,16 @@
 require("claude-code").setup({
 	keymaps = {
 		toggle = {
-			normal = "<leader>cc",
-			terminal = "<leader>cc",
+			normal = "<leader>ac",
+			terminal = "<leader>ac",
 			variants = {
-				continue = "<leader>cC",
-				verbose = "<leader>cV",
+				continue = "<leader>aC",
+				verbose = "<leader>aV",
 			},
 		},
 	},
+})
+
+require("which-key").add({
+	{ "<leader>a", group = "AI" },
 })

@@ -9,8 +9,9 @@ require("bufferline").setup({
 })
 
 require("which-key").add({
-	{ "[b", "<cmd>BufferLineCycleNext<cr>", desc = "BufferLine: Next buffer", silent = true, noremap = true },
-	{ "]b", "<cmd>BufferLineCyclePrev<cr>", desc = "BufferLine: Previous buffer", silent = true, noremap = true },
+	{ "]b", "<cmd>BufferLineCycleNext<cr>", desc = "BufferLine: Next buffer", silent = true, noremap = true },
+	{ "[b", "<cmd>BufferLineCyclePrev<cr>", desc = "BufferLine: Previous buffer", silent = true, noremap = true },
+	{ "<leader>b", group = "Buffer" },
 	{
 		"<Leader>be",
 		"<cmd>BufferLineSortByExtension<cr>",

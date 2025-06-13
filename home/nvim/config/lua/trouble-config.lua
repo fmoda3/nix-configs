@@ -1,6 +1,7 @@
 require("trouble").setup({})
 
 require("which-key").add({
+	{ "<leader>x", group = "Trouble/Diagnostics" },
 	{
 		"<Leader>xx",
 		"<cmd>Trouble diagnostics toggle<cr>",

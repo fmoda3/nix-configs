@@ -7,8 +7,9 @@ local on_attach = function(client, bufnr)
 
 	-- Mappings.
 	require("which-key").add({
+		{ "<leader>l", group = "LSP" },
 		{
-			"gD",
+			"<leader>lD",
 			vim.lsp.buf.declaration,
 			desc = "LSP: Go to declaration",
 			noremap = true,
@@ -16,16 +17,16 @@ local on_attach = function(client, bufnr)
 			buffer = bufnr,
 		},
 		{
-			"gd",
+			"<leader>ld",
 			"<cmd>Glance definitions<cr>",
 			desc = "LSP: Go to definition",
 			noremap = true,
 			silent = true,
 			buffer = bufnr,
 		},
-		{ "K", vim.lsp.buf.hover, desc = "LSP: Hover", noremap = true, silent = true, buffer = bufnr },
+		{ "<leader>lk", vim.lsp.buf.hover, desc = "LSP: Hover", noremap = true, silent = true, buffer = bufnr },
 		{
-			"gi",
+			"<leader>li",
 			"<cmd>Glance implementations<cr>",
 			desc = "LSP: Go to implementation",
 			noremap = true,
@@ -33,7 +34,7 @@ local on_attach = function(client, bufnr)
 			buffer = bufnr,
 		},
 		{
-			"<C-s>",
+			"<leader>ls",
 			vim.lsp.buf.signature_help,
 			desc = "LSP: Signature help",
 			mode = { "n", "i" },
@@ -41,8 +42,9 @@ local on_attach = function(client, bufnr)
 			silent = true,
 			buffer = bufnr,
 		},
+		{ "<leader>lw", group = "Workspace" },
 		{
-			"<space>wa",
+			"<leader>lwa",
 			vim.lsp.buf.add_workspace_folder,
 			desc = "LSP: Add workspace folder",
 			noremap = true,
@@ -50,7 +52,7 @@ local on_attach = function(client, bufnr)
 			buffer = bufnr,
 		},
 		{
-			"<space>wr",
+			"<leader>lwr",
 			vim.lsp.buf.remove_workspace_folder,
 			desc = "LSP: Remove workspace folder",
 			noremap = true,
@@ -58,7 +60,7 @@ local on_attach = function(client, bufnr)
 			buffer = bufnr,
 		},
 		{
-			"<space>wl",
+			"<leader>lwl",
 			function()
 				print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 			end,
@@ -68,16 +70,16 @@ local on_attach = function(client, bufnr)
 			buffer = bufnr,
 		},
 		{
-			"<space>D",
+			"<leader>ltd",
 			"<cmd>Glance type_definitions<cr>",
 			desc = "LSP: Show type definition",
 			noremap = true,
 			silent = true,
 			buffer = bufnr,
 		},
-		{ "<space>rn", vim.lsp.buf.rename, desc = "LSP: Rename", noremap = true, silent = true, buffer = bufnr },
+		{ "<leader>ln", vim.lsp.buf.rename, desc = "LSP: Rename", noremap = true, silent = true, buffer = bufnr },
 		{
-			"<space>ca",
+			"<leader>la",
 			vim.lsp.buf.code_action,
 			desc = "LSP: Code Action",
 			noremap = true,
@@ -85,15 +87,16 @@ local on_attach = function(client, bufnr)
 			buffer = bufnr,
 		},
 		{
-			"gr",
+			"<leader>lr",
 			"<cmd>Glance references<cr>",
 			desc = "LSP: Show references",
 			noremap = true,
 			silent = true,
 			buffer = bufnr,
 		},
+		{ "<leader>lx", group = "Diagnostics" },
 		{
-			"<space>e",
+			"<leader>lxw",
 			function()
 				vim.diagnostic.open_float({ scope = "line" })
 			end,
@@ -123,7 +126,7 @@ local on_attach = function(client, bufnr)
 			buffer = bufnr,
 		},
 		{
-			"<space>q",
+			"<leader>lxq",
 			vim.diagnostic.setloclist,
 			desc = "Diagnostic: Show location list",
 			noremap = true,
@@ -131,7 +134,7 @@ local on_attach = function(client, bufnr)
 			buffer = bufnr,
 		},
 		{
-			"<space>f",
+			"<leader>lf",
 			vim.lsp.buf.formatting,
 			desc = "LSP: Format file",
 			noremap = true,
@@ -302,16 +305,23 @@ nvim_lsp.ts_ls.setup({
 		-- Mappings.
 		require("which-key").add({
 			{
-				"gto",
+				"<leader>lio",
 				":TSLspOrganize<CR>",
 				desc = "LSP: Organize imports",
 				noremap = true,
 				silent = true,
 				buffer = true,
 			},
-			{ "gtr", ":TSLspRenameFile<CR>", desc = "LSP: Rename file", noremap = true, silent = true, buffer = true },
 			{
-				"gti",
+				"<leader>ltr",
+				":TSLspRenameFile<CR>",
+				desc = "LSP: Rename file",
+				noremap = true,
+				silent = true,
+				buffer = true,
+			},
+			{
+				"<leader>lia",
 				":TSLspImportAll<CR>",
 				desc = "LSP: Import missing imports",
 				noremap = true,
