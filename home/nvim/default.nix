@@ -111,6 +111,12 @@ in
           type = "lua";
           config = builtins.readFile ./config/lua/glance-config.lua;
         }
+        # Code outline sidebar
+        {
+          plugin = outline-nvim;
+          type = "lua";
+          config = builtins.readFile ./config/lua/outline-config.lua;
+        }
         {
           plugin = eagle-nvim;
           type = "lua";
