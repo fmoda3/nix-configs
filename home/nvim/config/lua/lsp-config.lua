@@ -15,11 +15,18 @@ local on_attach = function(client, bufnr)
 			silent = true,
 			buffer = bufnr,
 		},
-		{ "gd", vim.lsp.buf.definition, desc = "LSP: Go to definition", noremap = true, silent = true, buffer = bufnr },
+		{
+			"gd",
+			"<cmd>Glance definitions<cr>",
+			desc = "LSP: Go to definition",
+			noremap = true,
+			silent = true,
+			buffer = bufnr,
+		},
 		{ "K", vim.lsp.buf.hover, desc = "LSP: Hover", noremap = true, silent = true, buffer = bufnr },
 		{
 			"gi",
-			vim.lsp.buf.implementation,
+			"<cmd>Glance implementations<cr>",
 			desc = "LSP: Go to implementation",
 			noremap = true,
 			silent = true,
@@ -62,7 +69,7 @@ local on_attach = function(client, bufnr)
 		},
 		{
 			"<space>D",
-			vim.lsp.buf.type_definition,
+			"<cmd>Glance type_definitions<cr>",
 			desc = "LSP: Show type definition",
 			noremap = true,
 			silent = true,
@@ -77,7 +84,14 @@ local on_attach = function(client, bufnr)
 			silent = true,
 			buffer = bufnr,
 		},
-		{ "gr", vim.lsp.buf.references, desc = "LSP: Show references", noremap = true, silent = true, buffer = bufnr },
+		{
+			"gr",
+			"<cmd>Glance references<cr>",
+			desc = "LSP: Show references",
+			noremap = true,
+			silent = true,
+			buffer = bufnr,
+		},
 		{
 			"<space>e",
 			function()

@@ -105,6 +105,12 @@ in
         none-ls-nvim
         # Highlight selected symbol
         vim-illuminate
+        # Better LSP references/definitions viewer
+        {
+          plugin = glance-nvim;
+          type = "lua";
+          config = builtins.readFile ./config/lua/glance-config.lua;
+        }
         {
           plugin = eagle-nvim;
           type = "lua";
