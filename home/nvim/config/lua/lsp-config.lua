@@ -70,7 +70,7 @@ local on_attach = function(client, bufnr)
 			buffer = bufnr,
 		},
 		{
-			"<leader>ltd",
+			"<leader>lt",
 			"<cmd>Glance type_definitions<cr>",
 			desc = "LSP: Show type definition",
 			noremap = true,
@@ -94,9 +94,8 @@ local on_attach = function(client, bufnr)
 			silent = true,
 			buffer = bufnr,
 		},
-		{ "<leader>lx", group = "Diagnostics" },
 		{
-			"<leader>lxw",
+			"<leader>xw",
 			function()
 				vim.diagnostic.open_float({ scope = "line" })
 			end,
@@ -126,9 +125,9 @@ local on_attach = function(client, bufnr)
 			buffer = bufnr,
 		},
 		{
-			"<leader>lxq",
+			"<leader>xq",
 			vim.diagnostic.setloclist,
-			desc = "Diagnostic: Show location list",
+			desc = "Diagnostics: Show location list",
 			noremap = true,
 			silent = true,
 			buffer = bufnr,
