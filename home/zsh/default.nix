@@ -43,6 +43,10 @@ with lib;
 
       # Moving around
       cdb = "cd -";
+      mkcd = "mkdir -p $1 && cd $1";
+      ".." = "cd ..";
+      "..." = "cd ../..";
+      "...." = "cd .././..";
 
       # Show human friendly numbers and colors
       df = "df -h";
@@ -130,8 +134,17 @@ with lib;
       # RM
       rm = "nocorrect rm"; # Override rm -i alias which makes rm prompt for every action
 
+      # Networking
+      myip = "curl -s ipinfo.io/ip";
+      localip = "ipconfig getifaddr en0";
+      ports = "lsof -i -P | grep LISTEN";
+      flushdns = "sudo dscacheutil -flushcache";
+
       # Misc
       caff = "caffeinate -d -i -m -s"; # Prevents computer from falling asleep
+      h = "history";
+      c = "clear";
+      reload = "source ~/.zshrc";
     };
 
     shellGlobalAliases = {
