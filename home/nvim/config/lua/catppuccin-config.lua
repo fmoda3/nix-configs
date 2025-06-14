@@ -16,7 +16,7 @@ require("catppuccin").setup({
 			enabled = true,
 			colored_indent_levels = true,
 		},
-		leap = true,
+		flash = true,
 		lsp_trouble = true,
 		native_lsp = {
 			enabled = true,
@@ -40,6 +40,7 @@ require("catppuccin").setup({
 		},
 		notify = true,
 		nvimtree = true,
+		nvim_surround = true,
 		rainbow_delimiters = true,
 		semantic_tokens = true,
 		telescope = {

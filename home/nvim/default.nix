@@ -189,9 +189,9 @@ in
         }
         # Fast navigation
         {
-          plugin = leap-nvim;
+          plugin = flash-nvim;
           type = "lua";
-          config = builtins.readFile ./config/lua/leap-config.lua;
+          config = builtins.readFile ./config/lua/flash-config.lua;
         }
         # Debug adapter protocol
         {
