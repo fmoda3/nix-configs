@@ -61,6 +61,7 @@
 
         # prune
         prune-all = "!git remote | xargs -n 1 git remote prune";
+        gone = "!f() { git fetch --all --prune; git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -d; }; f"; # clean up deleted remote branches
 
         # pull
         pl = "pull"; # pull
@@ -78,6 +79,7 @@
         # reset
         unstage = "reset HEAD"; # remove files from index (tracking)
         uncommit = "reset --soft HEAD^"; # go back before last commit, with files in uncommitted state
+        undo = "reset --mixed HEAD~1"; # go back before last commit, with files in mixed state
         filelog = "log -u"; # show changes to a file
         mt = "mergetool"; # fire up the merge tool
 
@@ -157,6 +159,10 @@
           algorithm = "patience";
         };
 
+        fetch = {
+          prune = true;
+        };
+
         format = {
           pretty = "format:%C(blue)%ad%Creset %C(yellow)%h%C(green)%d%Creset %C(blue)%s %C(magenta) [%an]%Creset";
         };
@@ -177,6 +183,11 @@
 
         push = {
           default = "tracking";
+        };
+
+        rebase = {
+          autoStash = true;
+          autoSquash = true;
         };
 
         rerere = {
@@ -203,6 +214,7 @@
           line-numbers-zero-style = "white";
           minus-emph-style = "syntax bold \"#780000\"";
           minus-style = "syntax \"#400000\"";
+          navigate = true;
           plus-emph-style = "syntax bold \"#007800\"";
           plus-style = "syntax \"#004000\"";
           whitespace-error-style = "\"#280050\" reverse";
