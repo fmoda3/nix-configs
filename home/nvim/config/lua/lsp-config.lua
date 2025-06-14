@@ -117,7 +117,7 @@ local on_attach = function(client, bufnr)
 		{
 			"]d",
 			function()
-				vim.diagnostic.jump({ float = { border = "single" } })
+				vim.diagnostic.jump({ count = 1, float = { border = "single" } })
 			end,
 			desc = "Diagnostics: Next",
 			noremap = true,
