@@ -12,5 +12,5 @@ require("claude-code").setup({
 })
 
 require("which-key").add({
-	{ "<leader>a", group = "AI" },
+	{ "<leader>a", group = "AI", icon = "󱜙" },
 })

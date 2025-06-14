@@ -1,19 +1,20 @@
 require("telescope").load_extension("dap")
 
 require("which-key").add({
-	{ "<leader>d", group = "Debug" },
-	{ "<Leader>dc", require("dap").continue, desc = "DAP: Continue", noremap = true },
-	{ "<Leader>dn", require("dap").step_over, desc = "DAP: Step over", noremap = true },
-	{ "<Leader>di", require("dap").step_into, desc = "DAP: Step into", noremap = true },
-	{ "<Leader>do", require("dap").step_out, desc = "DAP: Step out", noremap = true },
-	{ "<Leader>db", require("dap").toggle_breakpoint, desc = "DAP: Toggle breakpoint", noremap = true },
-	{ "<Leader>dwh", require("dap.ui.widgets").hover, desc = "DAP: Widgets Hover", noremap = true },
+	{ "<leader>d", group = "Debug", icon = "" },
+	{ "<Leader>dc", require("dap").continue, desc = "DAP: Continue", icon = "", noremap = true },
+	{ "<Leader>dn", require("dap").step_over, desc = "DAP: Step over", icon = "󰆷", noremap = true },
+	{ "<Leader>di", require("dap").step_into, desc = "DAP: Step into", icon = "󰆹", noremap = true },
+	{ "<Leader>do", require("dap").step_out, desc = "DAP: Step out", icon = "󰆸", noremap = true },
+	{ "<Leader>db", require("dap").toggle_breakpoint, desc = "DAP: Toggle breakpoint", icon = "", noremap = true },
+	{ "<Leader>dwh", require("dap.ui.widgets").hover, desc = "DAP: Widgets Hover", icon = "󰋖", noremap = true },
 	{
 		"<Leader>dws",
 		function()
 			require("dap.ui.widgets").centered_float(require("dap.ui.widgets").scopes)
 		end,
 		desc = "DAP: Widgets scopes",
+		icon = "󰋖",
 		noremap = true,
 	},
 	{
@@ -24,6 +25,7 @@ require("which-key").add({
 			end)
 		end,
 		desc = "DAP: Set breakpoint condition",
+		icon = "",
 		noremap = true,
 	},
 	{
@@ -34,29 +36,50 @@ require("which-key").add({
 			end)
 		end,
 		desc = "DAP: Log message",
+		icon = "",
 		noremap = true,
 	},
-	{ "<Leader>dr", require("dap").repl.open, desc = "DAP: Open repl", noremap = true },
-	{ "<Leader>dl", require("dap").repl.run_last, desc = "DAP: Run last", noremap = true },
+	{ "<Leader>dr", require("dap").repl.open, desc = "DAP: Open repl", icon = "", noremap = true },
+	{ "<Leader>dl", require("dap").repl.run_last, desc = "DAP: Run last", icon = "", noremap = true },
 	-- Telescope extension
-	{ "<leader>dt", group = "Telescope" },
-	{ "<Leader>dtc", require("telescope").extensions.dap.commands, desc = "DAP: Show commands", noremap = true },
+	{ "<leader>dt", group = "Telescope", icon = "󰋖" },
+	{
+		"<Leader>dtc",
+		require("telescope").extensions.dap.commands,
+		desc = "DAP: Show commands",
+		icon = "󰋖",
+		noremap = true,
+	},
 	{
 		"<Leader>dto",
 		require("telescope").extensions.dap.configurations,
 		desc = "DAP: Show configurations",
+		icon = "󰋖",
 		noremap = true,
 	},
 	{
 		"<Leader>dtb",
 		require("telescope").extensions.dap.list_breakpoints,
 		desc = "DAP: Show breakpoints",
+		icon = "",
 		noremap = true,
 	},
-	{ "<Leader>dtv", require("telescope").extensions.dap.variables, desc = "DAP: Show variables", noremap = true },
-	{ "<Leader>dtf", require("telescope").extensions.dap.frames, desc = "DAP: Show frames", noremap = true },
+	{
+		"<Leader>dtv",
+		require("telescope").extensions.dap.variables,
+		desc = "DAP: Show variables",
+		icon = "󰫧",
+		noremap = true,
+	},
+	{
+		"<Leader>dtf",
+		require("telescope").extensions.dap.frames,
+		desc = "DAP: Show frames",
+		icon = "󰋖",
+		noremap = true,
+	},
 	-- DAP UI
-	{ "<Leader>du", require("dapui").toggle, desc = "DAP: Toggle UI", noremap = true },
+	{ "<Leader>du", require("dapui").toggle, desc = "DAP: Toggle UI", icon = "", noremap = true },
 	{
 		"<Leader>de",
 		function()
@@ -65,6 +88,7 @@ require("which-key").add({
 			end)
 		end,
 		desc = "DAP: Evaluate expression",
+		icon = "",
 		noremap = true,
 	},
 })

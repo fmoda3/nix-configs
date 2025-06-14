@@ -8,6 +8,7 @@ require("which-key").add({
 		end,
 		mode = { "n" },
 		desc = "Jump to Context",
+		icon = "󰆷",
 		silent = true,
 	},
 })

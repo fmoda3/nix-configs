@@ -14,6 +14,7 @@ require("gitsigns").setup({
 					end
 				end,
 				desc = "Gitsigns: Next hunk",
+				icon = "󰒭",
 			},
 			{
 				"[g",
@@ -25,14 +26,15 @@ require("gitsigns").setup({
 					end
 				end,
 				desc = "Gitsigns: Previous hunk",
+				icon = "󰒮",
 			},
 		})
 
 		-- Actions
 		require("which-key").add({
-			{ "<leader>g", group = "Git" },
-			{ "<leader>gs", gitsigns.stage_hunk, desc = "Gitsigns: Stage hunk" },
-			{ "<leader>gr", gitsigns.reset_hunk, desc = "Gitsigns: Reset hunk" },
+			{ "<leader>g", group = "Git", icon = "" },
+			{ "<leader>gs", gitsigns.stage_hunk, desc = "Gitsigns: Stage hunk", icon = "" },
+			{ "<leader>gr", gitsigns.reset_hunk, desc = "Gitsigns: Reset hunk", icon = "" },
 			{
 				"<leader>gs",
 				function()
@@ -40,6 +42,7 @@ require("gitsigns").setup({
 				end,
 				mode = { "v" },
 				desc = "Gitsigns: Stage hunk (visual)",
+				icon = "",
 			},
 			{
 				"<leader>gr",
@@ -48,25 +51,28 @@ require("gitsigns").setup({
 				end,
 				mode = { "v" },
 				desc = "Gitsigns: Reset hunk (visual)",
+				icon = "",
 			},
-			{ "<leader>gS", gitsigns.stage_buffer, desc = "Gitsigns: Stage buffer" },
-			{ "<leader>gR", gitsigns.reset_buffer, desc = "Gitsigns: Reset buffer" },
-			{ "<leader>gp", gitsigns.preview_hunk, desc = "Gitsigns: Preview hunk" },
-			{ "<leader>gi", gitsigns.preview_hunk_inline, desc = "Gitsigns: Preview hunk inline" },
+			{ "<leader>gS", gitsigns.stage_buffer, desc = "Gitsigns: Stage buffer", icon = "" },
+			{ "<leader>gR", gitsigns.reset_buffer, desc = "Gitsigns: Reset buffer", icon = "" },
+			{ "<leader>gp", gitsigns.preview_hunk, desc = "Gitsigns: Preview hunk", icon = "" },
+			{ "<leader>gi", gitsigns.preview_hunk_inline, desc = "Gitsigns: Preview hunk inline", icon = "" },
 			{
 				"<leader>gb",
 				function()
 					gitsigns.blame_line({ full = true })
 				end,
 				desc = "Gitsigns: Blame line",
+				icon = "",
 			},
-			{ "<leader>gd", gitsigns.diffthis, desc = "Gitsigns: Diff this" },
+			{ "<leader>gd", gitsigns.diffthis, desc = "Gitsigns: Diff this", icon = "" },
 			{
 				"<leader>gD",
 				function()
 					gitsigns.diffthis("~")
 				end,
 				desc = "Gitsigns: Diff this (cached)",
+				icon = "",
 			},
 			{
 				"<leader>gQ",
@@ -74,20 +80,26 @@ require("gitsigns").setup({
 					gitsigns.setqflist("all")
 				end,
 				desc = "Gitsigns: Set qflist",
+				icon = "󱖫",
 			},
 		})
 
 		-- Toggles
 		require("which-key").add({
-			{ "<leader>gt", group = "Toggle" },
-			{ "<leader>gtb", gitsigns.toggle_current_line_blame, desc = "Gitsigns: Toggle current line blame" },
-			{ "<leader>gtd", gitsigns.toggle_deleted, desc = "Gitsigns: Toggle deleted" },
-			{ "<leader>gtw", gitsigns.toggle_word_diff, desc = "Gitsigns: Toggle word diff" },
+			{ "<leader>gt", group = "Toggle", icon = "󰔡" },
+			{
+				"<leader>gtb",
+				gitsigns.toggle_current_line_blame,
+				desc = "Gitsigns: Toggle current line blame",
+				icon = "",
+			},
+			{ "<leader>gtd", gitsigns.toggle_deleted, desc = "Gitsigns: Toggle deleted", icon = "" },
+			{ "<leader>gtw", gitsigns.toggle_word_diff, desc = "Gitsigns: Toggle word diff", icon = "" },
 		})
 
 		-- Text object
 		require("which-key").add({
-			{ "<leader>gi", gitsigns.select_hunk, desc = "Gitsigns: Select hunk", mode = { "o", "x" } },
+			{ "<leader>gi", gitsigns.select_hunk, desc = "Gitsigns: Select hunk", icon = "󰒅", mode = { "o", "x" } },
 		})
 	end,
 })

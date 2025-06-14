@@ -25,6 +25,6 @@ require("Comment").setup({
 })
 
 require("which-key").add({
-	{ "<leader>c", group = "Comment" },
-	{ "<leader>ct", group = "Toggle" },
+	{ "<leader>c", group = "Comment", icon = "󰅺" },
+	{ "<leader>ct", group = "Toggle", icon = "󰔡" },
 })

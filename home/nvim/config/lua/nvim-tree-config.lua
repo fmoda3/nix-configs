@@ -40,8 +40,8 @@ require("nvim-tree").setup({
 })
 
 require("which-key").add({
-	{ "<leader>t", group = "Tree" },
-	{ "<leader>tt", ":NvimTreeToggle<cr>", desc = "Tree: Toggle", silent = true },
-	{ "<leader>tr", ":NvimTreeRefresh<cr>", desc = "Tree: Refresh", silent = true },
-	{ "<leader>tf", ":NvimTreeFindFile<cr>", desc = "Tree: Find file", silent = true },
+	{ "<leader>t", group = "Tree", icon = "󱏒" },
+	{ "<leader>tt", ":NvimTreeToggle<cr>", desc = "Tree: Toggle", icon = "󰔡", silent = true },
+	{ "<leader>tr", ":NvimTreeRefresh<cr>", desc = "Tree: Refresh", icon = "󰑐", silent = true },
+	{ "<leader>tf", ":NvimTreeFindFile<cr>", desc = "Tree: Find file", icon = "󰍉", silent = true },
 })
