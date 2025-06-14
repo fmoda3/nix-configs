@@ -8,6 +8,7 @@ final: prev:
   claude-code = prev.callPackage ./claude-code { };
   homebridge = prev.callPackage ./homebridge { };
   homebridge-config-ui-x = prev.callPackage ./homebridge-config-ui-x { };
+  kotlin-lsp = prev.callPackage ./kotlin-lsp { };
   nix-cleanup = prev.callPackage ./nix-cleanup { };
   oktoast = prev.callPackage ./oktoast { };
   # python3Packages = prev.python3Packages // {

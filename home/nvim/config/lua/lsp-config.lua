@@ -257,6 +257,8 @@ nvim_lsp.elixirls.setup({
 default_lsp_setup("gleam")
 -- Haskell
 default_lsp_setup("hls")
+-- Kotlin
+default_lsp_setup("kotlin_lsp")
 -- Lua
 local runtime_path = vim.split(package.path, ";")
 table.insert(runtime_path, "lua/?.lua")

@@ -245,6 +245,8 @@ in
         gleam
         # Haskell
         stable.haskellPackages.haskell-language-server
+        # Kotlin
+        kotlin-lsp
         # Lua
         lua-language-server
         # Nix
