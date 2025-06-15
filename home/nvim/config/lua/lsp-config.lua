@@ -168,7 +168,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			},
 			{
 				"<leader>lf",
-				vim.lsp.buf.formatting,
+				function()
+					vim.lsp.buf.format({ bufnr = bufnr, id = client.id, timeout_ms = 1000 })
+				end,
 				desc = "LSP: Format file",
 				icon = "",
 				noremap = true,
@@ -218,9 +220,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		then
 			vim.api.nvim_create_autocmd("BufWritePre", {
 				group = vim.api.nvim_create_augroup("my.lsp", { clear = false }),
-				buffer = args.buf,
+				buffer = bufnr,
 				callback = function()
-					vim.lsp.buf.format({ bufnr = args.buf, id = client.id, timeout_ms = 1000 })
+					vim.lsp.buf.format({ bufnr = bufnr, id = client.id, timeout_ms = 1000 })
 				end,
 			})
 		end
@@ -259,7 +261,7 @@ vim.lsp.enable("bashls")
 -- Dart
 vim.lsp.enable("dartls")
 -- Elixir
-vim.lsp.enable("elixirls", {
+vim.lsp.config("elixirls", {
 	cmd = { "elixir-ls" },
 	-- Settings block is required, as there is no default set for elixir
 	settings = {
@@ -269,6 +271,7 @@ vim.lsp.enable("elixirls", {
 		},
 	},
 })
+vim.lsp.enable("elixirls")
 -- Gleam
 vim.lsp.enable("gleam")
 -- Haskell
@@ -279,7 +282,7 @@ vim.lsp.enable("kotlin_lsp")
 local runtime_path = vim.split(package.path, ";")
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
-vim.lsp.enable("lua_ls", {
+vim.lsp.config("lua_ls", {
 	settings = {
 		Lua = {
 			runtime = {
@@ -307,8 +310,9 @@ vim.lsp.enable("lua_ls", {
 		},
 	},
 })
+vim.lsp.enable("lua_ls")
 -- Nix
-vim.lsp.enable("nixd", {
+vim.lsp.config("nixd", {
 	settings = {
 		nixd = {
 			nixpkgs = {
@@ -331,6 +335,7 @@ vim.lsp.enable("nixd", {
 		},
 	},
 })
+vim.lsp.enable("nixd")
 -- Python
 vim.lsp.enable("pyright")
 -- Typescript
