@@ -7,57 +7,153 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
 		local bufnr = args.buf
 
-		require("illuminate").on_attach(client)
-
-		-- Mappings.
-		require("which-key").add({
+		-- Mappings
+		local wk = require("which-key")
+		wk.add({
 			{ "<leader>l", group = "LSP", icon = "󰿘" },
-			{
-				"<leader>lD",
-				vim.lsp.buf.declaration,
-				desc = "LSP: Go to declaration",
-				icon = "",
-				noremap = true,
-				silent = true,
-				buffer = bufnr,
-			},
-			{
-				"<leader>ld",
-				"<cmd>Glance definitions<cr>",
-				desc = "LSP: Go to definition",
-				icon = "",
-				noremap = true,
-				silent = true,
-				buffer = bufnr,
-			},
-			{
-				"<leader>lk",
-				vim.lsp.buf.hover,
-				desc = "LSP: Hover",
-				icon = "󰋖",
-				noremap = true,
-				silent = true,
-				buffer = bufnr,
-			},
-			{
-				"<leader>li",
-				"<cmd>Glance implementations<cr>",
-				desc = "LSP: Go to implementation",
-				icon = "",
-				noremap = true,
-				silent = true,
-				buffer = bufnr,
-			},
-			{
-				"<leader>ls",
-				vim.lsp.buf.signature_help,
-				desc = "LSP: Signature help",
-				icon = "",
-				mode = { "n", "i" },
-				noremap = true,
-				silent = true,
-				buffer = bufnr,
-			},
+		})
+
+		-- Navigation
+		if client:supports_method("textDocument/declaration") then
+			wk.add({
+				{
+					"<leader>lD",
+					vim.lsp.buf.declaration,
+					desc = "LSP: Go to declaration",
+					icon = "",
+					noremap = true,
+					silent = true,
+					buffer = bufnr,
+				},
+			})
+		end
+		if client:supports_method("textDocument/definition") then
+			wk.add({
+				{
+					"<leader>ld",
+					"<cmd>Glance definitions<cr>",
+					desc = "LSP: Go to definition",
+					icon = "",
+					noremap = true,
+					silent = true,
+					buffer = bufnr,
+				},
+			})
+		end
+		if client:supports_method("textDocument/typeDefinition") then
+			wk.add({
+				{
+					"<leader>lt",
+					"<cmd>Glance type_definitions<cr>",
+					desc = "LSP: Show type definition",
+					icon = "",
+					noremap = true,
+					silent = true,
+					buffer = bufnr,
+				},
+			})
+		end
+		if client:supports_method("textDocument/implementation") then
+			wk.add({
+				{
+					"<leader>li",
+					"<cmd>Glance implementations<cr>",
+					desc = "LSP: Go to implementation",
+					icon = "",
+					noremap = true,
+					silent = true,
+					buffer = bufnr,
+				},
+			})
+		end
+		if client:supports_method("textDocument/references") then
+			wk.add({
+				{
+					"<leader>lr",
+					"<cmd>Glance references<cr>",
+					desc = "LSP: Show references",
+					icon = "",
+					noremap = true,
+					silent = true,
+					buffer = bufnr,
+				},
+			})
+		end
+
+		-- Code Actions
+		if client:supports_method("textDocument/codeAction") then
+			wk.add({
+				{
+					"<leader>la",
+					vim.lsp.buf.code_action,
+					desc = "LSP: Code Action",
+					icon = "",
+					noremap = true,
+					silent = true,
+					buffer = bufnr,
+				},
+			})
+		end
+		if client:supports_method("textDocument/rename") then
+			wk.add({
+				{
+					"<leader>ln",
+					vim.lsp.buf.rename,
+					desc = "LSP: Rename",
+					icon = "󰑕",
+					noremap = true,
+					silent = true,
+					buffer = bufnr,
+				},
+			})
+		end
+		if client:supports_method("textDocument/formatting") then
+			wk.add({
+				{
+					"<leader>lf",
+					function()
+						vim.lsp.buf.format({ bufnr = bufnr, id = client.id, timeout_ms = 1000 })
+					end,
+					desc = "LSP: Format file",
+					icon = "",
+					noremap = true,
+					silent = true,
+					buffer = bufnr,
+				},
+			})
+		end
+
+		-- Information Displays
+		if client:supports_method("textDocument/hover") then
+			wk.add({
+				{
+					"<leader>lk",
+					vim.lsp.buf.hover,
+					desc = "LSP: Hover",
+					icon = "󰋖",
+					noremap = true,
+					silent = true,
+					buffer = bufnr,
+				},
+			})
+		end
+		if client:supports_method("textDocument/signatureHelp") then
+			wk.add({
+				{
+					"<leader>ls",
+					vim.lsp.buf.signature_help,
+					desc = "LSP: Signature help",
+					icon = "",
+					mode = { "n", "i" },
+					noremap = true,
+					silent = true,
+					buffer = bufnr,
+				},
+			})
+		end
+
+		-- Workspaces
+		wk.add({
 			{ "<leader>lw", group = "Workspace", icon = "" },
 			{
 				"<leader>lwa",
@@ -88,42 +184,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
 				silent = true,
 				buffer = bufnr,
 			},
-			{
-				"<leader>lt",
-				"<cmd>Glance type_definitions<cr>",
-				desc = "LSP: Show type definition",
-				icon = "",
-				noremap = true,
-				silent = true,
-				buffer = bufnr,
-			},
-			{
-				"<leader>ln",
-				vim.lsp.buf.rename,
-				desc = "LSP: Rename",
-				icon = "󰑕",
-				noremap = true,
-				silent = true,
-				buffer = bufnr,
-			},
-			{
-				"<leader>la",
-				vim.lsp.buf.code_action,
-				desc = "LSP: Code Action",
-				icon = "",
-				noremap = true,
-				silent = true,
-				buffer = bufnr,
-			},
-			{
-				"<leader>lr",
-				"<cmd>Glance references<cr>",
-				desc = "LSP: Show references",
-				icon = "",
-				noremap = true,
-				silent = true,
-				buffer = bufnr,
-			},
+		})
+
+		-- Diagnostics
+		wk.add({
 			{
 				"<leader>xw",
 				function()
@@ -166,17 +230,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
 				silent = true,
 				buffer = bufnr,
 			},
-			{
-				"<leader>lf",
-				function()
-					vim.lsp.buf.format({ bufnr = bufnr, id = client.id, timeout_ms = 1000 })
-				end,
-				desc = "LSP: Format file",
-				icon = "",
-				noremap = true,
-				silent = true,
-				buffer = bufnr,
-			},
+		})
+
+		-- Illuminate
+		require("illuminate").on_attach(client)
+		require("which-key").add({
 			{
 				"]u",
 				function()
