@@ -324,10 +324,11 @@ in
         # 2.) In the globally installed node packages directory
         # 3.) Inside the custom plugin path directory
         # 1 won't work, as these packages are in the nix store.
-        # 2 won't work as we don't install globally
+        # 2 won't work, as we don't install globally.
         # That leaves us with 3, so we need to symlink the homebridge package
         # to the plugin path directory.
-        ln -sf "${pkgs.homebridge}/lib/node_modules/homebridge" "${cfg.pluginPath}/homebridge"
+        rm -rf "${cfg.pluginPath}/homebridge"
+        ln -s "${pkgs.homebridge}/lib/node_modules/homebridge" "${cfg.pluginPath}/homebridge"
       '';
 
       # hb-service environment variables based on source code analysis
