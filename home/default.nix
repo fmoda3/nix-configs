@@ -65,7 +65,7 @@ in
         ];
         fontPackages = [
           # Fonts
-          cozette
+          # cozette
           scientifica
           monocraft
         ] ++ all-nerd-fonts;
