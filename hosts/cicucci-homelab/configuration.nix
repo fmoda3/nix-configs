@@ -42,7 +42,6 @@
   services.homebridge = {
     enable = true;
     openFirewall = true;
-    allowInsecure = true;
   };
 
   services.home-assistant = {
