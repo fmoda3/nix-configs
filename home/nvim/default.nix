@@ -140,6 +140,12 @@ in
           type = "lua";
           config = builtins.readFile ./config/lua/lightbulb-config.lua;
         }
+        # Incremental rename
+        {
+          plugin = inc-rename-nvim;
+          type = "lua";
+          config = builtins.readFile ./config/lua/inc-rename-config.lua;
+        }
         # Rainbow brackets
         {
           plugin = rainbow-delimiters-nvim;

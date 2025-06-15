@@ -112,6 +112,17 @@ vim.api.nvim_create_autocmd("LspAttach", {
 					silent = true,
 					buffer = bufnr,
 				},
+				{
+					"<leader>lN",
+					function()
+						return ":IncRename " .. vim.fn.expand("<cword>")
+					end,
+					desc = "LSP: Incremental Rename",
+					icon = "󰑕",
+					noremap = true,
+					expr = true,
+					buffer = bufnr,
+				},
 			})
 		end
 		if client:supports_method("textDocument/formatting") then
