@@ -128,8 +128,39 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			wk.add({
 				{
 					"<leader>lk",
-					vim.lsp.buf.hover,
+					require("hover").hover,
 					desc = "LSP: Hover",
+					icon = "󰋖",
+					noremap = true,
+					silent = true,
+					buffer = bufnr,
+				},
+				{
+					"<leader>lK",
+					require("hover").hover_select,
+					desc = "LSP: Hover select source",
+					icon = "󰋖",
+					noremap = true,
+					silent = true,
+					buffer = bufnr,
+				},
+				{
+					"<leader>lh",
+					function()
+						require("hover").hover_switch("previous")
+					end,
+					desc = "LSP: Hover previous source",
+					icon = "󰋖",
+					noremap = true,
+					silent = true,
+					buffer = bufnr,
+				},
+				{
+					"<leader>lj",
+					function()
+						require("hover").hover_switch("next")
+					end,
+					desc = "LSP: Hover next source",
 					icon = "󰋖",
 					noremap = true,
 					silent = true,

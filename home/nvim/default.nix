@@ -118,11 +118,6 @@ in
           config = builtins.readFile ./config/lua/outline-config.lua;
         }
         {
-          plugin = eagle-nvim;
-          type = "lua";
-          config = builtins.readFile ./config/lua/eagle-config.lua;
-        }
-        {
           plugin = dropbar-nvim;
           type = "lua";
           config = builtins.readFile ./config/lua/dropbar-config.lua;
@@ -228,6 +223,12 @@ in
           plugin = claude-code-nvim;
           type = "lua";
           config = builtins.readFile ./config/lua/claude-code-config.lua;
+        }
+        # Hover documentation
+        {
+          plugin = hover-nvim;
+          type = "lua";
+          config = builtins.readFile ./config/lua/hover-config.lua;
         }
       ];
 
