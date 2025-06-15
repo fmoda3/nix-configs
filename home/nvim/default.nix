@@ -200,6 +200,8 @@ in
         telescope-dap-nvim
         nvim-dap-ui
         nvim-dap-virtual-text
+        # Code Action
+        tiny-code-action-nvim
         # Notify window
         {
           plugin = nvim-notify;

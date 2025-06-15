@@ -7,6 +7,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
 		local bufnr = args.buf
 
+		-- Initialize code action lib
+		require("tiny-code-action").setup({
+			backend = "vim",
+		})
+
 		-- Mappings
 		local wk = require("which-key")
 		wk.add({
@@ -85,7 +90,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			wk.add({
 				{
 					"<leader>la",
-					vim.lsp.buf.code_action,
+					function()
+						require("tiny-code-action").code_action()
+					end,
 					desc = "LSP: Code Action",
 					icon = "",
 					noremap = true,

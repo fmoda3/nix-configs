@@ -16,6 +16,6 @@ final: prev:
   # };
   toast-services = prev.callPackage ./toast-services { };
   vimPlugins = prev.vimPlugins // {
-    eagle-nvim = prev.callPackage ./eagle-nvim { };
+    tiny-code-action-nvim = prev.callPackage ./tiny-code-action-nvim { };
   };
 }
