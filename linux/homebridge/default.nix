@@ -9,17 +9,14 @@ with lib;
 let
   cfg = config.services.homebridge;
 
-  restartCommand = "sudo -n systemctl restart homebridge homebridge-config-ui-x";
-  homebridgePackagePath = "${pkgs.homebridge}/lib/node_modules/homebridge";
+  restartCommand = "sudo -n systemctl restart homebridge";
 
   defaultConfigUIPlatform = {
     inherit (cfg.uiSettings)
       platform
       name
       port
-      standalone
       restart
-      homebridgePackagePath
       sudo
       log
       ;
@@ -95,8 +92,6 @@ in
     #     enable = true;
     #     # Necessary for service to be reachable
     #     openFirewall = true;
-    #     # Most accessories need unauthenticated access
-    #     allowInsecure = true;
     #   };
     # }
 
@@ -117,15 +112,6 @@ in
     openFirewall = mkEnableOption "" // {
       description = ''
         Open ports in the firewall for the Homebridge web interface and service.
-      '';
-    };
-
-    allowInsecure = mkEnableOption "" // {
-      description = ''
-        Allow unauthenticated requests (for easier hacking).
-        In homebridge's own installer, this is enabled by default.
-        Needs to be enabled if you want to control accessories:
-        https://github.com/homebridge/homebridge-config-ui-x/wiki/Enabling-Accessory-Control
       '';
     };
 
@@ -255,29 +241,12 @@ in
             readOnly = true;
           };
 
-          # Required to be true to run Homebridge UI as a separate service
-          standalone = mkOption {
-            type = bool;
-            default = true;
-            description = "Whether to run the UI as a standalone service";
-            readOnly = true;
-          };
-
           # Homebridge can be installed many ways, but we're forcing a double service systemd setup
           # This command will restart both services
           restart = mkOption {
             type = str;
             default = restartCommand;
             description = "Command to restart the homebridge UI service";
-            readOnly = true;
-          };
-
-          # Tell Homebridge UI where homebridge is so it can pull package information
-          homebridgePackagePath = mkOption {
-            type = str;
-            default = homebridgePackagePath;
-            defaultText = "/path/to/homebridge";
-            description = "Path to the homebridge package";
             readOnly = true;
           };
 
@@ -349,52 +318,27 @@ in
 
         # Make sure plugin directory exists
         install -d -m 755 -o ${cfg.user} -g ${cfg.group} "${cfg.pluginPath}"
+        
+        # Service mode currently looks for the homebridge binary in 3 locations:
+        # 1.) As a sibling directory to homebridge-config-ui-x package
+        # 2.) In the globally installed node packages directory
+        # 3.) Inside the custom plugin path directory
+        # 1 won't work, as these packages are in the nix store.
+        # 2 won't work, as we don't install globally.
+        # That leaves us with 3, so we need to symlink the homebridge package
+        # to the plugin path directory.
+        rm -rf "${cfg.pluginPath}/homebridge"
+        ln -s "${pkgs.homebridge}/lib/node_modules/homebridge" "${cfg.pluginPath}/homebridge"
       '';
 
-      # Settings found from standalone mode docs and hb-service code
-      # https://github.com/homebridge/homebridge-config-ui-x/wiki/Standalone-Mode
-      # https://github.com/homebridge/homebridge-config-ui-x/blob/a12ad881fe6df62d817ecb56f9fc6b7e82b6d078/src/bin/platforms/linux.ts#L714
-      serviceConfig = {
-        Type = "simple";
-        User = cfg.user;
-        PermissionsStartOnly = true;
-        StateDirectory = "homebridge";
-        EnvironmentFile = mkIf (cfg.environmentFile != null) [ cfg.environmentFile ];
-        ExecStart = "${pkgs.homebridge}/bin/homebridge -U ${cfg.userStoragePath} -P ${cfg.pluginPath} --strict-plugin-resolution" + optionalString cfg.allowInsecure " -I";
-        Restart = "always";
-        RestartSec = 3;
-        KillMode = "process";
-        CapabilityBoundingSet = [
-          "CAP_IPC_LOCK"
-          "CAP_NET_ADMIN"
-          "CAP_NET_BIND_SERVICE"
-          "CAP_NET_RAW"
-          "CAP_SETGID"
-          "CAP_SETUID"
-          "CAP_SYS_CHROOT"
-          "CAP_CHOWN"
-          "CAP_FOWNER"
-          "CAP_DAC_OVERRIDE"
-          "CAP_AUDIT_WRITE"
-          "CAP_SYS_ADMIN"
-        ];
-        AmbientCapabilities = [
-          "CAP_NET_RAW"
-          "CAP_NET_BIND_SERVICE"
-        ];
+      # hb-service environment variables based on source code analysis
+      environment = {
+        HOMEBRIDGE_CONFIG_UI_TERMINAL = "1";
+        DISABLE_OPENCOLLECTIVE = "true";
+        # Required or homebridge will search the global npm namespace
+        UIX_STRICT_PLUGIN_RESOLUTION = "1";
       };
-    };
 
-    systemd.services.homebridge-config-ui-x = {
-      description = "Homebridge Config UI X";
-      wants = [ "network-online.target" ];
-      after = [
-        "syslog.target"
-        "network-online.target"
-        "homebridge.service"
-      ];
-      requires = [ "homebridge.service" ];
-      wantedBy = [ "multi-user.target" ];
       path = with pkgs; [
         # Tools listed in homebridge's installation documentations:
         # https://github.com/homebridge/homebridge/wiki/Install-Homebridge-on-Arch-Linux
@@ -410,23 +354,14 @@ in
         bash
       ];
 
-      environment = {
-        HOMEBRIDGE_CONFIG_UI_TERMINAL = "1";
-        DISABLE_OPENCOLLECTIVE = "true";
-        # Required or homebridge will search the global npm namespace
-        UIX_STRICT_PLUGIN_RESOLUTION = "1";
-      };
-
-      # Settings found from standalone mode docs and hb-service code
-      # https://github.com/homebridge/homebridge-config-ui-x/wiki/Standalone-Mode
-      # https://github.com/homebridge/homebridge-config-ui-x/blob/a12ad881fe6df62d817ecb56f9fc6b7e82b6d078/src/bin/platforms/linux.ts#L714
+      # Settings from https://github.com/homebridge/homebridge-config-ui-x/blob/latest/src/bin/platforms/linux.ts
       serviceConfig = {
         Type = "simple";
         User = cfg.user;
         PermissionsStartOnly = true;
         StateDirectory = "homebridge";
         EnvironmentFile = mkIf (cfg.environmentFile != null) [ cfg.environmentFile ];
-        ExecStart = "${pkgs.homebridge-config-ui-x}/bin/homebridge-config-ui-x -U ${cfg.userStoragePath} -P ${cfg.pluginPath}" + optionalString cfg.allowInsecure " -I";
+        ExecStart = "${pkgs.homebridge-config-ui-x}/bin/hb-service run -U ${cfg.userStoragePath} -P ${cfg.pluginPath}";
         Restart = "always";
         RestartSec = 3;
         KillMode = "process";
@@ -474,8 +409,8 @@ in
         users = [ cfg.user ];
         commands = [
           {
-            # Ability to restart homebridge services
-            command = "${pkgs.systemd}/bin/systemctl restart homebridge homebridge-config-ui-x";
+            # Ability to restart homebridge service
+            command = "${pkgs.systemd}/bin/systemctl restart homebridge";
             options = [ "NOPASSWD" ];
           }
           {
