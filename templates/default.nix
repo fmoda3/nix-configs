@@ -3,6 +3,10 @@
     path = ./elixir;
     description = "Elixir project setup with mix";
   };
+  gleam = {
+    path = ./gleam;
+    description = "Gleam project setup";
+  };
   haskell = {
     path = ./haskell;
     description = "Haskell project setup with cabal";
