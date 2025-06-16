@@ -17,7 +17,6 @@ let
       name
       port
       restart
-      sudo
       log
       ;
   };
@@ -250,14 +249,6 @@ in
             readOnly = true;
           };
 
-          # If sudo is true, homebridge will download plugins as root
-          sudo = mkOption {
-            type = bool;
-            default = false;
-            description = "Whether to run the UI with sudo";
-            readOnly = true;
-          };
-
           # We're using systemd, so make sure logs is setup to pull from systemd
           log.method = mkOption {
             type = str;
@@ -318,17 +309,18 @@ in
 
         # Make sure plugin directory exists
         install -d -m 755 -o ${cfg.user} -g ${cfg.group} "${cfg.pluginPath}"
-        
-        # Service mode currently looks for the homebridge binary in 3 locations:
-        # 1.) As a sibling directory to homebridge-config-ui-x package
-        # 2.) In the globally installed node packages directory
-        # 3.) Inside the custom plugin path directory
-        # 1 won't work, as these packages are in the nix store.
-        # 2 won't work, as we don't install globally.
-        # That leaves us with 3, so we need to symlink the homebridge package
-        # to the plugin path directory.
-        rm -rf "${cfg.pluginPath}/homebridge"
-        ln -s "${pkgs.homebridge}/lib/node_modules/homebridge" "${cfg.pluginPath}/homebridge"
+
+        # In order for hb-service to detect the homebridge installation, we need to create a folder structure
+        # where homebridge and homebrdige-config-ui-x node modules are side by side, and then point
+        # UIX_BASE_PATH_OVERRIDE at the homebridge-config-ui-x node module in the service environment.
+        # So, first create a directory to symlink these packages to
+        install -d -m 755 -o ${cfg.user} -g ${cfg.group} "${cfg.userStoragePath}/homebridge-packages"
+
+        # Then, symlink in the homebridge and homebridge-config-ui-x packages
+        rm -rf "${cfg.userStoragePath}/homebridge-packages/homebridge"
+        ln -s "${pkgs.homebridge}/lib/node_modules/homebridge" "${cfg.userStoragePath}/homebridge-packages/homebridge"
+        rm -rf "${cfg.userStoragePath}/homebridge-packages/homebridge-config-ui-x"
+        ln -s "${pkgs.homebridge-config-ui-x}/lib/node_modules/homebridge-config-ui-x" "${cfg.userStoragePath}/homebridge-packages/homebridge-config-ui-x"
       '';
 
       # hb-service environment variables based on source code analysis
@@ -337,6 +329,10 @@ in
         DISABLE_OPENCOLLECTIVE = "true";
         # Required or homebridge will search the global npm namespace
         UIX_STRICT_PLUGIN_RESOLUTION = "1";
+        # Workaround to ensure homebridge does not run in sudo mode
+        HOMEBRIDGE_APT_PACKAGE = "1";
+        # Required to get the service to detect the homebridge install correctly
+        UIX_BASE_PATH_OVERRIDE = "${cfg.userStoragePath}/homebridge-packages/homebridge-config-ui-x";
       };
 
       path = with pkgs; [
