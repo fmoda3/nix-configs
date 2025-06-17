@@ -23,12 +23,8 @@
     path = ./kotlin;
     description = "Kotlin project setup with gradle";
   };
-  python-poetry = {
-    path = ./python-poetry;
-    description = "Python project setup with poetry";
-  };
-  python-requirements = {
-    path = ./python-requirements;
-    description = "Python project setup with requirements.txt";
+  python = {
+    path = ./python;
+    description = "Python project setup with virtualenv";
   };
 }
