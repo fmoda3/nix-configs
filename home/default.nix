@@ -6,7 +6,7 @@ let
   all-nerd-fonts = builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
 
   claude-code-tools = with pkgs; lib.makeBinPath [
-    context7-mcp
+    mcp.context7-mcp
   ];
   claude-code-wrapped = with pkgs; writeShellScriptBin "claude" ''
     export PATH="${claude-code-tools}:$PATH"
@@ -82,8 +82,8 @@ in
           # Work packages
           postgresql
           awscli2
-          oktoast
-          toast-services
+          toast.oktoast
+          toast.toast-services
           heroku
           colima
           docker

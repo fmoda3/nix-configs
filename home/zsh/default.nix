@@ -155,7 +155,7 @@ with lib;
       eval "$(direnv hook zsh)"
       path+="/opt/homebrew/bin"
 
-      source ${pkgs.catppuccin-zsh-syntax-highlighting}/themes/catppuccin_frappe-zsh-syntax-highlighting.zsh
+      source ${pkgs.catppuccin.zsh-syntax-highlighting}/themes/catppuccin_frappe-zsh-syntax-highlighting.zsh
 
       setopt BANG_HIST
       setopt HIST_VERIFY

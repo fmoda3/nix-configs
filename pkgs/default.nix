@@ -1,22 +1,28 @@
 final: prev:
 {
   # Adding packages here, makes them accessible from "pkgs"
-  catppuccin-bat = prev.callPackage ./catppuccin-bat { };
-  catppuccin-btop = prev.callPackage ./catppuccin-btop { };
-  catppuccin-yazi = prev.callPackage ./catppuccin-yazi { };
-  catppuccin-zsh-syntax-highlighting = prev.callPackage ./catppuccin-zsh-syntax-highlighting { };
+  catppuccin = {
+    bat = prev.callPackage ./catppuccin/bat { };
+    btop = prev.callPackage ./catppuccin/btop { };
+    yazi = prev.callPackage ./catppuccin/yazi { };
+    zsh-syntax-highlighting = prev.callPackage ./catppuccin/zsh-syntax-highlighting { };
+  };
   claude-code = prev.callPackage ./claude-code { };
-  context7-mcp = prev.callPackage ./context7-mcp { };
   homebridge = prev.callPackage ./homebridge { };
   homebridge-config-ui-x = prev.callPackage ./homebridge-config-ui-x { };
   kotlin-lsp = prev.callPackage ./kotlin-lsp { };
+  mcp = {
+    context7-mcp = prev.callPackage ./mcp/context7-mcp { };
+  };
   nix-cleanup = prev.callPackage ./nix-cleanup { };
-  oktoast = prev.callPackage ./oktoast { };
   # python3Packages = prev.python3Packages // {
   #   toast-tools = prev.callPackage ./toast-tools { };
   # };
-  toast-services = prev.callPackage ./toast-services { };
+  toast = {
+    oktoast = prev.callPackage ./toast/oktoast { };
+    toast-services = prev.callPackage ./toast/toast-services { };
+  };
   vimPlugins = prev.vimPlugins // {
-    tiny-code-action-nvim = prev.callPackage ./tiny-code-action-nvim { };
+    tiny-code-action-nvim = prev.callPackage ./vimPlugins/tiny-code-action-nvim { };
   };
 }

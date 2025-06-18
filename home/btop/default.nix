@@ -6,7 +6,7 @@
       color_theme = "catppuccin-frappe";
     };
     themes = {
-      catppuccin-frappe = builtins.readFile "${pkgs.catppuccin-btop}/themes/catppuccin_frappe.theme";
+      catppuccin-frappe = builtins.readFile "${pkgs.catppuccin.btop}/themes/catppuccin_frappe.theme";
     };
   };
 }
