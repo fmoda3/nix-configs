@@ -4,6 +4,14 @@ let
   cfg = config.my-home;
 
   all-nerd-fonts = builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
+
+  claude-code-tools = with pkgs; lib.makeBinPath [
+    context7-mcp
+  ];
+  claude-code-wrapped = with pkgs; writeShellScriptBin "claude" ''
+    export PATH="${claude-code-tools}:$PATH"
+    exec ${claude-code}/bin/claude "$@"
+  '';
 in
 {
 
@@ -55,7 +63,7 @@ in
           comma
           nix-cleanup
           aider-chat
-          claude-code
+          claude-code-wrapped
           nh
           procs
           dust

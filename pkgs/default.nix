@@ -6,6 +6,7 @@ final: prev:
   catppuccin-yazi = prev.callPackage ./catppuccin-yazi { };
   catppuccin-zsh-syntax-highlighting = prev.callPackage ./catppuccin-zsh-syntax-highlighting { };
   claude-code = prev.callPackage ./claude-code { };
+  context7-mcp = prev.callPackage ./context7-mcp { };
   homebridge = prev.callPackage ./homebridge { };
   homebridge-config-ui-x = prev.callPackage ./homebridge-config-ui-x { };
   kotlin-lsp = prev.callPackage ./kotlin-lsp { };
