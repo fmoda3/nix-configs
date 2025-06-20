@@ -6,6 +6,8 @@ let
   all-nerd-fonts = builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
 
   claude-code-tools = with pkgs; lib.makeBinPath [
+    ripgrep # Claude really likes to use ripgrep
+    # MCP servers
     mcp.context7-mcp
   ];
   claude-code-wrapped = with pkgs; writeShellScriptBin "claude" ''
