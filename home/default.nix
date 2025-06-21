@@ -36,6 +36,7 @@ in
     ./zoxide
     ./eza
     ./lazygit
+    ./secrets
   ];
 
   options.my-home = {
