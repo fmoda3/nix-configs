@@ -8,7 +8,8 @@ let
   claude-code-tools = with pkgs; lib.makeBinPath [
     ripgrep # Claude really likes to use ripgrep
     # MCP servers
-    mcp.context7-mcp
+    mcp.context7
+    mcp.sequential-thinking
   ];
   claude-code-wrapped = with pkgs; writeShellScriptBin "claude" ''
     export PATH="${claude-code-tools}:$PATH"

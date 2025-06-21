@@ -12,7 +12,8 @@ final: prev:
   homebridge-config-ui-x = prev.callPackage ./homebridge-config-ui-x { };
   kotlin-lsp = prev.callPackage ./kotlin-lsp { };
   mcp = {
-    context7-mcp = prev.callPackage ./mcp/context7-mcp { };
+    context7 = prev.callPackage ./mcp/context7 { };
+    sequential-thinking = prev.callPackage ./mcp/sequential-thinking { };
   };
   nix-cleanup = prev.callPackage ./nix-cleanup { };
   # python3Packages = prev.python3Packages // {
