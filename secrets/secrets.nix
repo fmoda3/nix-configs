@@ -30,4 +30,5 @@ in
   "mistral_ai_key.age".publicKeys = all;
   "openrouter_key.age".publicKeys = all;
   "voyage_ai_key.age".publicKeys = all;
+  "personal_github_key.age".publicKeys = all;
 }

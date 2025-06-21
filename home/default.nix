@@ -9,6 +9,7 @@ let
     ripgrep # Claude really likes to use ripgrep
     # MCP servers
     mcp.context7
+    mcp.github
     mcp.sequential-thinking
   ];
   claude-code-wrapped = with pkgs; writeShellScriptBin "claude" ''

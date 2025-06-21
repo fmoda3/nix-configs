@@ -13,6 +13,7 @@ final: prev:
   kotlin-lsp = prev.callPackage ./kotlin-lsp { };
   mcp = {
     context7 = prev.callPackage ./mcp/context7 { };
+    github = prev.callPackage ./mcp/github { };
     sequential-thinking = prev.callPackage ./mcp/sequential-thinking { };
   };
   nix-cleanup = prev.callPackage ./nix-cleanup { };

@@ -9,6 +9,8 @@
     };
   };
 
+  age.secrets.personal_github_key.file = ../../secrets/personal_github_key.age;
+
   my-home = {
     includeFonts = true;
     useNeovim = true;
