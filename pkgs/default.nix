@@ -7,6 +7,7 @@ final: prev:
     yazi = prev.callPackage ./catppuccin/yazi { };
     zsh-syntax-highlighting = prev.callPackage ./catppuccin/zsh-syntax-highlighting { };
   };
+  ccusage = prev.callPackage ./ccusage { };
   claude-code = prev.callPackage ./claude-code { };
   homebridge = prev.callPackage ./homebridge { };
   homebridge-config-ui-x = prev.callPackage ./homebridge-config-ui-x { };

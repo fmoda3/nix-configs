@@ -69,6 +69,7 @@ in
           nix-cleanup
           aider-chat
           claude-code-wrapped
+          ccusage
           nh
           procs
           dust
