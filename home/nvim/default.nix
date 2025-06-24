@@ -228,7 +228,7 @@ in
         }
         # AI
         {
-          plugin = claude-code-nvim;
+          plugin = claudecode-nvim;
           type = "lua";
           config = builtins.readFile ./config/lua/claude-code-config.lua;
         }

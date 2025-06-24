@@ -26,6 +26,7 @@ final: prev:
     toast-services = prev.callPackage ./toast/toast-services { };
   };
   vimPlugins = prev.vimPlugins // {
+    claudecode-nvim = prev.callPackage ./vimPlugins/claudecode-nvim { };
     tiny-code-action-nvim = prev.callPackage ./vimPlugins/tiny-code-action-nvim { };
   };
 }
