@@ -18,5 +18,9 @@ in
     flaggy_token = mkIf cfg.isWork {
       file = ../../secrets/flaggy_token.age;
     };
+
+    work_github_key = mkIf cfg.isWork {
+      file = ../../secrets/work_github_key.age;
+    };
   };
 }
