@@ -6,16 +6,16 @@
 
 buildNpmPackage rec {
   pname = "sequential-thinking-mcp";
-  version = "0.6.2";
+  version = "2025.7.1";
 
   nodejs = nodejs_20;
 
   src = fetchzip {
     url = "https://registry.npmjs.org/@modelcontextprotocol/server-sequential-thinking/-/server-sequential-thinking-${version}.tgz";
-    hash = "sha256-U21rDtEpHYv+YPOs31AuGoTahR8QklNY4i0ySKWkX8U=";
+    hash = "sha256-Iel7ACHE+3aiAQPGD8IIQlU9iR4ofe6ZRsguFuXDeCg=";
   };
 
-  npmDepsHash = "sha256-DeC170NHQC7RP5JaGLl37vckz4hrLgT5cCX2Q+o6rSo=";
+  npmDepsHash = "sha256-2EebePCPqgceoPlP4JPq991JbGG+JGXS2+PcxsSvkAI=";
 
   postPatch = ''
     cp ${./package-lock.json} package-lock.json
