@@ -1,9 +1,12 @@
 { lib
-, pkgs
+, stdenv
 , buildNpmPackage
 , fetchFromGitHub
 , fetchNpmDeps
 , npmHooks
+, python3
+, cacert
+,
 }:
 
 buildNpmPackage (finalAttrs: {
@@ -20,38 +23,35 @@ buildNpmPackage (finalAttrs: {
   # Deps hash for the root package
   npmDepsHash = "sha256-fW2hH5W0PCIUWHiZHDgxfpLPxmncJsAepN8N56c8su0=";
 
+  # Deps src and hash for ui subdirectory
+  npmDeps_ui = fetchNpmDeps {
+    name = "npm-deps-ui";
+    src = "${finalAttrs.src}/ui";
+    hash = "sha256-nJE9OJ+sJP9GwEiqj4KO/RbvsQsYgaF3T3AoAK9nGYQ=";
+  };
+
   # Need to also run npm ci in the ui subdirectory
-  preBuild =
-    let
-      # Deps src and hash for ui subdirectory
-      npmDeps_ui = fetchNpmDeps {
-        name = "npm-deps-ui";
-        src = "${finalAttrs.src}/ui";
-        hash = "sha256-nJE9OJ+sJP9GwEiqj4KO/RbvsQsYgaF3T3AoAK9nGYQ=";
-      };
-    in
-    ''
-      # Tricky way to run npmConfigHook multiple times
-      (
-        source ${npmHooks.npmConfigHook}/nix-support/setup-hook
-        npmRoot=ui npmDeps=${npmDeps_ui} makeCacheWritable= npmConfigHook
-      )
-      # Required to prevent "ng build" from failing due to
-      # prompting user for autocompletion
-      export CI=true
-    '';
+  preBuild = ''
+    # Tricky way to run npmConfigHook multiple times
+    (
+      source ${npmHooks.npmConfigHook}/nix-support/setup-hook
+      npmRoot=ui npmDeps=${finalAttrs.npmDeps_ui} makeCacheWritable= npmConfigHook
+    )
+    # Required to prevent "ng build" from failing due to
+    # prompting user for autocompletion
+    export CI=true
+  '';
 
   # On darwin, the build failed because openpty() is not declared
   # Uses the prebuild version of @homebridge/node-pty-prebuilt-multiarch instead
-  makeCacheWritable = pkgs.stdenv.hostPlatform.isDarwin;
+  makeCacheWritable = stdenv.hostPlatform.isDarwin;
 
-  nativeBuildInputs = with pkgs; [
+  nativeBuildInputs = [
     python3
-    (lib.optional stdenv.hostPlatform.isDarwin cacert)
-  ];
+  ] ++ lib.optionals stdenv.hostPlatform.isDarwin [ cacert ];
 
   meta = {
-    description = "Homebridge Config UI X";
+    description = "Configure Homebridge, monitor and backup from a browser";
     homepage = "https://github.com/homebridge/homebridge-config-ui-x";
     license = lib.licenses.mit;
     mainProgram = "homebridge-config-ui-x";

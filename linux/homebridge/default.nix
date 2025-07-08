@@ -4,8 +4,6 @@
 , ...
 }:
 
-with lib;
-
 let
   cfg = config.services.homebridge;
 
@@ -83,7 +81,7 @@ let
   settingsFormat = pkgs.formats.json { };
 in
 {
-  options.services.homebridge = with types; {
+  options.services.homebridge = with lib.types; {
 
     # Basic Example
     # {
@@ -94,27 +92,27 @@ in
     #   };
     # }
 
-    enable = mkEnableOption "Homebridge: Homekit home automation";
+    enable = lib.mkEnableOption "Homebridge: Homekit home automation";
 
-    user = mkOption {
+    user = lib.mkOption {
       type = str;
       default = "homebridge";
       description = "User to run homebridge as.";
     };
 
-    group = mkOption {
+    group = lib.mkOption {
       type = str;
       default = "homebridge";
       description = "Group to run homebridge as.";
     };
 
-    openFirewall = mkEnableOption "" // {
+    openFirewall = lib.mkEnableOption "" // {
       description = ''
         Open ports in the firewall for the Homebridge web interface and service.
       '';
     };
 
-    userStoragePath = mkOption {
+    userStoragePath = lib.mkOption {
       type = str;
       default = "/var/lib/homebridge";
       description = ''
@@ -122,7 +120,7 @@ in
       '';
     };
 
-    pluginPath = mkOption {
+    pluginPath = lib.mkOption {
       type = str;
       default = "/var/lib/homebridge/node_modules";
       description = ''
@@ -132,7 +130,7 @@ in
       '';
     };
 
-    environmentFile = mkOption {
+    environmentFile = lib.mkOption {
       type = types.nullOr types.str;
       default = null;
       description = ''
@@ -140,7 +138,7 @@ in
       '';
     };
 
-    settings = mkOption {
+    settings = lib.mkOption {
       default = { };
       description = ''
         Configuration options for homebridge.
@@ -150,37 +148,37 @@ in
       type = submodule {
         freeformType = settingsFormat.type;
         options = {
-          description = mkOption {
+          description = lib.mkOption {
             type = str;
             default = "Homebridge";
             description = "Description of the homebridge instance.";
             readOnly = true;
           };
 
-          bridge.name = mkOption {
+          bridge.name = lib.mkOption {
             type = str;
             default = "Homebridge";
             description = "Name of the homebridge";
           };
 
-          bridge.port = mkOption {
+          bridge.port = lib.mkOption {
             type = port;
             default = 51826;
             description = "The port homebridge listens on";
           };
 
-          platforms = mkOption {
+          platforms = lib.mkOption {
             description = "Homebridge Platforms";
             default = [ ];
             apply = validatePlatforms;
             type = listOf (submodule {
               freeformType = settingsFormat.type;
               options = {
-                name = mkOption {
+                name = lib.mkOption {
                   type = str;
                   description = "Name of the platform";
                 };
-                platform = mkOption {
+                platform = lib.mkOption {
                   type = str;
                   description = "Platform type";
                 };
@@ -188,17 +186,17 @@ in
             });
           };
 
-          accessories = mkOption {
+          accessories = lib.mkOption {
             description = "Homebridge Accessories";
             default = [ ];
             type = listOf (submodule {
               freeformType = settingsFormat.type;
               options = {
-                name = mkOption {
+                name = lib.mkOption {
                   type = str;
                   description = "Name of the accessory";
                 };
-                accessory = mkOption {
+                accessory = lib.mkOption {
                   type = str;
                   description = "Accessory type";
                 };
@@ -212,7 +210,7 @@ in
     # Defines the parameters for the Homebridge UI Plugin.
     # This submodule will get merged into the "platforms" array
     # inside settings.
-    uiSettings = mkOption {
+    uiSettings = lib.mkOption {
       # Full list of UI settings can be found here: https://github.com/homebridge/homebridge-config-ui-x/wiki/Config-Options
       default = { };
       description = ''
@@ -226,14 +224,14 @@ in
           ## Following parameters must be set, and can't be changed.
 
           # Must be "config" for UI service to see its config
-          platform = mkOption {
+          platform = lib.mkOption {
             type = str;
             default = "config";
             description = "Type of the homebridge UI platform";
             readOnly = true;
           };
 
-          name = mkOption {
+          name = lib.mkOption {
             type = str;
             default = "Config";
             description = "Name of the homebridge UI platform";
@@ -242,7 +240,7 @@ in
 
           # Homebridge can be installed many ways, but we're forcing a double service systemd setup
           # This command will restart both services
-          restart = mkOption {
+          restart = lib.mkOption {
             type = str;
             default = restartCommand;
             description = "Command to restart the homebridge UI service";
@@ -250,14 +248,14 @@ in
           };
 
           # We're using systemd, so make sure logs is setup to pull from systemd
-          log.method = mkOption {
+          log.method = lib.mkOption {
             type = str;
             default = "systemd";
             description = "Method to use for logging";
             readOnly = true;
           };
 
-          log.service = mkOption {
+          log.service = lib.mkOption {
             type = str;
             default = "homebridge";
             description = "Name of the systemd service to log to";
@@ -265,7 +263,7 @@ in
           };
 
           # The following options are allowed to be changed.
-          port = mkOption {
+          port = lib.mkOption {
             type = port;
             default = 8581;
             description = "The port the UI web service should listen on";
@@ -275,7 +273,7 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     systemd.services.homebridge = {
       description = "Homebridge";
       wants = [ "network-online.target" ];
@@ -356,7 +354,7 @@ in
         User = cfg.user;
         PermissionsStartOnly = true;
         StateDirectory = "homebridge";
-        EnvironmentFile = mkIf (cfg.environmentFile != null) [ cfg.environmentFile ];
+        EnvironmentFile = lib.mkIf (cfg.environmentFile != null) [ cfg.environmentFile ];
         ExecStart = "${pkgs.homebridge-config-ui-x}/bin/hb-service run -U ${cfg.userStoragePath} -P ${cfg.pluginPath}";
         Restart = "always";
         RestartSec = 3;
@@ -424,11 +422,11 @@ in
     ];
 
     networking.firewall = {
-      allowedTCPPorts = mkIf cfg.openFirewall [
+      allowedTCPPorts = lib.mkIf cfg.openFirewall [
         cfg.settings.bridge.port
         cfg.uiSettings.port
       ];
-      allowedUDPPorts = mkIf cfg.openFirewall [ 5353 ];
+      allowedUDPPorts = lib.mkIf cfg.openFirewall [ 5353 ];
     };
   };
 }

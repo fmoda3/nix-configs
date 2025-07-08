@@ -1,7 +1,8 @@
 { lib
-, pkgs
 , buildNpmPackage
 , fetchFromGitHub
+, jq
+,
 }:
 
 buildNpmPackage (finalAttrs: {
@@ -21,12 +22,12 @@ buildNpmPackage (finalAttrs: {
   # rimraf is already in the declared dependencies, so we just don't need to do it.
   # This will replace "npm install rimraf && rimraf lib/" with "rimraf lib/".
   preBuild = ''
-    cat package.json | ${pkgs.jq}/bin/jq '.scripts.clean = "rimraf lib/"' > package.json.tmp
+    cat package.json | ${jq}/bin/jq '.scripts.clean = "rimraf lib/"' > package.json.tmp
     mv package.json.tmp package.json
   '';
 
   meta = {
-    description = "Homebridge";
+    description = "Lightweight emulator of iOS HomeKit API";
     homepage = "https://github.com/homebridge/homebridge";
     license = lib.licenses.asl20;
     mainProgram = "homebridge";
