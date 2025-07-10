@@ -63,14 +63,52 @@ with lib;
       "..." = "cd ../..";
       "...." = "cd .././..";
 
+      # Replace ls with eza
+      ls = "eza";
+      ll = "eza -l";
+      la = "eza -la";
+      lt = "eza --tree";
+      lg = "eza -l --git";
+      lag = "eza -la --git";
+      lsg = "eza -l --git --git-ignore";
+      lh = "eza -l --header";
+      lm = "eza -l --modified";
+      lc = "eza -l --created";
+      ls-size = "eza -l --sort=size";
+      ls-time = "eza -l --sort=modified";
+      ls-name = "eza -l --sort=name";
+      lsi = "eza -l --icons";
+      lai = "eza -la --icons";
+      lsf = "eza -l --classify";
+      lso = "eza -l --octal-permissions";
+
+      # Replace tree with eza
+      tree = "eza --tree";
+      tree2 = "eza --tree --level=2";
+      tree3 = "eza --tree --level=3";
+      treei = "eza --tree --icons";
+
+      # Bat
+      b = "bat";
+
+      # Zoxide
+      zz = "z -"; # Go to previous directory
+      zq = "z -i"; # Query interactively
+      zl = "zoxide query -l"; # List all directories in database
+      zs = "zoxide query -s"; # Show frecency scores
+      zt = "zoxide query -l | tail"; # Show recently added directories
+      zr = "zoxide remove"; # Remove directory from database
+      zc = "zoxide query -l | wc -l"; # Count directories in database
+      zf = "zoxide query -l | fzf"; # Use fzf to select from all directories
+      zh = "zoxide query -l | head"; # Show most frecent directories
+      zstats = "zoxide query -l -s"; # Show all directories with scores
+
       # Show human friendly numbers and colors
       df = "df -h";
-      ll = "ls --color=auto -alGh";
-      ls = "ls --color=auto -Gh";
       du = "du -h -d 2";
 
       # show me files matching "ls grep"
-      lsg = "ll | grep";
+      lsgrep = "ll | grep";
 
       # Grep
       grep = "grep --color=auto";
@@ -140,7 +178,6 @@ with lib;
       less = "less -r";
       tf = "tail -f";
       l = "less";
-      lh = "ls -alt | head"; # see the last modified files
       cl = "clear";
 
       # Zippin
