@@ -250,6 +250,8 @@ in
         dart
         # Elixir
         beam.packages.erlang.elixir-ls
+        # Flix
+        flix
         # Gleam
         gleam
         # Haskell

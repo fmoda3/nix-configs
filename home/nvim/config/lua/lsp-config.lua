@@ -379,6 +379,19 @@ vim.lsp.config("elixirls", {
 	},
 })
 vim.lsp.enable("elixirls")
+-- Flix
+vim.filetype.add({
+	extension = {
+		flix = "flix",
+	},
+})
+vim.lsp.config("flix", {
+	cmd = { "flix", "lsp" },
+	filetypes = { "flix" },
+	root_markers = { "flix.toml", "flix.jar" },
+	settings = {},
+})
+vim.lsp.enable("flix")
 -- Gleam
 vim.lsp.enable("gleam")
 -- Haskell
