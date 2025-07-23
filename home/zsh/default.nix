@@ -32,11 +32,6 @@ with lib;
           OPENROUTER_API_KEY = ''$(${pkgs.coreutils}/bin/cat ${config.age.secrets."openrouter_key".path})'';
         };
 
-        # Personal variables (when isWork = false)
-        personalVariables = optionalAttrs (!config.my-home.isWork) {
-          GITHUB_PERSONAL_ACCESS_TOKEN = ''$(${pkgs.coreutils}/bin/cat ${config.age.secrets."personal_github_key".path})'';
-        };
-
         # Work variables (when isWork = true)
         workVariables = optionalAttrs config.my-home.isWork {
           TOAST_GIT = "/Users/frank/Development";
@@ -44,11 +39,9 @@ with lib;
           TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE = "/var/run/docker.sock";
           FLAGGY_TOKEN = ''$(${pkgs.coreutils}/bin/cat ${config.age.secrets."flaggy_token".path})'';
           BRAID_PULSAR_MDC_PROPAGATION_KEYS = "Toast-Braid-Route,Toast-Braid-Services";
-          GITHUB_PERSONAL_ACCESS_TOKEN = ''$(${pkgs.coreutils}/bin/cat ${config.age.secrets."work_github_key".path})'';
-          GITHUB_HOST = "https://github.toasttab.com";
         };
       in
-      commonVariables // personalVariables // workVariables;
+      commonVariables // workVariables;
 
     shellAliases = {
       # PS

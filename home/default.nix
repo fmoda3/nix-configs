@@ -5,13 +5,33 @@ let
 
   all-nerd-fonts = builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
 
+  # Wrap github-mcp-server to give it an environment variable with our credential
+  github-mcp-server-wrapped = with pkgs; writeShellScriptBin "github-mcp-server" (
+    let
+      envVars =
+        if cfg.isWork then ''
+          export GITHUB_PERSONAL_ACCESS_TOKEN="$(${coreutils}/bin/cat ${config.age.secrets."work_github_key".path})"
+          export GITHUB_HOST="https://github.toasttab.com"
+        '' else ''
+          export GITHUB_PERSONAL_ACCESS_TOKEN="$(${coreutils}/bin/cat ${config.age.secrets."personal_github_key".path})"
+        '';
+    in
+    ''
+      ${envVars}
+      exec ${mcp.github}/bin/github-mcp-server "$@"
+    ''
+  );
+
+  # Build up list of claude code tools, to make sure they are available to claude
   claude-code-tools = with pkgs; lib.makeBinPath [
     ripgrep # Claude really likes to use ripgrep
     # MCP servers
     mcp.context7
-    mcp.github
+    github-mcp-server-wrapped
     mcp.sequential-thinking
   ];
+
+  # Make sure tools that are only meant for claude code, are applied to it's path
   claude-code-wrapped = with pkgs; writeShellScriptBin "claude" ''
     export PATH="${claude-code-tools}:$PATH"
     exec ${claude-code}/bin/claude "$@"
