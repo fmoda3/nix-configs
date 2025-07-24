@@ -20,16 +20,18 @@ let
   systems = [ cicucci-dns cicucci-homelab ];
 
   all = users ++ systems;
+  work = [ work-laptop-fmoda3 ];
+  personal = [ cicucci-desktop-fmoda3 cicucci-laptop-fmoda3 cicucci-homelab-fmoda3 cicucci-dns cicucci-homelab ];
 in
 {
   "anthropic_ai_key.age".publicKeys = all;
   "codestral_ai_key.age".publicKeys = all;
-  "dns_tailscale_key.age".publicKeys = all;
-  "homelab_tailscale_key.age".publicKeys = all;
-  "flaggy_token.age".publicKeys = all;
+  "dns_tailscale_key.age".publicKeys = [ cicucci-dns ];
+  "homelab_tailscale_key.age".publicKeys = [ cicucci-homelab cicucci-homelab-fmoda3 ];
+  "flaggy_token.age".publicKeys = work;
   "mistral_ai_key.age".publicKeys = all;
   "openrouter_key.age".publicKeys = all;
   "voyage_ai_key.age".publicKeys = all;
-  "personal_github_key.age".publicKeys = all;
-  "work_github_key.age".publicKeys = all;
+  "personal_github_key.age".publicKeys = personal;
+  "work_github_key.age".publicKeys = work;
 }
