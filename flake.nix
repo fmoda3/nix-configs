@@ -124,7 +124,7 @@
             useGlobalPkgs = true;
             users.${user} = import (./. + "/hosts/${host}/home.nix");
             sharedModules = [
-              nix-index-database.hmModules.nix-index
+              nix-index-database.homeModules.nix-index
               agenix.homeManagerModules.default
             ];
           };
