@@ -2,8 +2,6 @@
 with lib;
 let
   cfg = config.my-home;
-
-  all-nerd-fonts = builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
 in
 {
 
@@ -69,7 +67,15 @@ in
           # cozette
           scientifica
           monocraft
-        ] ++ all-nerd-fonts;
+          nerd-fonts.fira-code
+          nerd-fonts.fira-mono
+          nerd-fonts.inconsolata
+          nerd-fonts.iosevka
+          nerd-fonts.iosevka-term
+          nerd-fonts.iosevka-term-slab
+          nerd-fonts.monaspace
+          nerd-fonts.terminess-ttf
+        ];
         vimPackage = [ vim ];
         workPackages = [
           # Work packages
