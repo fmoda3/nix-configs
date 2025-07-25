@@ -10,7 +10,6 @@ in
     ./adguardhome
     ./unbound
     ./tailscale
-    ./homebridge
   ];
 
   options.my-linux = {
