@@ -24,9 +24,7 @@ let
   claude-code-tools = with pkgs; lib.makeBinPath [
     ripgrep # Claude really likes to use ripgrep
     # MCP servers
-    mcp.context7
     github-mcp-server-wrapped
-    mcp.sequential-thinking
   ];
 
   # Make sure tools that are only meant for claude code, are applied to it's path
