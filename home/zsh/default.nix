@@ -39,6 +39,7 @@ with lib;
           TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE = "/var/run/docker.sock";
           FLAGGY_TOKEN = ''$(${pkgs.coreutils}/bin/cat ${config.age.secrets."flaggy_token".path})'';
           BRAID_PULSAR_MDC_PROPAGATION_KEYS = "Toast-Braid-Route,Toast-Braid-Services";
+          GH_HOST = "github.toasttab.com";
         };
       in
       commonVariables // workVariables;
