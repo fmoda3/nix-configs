@@ -25,6 +25,7 @@ let
     ripgrep # Claude really likes to use ripgrep
     # MCP servers
     github-mcp-server-wrapped
+    playwright-mcp
   ];
 
   # Make sure tools that are only meant for claude code, are applied to it's path
