@@ -6,10 +6,10 @@ in
 {
 
   imports = [
-    ./openssh
     ./adguardhome
-    ./unbound
+    ./openssh
     ./tailscale
+    ./unbound
   ];
 
   options.my-linux = {

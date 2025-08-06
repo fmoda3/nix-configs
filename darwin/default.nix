@@ -6,11 +6,11 @@ in
 {
 
   imports = [
+    ./homebrew
     ./system-defaults
     # ./system-packages
     # Uncomment to bring Yabai back
     # ./wm
-    ./homebrew
   ];
 
   options.my-darwin = {

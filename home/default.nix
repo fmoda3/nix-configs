@@ -6,26 +6,26 @@ in
 {
 
   imports = [
-    # ./kitty
-    ./zsh
-    ./starship
-    ./git
-    ./nvim
-    ./tmux
-    ./direnv
-    ./games
-    ./gh
     ./bat
     ./btop
-    ./yazi
-    ./fzf
-    ./zoxide
-    ./eza
-    ./lazygit
-    ./secrets
     ./claude-code
-    ./nh
+    ./direnv
+    ./eza
+    ./fzf
+    ./games
+    ./gh
+    ./git
     ./jq
+    # ./kitty
+    ./lazygit
+    ./nh
+    ./nvim
+    ./secrets
+    ./starship
+    ./tmux
+    ./yazi
+    ./zoxide
+    ./zsh
   ];
 
   options.my-home = {
