@@ -25,6 +25,7 @@ in
     ./secrets
     ./claude-code
     ./nh
+    ./jq
   ];
 
   options.my-home = {
