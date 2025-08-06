@@ -24,6 +24,7 @@ in
     ./lazygit
     ./secrets
     ./claude-code
+    ./nh
   ];
 
   options.my-home = {
@@ -31,6 +32,11 @@ in
     useNeovim = lib.mkEnableOption "neovim";
     isWork = lib.mkEnableOption "work profile";
     includeGames = lib.mkEnableOption "games";
+    flake = lib.mkOption {
+      description = "Flake string to use for nh";
+      default = "";
+      type = types.str;
+    };
   };
 
   config = {

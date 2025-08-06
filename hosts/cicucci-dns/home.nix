@@ -3,11 +3,7 @@
     ../../home
   ];
 
-  home = {
-    sessionVariables = {
-      NH_OS_FLAKE = ".#nixosConfigurations.cicucci-dns";
-    };
+  my-home = {
+    flake = ".#nixosConfigurations.cicucci-dns";
   };
-
-  my-home = { };
 }

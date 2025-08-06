@@ -3,11 +3,7 @@
     ../../home
   ];
 
-  home = {
-    sessionVariables = {
-      NH_DARWIN_FLAKE = ".#darwinConfigurations.cicucci-builder";
-    };
+  my-home = {
+    flake = ".#darwinConfigurations.cicucci-builder";
   };
-
-  my-home = { };
 }
