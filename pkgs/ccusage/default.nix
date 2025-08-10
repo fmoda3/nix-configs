@@ -6,16 +6,16 @@
 
 buildNpmPackage rec {
   pname = "ccusage";
-  version = "15.9.1";
+  version = "15.9.2";
 
   nodejs = nodejs_20;
 
   src = fetchzip {
     url = "https://registry.npmjs.org/ccusage/-/ccusage-${version}.tgz";
-    hash = "sha256-4dbfUgYU3tB9LVVVL89VrwDEZOvTDnwlzwMzoFQeiF4=";
+    hash = "sha256-6MwvGPiYQlmhVt7xplo4d+4S6+JjWoer1jP2EK4eGb4=";
   };
 
-  npmDepsHash = "sha256-hohQDK++Erj530yRavPYAhnoUmw5e3q25SzaNd/vrpo=";
+  npmDepsHash = "sha256-uUBqMS3+axjsbbwe5TUDm7idSRiP5xrCzbzUBgooDHo=";
   forceEmptyCache = true;
 
   postPatch = ''
