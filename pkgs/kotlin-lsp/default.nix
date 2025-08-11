@@ -8,11 +8,11 @@
 
 stdenv.mkDerivation rec {
   pname = "kotlin-lsp";
-  version = "0.252.17811";
+  version = "0.253.10629";
 
   src = fetchurl {
     url = "https://download-cdn.jetbrains.com/kotlin-lsp/${version}/kotlin-${version}.zip";
-    hash = "sha256-DziwCvttgfY9JS3HKaC8M6AJvv0RreqZABpSeX1nMYw=";
+    hash = "sha256-r6Bxh0CB9kTqaoW0qGRXbv+2r6juMO51ERmc3M2sN5w=";
   };
 
   nativeBuildInputs = [
