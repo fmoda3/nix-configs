@@ -3,7 +3,7 @@
 }:
 stdenv.mkDerivation {
   pname = "catppuccin-yazi";
-  version = "1.0";
+  version = "2025-08-06";
 
   src = fetchFromGitHub {
     owner = "catppuccin";

@@ -3,7 +3,7 @@
 }:
 stdenv.mkDerivation {
   pname = "catppuccin-bat";
-  version = "1.0";
+  version = "2025-06-29";
 
   src = fetchFromGitHub {
     owner = "catppuccin";

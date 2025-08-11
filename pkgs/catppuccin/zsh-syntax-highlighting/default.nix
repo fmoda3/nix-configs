@@ -3,7 +3,7 @@
 }:
 stdenv.mkDerivation {
   pname = "catppuccin-zsh-syntax-highlighting";
-  version = "1.0";
+  version = "2024-07-20";
 
   src = fetchFromGitHub {
     owner = "catppuccin";

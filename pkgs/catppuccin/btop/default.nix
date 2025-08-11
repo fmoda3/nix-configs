@@ -3,7 +3,7 @@
 }:
 stdenv.mkDerivation {
   pname = "catppuccin-btop";
-  version = "1.0";
+  version = "2024-09-23";
 
   src = fetchFromGitHub {
     owner = "catppuccin";
