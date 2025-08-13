@@ -47,6 +47,10 @@ in
         ".claude/CLAUDE.md".source = ./config/CLAUDE.md;
         ".claude/settings.json".source = ./config/settings.json;
         ".claude/commands".source = ./config/commands;
+        ".claude/statusline.sh" = {
+          source = ./config/statusline.sh;
+          executable = true;
+        };
       };
     };
   };
