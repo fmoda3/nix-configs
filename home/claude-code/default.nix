@@ -46,6 +46,7 @@ in
       file = {
         ".claude/CLAUDE.md".source = ./config/CLAUDE.md;
         ".claude/settings.json".source = ./config/settings.json;
+        ".claude/agents".source = ./config/agents;
         ".claude/commands".source = ./config/commands;
         ".claude/statusline.sh" = {
           source = ./config/statusline.sh;
