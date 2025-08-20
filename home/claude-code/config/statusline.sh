@@ -43,18 +43,30 @@ readonly RESET="\033[0m"
 #   "workspace": {
 #     "current_dir": "/current/working/directory",
 #     "project_dir": "/original/project/directory"
+#   },
+#   "version": "1.0.85",
+#   "output_style": {
+#     "name": "default"
+#   },
+#   "cost": {
+#     "total_cost_usd": 0.1082909,
+#     "total_duration_ms": 37521,
+#     "total_api_duration_ms": 20258,
+#     "total_lines_added": 0,
+#     "total_lines_removed": 0
 #   }
 # }
 INPUT=$(cat)
 
-# Helper functions for common extractions
-get_session_id() { echo "$INPUT" | jq -r '.session_id'; }
-get_model_name() { echo "$INPUT" | jq -r '.model.display_name'; }
+# Debug: Log the INPUT JSON to a file for inspection
+echo "$INPUT" > /tmp/claude-code-input-debug.json
 
-SESSION_ID=$(get_session_id)
-CCUSAGE_TOTAL=$(ccusage session --id "$SESSION_ID" --json)
-get_session_cost() { echo "$CCUSAGE_TOTAL" | jq -r '.totalCost // 0'; }
-get_session_tokens() { echo "$CCUSAGE_TOTAL" | jq -r '.totalTokens // 0'; }
+# Helper functions for common extractions
+get_model_name() { echo "$INPUT" | jq -r '.model.display_name'; }
+get_output_style() { echo "$INPUT" | jq -r '.output_style.name'; }
+get_session_cost() { echo "$INPUT" | jq -r '.cost.total_cost_usd // 0'; }
+get_total_lines_added() { echo "$INPUT" | jq -r '.cost.total_lines_added // 0'; }
+get_total_lines_removed() { echo "$INPUT" | jq -r '.cost.total_lines_removed // 0'; }
 
 CCUSAGE_ACTIVE=$(ccusage blocks --active --json)
 get_remaining_minutes() { echo "$CCUSAGE_ACTIVE" | jq -r '.blocks[0].projection.remainingMinutes // 0'; }
@@ -64,7 +76,11 @@ STATUSLINE="${RESET}"
 
 # Add Model
 MODEL=$(get_model_name)
-STATUSLINE+="${TEXT}[${BLUE}󱜙 $MODEL${TEXT}]${RESET}"
+STATUSLINE+="${BLUE}󱜙 ${MODEL}${TEXT} | ${RESET}"
+
+# Add Output Style
+OUTPUT_STYLE=$(get_output_style)
+STATUSLINE+="${TEAL} ${OUTPUT_STYLE}${TEXT} | ${RESET}"
 
 # Add Session Cost
 format_decimal() {
@@ -72,27 +88,17 @@ format_decimal() {
 }
 SESSION_COST=$(get_session_cost)
 FORMATTED_SESSION_COST=$(format_decimal $SESSION_COST)
-STATUSLINE+="${TEXT}[${GREEN} \$$FORMATTED_SESSION_COST${TEXT}]${RESET}"
-
-# Add Session Tokens
-format_tokens() {
-  local t=$1
-  if (( t < 1000 )); then
-    printf "%s" "$t"
-  elif (( t < 1000000 )); then
-    printf "%.1fk" "$(echo "scale=1; $t / 1000" | bc)"
-  else
-    printf "%.1fM" "$(echo "scale=1; $t / 1000000" | bc)"
-  fi
-}
-SESSION_TOKENS=$(get_session_tokens)
-FORMATTED_TOKENS=$(format_tokens "$SESSION_TOKENS")
-STATUSLINE+="${TEXT}[${MAUVE}󰠰 $FORMATTED_TOKENS tokens${TEXT}]${RESET}"
+STATUSLINE+="${YELLOW} \$${FORMATTED_SESSION_COST}${TEXT} | ${RESET}"
 
 # Add remaining minutes in claude window
 MINUTES=$(get_remaining_minutes)
 HOURS=$((MINUTES / 60))
 REMAINING_MINUTES=$((MINUTES % 60))
-STATUSLINE+="${TEXT}[${TEAL} ${HOURS}h ${REMAINING_MINUTES}m${TEXT}]${RESET}"
+STATUSLINE+="${MAUVE} ${HOURS}h ${REMAINING_MINUTES}m${TEXT} | ${RESET}"
+
+# Add added/removes lines
+TOTAL_LINES_ADDED=$(get_total_lines_added)
+TOTAL_LINES_REMOVED=$(get_total_lines_removed)
+STATUSLINE+="${TEXT}(${GREEN} ${TOTAL_LINES_ADDED}${TEXT}, ${RED} ${TOTAL_LINES_REMOVED}${TEXT})${RESET}"
 
 echo -e "$STATUSLINE"
