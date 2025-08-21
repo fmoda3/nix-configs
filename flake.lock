@@ -27,6 +27,38 @@
         "type": "github"
       }
     },
+    "colmena": {
+      "inputs": {
+        "flake-compat": [
+          "flake-compat"
+        ],
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nix-github-actions": [
+          "nix-github-actions"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "stable": [
+          "nixos-stable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1755272288,
+        "narHash": "sha256-ypTPb2eKcOBbOoyvPV0j4ZOXs4kayo73/2KI456QnE0=",
+        "owner": "zhaofengli",
+        "repo": "colmena",
+        "rev": "5bf4ce6a24adba74a5184f4a9bef01d545a09473",
+        "type": "github"
+      },
+      "original": {
+        "owner": "zhaofengli",
+        "repo": "colmena",
+        "type": "github"
+      }
+    },
     "comma": {
       "inputs": {
         "flake-compat": [
@@ -73,32 +105,6 @@
       "original": {
         "owner": "lnl7",
         "repo": "nix-darwin",
-        "type": "github"
-      }
-    },
-    "deploy-rs": {
-      "inputs": {
-        "flake-compat": [
-          "flake-compat"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "utils": [
-          "flake-utils"
-        ]
-      },
-      "locked": {
-        "lastModified": 1749105467,
-        "narHash": "sha256-hXh76y/wDl15almBcqvjryB50B0BaiXJKk20f314RoE=",
-        "owner": "serokell",
-        "repo": "deploy-rs",
-        "rev": "6bc76b872374845ba9d645a2f012b764fecd765f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "serokell",
-        "repo": "deploy-rs",
         "type": "github"
       }
     },
@@ -320,6 +326,26 @@
         "type": "github"
       }
     },
+    "nix-github-actions": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1737420293,
+        "narHash": "sha256-F1G5ifvqTpJq7fdkT34e/Jy9VCyzd5XfJ9TO8fHhJWE=",
+        "owner": "nix-community",
+        "repo": "nix-github-actions",
+        "rev": "f4158fa080ef4503c8f4c820967d946c2af31ec9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nix-github-actions",
+        "type": "github"
+      }
+    },
     "nix-index-database": {
       "inputs": {
         "nixpkgs": [
@@ -458,9 +484,9 @@
     "root": {
       "inputs": {
         "agenix": "agenix",
+        "colmena": "colmena",
         "comma": "comma",
         "darwin": "darwin",
-        "deploy-rs": "deploy-rs",
         "devshell": "devshell",
         "disko": "disko",
         "flake-compat": "flake-compat",
@@ -470,6 +496,7 @@
         "git-hooks": "git-hooks",
         "home-manager": "home-manager",
         "naersk": "naersk",
+        "nix-github-actions": "nix-github-actions",
         "nix-index-database": "nix-index-database",
         "nixos-generators": "nixos-generators",
         "nixos-stable": "nixos-stable",

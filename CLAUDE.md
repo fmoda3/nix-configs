@@ -43,7 +43,7 @@ age-rekey            # Rekey all secrets
 
 ### Deployment
 ```bash
-deploy               # Deploy to remote systems
+colmena apply               # Deploy to remote systems
 ```
 
 ## Architecture
@@ -85,7 +85,7 @@ deploy               # Deploy to remote systems
 - Automatic rekeying when keys change
 
 ### Remote Deployment
-- Uses deploy-rs for remote system management
+- Uses colmena for remote system management
 - Configurations for multiple remote systems
 - Automated deployment pipelines
 

@@ -29,6 +29,10 @@
       url = "github:edolstra/flake-compat";
       flake = false;
     };
+    nix-github-actions = {
+      url = "github:nix-community/nix-github-actions";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -45,12 +49,14 @@
         home-manager.follows = "home-manager";
       };
     };
-    deploy-rs = {
-      url = "github:serokell/deploy-rs";
+    colmena = {
+      url = "github:zhaofengli/colmena";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        utils.follows = "flake-utils";
+        stable.follows = "nixos-stable";
+        flake-utils.follows = "flake-utils";
         flake-compat.follows = "flake-compat";
+        nix-github-actions.follows = "nix-github-actions";
       };
     };
     nixos-generators = {
@@ -86,7 +92,7 @@
       };
     };
   };
-  outputs = inputs@{ self, nixpkgs, darwin, flake-parts, flake-root, deploy-rs, treefmt-nix, devshell, nixos-generators, git-hooks, ... }:
+  outputs = inputs@{ self, nixpkgs, darwin, flake-parts, flake-root, colmena, treefmt-nix, devshell, nixos-generators, git-hooks, ... }:
     let
       # "pkgs" currently points to unstable
       # The following overlay allows you to specify "pkgs.stable" for stable versions
@@ -179,6 +185,14 @@
         modules = nixosModules { inherit user host; } ++ installerModules { inherit targetSystem; };
         specialArgs = { inherit inputs nixpkgs; };
       };
+      mkColmenaNode = { user, host, system, targetHost }: {
+        nixpkgs = nixpkgsConfig // system;
+        imports = nixosModules { inherit user host; };
+        deployment = {
+          inherit targetHost;
+          targetUser = "root";
+        };
+      };
     in
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
@@ -268,19 +282,14 @@
             targetSystem = self.nixosConfigurations.cicucci-homelab;
           };
         };
-        deploy = {
-          nodes = {
-            cicucci-dns = {
-              hostname = "192.168.1.251";
-              profiles.system = {
-                user = "root";
-                sshUser = "root";
-                path = deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.cicucci-dns;
-              };
-            };
+        colmenaHive = colmena.lib.makeHive {
+          cicucci-dns = mkColmenaNode {
+            user = "fmoda3";
+            host = "cicucci-dns";
+            system = "aarch64-linux";
+            targetHost = "192.168.1.251";
           };
         };
-        checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
         templates = import ./templates;
       };
       systems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
@@ -310,7 +319,7 @@
           packages = with pkgs; [
             nixd
             statix
-            inputs'.deploy-rs.packages.default
+            inputs'.colmena.packages.colmena
             inputs'.agenix.packages.default
           ];
           commands = [
@@ -385,6 +394,18 @@
               category = "image builds";
               help = "Creates a vmware image for cicucci-builder";
               command = "nix build \".#images.cicucci-builder-vm\"";
+            }
+            {
+              name = "deploy-dns";
+              category = "deployment";
+              help = "Deploy configuration to cicucci-dns";
+              command = "colmena apply --on cicucci-dns";
+            }
+            {
+              name = "build-deployments";
+              category = "deployment";
+              help = "Build all configurations without deploying";
+              command = "colmena build";
             }
           ];
         };

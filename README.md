@@ -140,7 +140,7 @@ These images are general purpose installers, that don't target a specific config
 
 # Remote Deployment
 
-I use [deploy-rs](https://github.com/serokell/deploy-rs) to deploy the `cicucci-dns` configuration remotely to my Raspberry Pi.  I do this because running `nixos-rebuild` on the Pi itself is very slow.  I deploy from a macOS machine, that is also running a NixOS vm, setup with the `cicucci-builder` configuration.
+I use [colmena](https://github.com/zhaofengli/colmena/tree/main) to deploy the `cicucci-dns` configuration remotely to my Raspberry Pi.  I do this because running `nixos-rebuild` on the Pi itself is very slow.  I deploy from a macOS machine, that is also running a NixOS vm, setup with the `cicucci-builder` configuration.
 
 ## Setup
 
@@ -150,7 +150,7 @@ I use [deploy-rs](https://github.com/serokell/deploy-rs) to deploy the `cicucci-
 
 ## Deploy
 
-1. Simply run `deploy`
+1. Simply run `colmena apply`
 
 # Using Templates
 
