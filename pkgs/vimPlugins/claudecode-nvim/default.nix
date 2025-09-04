@@ -4,12 +4,12 @@
 }:
 vimUtils.buildVimPlugin {
   pname = "claudecode-nvim";
-  version = "2025-08-11";
+  version = "2025-09-03";
   src = fetchFromGitHub {
     owner = "coder";
     repo = "claudecode.nvim";
-    rev = "985b4b117ea13ec85c92830ecac8f63543dd5ead";
-    sha256 = "sha256-b4jCKIqowkVuWhI9jxthluZISBOnIc8eOIgkw5++HRY=";
+    rev = "e21a837956c75dd5f617ce0fe80b054312c0829a";
+    sha256 = "sha256-TaQpxncs+KaGdqOHiic+yxvzyhuk+0HlLPDqsuJDurg=";
   };
   dependencies = [ vimPlugins.snacks-nvim ];
   meta.homepage = "https://github.com/coder/claudecode.nvim/";
