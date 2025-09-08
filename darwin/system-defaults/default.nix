@@ -5,16 +5,16 @@
   };
 
   system.defaults = {
-    dock = {
-      orientation = "bottom";
-      showhidden = true;
-      mineffect = "genie";
-      minimize-to-application = true;
-      launchanim = true;
-      show-process-indicators = true;
-      # tilesize = 48;
-      mru-spaces = true;
-    };
+    # dock = {
+    #   orientation = "bottom";
+    #   showhidden = true;
+    #   mineffect = "genie";
+    #   minimize-to-application = true;
+    #   launchanim = true;
+    #   show-process-indicators = true;
+    #   # tilesize = 48;
+    #   mru-spaces = true;
+    # };
     finder = {
       # AppleShowAllExtensions = true;
       # FXEnableExtensionChangeWarning = false;
