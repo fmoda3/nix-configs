@@ -213,6 +213,11 @@
             user = "fmoda3";
             host = "cicucci-laptop";
           };
+          cicucci-server = mkDarwinSystem {
+            system = "aarch64-darwin";
+            user = "fmoda3";
+            host = "cicucci-server";
+          };
           work-laptop = mkDarwinSystem {
             system = "aarch64-darwin";
             user = "frank";
