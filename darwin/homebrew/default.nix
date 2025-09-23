@@ -1,11 +1,11 @@
-{ config, ... }:
+{ config, lib, ... }:
 {
   homebrew = {
-    enable = config.my-darwin.isWork;
+    enable = config.my-darwin.isWork || config.my-darwin.isServer;
     onActivation = {
       cleanup = "uninstall";
     };
-    taps = [
+    taps = lib.optionals config.my-darwin.isWork [
       {
         name = "toasttab/toast";
         clone_target = "git@github.toasttab.com:toasttab/homebrew-toast";
@@ -14,13 +14,17 @@
         name = "snyk/tap";
       }
     ];
-    brews = [
-      "libffi"
-      "cocoapods"
-      "lunchbox"
-      "toasttab/toast/braid"
-      "snyk"
-      "flaggy"
-    ];
+    brews =
+      lib.optionals config.my-darwin.isWork [
+        "libffi"
+        "cocoapods"
+        "lunchbox"
+        "toasttab/toast/braid"
+        "snyk"
+        "flaggy"
+      ] ++
+      lib.optionals config.my-darwin.isServer [
+        # Add server-specific brews here
+      ];
   };
 }

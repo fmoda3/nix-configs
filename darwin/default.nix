@@ -15,6 +15,7 @@ in
 
   options.my-darwin = {
     isWork = lib.mkEnableOption "work profile";
+    isServer = lib.mkEnableOption "server profile";
     enableSudoTouch = lib.mkEnableOption "sudo touch id";
   };
 
