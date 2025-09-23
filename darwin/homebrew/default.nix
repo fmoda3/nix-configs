@@ -24,7 +24,10 @@
         "flaggy"
       ] ++
       lib.optionals config.my-darwin.isServer [
-        # Add server-specific brews here
+        "handbrake"
       ];
+    casks = lib.optionals config.my-darwin.isServer [
+      "filebot"
+    ];
   };
 }
