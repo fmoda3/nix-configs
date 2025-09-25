@@ -41,6 +41,8 @@ with lib;
           BRAID_PULSAR_MDC_PROPAGATION_KEYS = "Toast-Braid-Route,Toast-Braid-Services";
           GH_HOST = "github.toasttab.com";
           OKTOAST_PROVIDER = "Browser";
+          CLAUDE_CODE_USE_BEDROCK = "1";
+          AWS_REGION = "us-east-1";
         };
       in
       commonVariables // workVariables;
