@@ -1,29 +1,46 @@
 { lib
 , buildGoModule
 , fetchFromGitHub
+, versionCheckHook
+, nix-update-script
+,
 }:
 
-buildGoModule rec {
+buildGoModule (finalAttrs: {
   pname = "github-mcp-server";
   version = "0.15.0";
 
   src = fetchFromGitHub {
     owner = "github";
     repo = "github-mcp-server";
-    rev = "v${version}";
+    tag = "v${finalAttrs.version}";
     hash = "sha256-D6oEnaHrGnFfuO6NXRYbJ665OlWcwHo+JLfCPrdDkE4=";
   };
 
   vendorHash = "sha256-0QqgyjK3QID72aMI6l6ofXAUt94PYFqO8dWech7yaFw=";
 
-  subPackages = [ "cmd/github-mcp-server" ];
+  ldflags = [
+    "-s"
+    "-w"
+    "-X=main.version=${finalAttrs.version}"
+    "-X=main.commit=${finalAttrs.src.rev}"
+    "-X=main.date=1970-01-01T00:00:00Z"
+  ];
+
+  __darwinAllowLocalNetworking = true;
+
+  doInstallCheck = true;
+  nativeInstallCheckInputs = [ versionCheckHook ];
+  versionCheckProgramArg = "--version";
+
+  passthru.updateScript = nix-update-script { };
 
   meta = {
-    description = "MCP server for GitHub API interactions";
+    changelog = "https://github.com/github/github-mcp-server/releases/tag/v${finalAttrs.version}";
+    description = "GitHub's official MCP Server";
     homepage = "https://github.com/github/github-mcp-server";
     license = lib.licenses.mit;
     mainProgram = "github-mcp-server";
-    platforms = lib.platforms.linux ++ lib.platforms.darwin;
-    maintainers = with lib.maintainers; [ fmoda3 ];
+    maintainers = with lib.maintainers; [ ];
   };
-}
+})
