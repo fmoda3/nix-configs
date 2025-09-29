@@ -68,6 +68,7 @@ in
           gping
           tokei
           duf
+          nodejs
         ];
         fontPackages = [
           # Fonts
