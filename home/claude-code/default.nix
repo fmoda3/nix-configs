@@ -19,27 +19,17 @@ let
       exec ${mcp.github}/bin/github-mcp-server "$@"
     ''
   );
-
-  # Build up list of claude code tools, to make sure they are available to claude
-  claude-code-tools = with pkgs; lib.makeBinPath [
-    ripgrep # Claude really likes to use ripgrep
-    # MCP servers
-    github-mcp-server-wrapped
-    playwright-mcp
-  ];
-
-  # Make sure tools that are only meant for claude code, are applied to it's path
-  claude-code-wrapped = with pkgs; writeShellScriptBin "claude" ''
-    export PATH="${claude-code-tools}:$PATH"
-    exec ${claude-code}/bin/claude "$@"
-  '';
 in
 {
   config = {
     home = {
       packages = with pkgs; [
-        claude-code-wrapped
+        claude-code
         ccusage
+        ripgrep # Claude really likes to use ripgrep
+        # MCP servers
+        github-mcp-server-wrapped
+        playwright-mcp
       ];
 
       # Link Claude Code configuration files
