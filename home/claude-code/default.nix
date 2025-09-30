@@ -35,7 +35,7 @@ in
       # Link Claude Code configuration files
       file = {
         ".claude/CLAUDE.md".source = ./config/CLAUDE.md;
-        ".claude/settings.json".source = ./config/settings.json;
+        ".claude/settings.json".source = if cfg.isWork then ./config/settings-work.json else ./config/settings.json;
         ".claude/agents".source = ./config/agents;
         ".claude/commands".source = ./config/commands;
         ".claude/statusline.sh" = {
