@@ -204,9 +204,6 @@ with lib;
 
       source ${pkgs.catppuccin.zsh-syntax-highlighting}/themes/catppuccin_frappe-zsh-syntax-highlighting.zsh
 
-      setopt BANG_HIST
-      setopt HIST_VERIFY
-
       setopt COMPLETE_IN_WORD     # Complete from both ends of a word.
       setopt ALWAYS_TO_END        # Move cursor to the end of a completed word.
       setopt PATH_DIRS            # Perform path search even on command names with slashes.
