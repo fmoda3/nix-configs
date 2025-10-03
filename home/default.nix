@@ -18,6 +18,7 @@ in
     ./jq
     # ./kitty
     ./lazygit
+    ./navi
     ./nh
     ./nvim
     ./secrets
@@ -69,6 +70,9 @@ in
           tokei
           duf
           nodejs
+          fd
+          sd
+          xh
         ];
         fontPackages = [
           # Fonts
