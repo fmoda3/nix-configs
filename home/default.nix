@@ -26,6 +26,7 @@ in
     ./bat
     ./btop
     ./claude-code
+    ./codex
     ./direnv
     ./eza
     ./fzf

@@ -9,6 +9,7 @@ final: prev:
   };
   ccusage = prev.callPackage ./ccusage { };
   claude-code = prev.callPackage ./claude-code { };
+  codex = prev.callPackage ./codex { };
   homebridge = prev.callPackage ./homebridge { };
   homebridge-config-ui-x = prev.callPackage ./homebridge-config-ui-x { };
   kotlin-lsp = prev.callPackage ./kotlin-lsp { };
