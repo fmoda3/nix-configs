@@ -1,47 +1,80 @@
-{ config, pkgs, lib, ... }:
-with lib;
+{ config, lib, ... }:
 let
   cfg = config.my-home;
-
-  # Wrap github-mcp-server to give it an environment variable with our credential
-  github-mcp-server-wrapped = with pkgs; writeShellScriptBin "github-mcp-server" (
-    let
-      envVars =
-        if cfg.isWork then ''
-          export GITHUB_PERSONAL_ACCESS_TOKEN="$(${coreutils}/bin/cat ${config.age.secrets."work_github_key".path})"
-          export GITHUB_HOST="https://github.toasttab.com"
-        '' else ''
-          export GITHUB_PERSONAL_ACCESS_TOKEN="$(${coreutils}/bin/cat ${config.age.secrets."personal_github_key".path})"
-        '';
-    in
-    ''
-      ${envVars}
-      exec ${mcp.github}/bin/github-mcp-server "$@"
-    ''
-  );
 in
 {
-  config = {
-    home = {
-      packages = with pkgs; [
-        claude-code
-        ccusage
-        ripgrep # Claude really likes to use ripgrep
-        # MCP servers
-        github-mcp-server-wrapped
-        playwright-mcp
-      ];
+  programs.claude-code = {
+    enable = true;
+    settings = {
+      hooks = {
+        Stop = [
+          {
+            matcher = "";
+            hooks = [
+              {
+                type = "command";
+                command = "afplay /System/Library/Sounds/Funk.aiff";
+              }
+            ];
+          }
+        ];
+        Notification = [
+          {
+            matcher = "";
+            hooks = [
+              {
+                type = "command";
+                command = "afplay /System/Library/Sounds/Funk.aiff";
+              }
+            ];
+          }
+        ];
+      };
+      statusLine = {
+        type = "command";
+        command = "~/.claude/statusline.sh";
+      };
+    } // lib.optionalAttrs cfg.isWork {
+      env = {
+        AWS_REGION = "us-east-1";
+        CLAUDE_CODE_USE_BEDROCK = "1";
+        CLAUDE_CODE_ENABLE_TELEMETRY = "1";
+        OTEL_METRICS_EXPORTER = "otlp";
+        OTEL_LOGS_EXPORTER = "otlp";
+        OTEL_EXPORTER_OTLP_PROTOCOL = "http/protobuf";
+        OTEL_EXPORTER_OTLP_ENDPOINT = "http://otel-collector-alb-466535050.us-east-1.elb.amazonaws.com";
+        OTEL_RESOURCE_ATTRIBUTES = "department=engineering,team.id=paas,user_email=frank@toasttab.com,cost_center=default,organization=default";
+      };
+    };
+    memory.source = ./config/CLAUDE.md;
+    agentsDir = ./config/agents;
+    commandsDir = ./config/commands;
+    mcpServers = {
+      context7 = {
+        type = "http";
+        url = "https://mcp.context7.com/mcp";
+      };
+      deepwiki = {
+        type = "http";
+        url = "https://mcp.deepwiki.com/mcp";
+      };
+      sequential-thinking = {
+        type = "http";
+        url = "https://remote.mcpservers.org/sequentialthinking/mcp";
+      };
+    } // lib.optionalAttrs cfg.isWork {
+      atlassian = {
+        type = "sse";
+        url = "https://mcp.atlassian.com/v1/sse";
+      };
+    };
+  };
 
-      # Link Claude Code configuration files
-      file = {
-        ".claude/CLAUDE.md".source = ./config/CLAUDE.md;
-        ".claude/settings.json".source = if cfg.isWork then ./config/settings-work.json else ./config/settings.json;
-        ".claude/agents".source = ./config/agents;
-        ".claude/commands".source = ./config/commands;
-        ".claude/statusline.sh" = {
-          source = ./config/statusline.sh;
-          executable = true;
-        };
+  home = {
+    file = {
+      ".claude/statusline.sh" = {
+        source = ./config/statusline.sh;
+        executable = true;
       };
     };
   };
