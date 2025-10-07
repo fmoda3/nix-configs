@@ -122,7 +122,6 @@
       commonModules = { user, host }: with inputs; [
         # Main config
         (./. + "/hosts/${host}/configuration.nix")
-        agenix.darwinModules.default
         # `home-manager` module
         {
           nixpkgs = nixpkgsConfig;
@@ -138,6 +137,7 @@
       ];
       darwinModules = { user, host }: with inputs;
         commonModules { inherit user host; } ++ [
+          agenix.darwinModules.default
           home-manager.darwinModules.home-manager
           {
             # `home-manager` config
@@ -148,6 +148,7 @@
       nixosModules = { user, host }: with inputs;
         commonModules { inherit user host; } ++ [
           disko.nixosModules.disko
+          agenix.nixosModules.default
           home-manager.nixosModules.home-manager
           {
             # `home-manager` config
@@ -186,7 +187,7 @@
         specialArgs = { inherit inputs nixpkgs; };
       };
       mkColmenaNode = { user, host, system, targetHost }: {
-        nixpkgs = nixpkgsConfig // system;
+        nixpkgs = nixpkgsConfig // { inherit system; };
         imports = nixosModules { inherit user host; };
         deployment = {
           inherit targetHost;
