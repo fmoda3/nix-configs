@@ -27,6 +27,7 @@ in
     ./btop
     ./claude-code
     ./codex
+    ./delta
     ./direnv
     ./eza
     ./fzf

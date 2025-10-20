@@ -5,7 +5,7 @@ require("bufferline").setup({
 		show_close_icon = false,
 		diagnostics = "nvim_lsp",
 	},
-	highlights = require("catppuccin.groups.integrations.bufferline").get_theme(),
+	highlights = require("catppuccin.special.bufferline").get_theme(),
 })
 
 require("which-key").add({
