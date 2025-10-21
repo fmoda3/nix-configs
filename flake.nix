@@ -97,6 +97,7 @@
       # "pkgs" currently points to unstable
       # The following overlay allows you to specify "pkgs.stable" for stable versions
       # and "pkgs.master" for versions on master
+      inherit (nixpkgs) lib;
       versionsOverlay = with inputs; (final: prev:
         let
           inherit (prev.stdenv) system;
@@ -119,7 +120,7 @@
           customPackagesOverlay
         ];
       };
-      commonModules = { user, host }: with inputs; [
+      commonModules = { user, host, flakeRef }: with inputs; [
         # Main config
         (./. + "/hosts/${host}/configuration.nix")
         # `home-manager` module
@@ -131,12 +132,13 @@
             sharedModules = [
               nix-index-database.homeModules.nix-index
               agenix.homeManagerModules.default
+              { config.my-home.flake = lib.mkDefault flakeRef; }
             ];
           };
         }
       ];
-      darwinModules = { user, host }: with inputs;
-        commonModules { inherit user host; } ++ [
+      darwinModules = { user, host, flakeRef }: with inputs;
+        commonModules { inherit user host flakeRef; } ++ [
           agenix.darwinModules.default
           home-manager.darwinModules.home-manager
           {
@@ -145,8 +147,8 @@
             users.users.${user}.home = "/Users/${user}";
           }
         ];
-      nixosModules = { user, host }: with inputs;
-        commonModules { inherit user host; } ++ [
+      nixosModules = { user, host, flakeRef }: with inputs;
+        commonModules { inherit user host flakeRef; } ++ [
           disko.nixosModules.disko
           agenix.nixosModules.default
           home-manager.nixosModules.home-manager
@@ -168,27 +170,33 @@
       ];
       mkDarwinSystem = { user, host, system }: darwin.lib.darwinSystem {
         inherit system;
-        modules = darwinModules { inherit user host; };
+        modules = darwinModules {
+          inherit user host;
+          flakeRef = ".#darwinConfigurations.${host}";
+        };
         specialArgs = { inherit inputs nixpkgs; };
       };
       mkNixOSSystem = { user, host, system }: nixpkgs.lib.nixosSystem {
         inherit system;
-        modules = nixosModules { inherit user host; };
+        modules = nixosModules {
+          inherit user host;
+          flakeRef = ".#nixosConfigurations.${host}";
+        };
         specialArgs = { inherit inputs nixpkgs; };
       };
       mkImage = { user, host, system, format }: nixos-generators.nixosGenerate {
         inherit system format;
-        modules = nixosModules { inherit user host; };
+        modules = nixosModules { inherit user host; flakeRef = ""; };
         specialArgs = { inherit inputs nixpkgs; };
       };
       mkInstaller = { user, host, system, format, targetSystem }: nixos-generators.nixosGenerate {
         inherit system format;
-        modules = nixosModules { inherit user host; } ++ installerModules { inherit targetSystem; };
+        modules = nixosModules { inherit user host; flakeRef = ""; } ++ installerModules { inherit targetSystem; };
         specialArgs = { inherit inputs nixpkgs; };
       };
       mkColmenaNode = { user, host, system, targetHost }: {
         nixpkgs = nixpkgsConfig // { inherit system; };
-        imports = nixosModules { inherit user host; };
+        imports = nixosModules { inherit user host; flakeRef = ""; };
         deployment = {
           inherit targetHost;
           targetUser = "root";

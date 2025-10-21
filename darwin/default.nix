@@ -17,6 +17,7 @@ in
     isWork = lib.mkEnableOption "work profile";
     isServer = lib.mkEnableOption "server profile";
     enableSudoTouch = lib.mkEnableOption "sudo touch id";
+    enableRemoteBuilder = lib.mkEnableOption "remote builder for distributed builds";
   };
 
   config = {
@@ -31,18 +32,11 @@ in
       };
       # Enable Flakes
       extraOptions = "experimental-features = nix-command flakes";
-      # An aarch64-linux vm running nixos, so I can build my raspberry pi config
-      # on it and deploy remotely.  Building on the rpi3 directly is super slow.
-      buildMachines = [
-        {
-          hostName = "192.168.123.132";
-          sshUser = "root";
-          systems = [ "aarch64-linux" "x86_64-linux" ];
-          supportedFeatures = [ "big-parallel" ];
-        }
-      ];
-      # Required for the above build machines to be used.
-      distributedBuilds = true;
+      linux-builder = {
+        # Use nix-darwin's managed Linux builder VM.
+        enable = cfg.enableRemoteBuilder;
+        systems = [ "aarch64-linux" "x86_64-linux" ];
+      };
     };
 
     # Create /etc/zshrc that loads the nix-darwin environment.

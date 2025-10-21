@@ -3,7 +3,5 @@
     ../../home
   ];
 
-  my-home = {
-    flake = ".#darwinConfigurations.cicucci-builder";
-  };
+  my-home = { };
 }
