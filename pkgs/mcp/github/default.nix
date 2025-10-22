@@ -8,13 +8,13 @@
 
 buildGoModule (finalAttrs: {
   pname = "github-mcp-server";
-  version = "0.19.0";
+  version = "0.19.1";
 
   src = fetchFromGitHub {
     owner = "github";
     repo = "github-mcp-server";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-umuCDKBKLtgs6p4B1Ml4emaF7eBDDsKPj75yInOnuXE=";
+    hash = "sha256-/i/Gk47IZtTGHUJ3ok9Y2LDTRHqlz0N4IrNmyRqSTNk=";
   };
 
   vendorHash = "sha256-esd4Ly8cbN3z9fxC1j4wQqotV2ULqK3PDf1bEovewUY=";
