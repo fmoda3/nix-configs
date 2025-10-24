@@ -6,12 +6,12 @@
 ,
 }:
 
-buildNpmPackage rec {
+buildNpmPackage (finalAttrs: {
   pname = "claude-code";
   version = "2.0.26";
 
   src = fetchzip {
-    url = "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-${version}.tgz";
+    url = "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-${finalAttrs.version}.tgz";
     hash = "sha256-4roXnR6y3jFr7uCZFKTFOyahPjnhJuyVFXunQ89flL4=";
   };
 
@@ -51,4 +51,4 @@ buildNpmPackage rec {
     license = lib.licenses.unfree;
     mainProgram = "claude";
   };
-}
+})
