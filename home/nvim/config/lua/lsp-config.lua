@@ -460,6 +460,8 @@ vim.lsp.enable("nixd")
 vim.lsp.enable("pyright")
 -- Typescript
 vim.lsp.enable("ts_ls")
+-- Typst
+vim.lsp.enable("tinymist")
 -- Web
 -- ESLint
 vim.lsp.enable("eslint")

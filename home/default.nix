@@ -90,6 +90,7 @@ in
           ripgrep
           github-mcp-server-wrapped
           playwright-mcp
+          typst
         ];
         fontPackages = [
           # Fonts
