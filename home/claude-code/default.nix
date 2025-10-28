@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 let
   cfg = config.my-home;
 in
@@ -36,15 +36,18 @@ in
       };
     } // lib.optionalAttrs cfg.isWork {
       env = {
-        AWS_REGION = "us-east-1";
         CLAUDE_CODE_USE_BEDROCK = "1";
+        CLAUDE_CODE_SKIP_BEDROCK_AUTH = "1";
+        ANTHROPIC_BEDROCK_BASE_URL = "https://llm-proxy.prod-build.int.toasttab.com/bedrock";
+        ANTHROPIC_MODEL = "global.anthropic.claude-sonnet-4-5-20250929-v1:0";
         CLAUDE_CODE_ENABLE_TELEMETRY = "1";
         OTEL_METRICS_EXPORTER = "otlp";
         OTEL_LOGS_EXPORTER = "otlp";
         OTEL_EXPORTER_OTLP_PROTOCOL = "http/protobuf";
-        OTEL_EXPORTER_OTLP_ENDPOINT = "http://otel-collector-alb-466535050.us-east-1.elb.amazonaws.com";
+        OTEL_EXPORTER_OTLP_ENDPOINT = "https://bedrock-otel-collector.build.eng.toasttab.com";
         OTEL_RESOURCE_ATTRIBUTES = "department=engineering,team.id=paas,user_email=frank@toasttab.com,cost_center=default,organization=default";
       };
+      apiKeyHelper = "${pkgs.toast.toastApiKeyHelper}/bin/toastApiKeyHelper";
     };
     memory.source = ./config/CLAUDE.md;
     agentsDir = ./config/agents;
@@ -66,6 +69,13 @@ in
       atlassian = {
         type = "sse";
         url = "https://mcp.atlassian.com/v1/sse";
+      };
+      buffet = {
+        command = "npx";
+        args = [
+          "--registry=https://artifactory.eng.toasttab.com/artifactory/api/npm/toast_npm/"
+          "@toasttab/buffet-mcp-server@next"
+        ];
       };
     };
   };
