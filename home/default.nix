@@ -2,23 +2,6 @@
 with lib;
 let
   cfg = config.my-home;
-
-  # Wrap github-mcp-server to give it an environment variable with our credential
-  github-mcp-server-wrapped = with pkgs; writeShellScriptBin "github-mcp-server" (
-    let
-      envVars =
-        if cfg.isWork then ''
-          export GITHUB_PERSONAL_ACCESS_TOKEN="$(${coreutils}/bin/cat ${config.age.secrets."work_github_key".path})"
-          export GITHUB_HOST="https://github.toasttab.com"
-        '' else ''
-          export GITHUB_PERSONAL_ACCESS_TOKEN="$(${coreutils}/bin/cat ${config.age.secrets."personal_github_key".path})"
-        '';
-    in
-    ''
-      ${envVars}
-      exec ${mcp.github}/bin/github-mcp-server "$@"
-    ''
-  );
 in
 {
 
@@ -68,35 +51,31 @@ in
         commonPackages = [
           # command line utilities
           ack
-          curl
-          htop
-          neofetch
-          tldr
-          wget
-          comma
-          nix-cleanup
-          aider-chat
-          nh
-          procs
-          dust
-          gping
-          tokei
-          duf
-          nodejs
-          fd
-          sd
-          xh
           ccusage
-          ripgrep
-          github-mcp-server-wrapped
+          comma
+          curl
+          duf
+          dust
+          fd
+          htop
+          gping
+          neofetch
+          nh
+          nix-cleanup
+          nodejs
           playwright-mcp
+          procs
+          ripgrep
+          sd
+          tldr
+          tokei
           typst
+          wget
+          xh
         ];
         fontPackages = [
           # Fonts
-          # cozette
-          scientifica
-          monocraft
+          cozette
           nerd-fonts.fira-code
           nerd-fonts.fira-mono
           nerd-fonts.inconsolata
@@ -105,22 +84,23 @@ in
           nerd-fonts.iosevka-term-slab
           nerd-fonts.monaspace
           nerd-fonts.terminess-ttf
+          monocraft
+          scientifica
         ];
         vimPackage = [ vim ];
         workPackages = [
           # Work packages
-          postgresql
+          android-tools
+          autossh
           awscli2
-          toast.oktoast
-          toast.toast-services
-          heroku
           colima
           docker
           docker-compose
           docker-credential-helpers
-          android-tools
-          autossh
-          gh
+          heroku
+          postgresql
+          toast.oktoast
+          toast.toast-services
         ];
       in
       commonPackages

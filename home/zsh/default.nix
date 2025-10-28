@@ -28,10 +28,6 @@ with lib;
           PAGER = "bat --style=plain --paging=always";
           EDITOR = "vim";
           VISUAL = "vim";
-
-          # AI API keys (available on all machines)
-          ANTHROPIC_API_KEY = ''$(${pkgs.coreutils}/bin/cat ${config.age.secrets."anthropic_ai_key".path})'';
-          OPENROUTER_API_KEY = ''$(${pkgs.coreutils}/bin/cat ${config.age.secrets."openrouter_key".path})'';
         };
 
         # Work variables (when isWork = true)
