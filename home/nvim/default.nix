@@ -254,6 +254,8 @@ in
         flix
         # Gleam
         gleam
+        # Harper
+        harper
         # Haskell
         stable.haskellPackages.haskell-language-server
         # Kotlin

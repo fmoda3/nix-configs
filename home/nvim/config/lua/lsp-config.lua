@@ -394,6 +394,8 @@ vim.lsp.config("flix", {
 vim.lsp.enable("flix")
 -- Gleam
 vim.lsp.enable("gleam")
+-- Harper
+vim.lsp.enable("harper_ls")
 -- Haskell
 vim.lsp.enable("hls")
 -- Kotlin
