@@ -16,6 +16,7 @@ in
     ./fzf
     ./games
     ./gh
+    ./ghostty
     ./git
     ./jq
     # ./kitty
