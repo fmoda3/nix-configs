@@ -8,8 +8,8 @@ vimUtils.buildVimPlugin {
   src = fetchFromGitHub {
     owner = "rachartier";
     repo = "tiny-code-action.nvim";
-    rev = "0c24efca69645e8dd3623c398b2e55f12b03af54";
-    sha256 = "sha256-SL7NSSsrid5+csXy+iyGV/H5693cxdWuKvAOwPmWblc=";
+    rev = "a43fb811c0d406b1fdb14040f08e9875dda1882f";
+    sha256 = "sha256-BrFhXaIV/tNtn4QIJ4QzMTIx7VKpBcGlpS6Ro3bqllU=";
   };
   dependencies = [ vimPlugins.plenary-nvim ];
   nvimSkipModules = [
