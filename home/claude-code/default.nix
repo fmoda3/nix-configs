@@ -1,6 +1,10 @@
 { config, lib, pkgs, ... }:
 let
   cfg = config.my-home;
+
+  commonEnv = {
+    CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY = "1";
+  };
 in
 {
   programs.claude-code = {
@@ -34,8 +38,10 @@ in
         type = "command";
         command = "~/.claude/statusline.sh";
       };
+      env = commonEnv;
     } // lib.optionalAttrs cfg.isWork {
-      env = {
+      env = commonEnv // {
+        CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY = "1";
         CLAUDE_CODE_USE_BEDROCK = "1";
         CLAUDE_CODE_SKIP_BEDROCK_AUTH = "1";
         ANTHROPIC_BEDROCK_BASE_URL = "https://llm-proxy.prod-build.int.toasttab.com/bedrock";
