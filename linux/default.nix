@@ -50,7 +50,7 @@ in
 
   config = {
     nix = {
-      package = pkgs.nixStable;
+      package = pkgs.nixVersions.stable;
       settings = {
         auto-optimise-store = cfg.enableNixOptimise;
         # Add cache for nix-community, used mainly for neovim nightly

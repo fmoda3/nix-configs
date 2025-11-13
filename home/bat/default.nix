@@ -5,7 +5,7 @@
     config = {
       theme = "catppuccin-frappe";
     };
-    extraPackages = with pkgs.stable.bat-extras; [ batdiff batman batgrep batwatch ];
+    extraPackages = with pkgs.bat-extras; [ batdiff batman batgrep batwatch ];
     themes = {
       catppuccin-frappe = {
         src = pkgs.catppuccin.bat;
