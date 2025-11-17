@@ -91,8 +91,15 @@
         flake-compat.follows = "flake-compat";
       };
     };
+    expert = {
+      url = "github:elixir-lang/expert";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-parts.follows = "flake-parts";
+      };
+    };
   };
-  outputs = inputs@{ self, nixpkgs, darwin, flake-parts, flake-root, colmena, treefmt-nix, devshell, nixos-generators, git-hooks, ... }:
+  outputs = inputs@{ self, nixpkgs, darwin, flake-parts, flake-root, colmena, treefmt-nix, devshell, nixos-generators, git-hooks, expert, ... }:
     let
       # "pkgs" currently points to unstable
       # The following overlay allows you to specify "pkgs.stable" for stable versions
@@ -110,6 +117,7 @@
       );
       # Add in custom defined packages in the pkgs directory
       customPackagesOverlay = final: prev: { flake = self; } // import ./pkgs final prev;
+      expertOverlay = final: prev: { expert = expert.packages.${prev.system}.default; };
       nixpkgsConfig = with inputs; {
         config = {
           allowUnfree = true;
@@ -118,6 +126,7 @@
           comma.overlays.default
           versionsOverlay
           customPackagesOverlay
+          expertOverlay
         ];
       };
       commonModules = { user, host, flakeRef }: with inputs; [

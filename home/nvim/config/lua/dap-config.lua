@@ -130,29 +130,6 @@ vim.fn.sign_define(
 )
 
 local dap = require("dap")
--- Elixir
-dap.adapters.mix_task = {
-	type = "executable",
-	command = "@elixir_ls_home@" .. "/lib/debug_adapter.sh",
-	args = {},
-}
-
-dap.configurations.elixir = {
-	{
-		type = "mix_task",
-		name = "mix test",
-		task = "test",
-		taskArgs = { "--trace" },
-		request = "launch",
-		startApps = true,
-		projectDir = "${workspaceFolder}",
-		requireFiles = {
-			"test/**/test_helper.exs",
-			"test/**/*_test.exs",
-		},
-	},
-}
-
 -- Python
 dap.adapters.python = {
 	type = "executable",

@@ -27,6 +27,31 @@
         "type": "github"
       }
     },
+    "beam-flakes": {
+      "inputs": {
+        "flake-parts": [
+          "expert",
+          "flake-parts"
+        ],
+        "nixpkgs": [
+          "expert",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1763144771,
+        "narHash": "sha256-VWF3RK2lNPX5tz14LnJM7DXkP1YwgrTuu3RqeVEymCk=",
+        "owner": "elixir-tools",
+        "repo": "nix-beam-flakes",
+        "rev": "0927b7964669ff9301e90ec5753ac81885a4b1bf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "elixir-tools",
+        "repo": "nix-beam-flakes",
+        "type": "github"
+      }
+    },
     "colmena": {
       "inputs": {
         "flake-compat": [
@@ -145,6 +170,30 @@
       "original": {
         "owner": "nix-community",
         "repo": "disko",
+        "type": "github"
+      }
+    },
+    "expert": {
+      "inputs": {
+        "beam-flakes": "beam-flakes",
+        "flake-parts": [
+          "flake-parts"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1763241052,
+        "narHash": "sha256-VwsGOWMzgh+TUq0NJ7a74c6n3qsjWxTwFafuVH2AQx0=",
+        "owner": "elixir-lang",
+        "repo": "expert",
+        "rev": "583ee15fe361f892b51cbed823afc3fc61a9ed3f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "elixir-lang",
+        "repo": "expert",
         "type": "github"
       }
     },
@@ -489,6 +538,7 @@
         "darwin": "darwin",
         "devshell": "devshell",
         "disko": "disko",
+        "expert": "expert",
         "flake-compat": "flake-compat",
         "flake-parts": "flake-parts",
         "flake-root": "flake-root",

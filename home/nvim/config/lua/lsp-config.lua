@@ -368,17 +368,7 @@ vim.lsp.enable("bashls")
 -- Dart
 vim.lsp.enable("dartls")
 -- Elixir
-vim.lsp.config("elixirls", {
-	cmd = { "elixir-ls" },
-	-- Settings block is required, as there is no default set for elixir
-	settings = {
-		elixirLs = {
-			dialyzerEnabled = true,
-			dialyzerFormat = "dialyxir_long",
-		},
-	},
-})
-vim.lsp.enable("elixirls")
+vim.lsp.enable("expert")
 -- Flix
 vim.filetype.add({
 	extension = {
