@@ -84,6 +84,10 @@ in
           "@toasttab/buffet-mcp-server@next"
         ];
       };
+      figma = {
+        type = "http";
+        url = "http://127.0.0.1:3845/mcp";
+      };
     };
   };
 
