@@ -54,7 +54,13 @@ readonly RESET="\033[0m"
 #     "total_api_duration_ms": 20258,
 #     "total_lines_added": 0,
 #     "total_lines_removed": 0
-#   }
+#   },
+#   "context_window": {
+#     "total_input_tokens": 2287,
+#     "total_output_tokens": 241,
+#     "context_window_size": 200000
+#   },
+#   "exceeds_200k_tokens": false
 # }
 INPUT=$(cat)
 
@@ -67,6 +73,9 @@ get_output_style() { echo "$INPUT" | jq -r '.output_style.name'; }
 get_session_cost() { echo "$INPUT" | jq -r '.cost.total_cost_usd // 0'; }
 get_total_lines_added() { echo "$INPUT" | jq -r '.cost.total_lines_added // 0'; }
 get_total_lines_removed() { echo "$INPUT" | jq -r '.cost.total_lines_removed // 0'; }
+get_total_input_tokens() { echo "$INPUT" | jq -r '.context_window.total_input_tokens // 0'; }
+get_total_output_tokens() { echo "$INPUT" | jq -r '.context_window.total_output_tokens // 0'; }
+get_context_window_size() { echo "$INPUT" | jq -r '.context_window.context_window_size // 0'; }
 
 CCUSAGE_ACTIVE=$(ccusage blocks --active --json)
 get_remaining_minutes() { echo "$CCUSAGE_ACTIVE" | jq -r '.blocks[0].projection.remainingMinutes // 0'; }
@@ -94,7 +103,14 @@ STATUSLINE+="${YELLOW} \$${FORMATTED_SESSION_COST}${TEXT} | ${RESET}"
 MINUTES=$(get_remaining_minutes)
 HOURS=$((MINUTES / 60))
 REMAINING_MINUTES=$((MINUTES % 60))
-STATUSLINE+="${MAUVE} ${HOURS}h ${REMAINING_MINUTES}m${TEXT} | ${RESET}"
+STATUSLINE+="${MAROON} ${HOURS}h ${REMAINING_MINUTES}m${TEXT} | ${RESET}"
+
+# Add context window information
+TOTAL_INPUT_TOKENS=$(get_total_input_tokens)
+TOTAL_OUTPUT_TOKENS=$(get_total_output_tokens)
+CONTEXT_WINDOW_SIZE=$(get_context_window_size)
+CONTEXT_WINDOW_USAGE=$((TOTAL_INPUT_TOKENS + TOTAL_OUTPUT_TOKENS))
+STATUSLINE+="${MAUVE} ${CONTEXT_WINDOW_USAGE}/${CONTEXT_WINDOW_SIZE} | ${RESET}"
 
 # Add added/removes lines
 TOTAL_LINES_ADDED=$(get_total_lines_added)
