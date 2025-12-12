@@ -55,6 +55,18 @@ in
         OTEL_RESOURCE_ATTRIBUTES = "department=engineering,team.id=paas,user_email=frank@toasttab.com,cost_center=default,organization=default";
       };
       apiKeyHelper = "${pkgs.toast.toastApiKeyHelper}/bin/toastApiKeyHelper";
+      extraKnownMarketplaces = {
+        "toast-marketplace" = {
+          source = {
+            source = "git";
+            url = "git@github.toasttab.com:toasttab/claude-marketplace.git";
+          };
+        };
+      };
+      enabledPlugins = {
+        "toast-developer@toast-marketplace" = true;
+        "toast-backend-development@toast-marketplace" = true;
+      };
     };
     memory.source = ./config/CLAUDE.md;
     agentsDir = ./config/agents;
