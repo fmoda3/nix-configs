@@ -56,9 +56,15 @@ readonly RESET="\033[0m"
 #     "total_lines_removed": 0
 #   },
 #   "context_window": {
-#     "total_input_tokens": 2287,
-#     "total_output_tokens": 241,
-#     "context_window_size": 200000
+#     "total_input_tokens": 251080,
+#     "total_output_tokens": 10896,
+#     "context_window_size": 200000,
+#     "current_usage": {
+#       "input_tokens": 8,
+#       "output_tokens": 163,
+#       "cache_creation_input_tokens": 1008,
+#       "cache_read_input_tokens": 36646
+#     }
 #   },
 #   "exceeds_200k_tokens": false
 # }
@@ -73,8 +79,10 @@ get_output_style() { echo "$INPUT" | jq -r '.output_style.name'; }
 get_session_cost() { echo "$INPUT" | jq -r '.cost.total_cost_usd // 0'; }
 get_total_lines_added() { echo "$INPUT" | jq -r '.cost.total_lines_added // 0'; }
 get_total_lines_removed() { echo "$INPUT" | jq -r '.cost.total_lines_removed // 0'; }
-get_total_input_tokens() { echo "$INPUT" | jq -r '.context_window.total_input_tokens // 0'; }
-get_total_output_tokens() { echo "$INPUT" | jq -r '.context_window.total_output_tokens // 0'; }
+get_current_input_tokens() { echo "$INPUT" | jq -r '.context_window.current_usage.input_tokens // 0'; }
+get_current_output_tokens() { echo "$INPUT" | jq -r '.context_window.current_usage.output_tokens // 0'; }
+get_cache_creation_input_tokens() { echo "$INPUT" | jq -r '.context_window.current_usage.cache_creation_input_tokens // 0'; }
+get_cache_read_input_tokens() { echo "$INPUT" | jq -r '.context_window.current_usage.cache_read_input_tokens // 0'; }
 get_context_window_size() { echo "$INPUT" | jq -r '.context_window.context_window_size // 0'; }
 
 CCUSAGE_ACTIVE=$(ccusage blocks --active --json)
@@ -106,10 +114,12 @@ REMAINING_MINUTES=$((MINUTES % 60))
 STATUSLINE+="${MAROON} ${HOURS}h ${REMAINING_MINUTES}m${TEXT} | ${RESET}"
 
 # Add context window information
-TOTAL_INPUT_TOKENS=$(get_total_input_tokens)
-TOTAL_OUTPUT_TOKENS=$(get_total_output_tokens)
+CURRENT_INPUT_TOKENS=$(get_current_input_tokens)
+CURRENT_OUTPUT_TOKENS=$(get_current_output_tokens)
+CACHE_CREATION_INPUT_TOKENS=$(get_cache_creation_input_tokens)
+CACHE_READ_INPUT_TOKENS=$(get_cache_read_input_tokens)
 CONTEXT_WINDOW_SIZE=$(get_context_window_size)
-CONTEXT_WINDOW_USAGE=$((TOTAL_INPUT_TOKENS + TOTAL_OUTPUT_TOKENS))
+CONTEXT_WINDOW_USAGE=$((CURRENT_INPUT_TOKENS + CURRENT_OUTPUT_TOKENS + CACHE_CREATION_INPUT_TOKENS + CACHE_READ_INPUT_TOKENS))
 STATUSLINE+="${MAUVE} ${CONTEXT_WINDOW_USAGE}/${CONTEXT_WINDOW_SIZE} | ${RESET}"
 
 # Add added/removes lines
