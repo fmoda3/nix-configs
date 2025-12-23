@@ -2,7 +2,6 @@
   programs.codex = {
     enable = true;
     settings = {
-      rmcp_client = true;
       mcp_servers = {
         context7 = {
           url = "https://mcp.context7.com/mcp";
