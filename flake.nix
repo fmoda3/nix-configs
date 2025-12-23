@@ -107,7 +107,7 @@
       inherit (nixpkgs) lib;
       versionsOverlay = with inputs; (final: prev:
         let
-          inherit (prev.stdenv) system;
+          inherit (prev.stdenv.hostPlatform) system;
           nixpkgs-stable = if prev.stdenv.isDarwin then nixpkgs-stable-darwin else nixos-stable;
         in
         {
@@ -117,7 +117,7 @@
       );
       # Add in custom defined packages in the pkgs directory
       customPackagesOverlay = final: prev: { flake = self; } // import ./pkgs final prev;
-      expertOverlay = final: prev: { expert = expert.packages.${prev.system}.default; };
+      expertOverlay = final: prev: { expert = expert.packages.${prev.stdenv.hostPlatform.system}.default; };
       nixpkgsConfig = with inputs; {
         config = {
           allowUnfree = true;
