@@ -65,9 +65,13 @@ stdenv.mkDerivation rec {
     # Make the shell script executable
     chmod +x $out/share/kotlin-lsp/kotlin-lsp.sh
 
-    # Make the bundled Java executable
-    chmod +x $out/share/kotlin-lsp/jre/Contents/Home/bin/java
-    
+    # Make the bundled Java executable (path differs between macOS and Linux)
+    ${if stdenv.isDarwin then ''
+      chmod +x $out/share/kotlin-lsp/jre/Contents/Home/bin/java
+    '' else ''
+      chmod +x $out/share/kotlin-lsp/jre/bin/java
+    ''}
+
     # Create wrapper script that points to the kotlin-lsp.sh script
     makeWrapper $out/share/kotlin-lsp/kotlin-lsp.sh $out/bin/kotlin-lsp
     
