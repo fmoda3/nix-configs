@@ -23,7 +23,7 @@ final: prev:
   toast = {
     oktoast = prev.callPackage ./toast/oktoast { };
     toast-services = prev.callPackage ./toast/toast-services { };
-    toastApiKeyHelper = prev.callPackage ./toast/toastApiKeyHelper { };
+    bedrock-llm-proxy = prev.callPackage ./toast/bedrock-llm-proxy { };
   };
   vimPlugins = prev.vimPlugins // {
     claudecode-nvim = prev.callPackage ./vimPlugins/claudecode-nvim { };

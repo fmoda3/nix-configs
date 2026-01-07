@@ -54,7 +54,7 @@ in
         OTEL_EXPORTER_OTLP_ENDPOINT = "https://bedrock-otel-collector.build.eng.toasttab.com";
         OTEL_RESOURCE_ATTRIBUTES = "department=engineering,team.id=paas,user_email=frank@toasttab.com,cost_center=default,organization=default";
       };
-      apiKeyHelper = "${pkgs.toast.toastApiKeyHelper}/bin/toastApiKeyHelper";
+      apiKeyHelper = "${pkgs.toast.bedrock-llm-proxy}/bin/toastApiKeyHelper";
       extraKnownMarketplaces = {
         "toast-marketplace" = {
           source = {
