@@ -17,6 +17,7 @@ final: prev:
     github = prev.callPackage ./mcp/github { };
   };
   nix-cleanup = prev.callPackage ./nix-cleanup { };
+  opencode = prev.callPackage ./opencode { };
   # python3Packages = prev.python3Packages // {
   #   toast-tools = prev.callPackage ./toast-tools { };
   # };

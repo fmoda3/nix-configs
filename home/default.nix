@@ -24,6 +24,7 @@ in
     ./navi
     ./nh
     ./nvim
+    ./opencode
     ./secrets
     ./starship
     ./tmux
