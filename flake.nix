@@ -4,8 +4,8 @@
     # Package sets
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixpkgs-master.url = "github:nixos/nixpkgs/master";
-    nixpkgs-stable-darwin.url = "github:nixos/nixpkgs/nixpkgs-25.05-darwin";
-    nixos-stable.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs-stable-darwin.url = "github:nixos/nixpkgs/nixpkgs-25.11-darwin";
+    nixos-stable.url = "github:nixos/nixpkgs/nixos-25.11";
 
     # Environment/system management
     darwin = {
