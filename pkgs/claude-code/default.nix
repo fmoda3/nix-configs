@@ -1,6 +1,7 @@
 { lib
 , buildNpmPackage
 , fetchzip
+, procps
 , writableTmpDirAsHomeHook
 , versionCheckHook
 ,
@@ -8,17 +9,24 @@
 
 buildNpmPackage (finalAttrs: {
   pname = "claude-code";
-  version = "2.1.4";
+  version = "2.1.5";
 
   src = fetchzip {
     url = "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-${finalAttrs.version}.tgz";
-    hash = "sha256-+trjrFphFJ4fzTu0Ij7LlO8nR90Ri3MKhPyJAin9OS8=";
+    hash = "sha256-hJECxkGC+nkQ6YCZpSZxRbuHaeYQDs2q7L5SYKSFVFc=";
   };
 
-  npmDepsHash = "sha256-oa3BFnlKt5t5HdaGrVnFbWHM7S9xUYAuAxVciImRgtk=";
+  npmDepsHash = "sha256-YEiLL8S4HkBTB4h++FEOZhbYQToz/B8mVY6hV3LSg3E=";
+
+  strictDeps = true;
 
   postPatch = ''
     cp ${./package-lock.json} package-lock.json
+
+    # Replace hardcoded `/bin/bash` with `/usr/bin/env bash` for Nix compatibility
+    # https://github.com/anthropics/claude-code/issues/15195
+    substituteInPlace cli.js \
+      --replace-warn '#!/bin/bash' '#!/usr/bin/env bash'
   '';
 
   dontNpmBuild = true;
@@ -31,7 +39,12 @@ buildNpmPackage (finalAttrs: {
   postInstall = ''
     wrapProgram $out/bin/claude \
       --set DISABLE_AUTOUPDATER 1 \
-      --unset DEV
+      --unset DEV \
+      --prefix PATH : ${
+        lib.makeBinPath [
+          procps # claude-code uses [node-tree-kill](https://github.com/pkrumins/node-tree-kill) which requires procps's pgrep(darwin) or ps(linux)
+        ]
+      }
   '';
 
   doInstallCheck = true;
@@ -40,7 +53,6 @@ buildNpmPackage (finalAttrs: {
     versionCheckHook
   ];
   versionCheckKeepEnvironment = [ "HOME" ];
-  versionCheckProgramArg = "--version";
 
   passthru.updateScript = ./update.sh;
 
