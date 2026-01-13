@@ -64,7 +64,9 @@ readonly RESET="\033[0m"
 #       "output_tokens": 163,
 #       "cache_creation_input_tokens": 1008,
 #       "cache_read_input_tokens": 36646
-#     }
+#     },
+#     "used_percentage": 12,
+#     "remaining_percentage": 88
 #   },
 #   "exceeds_200k_tokens": false
 # }
@@ -84,6 +86,7 @@ get_current_output_tokens() { echo "$INPUT" | jq -r '.context_window.current_usa
 get_cache_creation_input_tokens() { echo "$INPUT" | jq -r '.context_window.current_usage.cache_creation_input_tokens // 0'; }
 get_cache_read_input_tokens() { echo "$INPUT" | jq -r '.context_window.current_usage.cache_read_input_tokens // 0'; }
 get_context_window_size() { echo "$INPUT" | jq -r '.context_window.context_window_size // 0'; }
+get_context_window_used_percentage() { echo "$INPUT" | jq -r '.context_window.used_percentage // 0'; }
 
 CCUSAGE_ACTIVE=$(ccusage blocks --active --json)
 get_remaining_minutes() { echo "$CCUSAGE_ACTIVE" | jq -r '.blocks[0].projection.remainingMinutes // 0'; }
@@ -120,7 +123,8 @@ CACHE_CREATION_INPUT_TOKENS=$(get_cache_creation_input_tokens)
 CACHE_READ_INPUT_TOKENS=$(get_cache_read_input_tokens)
 CONTEXT_WINDOW_SIZE=$(get_context_window_size)
 CONTEXT_WINDOW_USAGE=$((CURRENT_INPUT_TOKENS + CURRENT_OUTPUT_TOKENS + CACHE_CREATION_INPUT_TOKENS + CACHE_READ_INPUT_TOKENS))
-STATUSLINE+="${MAUVE} ${CONTEXT_WINDOW_USAGE}/${CONTEXT_WINDOW_SIZE} | ${RESET}"
+CONTEXT_WINDOW_USED_PERCENTAGE=$(get_context_window_used_percentage)
+STATUSLINE+="${MAUVE} ${CONTEXT_WINDOW_USAGE}/${CONTEXT_WINDOW_SIZE} (${CONTEXT_WINDOW_USED_PERCENTAGE}%) | ${RESET}"
 
 # Add added/removes lines
 TOTAL_LINES_ADDED=$(get_total_lines_added)
