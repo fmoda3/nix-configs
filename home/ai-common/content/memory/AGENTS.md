@@ -11,7 +11,7 @@
    - Deterministic functions only
    - Easy to test and reason about
 
-2. **Imperative Shell** 
+2. **Imperative Shell**
    - Handles all I/O (API calls, database, file system)
    - Minimal logic, mostly orchestration
    - Calls core functions with data

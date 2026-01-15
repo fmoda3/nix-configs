@@ -1,9 +1,29 @@
 { config, lib, pkgs, ... }:
 let
   cfg = config.my-home;
+  ai = import ../ai-common { inherit lib; };
 
   commonEnv = {
     CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY = "1";
+  };
+
+  # Work-specific MCP servers
+  workMcpServers = {
+    atlassian = {
+      type = "sse";
+      url = "https://mcp.atlassian.com/v1/sse";
+    };
+    buffet = {
+      command = "npx";
+      args = [
+        "--registry=https://artifactory.eng.toasttab.com/artifactory/api/npm/toast_npm/"
+        "@toasttab/buffet-mcp-server@next"
+      ];
+    };
+    figma = {
+      type = "http";
+      url = "http://127.0.0.1:3845/mcp";
+    };
   };
 in
 {
@@ -68,39 +88,15 @@ in
         "toast-backend-development@toast-marketplace" = true;
       };
     };
-    memory.source = ./config/CLAUDE.md;
-    agentsDir = ./config/agents;
-    commandsDir = ./config/commands;
-    mcpServers = {
-      context7 = {
-        type = "http";
-        url = "https://mcp.context7.com/mcp";
-      };
-      deepwiki = {
-        type = "http";
-        url = "https://mcp.deepwiki.com/mcp";
-      };
-      sequential-thinking = {
-        type = "http";
-        url = "https://remote.mcpservers.org/sequentialthinking/mcp";
-      };
-    } // lib.optionalAttrs cfg.isWork {
-      atlassian = {
-        type = "sse";
-        url = "https://mcp.atlassian.com/v1/sse";
-      };
-      buffet = {
-        command = "npx";
-        args = [
-          "--registry=https://artifactory.eng.toasttab.com/artifactory/api/npm/toast_npm/"
-          "@toasttab/buffet-mcp-server@next"
-        ];
-      };
-      figma = {
-        type = "http";
-        url = "http://127.0.0.1:3845/mcp";
-      };
-    };
+
+    # From common config via transformation functions
+    mcpServers = ai.lib.toClaudeCodeMcpServers ai.mcpServers
+      // lib.optionalAttrs cfg.isWork workMcpServers;
+    agents = ai.lib.toClaudeCodeAgents ai.agents;
+    commands = ai.lib.toClaudeCodeCommands ai.commands;
+    skills = ai.lib.toClaudeCodeSkills ai.skills;
+    rules = ai.lib.toClaudeCodeRules ai.rules;
+    memory.source = ai.memory.source;
   };
 
   home = {
