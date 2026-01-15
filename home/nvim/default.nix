@@ -2,6 +2,8 @@
 with lib;
 let
   python-debug = pkgs.python3.withPackages (p: with p; [ debugpy ]);
+  nvimLib = import ./lib.nix { inherit pkgs; };
+  inherit (nvimLib) mkLuaPlugin mkLuaPluginWithVars;
 in
 {
   config = mkIf config.my-home.useNeovim {
@@ -26,221 +28,113 @@ in
         dart-vim-plugin
         vim-flutter
 
-        # theming
-        {
-          plugin = catppuccin-nvim;
-          type = "lua";
-          config = builtins.readFile ./config/lua/catppuccin-config.lua;
-        }
+        # Theming
+        (mkLuaPlugin catppuccin-nvim ./config/lua/catppuccin-config.lua)
 
         # Smooth scrolling
         vim-smoothie
 
         # Startup dashboard
-        {
-          plugin = alpha-nvim;
-          type = "lua";
-          config = builtins.readFile ./config/lua/alpha-config.lua;
-        }
+        (mkLuaPlugin alpha-nvim ./config/lua/alpha-config.lua)
 
         # Keybindings window
-        {
-          plugin = which-key-nvim;
-          type = "lua";
-          config = builtins.readFile ./config/lua/which-key-config.lua;
-        }
+        (mkLuaPlugin which-key-nvim ./config/lua/which-key-config.lua)
 
         # Syntax highlighting
-        {
-          plugin = nvim-treesitter.withAllGrammars;
-          type = "lua";
-          config = builtins.readFile ./config/lua/treesitter-config.lua;
-        }
-        {
-          plugin = nvim-treesitter-context;
-          type = "lua";
-          config = builtins.readFile ./config/lua/treesitter-context-config.lua;
-        }
-        {
-          plugin = nvim-treesitter-textobjects;
-          type = "lua";
-          config = builtins.readFile ./config/lua/treesitter-textobjects-config.lua;
-        }
+        (mkLuaPlugin nvim-treesitter.withAllGrammars ./config/lua/treesitter-config.lua)
+        (mkLuaPlugin nvim-treesitter-context ./config/lua/treesitter-context-config.lua)
+        (mkLuaPlugin nvim-treesitter-textobjects ./config/lua/treesitter-textobjects-config.lua)
 
         # Status line
-        {
-          plugin = heirline-nvim;
-          type = "lua";
-          config = builtins.readFile ./config/lua/heirline-config.lua;
-        }
+        (mkLuaPlugin heirline-nvim ./config/lua/heirline-config.lua)
+
         # File Tree
-        {
-          plugin = nvim-tree-lua;
-          type = "lua";
-          config = builtins.readFile ./config/lua/nvim-tree-config.lua;
-        }
+        (mkLuaPlugin nvim-tree-lua ./config/lua/nvim-tree-config.lua)
         nvim-web-devicons
+
         # Indent lines
-        {
-          plugin = indent-blankline-nvim;
-          type = "lua";
-          config = builtins.readFile ./config/lua/indent-blankline-config.lua;
-        }
+        (mkLuaPlugin indent-blankline-nvim ./config/lua/indent-blankline-config.lua)
+
         # Auto close
-        {
-          plugin = nvim-autopairs;
-          type = "lua";
-          config = builtins.readFile ./config/lua/autopairs-config.lua;
-        }
+        (mkLuaPlugin nvim-autopairs ./config/lua/autopairs-config.lua)
+
         # Completions
-        {
-          plugin = blink-cmp;
-          type = "lua";
-          config = builtins.readFile ./config/lua/blink-config.lua;
-        }
+        (mkLuaPlugin blink-cmp ./config/lua/blink-config.lua)
+
         # LSP
-        {
-          plugin = nvim-lspconfig;
-          type = "lua";
-          config = builtins.readFile ./config/lua/lsp-config.lua;
-        }
+        (mkLuaPlugin nvim-lspconfig ./config/lua/lsp-config.lua)
         nvim-lsp-ts-utils
-        # Mostly for linting
-        none-ls-nvim
-        # Highlight selected symbol
-        vim-illuminate
+        none-ls-nvim # Mostly for linting
+        vim-illuminate # Highlight selected symbol
+
         # Better LSP references/definitions viewer
-        {
-          plugin = glance-nvim;
-          type = "lua";
-          config = builtins.readFile ./config/lua/glance-config.lua;
-        }
+        (mkLuaPlugin glance-nvim ./config/lua/glance-config.lua)
+
         # Code outline sidebar
-        {
-          plugin = outline-nvim;
-          type = "lua";
-          config = builtins.readFile ./config/lua/outline-config.lua;
-        }
-        {
-          plugin = dropbar-nvim;
-          type = "lua";
-          config = builtins.readFile ./config/lua/dropbar-config.lua;
-        }
+        (mkLuaPlugin outline-nvim ./config/lua/outline-config.lua)
+        (mkLuaPlugin dropbar-nvim ./config/lua/dropbar-config.lua)
+
         # Diagnostics virtual text
-        {
-          plugin = tiny-inline-diagnostic-nvim;
-          type = "lua";
-          config = builtins.readFile ./config/lua/tiny-inline-diagnostic-config.lua;
-        }
+        (mkLuaPlugin tiny-inline-diagnostic-nvim ./config/lua/tiny-inline-diagnostic-config.lua)
+
         # LSP status window
-        {
-          plugin = fidget-nvim;
-          type = "lua";
-          config = builtins.readFile ./config/lua/fidget-config.lua;
-        }
+        (mkLuaPlugin fidget-nvim ./config/lua/fidget-config.lua)
+
         # Code actions sign
-        {
-          plugin = nvim-lightbulb;
-          type = "lua";
-          config = builtins.readFile ./config/lua/lightbulb-config.lua;
-        }
+        (mkLuaPlugin nvim-lightbulb ./config/lua/lightbulb-config.lua)
+
         # Incremental rename
-        {
-          plugin = inc-rename-nvim;
-          type = "lua";
-          config = builtins.readFile ./config/lua/inc-rename-config.lua;
-        }
+        (mkLuaPlugin inc-rename-nvim ./config/lua/inc-rename-config.lua)
+
         # Rainbow brackets
-        {
-          plugin = rainbow-delimiters-nvim;
-          type = "lua";
-          config = builtins.readFile ./config/lua/rainbow-config.lua;
-        }
+        (mkLuaPlugin rainbow-delimiters-nvim ./config/lua/rainbow-config.lua)
+
         # Fuzzy finder window
-        {
-          plugin = telescope-nvim;
-          type = "lua";
-          config = builtins.readFile ./config/lua/telescope-config.lua;
-        }
+        (mkLuaPlugin telescope-nvim ./config/lua/telescope-config.lua)
+
         # Diagnostics window
-        {
-          plugin = trouble-nvim;
-          type = "lua";
-          config = builtins.readFile ./config/lua/trouble-config.lua;
-        }
+        (mkLuaPlugin trouble-nvim ./config/lua/trouble-config.lua)
+
         # Better native input/select windows
-        {
-          plugin = dressing-nvim;
-          type = "lua";
-          config = builtins.readFile ./config/lua/dressing-config.lua;
-        }
+        (mkLuaPlugin dressing-nvim ./config/lua/dressing-config.lua)
+
         # Tabs
-        {
-          plugin = bufferline-nvim;
-          type = "lua";
-          config = builtins.readFile ./config/lua/bufferline-config.lua;
-        }
+        (mkLuaPlugin bufferline-nvim ./config/lua/bufferline-config.lua)
+
         # Git info
-        {
-          plugin = gitsigns-nvim;
-          type = "lua";
-          config = builtins.readFile ./config/lua/gitsigns-config.lua;
-        }
+        (mkLuaPlugin gitsigns-nvim ./config/lua/gitsigns-config.lua)
+
         # Peek line search
-        {
-          plugin = numb-nvim;
-          type = "lua";
-          config = builtins.readFile ./config/lua/numb-config.lua;
-        }
+        (mkLuaPlugin numb-nvim ./config/lua/numb-config.lua)
+
         # Fast navigation
-        {
-          plugin = flash-nvim;
-          type = "lua";
-          config = builtins.readFile ./config/lua/flash-config.lua;
-        }
+        (mkLuaPlugin flash-nvim ./config/lua/flash-config.lua)
+
         # Debug adapter protocol
-        {
-          plugin = nvim-dap;
-          type = "lua";
-          config = builtins.readFile (pkgs.replaceVars ./config/lua/dap-config.lua {
-            python_debug_home = "${python-debug}";
-          });
-        }
+        (mkLuaPluginWithVars nvim-dap ./config/lua/dap-config.lua {
+          python_debug_home = "${python-debug}";
+        })
         telescope-dap-nvim
         nvim-dap-ui
         nvim-dap-virtual-text
+
         # Code Action
         tiny-code-action-nvim
+
         # Notify window
-        {
-          plugin = nvim-notify;
-          type = "lua";
-          config = builtins.readFile ./config/lua/notify-config.lua;
-        }
+        (mkLuaPlugin nvim-notify ./config/lua/notify-config.lua)
+
         # Commenting
-        {
-          plugin = comment-nvim;
-          type = "lua";
-          config = builtins.readFile ./config/lua/comment-config.lua;
-        }
+        (mkLuaPlugin comment-nvim ./config/lua/comment-config.lua)
+
         # Surround text objects
-        {
-          plugin = nvim-surround;
-          type = "lua";
-          config = builtins.readFile ./config/lua/surround-config.lua;
-        }
+        (mkLuaPlugin nvim-surround ./config/lua/surround-config.lua)
+
         # AI
-        {
-          plugin = claudecode-nvim;
-          type = "lua";
-          config = builtins.readFile ./config/lua/claude-code-config.lua;
-        }
+        (mkLuaPlugin claudecode-nvim ./config/lua/claude-code-config.lua)
+
         # Hover documentation
-        {
-          plugin = hover-nvim;
-          type = "lua";
-          config = builtins.readFile ./config/lua/hover-config.lua;
-        }
+        (mkLuaPlugin hover-nvim ./config/lua/hover-config.lua)
       ];
 
       extraPackages = with pkgs; [
