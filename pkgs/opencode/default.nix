@@ -14,12 +14,12 @@
 }:
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "opencode";
-  version = "1.1.27";
+  version = "1.1.28";
   src = fetchFromGitHub {
     owner = "anomalyco";
     repo = "opencode";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-iJ4WLNyP9i8baxp1FJJLv2VBD3XcE8nCruwO3GmSmK4=";
+    hash = "sha256-4WJs+JAmelroxvxRyTscbPGw5ryrELTri8nTy/YZAnU=";
   };
 
   node_modules = stdenvNoCC.mkDerivation {
@@ -66,7 +66,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     # NOTE: Required else we get errors that our fixed-output derivation references store paths
     dontFixup = true;
 
-    outputHash = "sha256-rNH+8n+9mGPAnbp1XdzTAOv4hV7rkTM2/Ang97foTls=";
+    outputHash = "sha256-O/irIrkD4ATK2WJI8oowCtFnm3j9hvAeFHOChGezxHc=";
     outputHashAlgo = "sha256";
     outputHashMode = "recursive";
   };
@@ -80,8 +80,6 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   ];
 
   patches = [
-    # NOTE: Relax Bun version check to be a warning instead of an error
-    ./relax-bun-version-check.patch
     # NOTE: Remove special and windows build targes
     ./remove-special-and-windows-build-targets.patch
   ];
