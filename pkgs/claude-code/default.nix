@@ -22,17 +22,17 @@ let
     "x86_64-darwin" = {
       os = "darwin";
       arch = "x64";
-      hash = "sha256-3fCDEsfIDREavjmPjBtW+VRFpVDNZOEbsz7kV3uChkg=";
+      hash = "sha256-3fCDEsfIDRGr43mPjBtW+VRFpVDNZOEbsz7kV3uChkg=";
     };
     "x86_64-linux" = {
       os = "linux";
       arch = "x64";
-      hash = "sha256-N/jodLjQfztgortHoQEDSDfR4zM+sRVS0JMteEQllJQ=";
+      hash = "sha256-N/jodLjQfztgo7ZsegEDSDfR4zPrQVUtCTLXhCVehi0=";
     };
     "aarch64-linux" = {
       os = "linux";
       arch = "arm64";
-      hash = "sha256-IKUgJWt4r/VtJz1hhsl5ZRHgQahQ/m7K6be3FX45lVQ=";
+      hash = "sha256-IKUgJWt4r/VtQnPWGMl5ZZE+BBqFD+bOq5txT1fjlVQ=";
     };
   };
 
