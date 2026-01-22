@@ -1,71 +1,53 @@
 { lib
-, stdenv
+, stdenvNoCC
 , fetchurl
-, autoPatchelfHook
+, installShellFiles
 , makeWrapper
-, procps
+, autoPatchelfHook
+, darwin
 , bubblewrap
+, procps
 , socat
+, versionCheckHook
+, writableTmpDirAsHomeHook
 ,
 }:
-
 let
-  version = "2.1.15";
-
-  # Map Nix system to the URL components used by the distribution
-  platformInfo = {
-    "aarch64-darwin" = {
-      os = "darwin";
-      arch = "arm64";
-      hash = "sha256-zGJ8DvWuGSwF0ALyc+Y32GdpIJC9I+/9XvUgaQ25XnE=";
-    };
-    "x86_64-darwin" = {
-      os = "darwin";
-      arch = "x64";
-      hash = "sha256-3fCDEsfIDRGr43mPjBtW+VRFpVDNZOEbsz7kV3uChkg=";
-    };
-    "x86_64-linux" = {
-      os = "linux";
-      arch = "x64";
-      hash = "sha256-N/jodLjQfztgo7ZsegEDSDfR4zPrQVUtCTLXhCVehi0=";
-    };
-    "aarch64-linux" = {
-      os = "linux";
-      arch = "arm64";
-      hash = "sha256-IKUgJWt4r/VtQnPWGMl5ZZE+BBqFD+bOq5txT1fjlVQ=";
-    };
-  };
-
-  platform = platformInfo.${stdenv.hostPlatform.system} or (throw "Unsupported system: ${stdenv.hostPlatform.system}");
+  stdenv = stdenvNoCC;
   baseUrl = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases";
+  manifest = lib.importJSON ./manifest.json;
+  platformKey = "${stdenv.hostPlatform.node.platform}-${stdenv.hostPlatform.node.arch}";
+  platformManifestEntry = manifest.platforms.${platformKey};
 in
-stdenv.mkDerivation {
-  pname = "claude-code";
-  inherit version;
+stdenvNoCC.mkDerivation (finalAttrs: {
+  pname = "claude-code-bin";
+  inherit (manifest) version;
 
   src = fetchurl {
-    url = "${baseUrl}/${version}/${platform.os}-${platform.arch}/claude";
-    inherit (platform) hash;
+    url = "${baseUrl}/${finalAttrs.version}/${platformKey}/claude";
+    sha256 = platformManifestEntry.checksum;
   };
 
   dontUnpack = true;
 
   nativeBuildInputs = [
+    installShellFiles
     makeWrapper
-  ] ++ lib.optionals stdenv.hostPlatform.isLinux [
-    autoPatchelfHook
-  ];
+  ]
+  ++ lib.optionals stdenv.hostPlatform.isElf [ autoPatchelfHook ]
+  ++ lib.optionals stdenv.hostPlatform.isDarwin [ darwin.autoSignDarwinBinariesHook ];
 
-  # autoPatchelfHook needs these for Linux
-  buildInputs = lib.optionals stdenv.hostPlatform.isLinux [
-    stdenv.cc.cc.lib
-  ];
+  strictDeps = true;
 
   installPhase = ''
     runHook preInstall
 
-    install -Dm755 $src $out/bin/claude
+    installBin $src
 
+    runHook postInstall
+  '';
+
+  postInstall = ''
     wrapProgram $out/bin/claude \
       --set DISABLE_AUTOUPDATER 1 \
       --unset DEV \
@@ -82,27 +64,30 @@ stdenv.mkDerivation {
           ]
         )
       }
-
-    runHook postInstall
   '';
 
-  # Skip version check since the binary outputs version differently
-  doInstallCheck = false;
+  doInstallCheck = true;
+  nativeInstallCheckInputs = [
+    writableTmpDirAsHomeHook
+    versionCheckHook
+  ];
+  versionCheckKeepEnvironment = [ "HOME" ];
+  versionCheckProgramArg = "--version";
 
   passthru.updateScript = ./update.sh;
 
   meta = {
     description = "Agentic coding tool that lives in your terminal, understands your codebase, and helps you code faster";
     homepage = "https://github.com/anthropics/claude-code";
-    downloadPage = "https://www.anthropic.com/claude-code";
+    downloadPage = "https://claude.com/product/claude-code";
     license = lib.licenses.unfree;
-    mainProgram = "claude";
+    sourceProvenance = with lib.sourceTypes; [ binaryNativeCode ];
     platforms = [
       "aarch64-darwin"
       "x86_64-darwin"
-      "x86_64-linux"
       "aarch64-linux"
+      "x86_64-linux"
     ];
-    sourceProvenance = [ lib.sourceTypes.binaryNativeCode ];
+    mainProgram = "claude";
   };
-}
+})
