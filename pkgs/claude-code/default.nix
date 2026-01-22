@@ -1,45 +1,71 @@
 { lib
 , stdenv
-, buildNpmPackage
-, fetchzip
-, versionCheckHook
-, writableTmpDirAsHomeHook
-, bubblewrap
+, fetchurl
+, autoPatchelfHook
+, makeWrapper
 , procps
+, bubblewrap
 , socat
 ,
 }:
 
-buildNpmPackage (finalAttrs: {
-  pname = "claude-code";
+let
   version = "2.1.15";
 
-  src = fetchzip {
-    url = "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-${finalAttrs.version}.tgz";
-    hash = "sha256-3zhjeAwKj1fMLuriX1qpVA8zaCk1oekJ1UmeEdDx4Xg=";
+  # Map Nix system to the URL components used by the distribution
+  platformInfo = {
+    "aarch64-darwin" = {
+      os = "darwin";
+      arch = "arm64";
+      hash = "sha256-zGJ8DvWuGSwF0ALyc+Y32GdpIJC9I+/9XvUgaQ25XnE=";
+    };
+    "x86_64-darwin" = {
+      os = "darwin";
+      arch = "x64";
+      hash = "sha256-3fCDEsfIDREavjmPjBtW+VRFpVDNZOEbsz7kV3uChkg=";
+    };
+    "x86_64-linux" = {
+      os = "linux";
+      arch = "x64";
+      hash = "sha256-N/jodLjQfztgortHoQEDSDfR4zM+sRVS0JMteEQllJQ=";
+    };
+    "aarch64-linux" = {
+      os = "linux";
+      arch = "arm64";
+      hash = "sha256-IKUgJWt4r/VtJz1hhsl5ZRHgQahQ/m7K6be3FX45lVQ=";
+    };
   };
 
-  npmDepsHash = "sha256-9Tkl7TEz2iPwa5+y//KioqItOw/r5zxb3Xc/DQWwm3Q=";
+  platform = platformInfo.${stdenv.hostPlatform.system} or (throw "Unsupported system: ${stdenv.hostPlatform.system}");
+  baseUrl = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases";
+in
+stdenv.mkDerivation {
+  pname = "claude-code";
+  inherit version;
 
-  strictDeps = true;
+  src = fetchurl {
+    url = "${baseUrl}/${version}/${platform.os}-${platform.arch}/claude";
+    inherit (platform) hash;
+  };
 
-  postPatch = ''
-    cp ${./package-lock.json} package-lock.json
+  dontUnpack = true;
 
-    # Replace hardcoded `/bin/bash` with `/usr/bin/env bash` for Nix compatibility
-    # https://github.com/anthropics/claude-code/issues/15195
-    substituteInPlace cli.js \
-      --replace-warn '#!/bin/bash' '#!/usr/bin/env bash'
-  '';
+  nativeBuildInputs = [
+    makeWrapper
+  ] ++ lib.optionals stdenv.hostPlatform.isLinux [
+    autoPatchelfHook
+  ];
 
-  dontNpmBuild = true;
+  # autoPatchelfHook needs these for Linux
+  buildInputs = lib.optionals stdenv.hostPlatform.isLinux [
+    stdenv.cc.cc.lib
+  ];
 
-  env.AUTHORIZED = "1";
+  installPhase = ''
+    runHook preInstall
 
-  # `claude-code` tries to auto-update by default, this disables that functionality.
-  # https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/overview#environment-variables
-  # The DEV=true env var causes claude to crash with `TypeError: window.WebSocket is not a constructor`
-  postInstall = ''
+    install -Dm755 $src $out/bin/claude
+
     wrapProgram $out/bin/claude \
       --set DISABLE_AUTOUPDATER 1 \
       --unset DEV \
@@ -56,22 +82,27 @@ buildNpmPackage (finalAttrs: {
           ]
         )
       }
+
+    runHook postInstall
   '';
 
-  doInstallCheck = true;
-  nativeInstallCheckInputs = [
-    writableTmpDirAsHomeHook
-    versionCheckHook
-  ];
-  versionCheckKeepEnvironment = [ "HOME" ];
+  # Skip version check since the binary outputs version differently
+  doInstallCheck = false;
 
   passthru.updateScript = ./update.sh;
 
   meta = {
     description = "Agentic coding tool that lives in your terminal, understands your codebase, and helps you code faster";
     homepage = "https://github.com/anthropics/claude-code";
-    downloadPage = "https://www.npmjs.com/package/@anthropic-ai/claude-code";
+    downloadPage = "https://www.anthropic.com/claude-code";
     license = lib.licenses.unfree;
     mainProgram = "claude";
+    platforms = [
+      "aarch64-darwin"
+      "x86_64-darwin"
+      "x86_64-linux"
+      "aarch64-linux"
+    ];
+    sourceProvenance = [ lib.sourceTypes.binaryNativeCode ];
   };
-})
+}
