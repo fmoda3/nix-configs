@@ -1,12 +1,13 @@
 { config, pkgs, lib, ... }:
 with lib;
 let
+  cfg = config.my-home;
   python-debug = pkgs.python3.withPackages (p: with p; [ debugpy ]);
   nvimLib = import ./lib.nix { inherit pkgs; };
   inherit (nvimLib) mkLuaPlugin mkLuaPluginWithVars;
 in
 {
-  config = mkIf config.my-home.useNeovim {
+  config = mkIf cfg.useNeovim {
     programs.neovim = {
       enable = true;
       viAlias = true;
@@ -130,11 +131,11 @@ in
         # Surround text objects
         (mkLuaPlugin nvim-surround ./config/lua/surround-config.lua)
 
-        # AI
-        (mkLuaPlugin claudecode-nvim ./config/lua/claude-code-config.lua)
-
         # Hover documentation
         (mkLuaPlugin hover-nvim ./config/lua/hover-config.lua)
+      ] ++ optionals cfg.includeAI [
+        # AI
+        (mkLuaPlugin claudecode-nvim ./config/lua/claude-code-config.lua)
       ];
 
       extraPackages = with pkgs; [
@@ -176,6 +177,7 @@ in
         # Telescope tools
         ripgrep
         fd
+      ] ++ optionals cfg.includeAI [
         # AI
         claude-code
       ];
