@@ -7,5 +7,6 @@
     includeFonts = true;
     useNeovim = true;
     isWork = true;
+    includeAI = true;
   };
 }

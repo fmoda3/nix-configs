@@ -7,5 +7,6 @@
     includeFonts = true;
     useNeovim = true;
     includeGames = true;
+    includeAI = true;
   };
 }

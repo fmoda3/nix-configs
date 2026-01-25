@@ -1,10 +1,10 @@
-{ lib, ... }:
+{ lib, config, ... }:
 let
   ai = import ../ai-common { inherit lib; };
 in
 {
   programs.opencode = {
-    enable = true;
+    enable = config.my-home.includeAI;
     settings = {
       autoupdate = false;
       theme = "system";

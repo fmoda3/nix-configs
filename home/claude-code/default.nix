@@ -28,7 +28,7 @@ let
 in
 {
   programs.claude-code = {
-    enable = true;
+    enable = cfg.includeAI;
     settings = {
       hooks = {
         Stop = [

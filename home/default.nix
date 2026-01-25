@@ -38,6 +38,7 @@ in
     useNeovim = lib.mkEnableOption "neovim";
     isWork = lib.mkEnableOption "work profile";
     includeGames = lib.mkEnableOption "games";
+    includeAI = lib.mkEnableOption "AI";
     flake = lib.mkOption {
       description = "Flake string to use for nh";
       default = "";

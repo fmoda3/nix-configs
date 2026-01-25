@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, config, ... }:
 let
   ai = import ../ai-common { inherit lib; };
 
@@ -14,7 +14,7 @@ let
 in
 {
   programs.codex = {
-    enable = true;
+    enable = config.my-home.includeAI;
     settings = {
       mcp_servers = ai.lib.toCodexMcpServers ai.mcpServers;
     };
