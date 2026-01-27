@@ -44,6 +44,8 @@ stdenvNoCC.mkDerivation (finalAttrs: {
       bun install \
         --cpu="*" \
         --frozen-lockfile \
+        --filter ./packages/opencode \
+        --filter ./packages/desktop \
         --ignore-scripts \
         --no-progress \
         --os="*"
@@ -66,7 +68,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     # NOTE: Required else we get errors that our fixed-output derivation references store paths
     dontFixup = true;
 
-    outputHash = "sha256-mSJ1CvuJpi8ygJF+xHrDd7/ZQd2wkmOj7GZLfZZwMs4=";
+    outputHash = "sha256-MPzEzyx+Av0sa6EU3ewjUSwAOyA+GJGfvEoROYqZjkM=";
     outputHashAlgo = "sha256";
     outputHashMode = "recursive";
   };
