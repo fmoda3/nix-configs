@@ -2,11 +2,11 @@
 , stdenvNoCC
 , fetchurl
 , installShellFiles
-, makeWrapper
+, makeBinaryWrapper
 , autoPatchelfHook
-, darwin
-, bubblewrap
 , procps
+, ripgrep
+, bubblewrap
 , socat
 , versionCheckHook
 , writableTmpDirAsHomeHook
@@ -29,13 +29,16 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   };
 
   dontUnpack = true;
+  dontBuild = true;
+  __noChroot = stdenv.hostPlatform.isDarwin;
+  # otherwise the bun runtime is executed instead of the binary
+  dontStrip = true;
 
   nativeBuildInputs = [
     installShellFiles
-    makeWrapper
+    makeBinaryWrapper
   ]
-  ++ lib.optionals stdenv.hostPlatform.isElf [ autoPatchelfHook ]
-  ++ lib.optionals stdenv.hostPlatform.isDarwin [ darwin.autoSignDarwinBinariesHook ];
+  ++ lib.optionals stdenv.hostPlatform.isElf [ autoPatchelfHook ];
 
   strictDeps = true;
 
@@ -44,18 +47,16 @@ stdenvNoCC.mkDerivation (finalAttrs: {
 
     installBin $src
 
-    runHook postInstall
-  '';
-
-  postInstall = ''
     wrapProgram $out/bin/claude \
       --set DISABLE_AUTOUPDATER 1 \
-      --unset DEV \
+      --set USE_BUILTIN_RIPGREP 0 \
       --prefix PATH : ${
         lib.makeBinPath (
           [
             # claude-code uses [node-tree-kill](https://github.com/pkrumins/node-tree-kill) which requires procps's pgrep(darwin) or ps(linux)
             procps
+            # https://code.claude.com/docs/en/troubleshooting#search-and-discovery-issues
+            ripgrep
           ]
           # the following packages are required for the sandbox to work (Linux only)
           ++ lib.optionals stdenv.hostPlatform.isLinux [
@@ -64,6 +65,8 @@ stdenvNoCC.mkDerivation (finalAttrs: {
           ]
         )
       }
+
+    runHook postInstall
   '';
 
   doInstallCheck = true;
@@ -80,6 +83,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     description = "Agentic coding tool that lives in your terminal, understands your codebase, and helps you code faster";
     homepage = "https://github.com/anthropics/claude-code";
     downloadPage = "https://claude.com/product/claude-code";
+    changelog = "https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md";
     license = lib.licenses.unfree;
     sourceProvenance = with lib.sourceTypes; [ binaryNativeCode ];
     platforms = [
