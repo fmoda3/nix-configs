@@ -4,23 +4,23 @@
 
 let
   # Define binary information for each platform
-  version = "1.0.59";
+  version = "1.0.73";
   sources = {
     "aarch64-darwin" = {
-      url = "https://artifactory.eng.toasttab.com/artifactory/go-binaries/bedrock-llm-proxy/${version}/bedrock-llm-proxy_toast-llm-utils_1.0.59_darwin_arm64.tar.gz";
-      sha256 = "sha256-uoFFBq/iTiuylQZuKtTIOAHtMn+Jwd2L9PDAww7BUpE=";
+      url = "https://artifactory.eng.toasttab.com/artifactory/go-binaries/bedrock-llm-proxy/${version}/bedrock-llm-proxy_toast-llm-utils_${version}_darwin_arm64.tar.gz";
+      sha256 = "sha256-UP5gjyDcy9Eukf9w8tdMrvAN26ph858jyEGKzxrxavI=";
     };
     "x86_64-darwin" = {
-      url = "https://artifactory.eng.toasttab.com/artifactory/go-binaries/bedrock-llm-proxy/${version}/bedrock-llm-proxy_toast-llm-utils_1.0.59_darwin_amd64.tar.gz";
-      sha256 = "sha256-wW8MZtWoDPWie0wfubd8cYD9nrS5Bz0bEhikLGOXtJ8=";
+      url = "https://artifactory.eng.toasttab.com/artifactory/go-binaries/bedrock-llm-proxy/${version}/bedrock-llm-proxy_toast-llm-utils_${version}_darwin_amd64.tar.gz";
+      sha256 = "sha256-bHj84YjG3sRpaBDLgxGymGhDc6ee9u4oru3FupSDuwM=";
     };
     "x86_64-linux" = {
-      url = "https://artifactory.eng.toasttab.com/artifactory/go-binaries/bedrock-llm-proxy/${version}/bedrock-llm-proxy_toast-llm-utils_1.0.59_linux_amd64.tar.gz";
-      sha256 = "sha256-DyVz/L0iGLoEHcU056nNp7H2HUw/3AW4Pq8dvJVT3Ks=";
+      url = "https://artifactory.eng.toasttab.com/artifactory/go-binaries/bedrock-llm-proxy/${version}/bedrock-llm-proxy_toast-llm-utils_${version}_linux_amd64.tar.gz";
+      sha256 = "sha256-dMCg5ltUcZ+8WBLpau5RtuTVJFY3TaJvqSqH25V7TA4=";
     };
     "aarch64-linux" = {
-      url = "https://artifactory.eng.toasttab.com/artifactory/go-binaries/bedrock-llm-proxy/${version}/bedrock-llm-proxy_toast-llm-utils_1.0.59_linux_arm64.tar.gz";
-      sha256 = "sha256-4ZPcWdtHF/HzonUcW0hvvT2DOBo8ChGbFC8m5UfTlpI=";
+      url = "https://artifactory.eng.toasttab.com/artifactory/go-binaries/bedrock-llm-proxy/${version}/bedrock-llm-proxy_toast-llm-utils_${version}_linux_arm64.tar.gz";
+      sha256 = "sha256-eFrw64AZ+wARkdQ0f0Er6MzpJNj+QUAkq6uTXOjRq78=";
     };
   };
 
