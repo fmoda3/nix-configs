@@ -1,5 +1,12 @@
 # Commands/prompts structure - maps to commands (claude-code, opencode) or custom_prompts (codex)
 {
+  packages = {
+    check_updates = {
+      description = "Check for package updates";
+      bodyFile = ./content/commands/packages/check_updates.md;
+    };
+  };
+
   tasks = {
     create_plan = {
       description = "Create a plan";
