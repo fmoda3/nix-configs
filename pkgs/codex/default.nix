@@ -16,18 +16,28 @@
 }:
 rustPlatform.buildRustPackage (finalAttrs: {
   pname = "codex";
-  version = "0.92.0";
+  version = "0.93.0";
 
   src = fetchFromGitHub {
     owner = "openai";
     repo = "codex";
     tag = "rust-v${finalAttrs.version}";
-    hash = "sha256-m/g+5wdehyaHDw6i5vik4HXiisY/iWFtPX0gKjCFPNY=";
+    hash = "sha256-JwCwFPa4+BAMUSp567s9l2QdanL7XEhtGSR8mvlws6Q=";
   };
 
   sourceRoot = "${finalAttrs.src.name}/codex-rs";
 
-  cargoHash = "sha256-fuT8vPb9/7fZam129nR6y+r+3j46WBhlf73Htkcjpzc=";
+  cargoLock = {
+    lockFile = ./Cargo.lock;
+    outputHashes = {
+      "runfiles-0.1.0" = "sha256-uJpVLcQh8wWZA3GPv9D8Nt43EOirajfDJ7eq/FB+tek=";
+      "crossterm-0.28.1" = "sha256-6qCtfSMuXACKFb9ATID39XyFDIEMFDmbx6SSmNe+728=";
+      "nucleo-0.5.0" = "sha256-Hm4SxtTSBrcWpXrtSqeO0TACbUxq3gizg1zD/6Yw/sI=";
+      "ratatui-0.29.0" = "sha256-HBvT5c8GsiCxMffNjJGLmHnvG77A6cqEL+1ARurBXho=";
+      "tokio-tungstenite-0.28.0" = "sha256-vJZ3S41gHtRt4UAODsjAoSCaTksgzCALiBmbWgyDCi8=";
+      "tungstenite-0.28.0" = "sha256-CyXZp58zGlUhEor7WItjQoS499IoSP55uWqr++ia+0A=";
+    };
+  };
 
   nativeBuildInputs = [
     cmake
