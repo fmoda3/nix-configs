@@ -14,7 +14,7 @@ in
       vimAlias = true;
       vimdiffAlias = true;
 
-      extraLuaConfig = ''
+      initLua = ''
         ${builtins.readFile ./config/lua/settings.lua}
         ${builtins.readFile ./config/lua/util.lua}
       '';

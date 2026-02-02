@@ -1,11 +1,17 @@
 { pkgs, ... }:
+let
+  # Remove once https://github.com/NixOS/nixpkgs/issues/485915 is fixed
+  bat-extras = pkgs.bat-extras.overrideScope (final: prev: {
+    nushell = pkgs.writeShellScriptBin "nu" "";
+  });
+in
 {
   programs.bat = {
     enable = true;
     config = {
       theme = "catppuccin-frappe";
     };
-    extraPackages = with pkgs.bat-extras; [ batdiff batman batgrep batwatch ];
+    extraPackages = with bat-extras; [ batdiff batman batgrep batwatch ];
     themes = {
       catppuccin-frappe = {
         src = pkgs.catppuccin.bat;
