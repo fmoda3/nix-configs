@@ -2,11 +2,11 @@
 , stdenvNoCC
 , bun
 , fetchFromGitHub
-, fzf
 , makeBinaryWrapper
 , models-dev
 , nix-update-script
 , ripgrep
+, sysctl
 , installShellFiles
 , versionCheckHook
 , writableTmpDirAsHomeHook
@@ -68,7 +68,13 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     # NOTE: Required else we get errors that our fixed-output derivation references store paths
     dontFixup = true;
 
-    outputHash = "sha256-ngN94dsKLKQb71rBLxe5f5TmFZC6dL5zRolnDP+khds=";
+    # To get linux hash, run:
+    # nix build '.#legacyPackages.aarch64-linux.opencode.node_modules'
+    outputHash =
+      if stdenvNoCC.hostPlatform.isDarwin then
+        "sha256-ngN94dsKLKQb71rBLxe5f5TmFZC6dL5zRolnDP+khds="
+      else
+        "sha256-jQBBTaJx7RKIVXnKxppsuMZvJAb5YbLylLoJoj0LBFE=";
     outputHashAlgo = "sha256";
     outputHashMode = "recursive";
   };
@@ -81,10 +87,12 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     writableTmpDirAsHomeHook
   ];
 
-  patches = [
-    # NOTE: Remove special and windows build targes
-    ./remove-special-and-windows-build-targets.patch
-  ];
+  postPatch = ''
+    # NOTE: Relax Bun version check to be a warning instead of an error
+    substituteInPlace packages/script/src/index.ts \
+      --replace-fail 'throw new Error(`This script requires bun@''${expectedBunVersionRange}' \
+                     'console.warn(`Warning: This script requires bun@''${expectedBunVersionRange}'
+  '';
 
   configurePhase = ''
     runHook preConfigure
@@ -100,16 +108,6 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     OPENCODE_CHANNEL = "stable";
   };
 
-  preBuild = ''
-    chmod -R u+w ./packages/opencode/node_modules
-    pushd ./packages/opencode/node_modules/@opentui/
-      for pkg in ../../../../node_modules/.bun/@opentui+core-*; do
-        linkName=$(basename "$pkg" | sed 's/@.*+\(.*\)@.*/\1/')
-        ln -sf "$pkg/node_modules/@opentui/$linkName" "$linkName"
-      done
-    popd
-  '';
-
   buildPhase = ''
     runHook preBuild
 
@@ -124,6 +122,18 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     runHook preInstall
 
     install -Dm755 dist/opencode-*/bin/opencode $out/bin/opencode
+    wrapProgram $out/bin/opencode \
+     --prefix PATH : ${
+       lib.makeBinPath (
+         [
+           ripgrep
+         ]
+         ++ lib.optionals stdenvNoCC.hostPlatform.isDarwin [
+           sysctl
+         ]
+       )
+     }
+
     install -Dm644 schema.json $out/share/opencode/schema.json
 
     runHook postInstall
@@ -131,17 +141,8 @@ stdenvNoCC.mkDerivation (finalAttrs: {
 
   postInstall = lib.optionalString (stdenvNoCC.buildPlatform.canExecute stdenvNoCC.hostPlatform) ''
     installShellCompletion --cmd opencode \
-      --bash <($out/bin/opencode completion)
-  '';
-
-  postFixup = ''
-    wrapProgram $out/bin/opencode \
-     --prefix PATH : ${
-       lib.makeBinPath [
-         fzf
-         ripgrep
-       ]
-     }
+      --bash <($out/bin/opencode completion) \
+      --zsh <(SHELL=/bin/zsh $out/bin/opencode completion)
   '';
 
   nativeInstallCheckInputs = [
@@ -166,7 +167,6 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     description = "AI coding agent built for the terminal";
     homepage = "https://github.com/anomalyco/opencode";
     license = lib.licenses.mit;
-    maintainers = with lib.maintainers; [ delafthi ];
     sourceProvenance = with lib.sourceTypes; [ fromSource ];
     platforms = [
       "aarch64-linux"
