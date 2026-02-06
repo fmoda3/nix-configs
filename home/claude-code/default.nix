@@ -58,7 +58,11 @@ in
         type = "command";
         command = "~/.claude/statusline.sh";
       };
-      env = commonEnv;
+    } // lib.optionalAttrs (!cfg.isWork) {
+      env = commonEnv // {
+        CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS = "1";
+      };
+      teammateMode = "tmux";
     } // lib.optionalAttrs cfg.isWork {
       env = commonEnv // {
         CLAUDE_CODE_USE_BEDROCK = "1";
