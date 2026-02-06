@@ -6,6 +6,7 @@
   my-darwin = {
     isWork = true;
     enableSudoTouch = true;
+    enableNixOptimise = true;
   };
 
   # Used for backwards compatibility, please read the changelog before changing.

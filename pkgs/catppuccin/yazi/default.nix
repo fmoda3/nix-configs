@@ -1,7 +1,7 @@
-{ stdenv
+{ stdenvNoCC
 , fetchFromGitHub
 }:
-stdenv.mkDerivation {
+stdenvNoCC.mkDerivation {
   pname = "catppuccin-yazi";
   version = "2025-12-29";
 

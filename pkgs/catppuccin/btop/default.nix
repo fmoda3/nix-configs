@@ -1,7 +1,7 @@
-{ stdenv
+{ stdenvNoCC
 , fetchFromGitHub
 }:
-stdenv.mkDerivation {
+stdenvNoCC.mkDerivation {
   pname = "catppuccin-btop";
   version = "2024-09-23";
 

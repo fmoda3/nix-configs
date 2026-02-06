@@ -1,7 +1,7 @@
-{ stdenv
+{ stdenvNoCC
 , fetchFromGitHub
 }:
-stdenv.mkDerivation {
+stdenvNoCC.mkDerivation {
   pname = "catppuccin-zsh-syntax-highlighting";
   version = "2024-07-20";
 

@@ -1,7 +1,7 @@
-{ stdenv
+{ stdenvNoCC
 , fetchFromGitHub
 }:
-stdenv.mkDerivation {
+stdenvNoCC.mkDerivation {
   pname = "catppuccin-bat";
   version = "2025-06-29";
 

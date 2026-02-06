@@ -5,6 +5,7 @@
 
   my-darwin = {
     isServer = true;
+    enableNixOptimise = true;
   };
 
   # Used for backwards compatibility, please read the changelog before changing.

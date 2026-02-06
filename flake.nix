@@ -47,6 +47,7 @@
         nixpkgs.follows = "nixpkgs";
         darwin.follows = "darwin";
         home-manager.follows = "home-manager";
+        systems.follows = "systems";
       };
     };
     colmena = {
@@ -329,7 +330,7 @@
         pre-commit = {
           check.enable = true;
           settings = {
-            src = ./.;
+            src = lib.cleanSource ./.;
             hooks = {
               nixpkgs-fmt.enable = true;
               statix.enable = true;
