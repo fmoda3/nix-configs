@@ -66,7 +66,7 @@ stdenv.mkDerivation {
     chmod +x $out/share/kotlin-lsp/kotlin-lsp.sh
 
     # Make the bundled Java executable (path differs between macOS and Linux)
-    ${if stdenv.isDarwin then ''
+    ${if stdenv.hostPlatform.isDarwin then ''
       chmod +x $out/share/kotlin-lsp/jre/Contents/Home/bin/java
     '' else ''
       chmod +x $out/share/kotlin-lsp/jre/bin/java
