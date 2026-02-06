@@ -30,7 +30,7 @@ let
   # Select the appropriate source for the current system
   selectedSource = sources.${stdenv.hostPlatform.system} or (throw "Unsupported system: ${stdenv.hostPlatform.system}");
 in
-stdenv.mkDerivation rec {
+stdenv.mkDerivation {
   pname = "kotlin-lsp";
   inherit version;
 
