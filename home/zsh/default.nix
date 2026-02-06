@@ -18,7 +18,7 @@
 
     sessionVariables = import ./env.nix { inherit config pkgs lib; };
 
-    shellAliases = import ./aliases.nix;
+    shellAliases = import ./aliases.nix { inherit pkgs lib; };
 
     shellGlobalAliases = {
       "--help" = "--help 2>&1 | bat --language=help --style=plain";

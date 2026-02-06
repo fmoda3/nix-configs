@@ -18,8 +18,8 @@ let
 
   # Work variables (when isWork = true)
   workVariables = lib.optionalAttrs config.my-home.isWork {
-    TOAST_GIT = "/Users/frank/Development";
-    DOCKER_HOST = "unix:///Users/frank/.colima/default/docker.sock";
+    TOAST_GIT = "${config.home.homeDirectory}/Development";
+    DOCKER_HOST = "unix://${config.home.homeDirectory}/.colima/default/docker.sock";
     TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE = "/var/run/docker.sock";
     FLAGGY_TOKEN = ''$(${pkgs.coreutils}/bin/cat ${config.age.secrets."flaggy_token".path})'';
     BRAID_PULSAR_MDC_PROPAGATION_KEYS = "Toast-Braid-Route,Toast-Braid-Services";
