@@ -13,9 +13,6 @@ final: prev:
   homebridge = prev.callPackage ./homebridge { };
   homebridge-config-ui-x = prev.callPackage ./homebridge-config-ui-x { };
   kotlin-lsp = prev.callPackage ./kotlin-lsp { };
-  mcp = {
-    github = prev.callPackage ./mcp/github { };
-  };
   nix-cleanup = prev.callPackage ./nix-cleanup { };
   opencode = prev.callPackage ./opencode { };
   # python3Packages = prev.python3Packages // {

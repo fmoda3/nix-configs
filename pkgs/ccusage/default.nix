@@ -4,14 +4,14 @@
 , nodejs_20
 }:
 
-buildNpmPackage rec {
+buildNpmPackage (finalAttrs: {
   pname = "ccusage";
   version = "18.0.5";
 
   nodejs = nodejs_20;
 
   src = fetchzip {
-    url = "https://registry.npmjs.org/ccusage/-/ccusage-${version}.tgz";
+    url = "https://registry.npmjs.org/ccusage/-/ccusage-${finalAttrs.version}.tgz";
     hash = "sha256-i4UyRU7EA0PLduABnPGbcD8I06ZjmjwXCC77vtFM638=";
   };
 
@@ -44,4 +44,4 @@ buildNpmPackage rec {
     mainProgram = "ccusage";
     maintainers = [ ];
   };
-}
+})

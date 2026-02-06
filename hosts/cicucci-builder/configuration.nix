@@ -17,7 +17,7 @@
   ];
 
   networking = {
-    hostName = "cicucci-aarch64-linux-builder";
+    hostName = "cicucci-builder";
     useDHCP = false;
     networkmanager = {
       enable = true;

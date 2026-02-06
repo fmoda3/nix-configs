@@ -362,7 +362,7 @@
               name = "age-edit";
               category = "secrets";
               help = "Edit an age file";
-              command = "agenix -e $@";
+              command = "agenix -e \"$@\"";
             }
             {
               name = "age-rekey";
@@ -374,7 +374,7 @@
               name = "age-decrypt";
               category = "secrets";
               help = "Decrypt an age file";
-              command = "agenix -d $@";
+              command = "agenix -d \"$@\"";
             }
             {
               name = "create-aarch64-iso";

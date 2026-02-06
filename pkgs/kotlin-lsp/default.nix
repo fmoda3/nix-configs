@@ -82,7 +82,12 @@ stdenv.mkDerivation rec {
     description = "Kotlin Language Server Protocol implementation";
     homepage = "https://github.com/Kotlin/kotlin-lsp";
     license = lib.licenses.asl20;
-    platforms = lib.platforms.all;
+    platforms = [
+      "aarch64-darwin"
+      "x86_64-darwin"
+      "aarch64-linux"
+      "x86_64-linux"
+    ];
     mainProgram = "kotlin-lsp";
   };
 }

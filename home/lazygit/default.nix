@@ -3,18 +3,18 @@
     enable = true;
     settings = {
       theme = {
-        activeBorderColor = [ "#1e66f5" "bold" ];
-        inactiveBorderColor = [ "#6c6f85" ];
-        optionsTextColor = [ "#1e66f5" ];
-        selectedLineBgColor = [ "#ccd0da" ];
-        cherryPickedCommitBgColor = [ "#bcc0cc" ];
-        cherryPickedCommitFgColor = [ "#1e66f5" ];
-        unstagedChangesColor = [ "#d20f39" ];
-        defaultFgColor = [ "#4c4f69" ];
-        searchingActiveBorderColor = [ "#df8e1d" ];
+        activeBorderColor = [ "#8caaee" "bold" ];
+        inactiveBorderColor = [ "#a5adce" ];
+        optionsTextColor = [ "#8caaee" ];
+        selectedLineBgColor = [ "#414559" ];
+        cherryPickedCommitBgColor = [ "#51576d" ];
+        cherryPickedCommitFgColor = [ "#8caaee" ];
+        unstagedChangesColor = [ "#e78284" ];
+        defaultFgColor = [ "#c6d0f5" ];
+        searchingActiveBorderColor = [ "#e5c890" ];
       };
       authorColors = {
-        "*" = "#7287fd";
+        "*" = "#babbf1";
       };
     };
   };

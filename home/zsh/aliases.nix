@@ -8,7 +8,7 @@
   mkcd = "mkdir -p $1 && cd $1";
   ".." = "cd ..";
   "..." = "cd ../..";
-  "...." = "cd .././..";
+  "...." = "cd ../../..";
 
   # Replace ls with eza
   ls = "eza";

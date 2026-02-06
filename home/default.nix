@@ -58,10 +58,10 @@ in
           curl
           duf
           dust
+          fastfetch
           fd
           htop
           gping
-          neofetch
           nh
           nix-cleanup
           nodejs
