@@ -12,6 +12,7 @@ stdenv.mkDerivation {
     url = "git@github.toasttab.com:toasttab/toast-services.git";
     rev = "ec5365aff322086af75abb1bcf7f18a675249d57";
     ref = "development";
+    narHash = "sha256-pTBXLaFaP7lUOXUI61akiCcE6tRUlhyRsVz3LHN+z6Q=";
   };
 
   nativeBuildInputs = [
