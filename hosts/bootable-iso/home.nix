@@ -4,4 +4,6 @@
   ];
 
   my-home = { };
+
+  home.stateVersion = "25.11";
 }

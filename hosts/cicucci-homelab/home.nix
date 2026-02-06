@@ -7,4 +7,6 @@
     includeFonts = true;
     useNeovim = true;
   };
+
+  home.stateVersion = "21.05";
 }

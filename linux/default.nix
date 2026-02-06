@@ -81,8 +81,6 @@ in
     };
 
     users.defaultUserShell = pkgs.zsh;
-
-    system.stateVersion = "22.05";
   };
 
 }
