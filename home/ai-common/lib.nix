@@ -130,6 +130,16 @@ let
 
     ${getBody skill}
   '';
+
+  # claude-code: name, description, color, model, tools
+  toClaudeCodeOutputStyleMarkdown = style: ''
+    ---
+    name: ${style.name}
+    description: ${style.description}
+    ---
+
+    ${getBody style}
+  '';
 in
 {
   # ============ MCP Servers ============
@@ -239,6 +249,10 @@ in
   toClaudeCodeSkills = skills: builtins.mapAttrs (n: toClaudeCodeSkillMarkdown) skills;
   toOpencodeSkills = skills: builtins.mapAttrs (n: toOpencodeSkillMarkdown) skills;
   toCodexSkills = skills: builtins.mapAttrs (n: toCodexSkillMarkdown) skills;
+
+  # ======== Output Styles =========
+
+  toClaudeCodeOutputStyles = styles: builtins.mapAttrs (n: toClaudeCodeOutputStyleMarkdown) styles;
 
   # ============ Memory ============
 

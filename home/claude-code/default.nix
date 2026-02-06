@@ -25,6 +25,11 @@ let
       url = "http://127.0.0.1:3845/mcp";
     };
   };
+
+  # Convert styles to home.file entries for ~/.claude/output-styles/<name>.md
+  claudeCodeStyleFiles = lib.mapAttrs'
+    (name: content: lib.nameValuePair ".claude/output-styles/${name}.md" { text = content; })
+    (ai.lib.toClaudeCodeOutputStyles ai.output-styles);
 in
 {
   programs.claude-code = {
@@ -109,6 +114,6 @@ in
         source = ./config/statusline.sh;
         executable = true;
       };
-    };
+    } // claudeCodeStyleFiles;
   };
 }
