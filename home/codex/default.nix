@@ -1,26 +1,30 @@
-{ lib, config, ... }:
-let
-  ai = import ../ai-common { inherit lib; };
-
-  # Convert commands to home.file entries for ~/.codex/prompts/
-  codexPromptFiles = lib.mapAttrs'
-    (name: content: lib.nameValuePair ".codex/prompts/${name}.md" { text = content; })
-    (ai.lib.toCodexPrompts ai.commands);
-
-  # Convert skills to home.file entries for ~/.codex/skills/<name>/SKILL.md
-  codexSkillFiles = lib.mapAttrs'
-    (name: content: lib.nameValuePair ".codex/skills/${name}/SKILL.md" { text = content; })
-    (ai.lib.toCodexSkills ai.skills);
-in
+{ config, ... }:
 {
   programs.codex = {
     enable = config.my-home.includeAI;
     settings = {
-      mcp_servers = ai.lib.toCodexMcpServers ai.mcpServers;
+      mcp_servers = {
+        context7 = {
+          url = "https://mcp.context7.com/mcp";
+        };
+        deepwiki = {
+          url = "https://mcp.deepwiki.com/mcp";
+        };
+        sequential-thinking = {
+          url = "https://remote.mcpservers.org/sequentialthinking/mcp";
+        };
+      };
     };
-    custom-instructions = ai.lib.getMemoryWithRules ai.memory ai.rules;
+    custom-instructions = builtins.readFile ./config/AGENT.md;
   };
 
   # Codex prompts and skills are placed as files
-  home.file = codexPromptFiles // codexSkillFiles;
+  home = {
+    file = {
+      ".codex/prompts" = {
+        source = ./config/prompts;
+        recursive = true;
+      };
+    };
+  };
 }

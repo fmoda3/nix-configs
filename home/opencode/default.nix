@@ -1,18 +1,27 @@
-{ lib, config, ... }:
-let
-  ai = import ../ai-common { inherit lib; };
-in
+{ config, ... }:
 {
   programs.opencode = {
     enable = config.my-home.includeAI;
     settings = {
       autoupdate = false;
       theme = "system";
-      mcp = ai.lib.toOpencodeMcp ai.mcpServers;
+      mcp = {
+        context7 = {
+          type = "remote";
+          url = "https://mcp.context7.com/mcp";
+        };
+        deepwiki = {
+          type = "remote";
+          url = "https://mcp.deepwiki.com/mcp";
+        };
+        sequential-thinking = {
+          type = "remote";
+          url = "https://remote.mcpservers.org/sequentialthinking/mcp";
+        };
+      };
     };
-    rules = ai.lib.getMemoryWithRules ai.memory ai.rules;
-    agents = ai.lib.toOpencodeAgents ai.agents;
-    commands = ai.lib.toOpencodeCommands ai.commands;
-    skills = ai.lib.toOpencodeSkills ai.skills;
+    rules = ./config/AGENT.md;
+    agents = ./config/agents;
+    commands = ./config/commands;
   };
 }
