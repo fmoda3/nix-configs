@@ -1,42 +1,57 @@
 # Unified agent structure - tools use only fields they support
 {
-  code-debugger = {
-    name = "code-debugger";
-    description = ''Use this agent when you encounter runtime errors, test failures, unexpected behavior, or need help troubleshooting issues in your code. This includes debugging compilation errors, analyzing stack traces, fixing failing unit or integration tests, resolving unexpected output, identifying logic errors, and diagnosing performance issues. Examples:\n\n<example>\nContext: User encounters a test failure in their Kotlin service.\nuser: "My integration test is failing with a NullPointerException in the FundedOffersService"\nassistant: "I'll use the code-debugger agent to help analyze this test failure and identify the root cause."\n<commentary>\nSince the user is reporting a test failure with a specific error, use the Task tool to launch the code-debugger agent to analyze the stack trace and identify the issue.\n</commentary>\n</example>\n\n<example>\nContext: User's code produces unexpected output.\nuser: "This function should return a sorted list but it's returning duplicates"\nassistant: "Let me use the code-debugger agent to investigate why your sorting function is producing duplicates."\n<commentary>\nThe user is experiencing unexpected behavior in their code, so use the code-debugger agent to analyze the logic and identify the bug.\n</commentary>\n</example>\n\n<example>\nContext: User encounters a compilation error.\nuser: "I'm getting a type mismatch error in my Guice module configuration"\nassistant: "I'll launch the code-debugger agent to help resolve this type mismatch error in your Guice configuration."\n<commentary>\nSince this is a compilation error, use the code-debugger agent to analyze the type system issue and provide a solution.\n</commentary>\n</example>'';
-    bodyFile = ./content/agents/code-debugger.md;
-    # claude-code specific
-    color = "orange";
-  };
-
-  code-reviewer = {
-    name = "code-reviewer";
-    description = ''Use this agent when you need expert code review feedback on recently written code. This agent analyzes code for best practices, potential bugs, performance issues, and architectural concerns. It provides actionable suggestions for improvement while considering project-specific patterns and standards. Examples:\n\n<example>\nContext: The user wants to review a function they just wrote.\nuser: "I just implemented a new authentication service. Can you review it?"\nassistant: "I'll use the code-reviewer agent to analyze your authentication service implementation."\n<commentary>\nSince the user has written new code and wants feedback, use the Task tool to launch the code-reviewer agent.\n</commentary>\n</example>\n\n<example>\nContext: The user has completed a feature and wants a review.\nuser: "I've finished the payment processing module"\nassistant: "Let me review your payment processing module using the code-reviewer agent to ensure it follows best practices."\n<commentary>\nThe user has completed code that needs review, so launch the code-reviewer agent to provide feedback.\n</commentary>\n</example>'';
-    bodyFile = ./content/agents/code-reviewer.md;
+  architect = {
+    name = "architect";
+    description = ''
+      Understands architecture, project conventions, and quality designs
+    '';
+    bodyFile = ./content/agents/architect.md;
+    model = "opus";
     # claude-code specific
     color = "purple";
   };
 
-  performance-optimizer = {
-    name = "performance-optimizer";
-    description = ''Use this agent when you need to analyze code performance, identify bottlenecks, optimize algorithms, reduce computational complexity, improve memory usage, or enhance overall code efficiency. This includes profiling code execution, analyzing time/space complexity, suggesting caching strategies, optimizing database queries, reducing unnecessary computations, and implementing performance best practices. <example>\nContext: The user has written a function that processes large datasets and wants to improve its performance.\nuser: "I've implemented this data processing function but it's running slowly on large inputs"\nassistant: "I'll analyze your function for performance issues"\n<function call omitted for brevity>\n<commentary>\nSince the user is concerned about performance on large inputs, use the Task tool to launch the performance-optimizer agent to analyze and optimize the code.\n</commentary>\nassistant: "Now let me use the performance-optimizer agent to identify bottlenecks and suggest optimizations"\n</example>\n<example>\nContext: The user wants to optimize database queries in their application.\nuser: "These database queries are taking too long to execute"\nassistant: "I'll use the performance-optimizer agent to analyze your queries and suggest improvements"\n<commentary>\nThe user needs help with database query performance, so use the performance-optimizer agent to analyze and optimize the queries.\n</commentary>\n</example>'';
-    bodyFile = ./content/agents/performance-optimizer.md;
+  debugger = {
+    name = "debugger";
+    description = ''
+      Analyzes bugs through systematic evidence gathering - use for complex debugging
+    '';
+    bodyFile = ./content/agents/debugger.md;
+    model = "sonnet";
     # claude-code specific
-    color = "green";
+    color = "cyan";
   };
 
-  security-auditor = {
-    name = "security-auditor";
-    description = ''Use this agent when you need to analyze code for security vulnerabilities, potential attack vectors, or compliance with security best practices. This includes checking for injection vulnerabilities, authentication/authorization issues, data exposure risks, cryptographic weaknesses, and other security concerns. Examples:\n\n<example>\nContext: The user has just written an authentication endpoint and wants to ensure it's secure.\nuser: "I've implemented a new login endpoint. Can you check it for security issues?"\nassistant: "I'll use the security-auditor agent to analyze your authentication endpoint for potential vulnerabilities."\n<commentary>\nSince the user is asking for a security review of authentication code, use the Task tool to launch the security-auditor agent.\n</commentary>\n</example>\n\n<example>\nContext: The user has written code that handles user input and wants to verify it's safe.\nuser: "Here's my function that processes user-submitted data for our API"\nassistant: "Let me analyze this code for security vulnerabilities using the security-auditor agent."\n<commentary>\nThe user has shared code that handles user input, which is a common source of security vulnerabilities. Use the security-auditor agent to check for injection attacks and input validation issues.\n</commentary>\n</example>\n\n<example>\nContext: After implementing a new feature, the developer wants a security review.\nuser: "I've just finished implementing the payment processing module"\nassistant: "Given that this handles sensitive payment data, I'll use the security-auditor agent to perform a thorough security analysis."\n<commentary>\nPayment processing code requires careful security review. Use the security-auditor agent to check for PCI compliance issues and data protection vulnerabilities.\n</commentary>\n</example>'';
-    bodyFile = ./content/agents/security-auditor.md;
-    # claude-code specific
-    color = "pink";
-  };
-
-  systems-architect = {
-    name = "systems-architect";
-    description = ''Use this agent when you need to design and plan the implementation of new functionality, from simple bug fixes to complex system architectures. This includes analyzing requirements, proposing technical solutions, identifying components and their interactions, and creating implementation roadmaps. Examples:\n\n<example>\nContext: User needs to add a new feature to their application.\nuser: "I need to add a notification system that sends emails when orders are completed"\nassistant: "I'll use the systems-architect agent to design the notification system architecture"\n<commentary>\nSince the user needs to plan and design a new feature, use the Task tool to launch the systems-architect agent to analyze requirements and propose a technical solution.\n</commentary>\n</example>\n\n<example>\nContext: User has a bug that requires architectural analysis.\nuser: "We're getting race conditions when multiple users update the same order simultaneously"\nassistant: "Let me use the systems-architect agent to analyze this concurrency issue and design a solution"\n<commentary>\nThe bug involves system-level concerns (concurrency), so use the systems-architect agent to analyze the problem and design an appropriate fix.\n</commentary>\n</example>\n\n<example>\nContext: User wants to build a new microservice.\nuser: "We need a new service to handle payment processing separately from our main application"\nassistant: "I'll engage the systems-architect agent to design the payment processing service architecture"\n<commentary>\nBuilding a new service requires architectural planning, so use the systems-architect agent to design the service structure, APIs, and integration points.\n</commentary>\n</example>'';
-    bodyFile = ./content/agents/systems-architect.md;
+  developer = {
+    name = "developer";
+    description = ''
+      Implements your specs with tests - delegate for writing code
+    '';
+    bodyFile = ./content/agents/developer.md;
+    model = "sonnet";
     # claude-code specific
     color = "blue";
+  };
+
+  quality-reviewer = {
+    name = "quality-reviewer";
+    description = ''
+      Reviews code and plans for production risks, project conformance, and structural quality
+    '';
+    bodyFile = ./content/agents/quality-reviewer.md;
+    model = "sonnet";
+    # claude-code specific
+    color = "orange";
+  };
+
+  technical-writer = {
+    name = "technical-writer";
+    description = ''
+      Creates documentation optimized for LLM consumption
+    '';
+    bodyFile = ./content/agents/technical-writer.md;
+    model = "sonnet";
+    # claude-code specific
+    color = "green";
   };
 }
