@@ -14,12 +14,12 @@
 }:
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "opencode";
-  version = "1.1.52";
+  version = "1.1.53";
   src = fetchFromGitHub {
     owner = "anomalyco";
     repo = "opencode";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-H5D1uUi/5EUPheNZSPuRaRRcFF9n4MEcT7ToIejGESo=";
+    hash = "sha256-VddWpvtoDJlbbesJL6VlP99/NJqkHbN8Rdv1XccNRZM=";
   };
 
   node_modules = stdenvNoCC.mkDerivation {
@@ -72,9 +72,9 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     # nix build '.#legacyPackages.aarch64-linux.opencode.node_modules'
     outputHash =
       if stdenvNoCC.hostPlatform.isDarwin then
-        "sha256-qCF9gNBOJUTi9WziYRqCWRPPNdyG44zeB8m27aMZpA0="
+        "sha256-m0vAVv8zS8RgU6YpEVbf6l6vilkU+CP/PtAD6U5g/F8="
       else
-        "sha256-RiHlmCiapxevx9Z4KvyBKEjhCxxVgar/IyZ/lpYa6x4=";
+        "sha256-S69x2yRym+h0hbc6wHFOeTxYi9nbBgEJGaZKhUbmdxI=";
     outputHashAlgo = "sha256";
     outputHashMode = "recursive";
   };
