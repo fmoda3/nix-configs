@@ -5,6 +5,7 @@
 , makeBinaryWrapper
 , autoPatchelfHook
 , procps
+, python3
 , ripgrep
 , bubblewrap
 , socat
@@ -56,6 +57,8 @@ stdenvNoCC.mkDerivation (finalAttrs: {
           [
             # claude-code uses [node-tree-kill](https://github.com/pkrumins/node-tree-kill) which requires procps's pgrep(darwin) or ps(linux)
             procps
+            # required for skills/hooks that use python scripts
+            python3
             # https://code.claude.com/docs/en/troubleshooting#search-and-discovery-issues
             ripgrep
           ]
