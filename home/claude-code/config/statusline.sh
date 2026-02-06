@@ -76,7 +76,24 @@ INPUT=$(cat)
 echo "$INPUT" > /tmp/claude-code-input-debug.json
 
 # Helper functions for common extractions
-get_model_name() { echo "$INPUT" | jq -r '.model.display_name'; }
+get_model_name() {
+    local display_name=$(echo "$INPUT" | jq -r '.model.display_name')
+
+    # Check if it's a Bedrock-style ID (contains "anthropic.claude")
+    if [[ "$display_name" =~ anthropic\.claude-([a-z]+)-([0-9])-([0-9]) ]]; then
+        local family="${BASH_REMATCH[1]}"
+        local major="${BASH_REMATCH[2]}"
+        local minor="${BASH_REMATCH[3]}"
+
+        # Capitalize the first letter
+        family="$(tr '[:lower:]' '[:upper:]' <<< ${family:0:1})${family:1}"
+
+        echo "${family} ${major}.${minor}"
+    else
+        # Return as-is if not a Bedrock ID
+        echo "$display_name"
+    fi
+}
 get_output_style() { echo "$INPUT" | jq -r '.output_style.name'; }
 get_session_cost() { echo "$INPUT" | jq -r '.cost.total_cost_usd // 0'; }
 get_total_lines_added() { echo "$INPUT" | jq -r '.cost.total_lines_added // 0'; }
