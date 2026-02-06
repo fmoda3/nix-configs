@@ -3,27 +3,29 @@
     enable = true;
     enableGitIntegration = true;
     options = {
-      commit-decoration-style = "bold box ul";
+      blame-palette = "\"#303446 #292c3c #232634 #414559 #51576d\"";
+      commit-decoration-style = "\"#737994\" bold box ul";
       dark = true;
-      file-decoration-style = "none";
-      file-style = "omit";
-      hunk-header-decoration-style = "\"#88C0D0\" box ul";
-      hunk-header-file-style = "white";
-      hunk-header-line-number-style = "bold \"#5E81AC\"";
+      file-decoration-style = "\"#737994\"";
+      file-style = "\"#c6d0f5\"";
+      hunk-header-decoration-style = "\"#737994\" box ul";
+      hunk-header-file-style = "bold";
+      hunk-header-line-number-style = "bold \"#a5adce\"";
       hunk-header-style = "file line-number syntax";
       line-numbers = true;
-      line-numbers-left-style = "\"#88C0D0\"";
-      line-numbers-minus-style = "\"#BF616A\"";
-      line-numbers-plus-style = "\"#A3BE8C\"";
-      line-numbers-right-style = "\"#88C0D0\"";
-      line-numbers-zero-style = "white";
-      minus-emph-style = "syntax bold \"#780000\"";
-      minus-style = "syntax \"#400000\"";
+      line-numbers-left-style = "\"#737994\"";
+      line-numbers-minus-style = "bold \"#e78284\"";
+      line-numbers-plus-style = "bold \"#a6d189\"";
+      line-numbers-right-style = "\"#737994\"";
+      line-numbers-zero-style = "\"#737994\"";
+      minus-emph-style = "bold syntax \"#704f5c\"";
+      minus-style = "syntax \"#544452\"";
       navigate = true;
-      plus-emph-style = "syntax bold \"#007800\"";
-      plus-style = "syntax \"#004000\"";
-      whitespace-error-style = "\"#280050\" reverse";
-      zero-style = "syntax";
+      plus-emph-style = "bold syntax \"#596b5e\"";
+      plus-style = "syntax \"#475453\"";
+      map-styles = ''
+        bold purple => syntax "#66597e", bold blue => syntax "#505d81", bold cyan => syntax "#546b7a", bold yellow => syntax "#6f6860"
+      '';
       syntax-theme = "catppuccin-frappe";
     };
   };
