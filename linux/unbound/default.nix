@@ -1,7 +1,6 @@
 { config, lib, ... }:
-with lib;
 {
-  config = mkIf config.my-linux.adblocker.useUnbound {
+  config = lib.mkIf config.my-linux.adblocker.useUnbound {
     services.unbound = {
       enable = true;
       settings = {

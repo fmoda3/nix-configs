@@ -1,5 +1,4 @@
 { config, pkgs, lib, ... }:
-with lib;
 let
   cfg = config.my-home;
   python-debug = pkgs.python3.withPackages (p: with p; [ debugpy ]);
@@ -7,7 +6,7 @@ let
   inherit (nvimLib) mkLuaPlugin mkLuaPluginWithVars;
 in
 {
-  config = mkIf cfg.useNeovim {
+  config = lib.mkIf cfg.useNeovim {
     programs.neovim = {
       enable = true;
       viAlias = true;
@@ -133,7 +132,7 @@ in
 
         # Hover documentation
         (mkLuaPlugin hover-nvim ./config/lua/hover-config.lua)
-      ] ++ optionals cfg.includeAI [
+      ] ++ lib.optionals cfg.includeAI [
         # AI
         (mkLuaPlugin claudecode-nvim ./config/lua/claude-code-config.lua)
       ];
@@ -177,7 +176,7 @@ in
         # Telescope tools
         ripgrep
         fd
-      ] ++ optionals cfg.includeAI [
+      ] ++ lib.optionals cfg.includeAI [
         # AI
         claude-code
       ];

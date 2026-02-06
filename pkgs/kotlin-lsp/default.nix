@@ -78,11 +78,11 @@ stdenv.mkDerivation rec {
     runHook postInstall
   '';
 
-  meta = with lib; {
+  meta = {
     description = "Kotlin Language Server Protocol implementation";
     homepage = "https://github.com/Kotlin/kotlin-lsp";
-    license = licenses.asl20;
-    platforms = platforms.all;
+    license = lib.licenses.asl20;
+    platforms = lib.platforms.all;
     mainProgram = "kotlin-lsp";
   };
 }

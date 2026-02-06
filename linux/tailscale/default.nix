@@ -1,10 +1,9 @@
 { config, lib, ... }:
-with lib;
 let
-  advertiseExitNode = optionals config.my-linux.tailscale.advertiseExitNode [ "--advertise-exit-node" ];
+  advertiseExitNode = lib.optionals config.my-linux.tailscale.advertiseExitNode [ "--advertise-exit-node" ];
 in
 {
-  config = mkIf config.my-linux.tailscale.enable {
+  config = lib.mkIf config.my-linux.tailscale.enable {
     services.tailscale = {
       enable = true;
       useRoutingFeatures = "both";

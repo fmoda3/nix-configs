@@ -1,5 +1,4 @@
 { config, pkgs, lib, ... }:
-with lib;
 let
   cfg = config.my-home;
 in
@@ -42,7 +41,7 @@ in
     flake = lib.mkOption {
       description = "Flake string to use for nh";
       default = "";
-      type = types.str;
+      type = lib.types.str;
     };
   };
 

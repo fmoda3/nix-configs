@@ -1,7 +1,6 @@
 { config, lib, ... }:
-with lib;
 {
-  config = mkIf config.my-linux.adblocker.enable {
+  config = lib.mkIf config.my-linux.adblocker.enable {
     services.adguardhome = {
       inherit (config.my-linux.adblocker) enable;
       settings = {

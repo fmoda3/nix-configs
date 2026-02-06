@@ -1,5 +1,4 @@
-{ config, pkgs, lib, ... }:
-with lib;
+{ pkgs, ... }:
 {
   # Hide the dock and menu bar, for Yabai
   system.defaults = {

@@ -1,5 +1,4 @@
 { config, pkgs, lib, ... }:
-with lib;
 let
   cfg = config.my-darwin;
 in

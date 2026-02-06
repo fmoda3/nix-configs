@@ -1,5 +1,4 @@
 { config, pkgs, lib, ... }:
-with lib;
 let
   cfg = config.installer;
 
@@ -30,8 +29,8 @@ let
 in
 {
   options.installer = {
-    targetSystem = mkOption {
-      type = types.attrs;
+    targetSystem = lib.mkOption {
+      type = lib.types.attrs;
       default = null;
       description = ''
         A reference to a built nixosSystem
