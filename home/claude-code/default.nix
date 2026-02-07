@@ -2,6 +2,20 @@
 let
   cfg = config.my-home;
 
+  extraPackages = with pkgs; [
+    python3
+  ];
+
+  wrappedClaude = pkgs.symlinkJoin {
+    name = "claude-code-wrapped";
+    paths = [ pkgs.claude-code ];
+    buildInputs = [ pkgs.makeBinaryWrapper ];
+    postBuild = ''
+      wrapProgram $out/bin/claude \
+        --prefix PATH : ${pkgs.lib.makeBinPath extraPackages}
+    '';
+  };
+
   # COMMON
   commonEnv = {
     CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY = "1";
@@ -108,6 +122,7 @@ in
 {
   programs.claude-code = {
     enable = cfg.includeAI;
+    package = wrappedClaude;
     settings = {
       hooks = commonHooks;
       statusLine = commonStatusLine;
