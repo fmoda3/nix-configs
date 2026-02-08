@@ -53,6 +53,8 @@ buildNpmPackage.override { nodejs = nodejs_22; } (finalAttrs: {
     python3
   ] ++ lib.optionals stdenv.hostPlatform.isDarwin [ cacert ];
 
+  passthru.updateScript = ./update.sh;
+
   meta = {
     description = "Configure Homebridge, monitor and backup from a browser";
     homepage = "https://github.com/homebridge/homebridge-config-ui-x";
