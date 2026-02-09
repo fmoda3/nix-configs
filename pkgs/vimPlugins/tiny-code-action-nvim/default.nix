@@ -4,12 +4,12 @@
 }:
 vimUtils.buildVimPlugin {
   pname = "tiny-code-action-nvim";
-  version = "2026-02-06";
+  version = "2026-02-07";
   src = fetchFromGitHub {
     owner = "rachartier";
     repo = "tiny-code-action.nvim";
-    rev = "f97b7d349a15b1f6884c9038f8f2ec5ff5325f34";
-    sha256 = "sha256-SsEbg/ABw1e41f/uSF6Ajat0EYaVQd8ZnLAiORoVb3A=";
+    rev = "15bf3e25e25ec5a9d5878e9f57bd65f92ce250a9";
+    sha256 = "sha256-c1jNtAvWUMTYyNK8uG3XuaEBjtcfmljsAcK+GxEK7ro=";
   };
   dependencies = [ vimPlugins.plenary-nvim ];
   nvimSkipModules = [
