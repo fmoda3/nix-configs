@@ -7,4 +7,4 @@ BASE_URL="https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8df
 
 VERSION=$(curl -fsSL "$BASE_URL/latest")
 
-curl -fsSL "$BASE_URL/$VERSION/manifest.json" --output manifest.json
+curl -fsSL "$BASE_URL/$VERSION/manifest.json" --output pkgs/claude-code/manifest.json
