@@ -15,6 +15,7 @@ final: prev:
   kotlin-lsp = prev.callPackage ./kotlin-lsp { };
   nix-cleanup = prev.callPackage ./nix-cleanup { };
   opencode = prev.callPackage ./opencode { };
+  pi-coding-agent = prev.callPackage ./pi-coding-agent { };
   # python3Packages = prev.python3Packages // {
   #   toast-tools = prev.callPackage ./toast-tools { };
   # };

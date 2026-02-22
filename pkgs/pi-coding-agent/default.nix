@@ -1,0 +1,162 @@
+{ lib
+, stdenvNoCC
+, bun
+, nodejs_22
+, fetchFromGitHub
+, makeBinaryWrapper
+, writableTmpDirAsHomeHook
+, cacert
+,
+}:
+stdenvNoCC.mkDerivation (finalAttrs: {
+  pname = "pi-coding-agent";
+  version = "0.54.1";
+
+  src = fetchFromGitHub {
+    owner = "badlogic";
+    repo = "pi-mono";
+    tag = "v${finalAttrs.version}";
+    hash = "sha256-0Tr8gZLnboXUcEgFourXNFIIqE4yj/GOZz8uc/HGxRo=";
+  };
+
+  node_modules = stdenvNoCC.mkDerivation {
+    pname = "${finalAttrs.pname}-node_modules";
+    inherit (finalAttrs) version src;
+
+    impureEnvVars = lib.fetchers.proxyImpureEnvVars ++ [
+      "GIT_PROXY_COMMAND"
+      "SOCKS_SERVER"
+    ];
+
+    nativeBuildInputs = [
+      nodejs_22
+      cacert
+      writableTmpDirAsHomeHook
+    ];
+
+    dontConfigure = true;
+
+    buildPhase = ''
+      runHook preBuild
+
+      npm ci --ignore-scripts
+
+      runHook postBuild
+    '';
+
+    installPhase = ''
+      runHook preInstall
+
+      mkdir -p $out
+      find . -type d -name node_modules -exec cp -R --parents {} $out \;
+
+      runHook postInstall
+    '';
+
+    dontFixup = true;
+
+    outputHash = "sha256-9eSRinEDP+vkfJeVX97fYKIfmezCEGcwQKlrv48fXKg=";
+    outputHashAlgo = "sha256";
+    outputHashMode = "recursive";
+  };
+
+  nativeBuildInputs = [
+    bun
+    nodejs_22
+    makeBinaryWrapper
+    writableTmpDirAsHomeHook
+  ];
+
+  configurePhase = ''
+    runHook preConfigure
+
+    cp -R ${finalAttrs.node_modules}/. .
+
+    runHook postConfigure
+  '';
+
+  buildPhase = ''
+    runHook preBuild
+
+    export PATH="$PWD/node_modules/.bin:$PATH"
+
+    # Build workspace dependencies in order
+    cd packages/tui
+    tsgo -p tsconfig.build.json
+    cd ../ai
+    tsgo -p tsconfig.build.json
+    cd ../agent
+    tsgo -p tsconfig.build.json
+
+    # Build coding-agent
+    cd ../coding-agent
+    tsgo -p tsconfig.build.json
+    chmod +x dist/cli.js
+
+    # Copy theme and template assets
+    mkdir -p dist/modes/interactive/theme
+    cp src/modes/interactive/theme/*.json dist/modes/interactive/theme/
+    mkdir -p dist/core/export-html/vendor
+    cp src/core/export-html/template.html src/core/export-html/template.css src/core/export-html/template.js dist/core/export-html/
+    cp src/core/export-html/vendor/*.js dist/core/export-html/vendor/
+
+    # Build standalone binary with Bun
+    bun build --compile ./dist/cli.js --outfile dist/pi
+
+    # Copy binary assets alongside
+    cp package.json dist/
+    mkdir -p dist/theme
+    cp src/modes/interactive/theme/*.json dist/theme/
+    mkdir -p dist/export-html/vendor
+    cp src/core/export-html/template.html dist/export-html/
+    cp src/core/export-html/vendor/*.js dist/export-html/vendor/
+    cp -r docs dist/
+    cp -r examples dist/
+    cp ../../node_modules/@silvia-odwyer/photon-node/photon_rs_bg.wasm dist/
+
+    cd ../..
+
+    runHook postBuild
+  '';
+
+  installPhase = ''
+    runHook preInstall
+
+    mkdir -p $out/bin $out/share/pi-coding-agent
+
+    install -Dm755 packages/coding-agent/dist/pi $out/bin/pi
+
+    # Install runtime assets that the binary discovers via PI_PACKAGE_DIR
+    cp -r packages/coding-agent/dist/theme $out/share/pi-coding-agent/
+    cp -r packages/coding-agent/dist/export-html $out/share/pi-coding-agent/
+    cp -r packages/coding-agent/dist/docs $out/share/pi-coding-agent/
+    cp -r packages/coding-agent/dist/examples $out/share/pi-coding-agent/
+    cp packages/coding-agent/dist/package.json $out/share/pi-coding-agent/
+    cp packages/coding-agent/dist/photon_rs_bg.wasm $out/share/pi-coding-agent/
+    cp packages/coding-agent/CHANGELOG.md $out/share/pi-coding-agent/
+    cp packages/coding-agent/README.md $out/share/pi-coding-agent/
+
+    # Bun binary looks for theme/ and export-html/ relative to dirname(process.execPath)
+    ln -s $out/share/pi-coding-agent/theme $out/bin/theme
+    ln -s $out/share/pi-coding-agent/export-html $out/bin/export-html
+
+    wrapProgram $out/bin/pi \
+      --set PI_PACKAGE_DIR $out/share/pi-coding-agent
+
+    runHook postInstall
+  '';
+
+  meta = {
+    description = "Minimal terminal coding agent with read, bash, edit, write tools";
+    homepage = "https://github.com/badlogic/pi-mono";
+    license = lib.licenses.mit;
+    sourceProvenance = with lib.sourceTypes; [ fromSource ];
+    platforms = [
+      "aarch64-linux"
+      "x86_64-linux"
+      "aarch64-darwin"
+      "x86_64-darwin"
+    ];
+    mainProgram = "pi";
+  };
+})
