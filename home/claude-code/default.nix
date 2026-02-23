@@ -77,7 +77,7 @@ let
     CLAUDE_CODE_SKIP_BEDROCK_AUTH = "1";
     ANTHROPIC_BEDROCK_BASE_URL = "https://llm-proxy.prod-build.int.toasttab.com/bedrock";
     ANTHROPIC_DEFAULT_OPUS_MODEL = "global.anthropic.claude-opus-4-6-v1";
-    ANTHROPIC_DEFAULT_SONNET_MODEL = "global.anthropic.claude-sonnet-4-5-20250929-v1:0";
+    ANTHROPIC_DEFAULT_SONNET_MODEL = "global.anthropic.claude-sonnet-4-6";
     ANTHROPIC_DEFAULT_HAIKU_MODEL = "global.anthropic.claude-haiku-4-5-20251001-v1:0";
     CLAUDE_CODE_ENABLE_TELEMETRY = "1";
     OTEL_METRICS_EXPORTER = "otlp";
