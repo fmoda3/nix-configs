@@ -6,6 +6,8 @@
 , makeBinaryWrapper
 , writableTmpDirAsHomeHook
 , cacert
+, fd
+, ripgrep
 ,
 }:
 stdenvNoCC.mkDerivation (finalAttrs: {
@@ -141,7 +143,9 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     ln -s $out/share/pi-coding-agent/export-html $out/bin/export-html
 
     wrapProgram $out/bin/pi \
-      --set PI_PACKAGE_DIR $out/share/pi-coding-agent
+      --prefix PATH : ${lib.makeBinPath [ fd ripgrep ]} \
+      --set PI_PACKAGE_DIR $out/share/pi-coding-agent \
+      --set PI_SKIP_VERSION_CHECK 1
 
     runHook postInstall
   '';
