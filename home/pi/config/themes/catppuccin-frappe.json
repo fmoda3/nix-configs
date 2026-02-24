@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/badlogic/pi-mono/main/packages/coding-agent/theme-schema.json",
+  "$schema": "https://raw.githubusercontent.com/badlogic/pi-mono/380236a003ec7f0e69f54463b0f00b3118d78f3c/packages/coding-agent/src/modes/interactive/theme/theme-schema.json",
   "name": "catppuccin-frappe",
   "vars": {
     "rosewater": "#f2d5cf",
