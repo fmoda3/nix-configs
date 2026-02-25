@@ -23,6 +23,7 @@ let
   };
 
   extensions = [
+    { name = "pi-ask-tool"; package = pkgs.piExtensions.pi-ask-tool; }
     { name = "pi-context"; package = pkgs.piExtensions.pi-context; }
     { name = "pi-direnv"; package = pkgs.piExtensions.pi-direnv; }
     { name = "pi-ghostty"; package = pkgs.piExtensions.pi-ghostty; }
