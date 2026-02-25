@@ -1,0 +1,27 @@
+{ stdenvNoCC
+, fetchFromGitHub
+}:
+stdenvNoCC.mkDerivation {
+  pname = "pi-ghostty";
+  version = "1.0.0";
+
+  src = fetchFromGitHub {
+    owner = "HazAT";
+    repo = "pi-ghostty";
+    rev = "f414a831db7f097abc59fbc91f4e9296db2c092d";
+    sha256 = "sha256-XxnqAqkQivzRw1YmNJAz1bJPdlugMU0BXRrmiO2x86c=";
+  };
+
+  installPhase = ''
+    runHook preInstall
+
+    mkdir -p $out
+    cp -r . $out/
+    rm -rf $out/.github
+
+    # Add index.ts so Bun can resolve the "extensions" directory as a module
+    echo 'export { default } from "./ghostty.ts";' > $out/extensions/index.ts
+
+    runHook postInstall
+  '';
+}
