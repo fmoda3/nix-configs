@@ -29,6 +29,7 @@ let
     { name = "pi-ghostty"; package = pkgs.piExtensions.pi-ghostty; }
     { name = "pi-mcp-adapter"; package = pkgs.piExtensions.pi-mcp-adapter; }
     { name = "pi-notify"; package = pkgs.piExtensions.pi-notify; }
+    { name = "pi-plan"; package = pkgs.piExtensions.pi-plan; }
     { name = "pi-powerline-footer"; package = pkgs.piExtensions.pi-powerline-footer; }
     { name = "pi-subagents"; package = pkgs.piExtensions.pi-subagents; }
   ];

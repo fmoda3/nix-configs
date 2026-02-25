@@ -23,6 +23,7 @@ final: prev:
     pi-ghostty = prev.callPackage ./piExtensions/pi-ghostty { };
     pi-mcp-adapter = prev.callPackage ./piExtensions/pi-mcp-adapter { };
     pi-notify = prev.callPackage ./piExtensions/pi-notify { };
+    pi-plan = prev.callPackage ./piExtensions/pi-plan { };
     pi-powerline-footer = prev.callPackage ./piExtensions/pi-powerline-footer { };
     pi-subagents = prev.callPackage ./piExtensions/pi-subagents { };
   };
