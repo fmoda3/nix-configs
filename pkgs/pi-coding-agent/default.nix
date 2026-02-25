@@ -12,13 +12,13 @@
 }:
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "pi-coding-agent";
-  version = "0.54.2";
+  version = "0.55.0";
 
   src = fetchFromGitHub {
     owner = "badlogic";
     repo = "pi-mono";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-ocSqOfFUpNDudCqeGm2hpxL3PZZOdseQTEz/SfhKR+s=";
+    hash = "sha256-+T10MIxdRPHWAeXWur2JkonBgLZtBgCUM931QRWhBM4=";
   };
 
   node_modules = stdenvNoCC.mkDerivation {
@@ -57,7 +57,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
 
     dontFixup = true;
 
-    outputHash = "sha256-9f5XTlvW1XWn3wJJ+2jF9R8aw78cLWd5t5DBOuaUBfY=";
+    outputHash = "sha256-nR1hqeyFzIVYsNmf3AsQLWeiGnd7Q9iFF+J1SZC2CB0=";
     outputHashAlgo = "sha256";
     outputHashMode = "recursive";
   };
