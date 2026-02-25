@@ -17,6 +17,7 @@ final: prev:
   opencode = prev.callPackage ./opencode { };
   pi-coding-agent = prev.callPackage ./pi-coding-agent { };
   piExtensions = {
+    pi-context = prev.callPackage ./piExtensions/pi-context { };
     pi-notify = prev.callPackage ./piExtensions/pi-notify { };
     pi-powerline-footer = prev.callPackage ./piExtensions/pi-powerline-footer { };
     pi-subagents = prev.callPackage ./piExtensions/pi-subagents { };
