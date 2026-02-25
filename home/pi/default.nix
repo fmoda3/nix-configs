@@ -9,6 +9,7 @@ let
   };
 
   extensions = [
+    { name = "pi-notify"; package = pkgs.piExtensions.pi-notify; }
     { name = "pi-powerline-footer"; package = pkgs.piExtensions.pi-powerline-footer; }
     { name = "pi-subagents"; package = pkgs.piExtensions.pi-subagents; }
   ];

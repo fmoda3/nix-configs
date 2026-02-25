@@ -29,6 +29,9 @@
       # Need to override sensible
       set -g default-command '$SHELL'
 
+      # Passthrough for notifications
+      set -g allow-passthrough on
+
       # splitting panes
       # START:panesplit
       bind | split-window -h
