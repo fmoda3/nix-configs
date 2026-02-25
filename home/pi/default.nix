@@ -10,6 +10,7 @@ let
 
   extensions = [
     { name = "pi-context"; package = pkgs.piExtensions.pi-context; }
+    { name = "pi-direnv"; package = pkgs.piExtensions.pi-direnv; }
     { name = "pi-ghostty"; package = pkgs.piExtensions.pi-ghostty; }
     { name = "pi-notify"; package = pkgs.piExtensions.pi-notify; }
     { name = "pi-powerline-footer"; package = pkgs.piExtensions.pi-powerline-footer; }
