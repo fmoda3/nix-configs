@@ -7,6 +7,10 @@ let
     defaultModel = "gpt-5.3-codex";
     theme = "catppuccin-frappe";
   };
+
+  extensions = [
+    { name = "pi-subagents"; package = pkgs.piExtensions.pi-subagents; }
+  ];
 in
 {
   config = lib.mkIf cfg.includeAI {
@@ -28,7 +32,19 @@ in
           source = ./config/themes;
           recursive = true;
         };
-      };
+        ".pi/agent/agents" = {
+          source = ./config/agents;
+          recursive = true;
+        };
+      } // builtins.listToAttrs (map
+        (ext: {
+          name = ".pi/agent/extensions/${ext.name}";
+          value = {
+            source = ext.package;
+            recursive = true;
+          };
+        })
+        extensions);
     };
   };
 }

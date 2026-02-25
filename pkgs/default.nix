@@ -16,6 +16,9 @@ final: prev:
   nix-cleanup = prev.callPackage ./nix-cleanup { };
   opencode = prev.callPackage ./opencode { };
   pi-coding-agent = prev.callPackage ./pi-coding-agent { };
+  piExtensions = {
+    pi-subagents = prev.callPackage ./piExtensions/pi-subagents { };
+  };
   # python3Packages = prev.python3Packages // {
   #   toast-tools = prev.callPackage ./toast-tools { };
   # };
