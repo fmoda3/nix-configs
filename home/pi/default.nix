@@ -2,6 +2,21 @@
 let
   cfg = config.my-home;
 
+  extraPackages = with pkgs; [
+    python3
+  ];
+
+  wrappedPi = pkgs.symlinkJoin {
+    name = "pi-coding-agent-wrapped";
+    paths = [ pkgs.pi-coding-agent ];
+    buildInputs = [ pkgs.makeBinaryWrapper ];
+    postBuild = ''
+      wrapProgram $out/bin/pi \
+        --prefix PATH : ${pkgs.lib.makeBinPath extraPackages} \
+        --set POWERLINE_NERD_FONTS 1
+    '';
+  };
+
   settings = {
     defaultProvider = "openai-codex";
     defaultModel = "gpt-5.3-codex";
@@ -37,7 +52,7 @@ in
 {
   config = lib.mkIf cfg.includeAI {
     home = {
-      packages = [ pkgs.pi-coding-agent ];
+      packages = [ wrappedPi ];
 
       file = {
         ".pi/agent/settings.json" = {

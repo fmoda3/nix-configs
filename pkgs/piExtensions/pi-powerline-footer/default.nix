@@ -12,6 +12,12 @@ stdenvNoCC.mkDerivation {
     sha256 = "sha256-7PIWXW4lazsy0jPh2LpLnSvxVJcWI1LbY56Qh024s5E=";
   };
 
+  # fix crash until https://github.com/nicobailon/pi-powerline-footer/issues/4 is fixed
+  postPatch = ''
+    substituteInPlace presets.ts \
+      --replace-fail 'tokens: "primary"' 'tokens: "muted"'
+  '';
+
   installPhase = ''
     runHook preInstall
 
