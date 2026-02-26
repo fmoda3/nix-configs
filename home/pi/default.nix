@@ -37,6 +37,20 @@ let
     };
   };
 
+  keybindings = {
+    newLine = [ "shift+enter" "ctrl+j" ];
+    newSession = "ctrl+shift+n";
+    tree = "ctrl+shift+t";
+    fork = "ctrl+shift+f";
+    resume = "ctrl+shift+r";
+    cursorUp = [ "up" "alt+k" ];
+    cursorDown = [ "down" "alt+j" ];
+    cursorLeft = [ "left" "alt+h" ];
+    cursorRight = [ "right" "alt+l" ];
+    cursorWordLeft = [ "alt+left" "alt+b" ];
+    cursorWordRight = [ "alt+right" "alt+w" ];
+  };
+
   extensions = [
     { name = "pi-ask-tool"; package = pkgs.piExtensions.pi-ask-tool; }
     { name = "pi-context"; package = pkgs.piExtensions.pi-context; }
@@ -60,6 +74,9 @@ in
         };
         ".pi/agent/mcp.json" = {
           text = builtins.toJSON mcpConfig;
+        };
+        ".pi/agent/keybindings.json" = {
+          text = builtins.toJSON keybindings;
         };
         ".pi/agent/AGENTS.md" = {
           source = ./config/AGENT.md;
