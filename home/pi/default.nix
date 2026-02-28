@@ -60,6 +60,7 @@ let
     { name = "pi-notify"; package = pkgs.piExtensions.pi-notify; }
     { name = "pi-plan"; package = pkgs.piExtensions.pi-plan; }
     { name = "pi-powerline-footer"; package = pkgs.piExtensions.pi-powerline-footer; }
+    { name = "pi-sub-bar"; package = pkgs.piExtensions.pi-sub-bar; }
     { name = "pi-subagents"; package = pkgs.piExtensions.pi-subagents; }
   ];
 in
@@ -77,6 +78,9 @@ in
         };
         ".pi/agent/keybindings.json" = {
           text = builtins.toJSON keybindings;
+        };
+        ".pi/agent/pi-sub-bar-settings.json" = {
+          source = ./config/pi-sub-bar-settings.json;
         };
         ".pi/agent/AGENTS.md" = {
           source = ./config/AGENT.md;

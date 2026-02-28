@@ -25,6 +25,7 @@ final: prev:
     pi-notify = prev.callPackage ./piExtensions/pi-notify { };
     pi-plan = prev.callPackage ./piExtensions/pi-plan { };
     pi-powerline-footer = prev.callPackage ./piExtensions/pi-powerline-footer { };
+    pi-sub-bar = prev.callPackage ./piExtensions/pi-sub-bar { };
     pi-subagents = prev.callPackage ./piExtensions/pi-subagents { };
   };
   # python3Packages = prev.python3Packages // {
