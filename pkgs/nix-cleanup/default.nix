@@ -1,7 +1,6 @@
 { writeShellApplication
 , lib
 , stdenv
-, replaceVars
 , coreutils
 , gawk
 , gnugrep
@@ -10,9 +9,10 @@
 writeShellApplication {
   name = "nix-cleanup";
 
-  text = lib.readFile (replaceVars ./nix-cleanup.sh {
-    isNixOS = if stdenv.isLinux then "1" else "0";
-  });
+  text = lib.replaceStrings
+    [ "@isNixOS@" ]
+    [ (if stdenv.isLinux then "1" else "0") ]
+    (builtins.readFile ./nix-cleanup.sh);
 
   runtimeInputs = [ coreutils gawk gnugrep nix ];
 }
