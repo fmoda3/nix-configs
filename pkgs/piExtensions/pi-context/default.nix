@@ -3,13 +3,13 @@
 }:
 stdenvNoCC.mkDerivation {
   pname = "pi-context";
-  version = "1.0.5";
+  version = "1.1.0";
 
   src = fetchFromGitHub {
     owner = "ttttmr";
     repo = "pi-context";
-    rev = "0e40cfe8482a2e82672e49c8373b31684f918ced";
-    sha256 = "sha256-GppOFqYvc24WuwsH6xLjxuCoB1sOAz3jkGh/MIYqTsQ=";
+    rev = "7fd8752d05d98e4e38a7d0bc22de51d72d99f398";
+    sha256 = "sha256-cbcXUSzZfAXupQ1fzsise4OXFwH1N2VAIA3jdDyLJ/U=";
   };
 
   installPhase = ''
