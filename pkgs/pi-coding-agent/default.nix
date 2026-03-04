@@ -12,13 +12,13 @@
 }:
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "pi-coding-agent";
-  version = "0.55.4";
+  version = "0.56.0";
 
   src = fetchFromGitHub {
     owner = "badlogic";
     repo = "pi-mono";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-wwC9Kf0LD13LwEWVgeptEU1DC29y9AUVbHdSO5XEx50=";
+    hash = "sha256-07G0bZOAdfo0ttHXMvj3+DDCTU1ukPEex/BCQwycxyo=";
   };
 
   node_modules = stdenvNoCC.mkDerivation {
@@ -57,7 +57,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
 
     dontFixup = true;
 
-    outputHash = "sha256-hEJ1wuH/hQtvFuZgVJzKbaMSSEW88klmgUL8surYhW4=";
+    outputHash = "sha256-xfP98+xkNflM3FQmYPEu26ry8lugf+8JWyf/7TYJe/g=";
     outputHashAlgo = "sha256";
     outputHashMode = "recursive";
   };
@@ -95,23 +95,16 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     tsgo -p tsconfig.build.json
     chmod +x dist/cli.js
 
-    # Copy theme and template assets
-    mkdir -p dist/modes/interactive/theme
-    cp src/modes/interactive/theme/*.json dist/modes/interactive/theme/
-    mkdir -p dist/core/export-html/vendor
-    cp src/core/export-html/template.html src/core/export-html/template.css src/core/export-html/template.js dist/core/export-html/
-    cp src/core/export-html/vendor/*.js dist/core/export-html/vendor/
-
     # Build standalone binary with Bun
     bun build --compile ./dist/cli.js --outfile dist/pi
 
     # Copy binary assets alongside
     cp package.json dist/
+    cp README.md dist/
+    cp CHANGELOG.md dist/
     mkdir -p dist/theme
     cp src/modes/interactive/theme/*.json dist/theme/
-    mkdir -p dist/export-html/vendor
-    cp src/core/export-html/template.html dist/export-html/
-    cp src/core/export-html/vendor/*.js dist/export-html/vendor/
+    cp -r src/core/export-html dist/
     cp -r docs dist/
     cp -r examples dist/
     cp ../../node_modules/@silvia-odwyer/photon-node/photon_rs_bg.wasm dist/
@@ -135,8 +128,8 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     cp -r packages/coding-agent/dist/examples $out/share/pi-coding-agent/
     cp packages/coding-agent/dist/package.json $out/share/pi-coding-agent/
     cp packages/coding-agent/dist/photon_rs_bg.wasm $out/share/pi-coding-agent/
-    cp packages/coding-agent/CHANGELOG.md $out/share/pi-coding-agent/
-    cp packages/coding-agent/README.md $out/share/pi-coding-agent/
+    cp packages/coding-agent/dist/CHANGELOG.md $out/share/pi-coding-agent/
+    cp packages/coding-agent/dist/README.md $out/share/pi-coding-agent/
 
     # Bun binary looks for theme/ and export-html/ relative to dirname(process.execPath)
     ln -s $out/share/pi-coding-agent/theme $out/bin/theme
