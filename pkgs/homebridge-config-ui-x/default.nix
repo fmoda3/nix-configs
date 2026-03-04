@@ -12,23 +12,23 @@
 
 buildNpmPackage.override { nodejs = nodejs_22; } (finalAttrs: {
   pname = "homebridge-config-ui-x";
-  version = "5.18.0";
+  version = "5.19.0";
 
   src = fetchFromGitHub {
     owner = "homebridge";
     repo = "homebridge-config-ui-x";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-bdE/uu3uh3qgPNaDKU47wD1LtER/wJfLmwp2J624rK4=";
+    hash = "sha256-PJ+dpI4vuT1NbmbqDe5sLXWayCHu1LPjX/SgNxNpKjE=";
   };
 
   # Deps hash for the root package
-  npmDepsHash = "sha256-pbmnAAQs6RVwklAoKY4LY0k+nheX2BeAgkQEFNVDofc=";
+  npmDepsHash = "sha256-lENiS4SDxESpHzQrq9uuBWQmdbOpfDls6FKqq/KCp9w=";
 
   # Deps src and hash for ui subdirectory
   npmDeps_ui = fetchNpmDeps {
     name = "npm-deps-ui";
     src = "${finalAttrs.src}/ui";
-    hash = "sha256-uBB2WxbCXJL2Ys6sMFcLUlh88TLAz3U+XMhvDc8yFPk=";
+    hash = "sha256-3Bpo8l0aPKbLr/LVVwYa+H4kijt7fyIcwk4icDmWmUQ=";
   };
 
   # npmFlags = [ "--legacy-peer-deps" ];
@@ -48,6 +48,8 @@ buildNpmPackage.override { nodejs = nodejs_22; } (finalAttrs: {
   # On darwin, the build failed because openpty() is not declared
   # Uses the prebuild version of @homebridge/node-pty-prebuilt-multiarch instead
   makeCacheWritable = stdenv.hostPlatform.isDarwin;
+
+  npmFlags = [ "--legacy-peer-deps" ];
 
   nativeBuildInputs = [
     python3
