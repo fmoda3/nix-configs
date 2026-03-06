@@ -19,7 +19,7 @@ let
 
   settings = {
     defaultProvider = "openai-codex";
-    defaultModel = "gpt-5.3-codex";
+    defaultModel = "gpt-5.4";
     theme = "catppuccin-frappe";
   };
 
