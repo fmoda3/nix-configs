@@ -34,6 +34,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     nativeBuildInputs = [
       nodejs_22
       cacert
+      writableTmpDirAsHomeHook
     ];
 
     dontConfigure = true;
