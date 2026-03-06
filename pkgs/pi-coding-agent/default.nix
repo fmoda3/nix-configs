@@ -4,6 +4,7 @@
 , nodejs_22
 , fetchFromGitHub
 , makeBinaryWrapper
+, versionCheckHook
 , writableTmpDirAsHomeHook
 , cacert
 , fd
@@ -33,7 +34,6 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     nativeBuildInputs = [
       nodejs_22
       cacert
-      writableTmpDirAsHomeHook
     ];
 
     dontConfigure = true;
@@ -66,7 +66,6 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     bun
     nodejs_22
     makeBinaryWrapper
-    writableTmpDirAsHomeHook
   ];
 
   configurePhase = ''
@@ -142,6 +141,14 @@ stdenvNoCC.mkDerivation (finalAttrs: {
 
     runHook postInstall
   '';
+
+  nativeInstallCheckInputs = [
+    writableTmpDirAsHomeHook
+    versionCheckHook
+  ];
+  doInstallCheck = true;
+  versionCheckKeepEnvironment = [ "HOME" ];
+  versionCheckProgramArg = "--version";
 
   meta = {
     description = "Minimal terminal coding agent with read, bash, edit, write tools";
