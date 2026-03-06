@@ -141,6 +141,9 @@ in
     commandsDir = ./config/commands;
     memory.source = ./config/CLAUDE.md;
     skillsDir = ./config/skills;
+    outputStyles = {
+      direct = ./config/output-styles/direct.md;
+    };
   };
 
   home = {
@@ -148,10 +151,6 @@ in
       ".claude/statusline.sh" = {
         source = ./config/statusline.sh;
         executable = true;
-      };
-      ".claude/output-styles" = {
-        source = ./config/output-styles;
-        recursive = true;
       };
       ".claude/conventions" = {
         source = ./config/conventions;
