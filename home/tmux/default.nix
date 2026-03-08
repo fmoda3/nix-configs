@@ -93,9 +93,8 @@
       set-option -g automatic-rename-format ' #{b:pane_current_path}'
 
       # Let tmux recognize Shift+Enter from iTerm2, then forward as CSI u bytes
-      set -s extended-keys on
-      set -as terminal-features 'xterm*:extkeys'
-      bind -n S-Enter send-keys -H 1b 5b 31 33 3b 32 75
+      set -g extended-keys on
+      set -g extended-keys-format csi-u
 
       run-shell ${pkgs.tmuxPlugins.cpu}/share/tmux-plugins/cpu/cpu.tmux
       run-shell ${pkgs.tmuxPlugins.battery}/share/tmux-plugins/battery/battery.tmux
