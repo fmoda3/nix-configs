@@ -8,6 +8,9 @@
       theme = "catppuccin-frappe";
       font-family = "Terminess Nerd Font Mono";
       font-size = 14;
+      notify-on-command-finish = "always";
+      notify-on-command-finish-action = "bell,notify";
+      notify-on-command-finish-after = "30s";
     };
     themes = {
       catppuccin-frappe = {
@@ -29,6 +32,7 @@
           "14=#81c8be"
           "15=#b5bfe2"
         ];
+        palette-generate = true;
         background = "303446";
         foreground = "c6d0f5";
         cursor-color = "f2d5cf";
