@@ -46,7 +46,7 @@
 
       # mouse support - set to on if you want to use the mouse
       # START:mouse
-      setw -g mouse off 
+      setw -g mouse on
       # END:mouse
 
       # enable activity alerts
