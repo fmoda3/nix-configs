@@ -3,9 +3,11 @@
 , rustPlatform
 , fetchFromGitHub
 , installShellFiles
+, cargo
 , clang
 , cmake
 , gitMinimal
+, libcap
 , libclang
 , makeBinaryWrapper
 , nix-update-script
@@ -29,17 +31,19 @@ rustPlatform.buildRustPackage (finalAttrs: {
 
   sourceRoot = "${finalAttrs.src.name}/codex-rs";
 
-  cargoLock = {
-    lockFile = ./Cargo.lock;
-    outputHashes = {
-      "runfiles-0.1.0" = "sha256-uJpVLcQh8wWZA3GPv9D8Nt43EOirajfDJ7eq/FB+tek=";
-      "crossterm-0.28.1" = "sha256-6qCtfSMuXACKFb9ATID39XyFDIEMFDmbx6SSmNe+728=";
-      "nucleo-0.5.0" = "sha256-Hm4SxtTSBrcWpXrtSqeO0TACbUxq3gizg1zD/6Yw/sI=";
-      "ratatui-0.29.0" = "sha256-HBvT5c8GsiCxMffNjJGLmHnvG77A6cqEL+1ARurBXho=";
-      "tokio-tungstenite-0.28.0" = "sha256-hJAkvWxDjB9A9GqansahWhTmj/ekcelslLUTtwqI7lw=";
-      "tungstenite-0.27.0" = "sha256-AN5wql2X2yJnQ7lnDxpljNw0Jua40GtmT+w3wjER010=";
-    };
+  # TODO: Drop workaround once PR #486983 reaches master.
+  depsExtraArgs = {
+    nativeBuildInputs = [ cargo ];
+    postBuild = ''
+      # delete all Cargo.toml files for which `cargo metadata` fails
+      shopt -s globstar
+      for manifest_path in "$out"/**/Cargo.toml; do
+        cargo metadata --format-version 1 --no-deps --manifest-path "$manifest_path" >/dev/null || rm -v "$manifest_path"
+      done
+    '';
   };
+
+  cargoHash = "sha256-Ig3VMNN1oeC9DyjjVPTiXw4JXCuO01eRYJClcIXu8vQ=";
 
   nativeBuildInputs = [
     clang
@@ -53,6 +57,8 @@ rustPlatform.buildRustPackage (finalAttrs: {
   buildInputs = [
     libclang
     openssl
+  ] ++ lib.optionals stdenv.hostPlatform.isLinux [
+    libcap
   ];
 
   # NOTE: set LIBCLANG_PATH so bindgen can locate libclang, and adjust
