@@ -3,7 +3,7 @@
 }:
 stdenvNoCC.mkDerivation {
   pname = "pi-powerline-footer";
-  version = "0.4.0";
+  version = "2026-03-12";
 
   src = fetchFromGitHub {
     owner = "nicobailon";

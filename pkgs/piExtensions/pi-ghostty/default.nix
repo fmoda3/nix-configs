@@ -3,7 +3,7 @@
 }:
 stdenvNoCC.mkDerivation {
   pname = "pi-ghostty";
-  version = "1.0.0";
+  version = "2026-02-14";
 
   src = fetchFromGitHub {
     owner = "HazAT";

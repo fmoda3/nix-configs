@@ -3,7 +3,7 @@
 }:
 stdenvNoCC.mkDerivation {
   pname = "pi-notify";
-  version = "1.3.0";
+  version = "2026-02-12";
 
   src = fetchFromGitHub {
     owner = "ferologics";

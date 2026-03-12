@@ -3,7 +3,7 @@
 }:
 stdenvNoCC.mkDerivation {
   pname = "pi-subagents";
-  version = "0.11.2";
+  version = "2026-03-12";
 
   src = fetchFromGitHub {
     owner = "nicobailon";

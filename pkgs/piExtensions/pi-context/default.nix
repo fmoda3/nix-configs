@@ -3,7 +3,7 @@
 }:
 stdenvNoCC.mkDerivation {
   pname = "pi-context";
-  version = "1.1.1";
+  version = "2026-03-05";
 
   src = fetchFromGitHub {
     owner = "ttttmr";

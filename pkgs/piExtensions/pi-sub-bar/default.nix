@@ -3,7 +3,7 @@
 }:
 stdenvNoCC.mkDerivation {
   pname = "pi-sub-bar";
-  version = "1.3.0";
+  version = "2026-02-13";
 
   src = fetchFromGitHub {
     owner = "marckrenn";

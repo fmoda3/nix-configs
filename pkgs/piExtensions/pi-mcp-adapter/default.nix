@@ -3,7 +3,7 @@
 }:
 buildNpmPackage {
   pname = "pi-mcp-adapter";
-  version = "2.1.2";
+  version = "2026-02-20";
 
   src = fetchFromGitHub {
     owner = "nicobailon";

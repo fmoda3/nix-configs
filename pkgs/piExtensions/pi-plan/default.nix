@@ -3,7 +3,7 @@
 }:
 stdenvNoCC.mkDerivation {
   pname = "pi-plan";
-  version = "0.2.2";
+  version = "2026-02-24";
 
   src = fetchFromGitHub {
     owner = "devkade";

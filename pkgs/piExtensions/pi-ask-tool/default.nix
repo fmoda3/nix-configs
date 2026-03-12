@@ -3,7 +3,7 @@
 }:
 stdenvNoCC.mkDerivation {
   pname = "pi-ask-tool";
-  version = "0.2.2";
+  version = "2026-03-03";
 
   src = fetchFromGitHub {
     owner = "devkade";
