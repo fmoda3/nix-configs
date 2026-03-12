@@ -3,13 +3,13 @@
 }:
 stdenvNoCC.mkDerivation {
   pname = "pi-powerline-footer";
-  version = "0.3.1";
+  version = "0.4.0";
 
   src = fetchFromGitHub {
     owner = "nicobailon";
     repo = "pi-powerline-footer";
-    rev = "ced10bcd14273c99637c2474840286c173acc1d7";
-    sha256 = "sha256-4nxY66Xx38RVhN1LUVMqpwwruwVpOCNhi+tGYRL5fkM=";
+    rev = "c8e82ebb9d25ac554865802e4f902528721754bb";
+    sha256 = "sha256-cr/4GD3EmIGLckQsthfaikLmo8LZE1/o+8nqQAGcehQ=";
   };
 
   # fix crash until https://github.com/nicobailon/pi-powerline-footer/issues/4 is fixed
