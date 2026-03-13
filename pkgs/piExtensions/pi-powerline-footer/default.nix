@@ -8,8 +8,8 @@ stdenvNoCC.mkDerivation {
   src = fetchFromGitHub {
     owner = "nicobailon";
     repo = "pi-powerline-footer";
-    rev = "c8e82ebb9d25ac554865802e4f902528721754bb";
-    sha256 = "sha256-cr/4GD3EmIGLckQsthfaikLmo8LZE1/o+8nqQAGcehQ=";
+    rev = "a35153e35d9588aa3c23985f8425e5c80b01b46c";
+    sha256 = "sha256-CvDU324IYcyBcSMWkbjS+G3YfsXslpNrAzYXyxZSI+M=";
   };
 
   # fix crash until https://github.com/nicobailon/pi-powerline-footer/issues/4 is fixed
