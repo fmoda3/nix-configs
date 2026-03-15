@@ -3,13 +3,13 @@
 }:
 stdenvNoCC.mkDerivation {
   pname = "pi-sub-bar";
-  version = "2026-02-13";
+  version = "2026-03-15";
 
   src = fetchFromGitHub {
     owner = "marckrenn";
     repo = "pi-sub";
-    rev = "568087f80a360b795a75171741fc93f5f8be114c";
-    sha256 = "sha256-BuDAvV7KeK7psSfODwUBTA04b6LkhFwM/AMQpxlvmgk=";
+    rev = "b5f7b287957dfede37134b6ecbe561dfaff5817d";
+    sha256 = "sha256-RYn8UAc2s4ji2eWaBgaBFgQV1EpgbbRt7MDo3XYC7qM=";
   };
 
   installPhase = ''
