@@ -7,7 +7,7 @@
 }:
 stdenvNoCC.mkDerivation rec {
   pname = "pi-processes";
-  version = "0.6.2";
+  version = "2026-03-06";
 
   src = fetchFromGitHub {
     owner = "aliou";
