@@ -60,6 +60,7 @@ let
     { name = "pi-notify"; package = pkgs.piExtensions.pi-notify; }
     { name = "pi-plan"; package = pkgs.piExtensions.pi-plan; }
     { name = "pi-powerline-footer"; package = pkgs.piExtensions.pi-powerline-footer; }
+    { name = "pi-processes"; package = pkgs.piExtensions.pi-processes; }
     { name = "pi-sub-bar"; package = pkgs.piExtensions.pi-sub-bar; }
     { name = "pi-subagents"; package = pkgs.piExtensions.pi-subagents; }
     { name = "pi-teams"; package = pkgs.piExtensions.pi-teams; }
