@@ -12,6 +12,10 @@ stdenvNoCC.mkDerivation {
     sha256 = "sha256-awfCnc/V3XyYkW19IPqp/FjWLIKk30wZfFrrzNOHE8s=";
   };
 
+  patches = [
+    ./fix-bunfs-launch.patch
+  ];
+
   installPhase = ''
     runHook preInstall
 
