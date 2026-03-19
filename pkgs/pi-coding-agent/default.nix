@@ -104,7 +104,9 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     cp CHANGELOG.md dist/
     mkdir -p dist/theme
     cp src/modes/interactive/theme/*.json dist/theme/
-    cp -r src/core/export-html dist/
+    mkdir -p dist/export-html/vendor
+    cp src/core/export-html/template.html dist/export-html/
+    cp src/core/export-html/vendor/*.js dist/export-html/vendor/
     cp -r docs dist/
     cp -r examples dist/
     cp ../../node_modules/@silvia-odwyer/photon-node/photon_rs_bg.wasm dist/
