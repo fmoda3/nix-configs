@@ -8,15 +8,9 @@ stdenvNoCC.mkDerivation {
   src = fetchFromGitHub {
     owner = "nicobailon";
     repo = "pi-powerline-footer";
-    rev = "f37425c4d65973d684c49aa64856d150eb7f9188";
-    sha256 = "sha256-yeZ3exsyWyULZKxf8+B1xLxDqSfuAnDpdioeknx+zro=";
+    rev = "81f96e0de651fc6e0ea0e21cc825f6803715eca4";
+    sha256 = "sha256-ET8RxPKQH/WI+ES15F7DF/R0HP3Jvn0X0mkBnPLS2Co=";
   };
-
-  # fix crash until https://github.com/nicobailon/pi-powerline-footer/issues/4 is fixed
-  postPatch = ''
-    substituteInPlace presets.ts \
-      --replace-fail 'tokens: "primary"' 'tokens: "muted"'
-  '';
 
   installPhase = ''
     runHook preInstall
