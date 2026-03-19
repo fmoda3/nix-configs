@@ -3,18 +3,14 @@
 }:
 stdenvNoCC.mkDerivation {
   pname = "pi-teams";
-  version = "0.9.8";
+  version = "2026-03-19";
 
   src = fetchFromGitHub {
     owner = "burggraf";
     repo = "pi-teams";
-    rev = "89bccde903bd3c9fc849e00b25b9fc1c86f6e2f5";
-    sha256 = "sha256-awfCnc/V3XyYkW19IPqp/FjWLIKk30wZfFrrzNOHE8s=";
+    rev = "1d61307fa59db72bf40be34bda018e2a2b20fe5c";
+    sha256 = "sha256-OhaaRuFPCcmibzgzS/uAa+q0TWi0+cyhhPF/7YKHYKM=";
   };
-
-  patches = [
-    ./fix-bunfs-launch.patch
-  ];
 
   installPhase = ''
     runHook preInstall
