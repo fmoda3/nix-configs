@@ -3,13 +3,13 @@
 }:
 stdenvNoCC.mkDerivation {
   pname = "pi-teams";
-  version = "2026-03-19";
+  version = "2026-03-20";
 
   src = fetchFromGitHub {
     owner = "burggraf";
     repo = "pi-teams";
-    rev = "1d61307fa59db72bf40be34bda018e2a2b20fe5c";
-    sha256 = "sha256-OhaaRuFPCcmibzgzS/uAa+q0TWi0+cyhhPF/7YKHYKM=";
+    rev = "24596c922e832262626ab199fb3b42b3c42298d2";
+    sha256 = "sha256-FHKHJ0o6zr+jhS5yyuoosmoWBZO4wRO0dHKOo3Hu9+k=";
   };
 
   installPhase = ''
