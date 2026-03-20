@@ -7,23 +7,23 @@
 
 let
   # Define binary information for each platform
-  version = "262.1817.0";
+  version = "262.2310.0";
   sources = {
     "aarch64-darwin" = {
       url = "https://download-cdn.jetbrains.com/kotlin-lsp/${version}/kotlin-lsp-${version}-mac-aarch64.zip";
-      sha256 = "0jnfy97bhysqdybmvx51ray6wl2advalls3ccmcnasygsxxlrqs6";
+      sha256 = "1iq98gvhmw50mgnvpm5z7z80y75mhkpcb344cd1j0rnpxjs0wmhi";
     };
     "x86_64-darwin" = {
       url = "https://download-cdn.jetbrains.com/kotlin-lsp/${version}/kotlin-lsp-${version}-mac-x64.zip";
-      sha256 = "0phi5kds4xbb2b1yh6a037bp4kwnydnbzwdw2x22bdw30ih4pbnw";
+      sha256 = "1xavz4jmz48v95s4dlrfwqnvj9md7g9919i15yhzdzjccs8zbk54";
     };
     "x86_64-linux" = {
       url = "https://download-cdn.jetbrains.com/kotlin-lsp/${version}/kotlin-lsp-${version}-linux-x64.zip";
-      sha256 = "0ismhk2aqa605l9xi2kf269gjli77mgqi744cp5nq1gln9kwlvys";
+      sha256 = "1c8nmp8hgf26i372nglalm7lhyd2yvk4in6x2zcy3dglb0hj8160";
     };
     "aarch64-linux" = {
       url = "https://download-cdn.jetbrains.com/kotlin-lsp/${version}/kotlin-lsp-${version}-linux-aarch64.zip";
-      sha256 = "01apjqyawywx7rizkx033j0wdddpwvk2f31ijr7xissq1vb7djbj";
+      sha256 = "0p6ky0wjzny74blhrvs0fa7c9jvr0bxad0rblgxsjr4xz96q330z";
     };
   };
 
