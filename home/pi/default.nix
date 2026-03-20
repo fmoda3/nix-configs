@@ -38,17 +38,17 @@ let
   };
 
   keybindings = {
-    newLine = [ "shift+enter" "ctrl+j" ];
-    newSession = "ctrl+shift+n";
-    tree = "ctrl+shift+t";
-    fork = "ctrl+shift+f";
-    resume = "ctrl+shift+r";
-    cursorUp = [ "up" "alt+k" ];
-    cursorDown = [ "down" "alt+j" ];
-    cursorLeft = [ "left" "alt+h" ];
-    cursorRight = [ "right" "alt+l" ];
-    cursorWordLeft = [ "alt+left" "alt+b" ];
-    cursorWordRight = [ "alt+right" "alt+w" ];
+    "tui.input.newLine" = [ "shift+enter" "ctrl+j" ];
+    "app.session.new" = "ctrl+shift+n";
+    "app.session.tree" = "ctrl+shift+t";
+    "app.session.fork" = "ctrl+shift+f";
+    "app.session.resume" = "ctrl+shift+r";
+    "tui.editor.cursorUp" = [ "up" "alt+k" ];
+    "tui.editor.cursorDown" = [ "down" "alt+j" ];
+    "tui.editor.cursorLeft" = [ "left" "alt+h" ];
+    "tui.editor.cursorRight" = [ "right" "alt+l" ];
+    "tui.editor.cursorWordLeft" = [ "alt+left" "alt+b" ];
+    "tui.editor.cursorWordRight" = [ "alt+right" "alt+w" ];
   };
 
   extensions = [
