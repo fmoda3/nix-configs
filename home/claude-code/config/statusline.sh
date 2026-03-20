@@ -68,7 +68,17 @@ readonly RESET="\033[0m"
 #     "used_percentage": 12,
 #     "remaining_percentage": 88
 #   },
-#   "exceeds_200k_tokens": false
+#   "exceeds_200k_tokens": false,
+#   "rate_limits": {
+#     "five_hour": {
+#       "used_percentage": 0,
+#       "resets_at": 1773979200
+#     },
+#     "seven_day": {
+#       "used_percentage": 3,
+#       "resets_at": 1774036800
+#     }
+#   }
 # }
 INPUT=$(cat)
 
@@ -105,19 +115,30 @@ get_cache_read_input_tokens() { echo "$INPUT" | jq -r '.context_window.current_u
 get_context_window_size() { echo "$INPUT" | jq -r '.context_window.context_window_size // 0'; }
 get_context_window_used_percentage() { echo "$INPUT" | jq -r '.context_window.used_percentage // 0'; }
 
-CCUSAGE_ACTIVE=$(ccusage blocks --active --json)
-get_remaining_minutes() { echo "$CCUSAGE_ACTIVE" | jq -r '.blocks[0].projection.remainingMinutes // 0'; }
+get_five_hour_used_percentage() { echo "$INPUT" | jq -r '.rate_limits.five_hour.used_percentage // 0'; }
+get_five_hour_resets_at() { echo "$INPUT" | jq -r '.rate_limits.five_hour.resets_at // 0'; }
+get_seven_day_used_percentage() { echo "$INPUT" | jq -r '.rate_limits.seven_day.used_percentage // 0'; }
+get_seven_day_resets_at() { echo "$INPUT" | jq -r '.rate_limits.seven_day.resets_at // 0'; }
+get_remaining_seconds() {
+    local resets_at=$1
+    local now=$(date +%s)
+    local remaining=$((resets_at - now))
+    if [ "$remaining" -lt 0 ]; then
+        remaining=0
+    fi
+    echo "$remaining"
+}
 
 # Build statusline components
 STATUSLINE="${RESET}"
 
 # Add Model
 MODEL=$(get_model_name)
-STATUSLINE+="${BLUE}󱜙 ${MODEL}${TEXT} | ${RESET}"
+STATUSLINE+="${LAVENDER}󱜙 ${MODEL}${TEXT} | ${RESET}"
 
 # Add Output Style
 OUTPUT_STYLE=$(get_output_style)
-STATUSLINE+="${TEAL} ${OUTPUT_STYLE}${TEXT} | ${RESET}"
+STATUSLINE+="${BLUE} ${OUTPUT_STYLE}${TEXT} | ${RESET}"
 
 # Add Session Cost
 format_decimal() {
@@ -125,13 +146,24 @@ format_decimal() {
 }
 SESSION_COST=$(get_session_cost)
 FORMATTED_SESSION_COST=$(format_decimal $SESSION_COST)
-STATUSLINE+="${YELLOW} \$${FORMATTED_SESSION_COST}${TEXT} | ${RESET}"
+STATUSLINE+="${TEAL} \$${FORMATTED_SESSION_COST}${TEXT} | ${RESET}"
 
-# Add remaining minutes in claude window
-MINUTES=$(get_remaining_minutes)
-HOURS=$((MINUTES / 60))
-REMAINING_MINUTES=$((MINUTES % 60))
-STATUSLINE+="${MAROON} ${HOURS}h ${REMAINING_MINUTES}m${TEXT} | ${RESET}"
+# Add 5-hour rate limit window: usage% and time remaining
+FIVE_HOUR_USED=$(get_five_hour_used_percentage)
+FIVE_HOUR_RESETS_AT=$(get_five_hour_resets_at)
+FIVE_HOUR_REMAINING_SECS=$(get_remaining_seconds "$FIVE_HOUR_RESETS_AT")
+FIVE_HOUR_HOURS=$((FIVE_HOUR_REMAINING_SECS / 3600))
+FIVE_HOUR_MINUTES=$(( (FIVE_HOUR_REMAINING_SECS % 3600) / 60 ))
+STATUSLINE+="${YELLOW} ${FIVE_HOUR_USED}% ${FIVE_HOUR_HOURS}h ${FIVE_HOUR_MINUTES}m${TEXT} | ${RESET}"
+
+# Add 7-day rate limit window: usage% and time remaining
+SEVEN_DAY_USED=$(get_seven_day_used_percentage)
+SEVEN_DAY_RESETS_AT=$(get_seven_day_resets_at)
+SEVEN_DAY_REMAINING_SECS=$(get_remaining_seconds "$SEVEN_DAY_RESETS_AT")
+SEVEN_DAY_DAYS=$((SEVEN_DAY_REMAINING_SECS / 86400))
+SEVEN_DAY_HOURS=$(( (SEVEN_DAY_REMAINING_SECS % 86400) / 3600 ))
+SEVEN_DAY_MINUTES=$(( (SEVEN_DAY_REMAINING_SECS % 3600) / 60 ))
+STATUSLINE+="${MAROON}󰨳 ${SEVEN_DAY_USED}% ${SEVEN_DAY_DAYS}d ${SEVEN_DAY_HOURS}h ${SEVEN_DAY_MINUTES}m${TEXT} | ${RESET}"
 
 # Add context window information
 CURRENT_INPUT_TOKENS=$(get_current_input_tokens)
