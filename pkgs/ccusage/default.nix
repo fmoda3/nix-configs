@@ -1,14 +1,11 @@
 { lib
 , buildNpmPackage
 , fetchzip
-, nodejs_20
 }:
 
 buildNpmPackage (finalAttrs: {
   pname = "ccusage";
   version = "18.0.10";
-
-  nodejs = nodejs_20;
 
   src = fetchzip {
     url = "https://registry.npmjs.org/ccusage/-/ccusage-${finalAttrs.version}.tgz";
