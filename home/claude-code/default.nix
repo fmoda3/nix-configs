@@ -3,7 +3,21 @@ let
   cfg = config.my-home;
 
   extraPackages = with pkgs; [
+    # Bash
+    nodePackages.bash-language-server
+    # Elixir
+    expert
+    # Kotlin
+    kotlin-lsp
+    # Lua
+    lua-language-server
+    # Nix
+    nixd
+    # Python
+    pyright
     python3
+    # Typescript
+    nodePackages.typescript-language-server
   ];
 
   wrappedClaude = pkgs.symlinkJoin {
@@ -63,6 +77,77 @@ let
     sequential-thinking = {
       type = "http";
       url = "https://remote.mcpservers.org/sequentialthinking/mcp";
+    };
+  };
+
+  commonLspServers = {
+    bash = {
+      command = "bash-language-server";
+      args = [ "start" ];
+      extensionToLanguage = {
+        ".sh" = "shellscript";
+        ".bash" = "shellscript";
+        ".bashrc" = "shellscript";
+        ".bash_profile" = "shellscript";
+        ".profile" = "shellscript";
+      };
+    };
+    elixir = {
+      command = "expert";
+      args = [ "--stdio" ];
+      extensionToLanguage = {
+        ".ex" = "elixir";
+        ".exs" = "elixir";
+        ".eex" = "eex";
+        ".leex" = "eex";
+        ".heex" = "phoenix-heex";
+        ".sface" = "surface";
+        ".html.eex" = "html-eex";
+        ".html.leex" = "html-eex";
+      };
+    };
+    kotlin = {
+      command = "kotlin-lsp";
+      args = [ "--stdio" ];
+      extensionToLanguage = {
+        ".kt" = "kotlin";
+        ".kts" = "kotlin";
+      };
+      startupTimeout = 120000;
+    };
+    lua = {
+      command = "lua-language-server";
+      extensionToLanguage = {
+        ".lua" = "lua";
+      };
+    };
+    nix = {
+      command = "nixd";
+      extensionToLanguage = {
+        ".nix" = "nix";
+      };
+    };
+    python = {
+      command = "pyright-langserver";
+      args = [ "--stdio" ];
+      extensionToLanguage = {
+        ".py" = "python";
+        ".pyi" = "python";
+      };
+    };
+    typescript = {
+      command = "typescript-language-server";
+      args = [ "--stdio" ];
+      extensionToLanguage = {
+        ".ts" = "typescript";
+        ".tsx" = "typescriptreact";
+        ".js" = "javascript";
+        ".jsx" = "javascriptreact";
+        ".mts" = "typescript";
+        ".cts" = "typescript";
+        ".mjs" = "javascript";
+        ".cjs" = "javascript";
+      };
     };
   };
 
@@ -137,6 +222,7 @@ in
     };
 
     mcpServers = commonMcpServers // lib.optionalAttrs cfg.isWork workMcpServers;
+    lspServers = commonLspServers;
     agentsDir = ./config/agents;
     commandsDir = ./config/commands;
     memory.source = ./config/CLAUDE.md;
