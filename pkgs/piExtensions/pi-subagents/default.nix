@@ -3,13 +3,13 @@
 }:
 stdenvNoCC.mkDerivation {
   pname = "pi-subagents";
-  version = "2026-03-20";
+  version = "2026-03-21";
 
   src = fetchFromGitHub {
     owner = "nicobailon";
     repo = "pi-subagents";
-    rev = "5748ebab4ca2c9614969b23dd8f87b872fc3833d";
-    sha256 = "sha256-tLGGaMm8diie0ZNEb44ccrX8ZsKM7N/gGbEAgwlyhoA=";
+    rev = "ed5673f8df10719cad223db84cf2b631b01dffd6";
+    sha256 = "sha256-byJm0xyqYOfRsCJJfUQQyA/NqJeC3BRufmqyE2AiGd0=";
   };
 
   installPhase = ''
