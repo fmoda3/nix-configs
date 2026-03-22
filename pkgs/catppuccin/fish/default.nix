@@ -3,7 +3,7 @@
 }:
 stdenvNoCC.mkDerivation {
   pname = "catppuccin-fish";
-  version = "2025-03-12";
+  version = "2026-03-13";
 
   src = fetchFromGitHub {
     owner = "catppuccin";
