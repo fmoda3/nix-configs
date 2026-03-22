@@ -3,13 +3,13 @@
 }:
 stdenvNoCC.mkDerivation {
   pname = "pi-powerline-footer";
-  version = "2026-03-21";
+  version = "2026-03-22";
 
   src = fetchFromGitHub {
     owner = "nicobailon";
     repo = "pi-powerline-footer";
-    rev = "60420b18b542d9373392c3c9e6a79596027ea608";
-    sha256 = "sha256-2GROLitA3FqKFs56WcuhgAifeq6xqz3m2JpvGVnAcIo=";
+    rev = "31bc98bcee50e3c21283dc7db3cdf7bfbe757a13";
+    sha256 = "sha256-ZWEuYtrFxwlsqtbZ2UV2LS0lVpQpAxje/LmBPWYvmcI=";
   };
 
   installPhase = ''
