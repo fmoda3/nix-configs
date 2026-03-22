@@ -85,14 +85,14 @@
       # END:pipe-pane
 
       # Neovim color compatibility
-      set-option -sa terminal-overrides ',xterm-256color:RGB'
+      set-option -sa terminal-overrides ',xterm-256color:RGB,xterm-ghostty:RGB'
 
       # Auto rename windows to directory
       set-option -g status-interval 1
       set-option -g automatic-rename on
       set-option -g automatic-rename-format ' #{b:pane_current_path}'
 
-      # Let tmux recognize Shift+Enter from iTerm2, then forward as CSI u bytes
+      # Let tmux recognize extended keys (e.g. Shift+Enter) via CSI u protocol
       set -g extended-keys on
       set -g extended-keys-format csi-u
 
