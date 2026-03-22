@@ -5,6 +5,7 @@ final: prev:
     bat = prev.callPackage ./catppuccin/bat { };
     btop = prev.callPackage ./catppuccin/btop { };
     yazi = prev.callPackage ./catppuccin/yazi { };
+    fish = prev.callPackage ./catppuccin/fish { };
     zsh-syntax-highlighting = prev.callPackage ./catppuccin/zsh-syntax-highlighting { };
   };
   ccusage = prev.callPackage ./ccusage { };

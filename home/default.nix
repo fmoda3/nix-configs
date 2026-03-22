@@ -12,6 +12,7 @@ in
     ./delta
     ./direnv
     ./eza
+    ./fish
     ./fzf
     ./games
     ./gh

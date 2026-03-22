@@ -2,6 +2,7 @@
   programs.fzf = {
     enable = true;
     enableZshIntegration = true;
+    enableFishIntegration = true;
     # Has Catppuccin theme support
     colors = {
       # Catppuccin Frappe colors

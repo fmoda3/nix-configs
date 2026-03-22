@@ -3,6 +3,7 @@
   programs.ghostty = {
     enable = true;
     enableZshIntegration = true;
+    enableFishIntegration = true;
     package = if pkgs.stdenv.isLinux then pkgs.ghostty else null;
     settings = {
       theme = "catppuccin-frappe";

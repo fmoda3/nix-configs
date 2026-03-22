@@ -25,7 +25,6 @@
     };
 
     initContent = ''
-      eval "$(direnv hook zsh)"
       eval "$(batman --export-env)"
       path+="/opt/homebrew/bin"
 

@@ -3,6 +3,7 @@
   programs.starship = {
     enable = true;
     enableZshIntegration = true;
+    enableFishIntegration = true;
     settings = {
       palette = "catppuccin_frappe";
       palettes = {
