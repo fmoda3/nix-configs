@@ -18,10 +18,10 @@
       lib.optionals config.my-darwin.isWork [
         "libffi"
         "cocoapods"
-        "lunchbox"
+        "toasttab/toast/lunchbox"
         "toasttab/toast/braid"
-        "snyk"
-        "flaggy"
+        "snyk/tap/snyk"
+        "toasttab/toast/flaggy"
       ] ++
       lib.optionals config.my-darwin.isServer [
         "handbrake"
