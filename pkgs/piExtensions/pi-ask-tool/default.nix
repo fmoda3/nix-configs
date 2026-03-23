@@ -3,13 +3,13 @@
 }:
 stdenvNoCC.mkDerivation {
   pname = "pi-ask-tool";
-  version = "2026-03-03";
+  version = "2026-03-23";
 
   src = fetchFromGitHub {
     owner = "devkade";
     repo = "pi-ask-tool";
-    rev = "880643605c7027f0115cca94fbd599bf3d2ce374";
-    sha256 = "sha256-bCkzjcM4eRA9B7k5e/WBJBfsFdqb1EHf8On1wZD0QBU=";
+    rev = "fde70011e75ca60baff37f335f824b6cf26c9fac";
+    sha256 = "sha256-q8Wsw1ysVMMMeDHsstIirbeb6ST2K8+dK5IG7ukKXFA=";
   };
 
   installPhase = ''
