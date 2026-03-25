@@ -6,6 +6,7 @@
     enableFishIntegration = true;
     package = if pkgs.stdenv.isLinux then pkgs.ghostty else null;
     settings = {
+      command = "/Users/fmoda3/.nix-profile/bin/fish";
       theme = "catppuccin-frappe";
       font-family = "Terminess Nerd Font Mono";
       font-size = 14;
