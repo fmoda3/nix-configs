@@ -26,7 +26,10 @@
       lib.optionals config.my-darwin.isServer [
         "handbrake"
       ];
-    casks = lib.optionals config.my-darwin.isServer [
+    casks = lib.optionals config.my-darwin.isWork [
+      "toasttab/toast/tether"
+    ] ++
+    lib.optionals config.my-darwin.isServer [
       "filebot"
     ];
   };
