@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
   programs.tmux = {
     enable = true;
@@ -18,6 +18,9 @@
     extraConfig = ''
       # Set default terminal
       set -g default-terminal "tmux-256color"
+
+      # Set default shell
+      set-option -g default-shell ${config.home.homeDirectory}/.nix-profile/bin/fish
 
       # Set theme
       set -g @catppuccin_flavor 'frappe' # latte, frappe, macchiato or mocha
