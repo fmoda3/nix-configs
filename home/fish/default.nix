@@ -28,6 +28,7 @@
     plugins = [
       { name = "autopair"; inherit (pkgs.fishPlugins.autopair) src; }
       { name = "fzf-fish"; inherit (pkgs.fishPlugins.fzf-fish) src; }
+      { name = "puffer-fish"; inherit (pkgs.fishPlugins.puffer) src; }
     ];
 
     functions = {

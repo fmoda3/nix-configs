@@ -18,11 +18,6 @@ let
     # Human friendly numbers
     df = "df -h";
     du = "du -h -d 2";
-
-    # Moving around (dots can't be abbreviation names)
-    ".." = "cd ..";
-    "..." = "cd ../..";
-    "...." = "cd ../../..";
   };
 
   # Abbreviations: shortcuts that expand inline so history shows the full command.

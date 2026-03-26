@@ -23,6 +23,7 @@ in
     ./lazygit
     ./navi
     ./nh
+    ./nix-your-shell
     ./nvim
     ./opencode
     ./pi
