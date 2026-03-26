@@ -4,6 +4,7 @@
     enable = true;
     enableZshIntegration = true;
     enableFishIntegration = true;
+    enableTransience = true;
     settings = {
       palette = "catppuccin_frappe";
       palettes = {
