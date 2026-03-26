@@ -1,68 +1,75 @@
 { pkgs, lib, ... }:
 let
-  # Common aliases (all platforms)
+  # Aliases: transparent tool replacements where expansion would be noisy.
+  # These silently swap one tool for another; history shows the alias name.
   commonAliases = {
-    # PS
-    psa = "ps aux";
-    psg = "ps aux | grep ";
-
-    # Moving around
-    cdb = "cd -";
-    ".." = "cd ..";
-    "..." = "cd ../..";
-    "...." = "cd ../../..";
-
     # Replace ls with eza
     ls = "eza";
-    ll = "eza -l";
-    la = "eza -la";
-    lt = "eza --tree";
-    lg = "eza -l --git";
-    lag = "eza -la --git";
-    lsg = "eza -l --git --git-ignore";
-    lh = "eza -l --header";
-    lm = "eza -l --modified";
-    lc = "eza -l --created";
-    ls-size = "eza -l --sort=size";
-    ls-time = "eza -l --sort=modified";
-    ls-name = "eza -l --sort=name";
-    lsi = "eza -l --icons";
-    lai = "eza -la --icons";
-    lsf = "eza -l --classify";
-    lso = "eza -l --octal-permissions";
 
     # Replace tree with eza
     tree = "eza --tree";
-    tree2 = "eza --tree --level=2";
-    tree3 = "eza --tree --level=3";
-    treei = "eza --tree --icons";
+
+    # Grep with color
+    grep = "grep --color=auto";
+
+    # Less with raw control chars
+    less = "less -r";
+
+    # Human friendly numbers
+    df = "df -h";
+    du = "du -h -d 2";
+
+    # Moving around (dots can't be abbreviation names)
+    ".." = "cd ..";
+    "..." = "cd ../..";
+    "...." = "cd ../../..";
+  };
+
+  # Abbreviations: shortcuts that expand inline so history shows the full command.
+  # For ls/tree variants, we expand to the alias name (e.g. ll -> ls -l)
+  # so history reads naturally while the alias handles the eza substitution.
+  commonAbbreviations = {
+    # PS
+    psa = "ps aux";
+
+    # Moving around
+    cdb = "cd -";
+
+    # ls variants (expand to aliased ls/tree, not eza directly)
+    ll = "ls -l";
+    la = "ls -la";
+    lt = "ls --tree";
+    lg = "ls -l --git";
+    lag = "ls -la --git";
+    lsg = "ls -l --git --git-ignore";
+    lh = "ls -l --header";
+    lm = "ls -l --modified";
+    lc = "ls -l --created";
+    ls-size = "ls -l --sort=size";
+    ls-time = "ls -l --sort=modified";
+    ls-name = "ls -l --sort=name";
+    lsi = "ls -l --icons";
+    lai = "ls -la --icons";
+    lsf = "ls -l --classify";
+    lso = "ls -l --octal-permissions";
+
+    # Tree variants
+    tree2 = "tree --level=2";
+    tree3 = "tree --level=3";
+    treei = "tree --icons";
 
     # Bat
     b = "bat";
 
     # Zoxide
-    zz = "z -"; # Go to previous directory
-    zq = "z -i"; # Query interactively
-    zl = "zoxide query -l"; # List all directories in database
-    zs = "zoxide query -s"; # Show frecency scores
-    zt = "zoxide query -l | tail"; # Show recently added directories
-    zr = "zoxide remove"; # Remove directory from database
-    zc = "zoxide query -l | wc -l"; # Count directories in database
-    zf = "zoxide query -l | fzf"; # Use fzf to select from all directories
-    zh = "zoxide query -l | head"; # Show most frecent directories
-    zstats = "zoxide query -l -s"; # Show all directories with scores
+    zz = "z -";
+    zq = "z -i";
+    zl = "zoxide query -l";
+    zs = "zoxide query -s";
+    zr = "zoxide remove";
+    zstats = "zoxide query -l -s";
 
-    # Show human friendly numbers and colors
-    df = "df -h";
-    du = "du -h -d 2";
-
-    # show me files matching "ls grep"
-    lsgrep = "ll | grep";
-
-    # Grep
-    grep = "grep --color=auto";
-
-    # Git Aliases
+    # Git
     gs = "git status";
     gstsh = "git stash";
     gst = "git stash";
@@ -106,7 +113,7 @@ let
     gplr = "git pull --rebase";
     gps = "git push";
     gpsh = "git push";
-    gnb = "git nb"; # new branch aka checkout -b
+    gnb = "git nb";
     grs = "git reset";
     grsh = "git reset --hard";
     gcln = "git clean";
@@ -119,37 +126,53 @@ let
     gbg = "git bisect good";
     gbb = "git bisect bad";
 
-    # Common shell functions
-    less = "less -r";
+    # Common shell
     tf = "tail -f";
     l = "less";
     cl = "clear";
+    c = "clear";
 
     # Zippin
     gz = "tar -zcvf";
 
     # Networking
     myip = "curl -s ipinfo.io/ip";
-    ports = "lsof -i -P | grep LISTEN";
 
     # Misc
     h = "history";
-    c = "clear";
   };
 
-  # macOS-only aliases
-  darwinAliases = lib.optionalAttrs pkgs.stdenv.isDarwin {
+  # Aliases that contain pipes or semicolons (can't be abbreviations)
+  commonPipeAliases = {
+    psg = "ps aux | grep ";
+    lsgrep = "ls -l | grep";
+    ports = "lsof -i -P | grep LISTEN";
+    zt = "zoxide query -l | tail";
+    zc = "zoxide query -l | wc -l";
+    zf = "zoxide query -l | fzf";
+    zh = "zoxide query -l | head";
+  };
+
+  # macOS-only
+  darwinAbbreviations = lib.optionalAttrs pkgs.stdenv.isDarwin {
     localip = "ipconfig getifaddr en0";
     flushdns = "sudo dscacheutil -flushcache";
-    caff = "caffeinate -d -i -m -s"; # Prevents computer from falling asleep
+    caff = "caffeinate -d -i -m -s";
   };
 
-  # Linux-only aliases
+  # Linux-only
+  linuxAbbreviations = lib.optionalAttrs pkgs.stdenv.isLinux {
+    flushdns = "resolvectl flush-caches";
+  };
+
+  # Linux-only aliases (contain pipes)
   linuxAliases = lib.optionalAttrs pkgs.stdenv.isLinux {
     localip = "hostname -I | awk '{print $1}'";
-    flushdns = "resolvectl flush-caches";
   };
 in
 {
-  programs.fish.shellAliases = commonAliases // darwinAliases // linuxAliases;
+  programs.fish = {
+    shellAliases = commonAliases // commonPipeAliases // linuxAliases;
+    shellAbbrs = commonAbbreviations // darwinAbbreviations // linuxAbbreviations;
+  };
 }

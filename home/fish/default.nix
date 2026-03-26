@@ -20,7 +20,15 @@
 
       # Disable fish greeting
       set -g fish_greeting
+
+      # Vi keybindings (set via variable so plugins like autopair can hook into it)
+      set -g fish_key_bindings fish_vi_key_bindings
     '';
+
+    plugins = [
+      { name = "autopair"; inherit (pkgs.fishPlugins.autopair) src; }
+      { name = "fzf-fish"; inherit (pkgs.fishPlugins.fzf-fish) src; }
+    ];
 
     functions = {
       # Help wrapper to pipe through bat (replaces zsh global alias)
