@@ -5,6 +5,7 @@ in
 {
 
   imports = [
+    ./atuin
     ./bat
     ./btop
     ./claude-code

@@ -2,6 +2,7 @@ final: prev:
 {
   # Adding packages here, makes them accessible from "pkgs"
   catppuccin = {
+    atuin = prev.callPackage ./catppuccin/atuin { };
     bat = prev.callPackage ./catppuccin/bat { };
     btop = prev.callPackage ./catppuccin/btop { };
     yazi = prev.callPackage ./catppuccin/yazi { };
