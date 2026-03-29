@@ -4,7 +4,6 @@
 , rustPlatform
 , fetchFromGitHub
 , installShellFiles
-, cargo
 , clang
 , cmake
 , gitMinimal
@@ -35,19 +34,7 @@ rustPlatform.buildRustPackage (finalAttrs: {
 
   sourceRoot = "${finalAttrs.src.name}/codex-rs";
 
-  # TODO: Drop workaround once PR #486983 reaches master.
-  depsExtraArgs = {
-    nativeBuildInputs = [ cargo ];
-    postBuild = ''
-      # delete all Cargo.toml files for which `cargo metadata` fails
-      shopt -s globstar
-      for manifest_path in "$out"/**/Cargo.toml; do
-        cargo metadata --format-version 1 --no-deps --manifest-path "$manifest_path" >/dev/null || rm -v "$manifest_path"
-      done
-    '';
-  };
-
-  cargoHash = "sha256-QUh2G35uIUlQnq4LVt+TVs8hAf+3fo1WULpPWtw2Uxs=";
+  cargoHash = "sha256-YbE6SQn8zWQUfSpEO2IynXzJhLl+AHc6sfh7E6PxYJk=";
 
   nativeBuildInputs = [
     clang
@@ -61,7 +48,8 @@ rustPlatform.buildRustPackage (finalAttrs: {
   buildInputs = [
     libclang
     openssl
-  ] ++ lib.optionals stdenv.hostPlatform.isLinux [
+  ]
+  ++ lib.optionals stdenv.hostPlatform.isLinux [
     libcap
   ];
 
@@ -107,6 +95,7 @@ rustPlatform.buildRustPackage (finalAttrs: {
   passthru = {
     updateScript = nix-update-script {
       extraArgs = [
+        "--use-github-releases"
         "--version-regex"
         "^rust-v(\\d+\\.\\d+\\.\\d+)$"
       ];
