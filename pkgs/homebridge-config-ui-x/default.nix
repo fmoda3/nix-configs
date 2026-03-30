@@ -31,23 +31,23 @@ in
 
 buildNpmPackage.override { nodejs = nodejs_22; } (finalAttrs: {
   pname = "homebridge-config-ui-x";
-  version = "5.20.0";
+  version = "5.21.0";
 
   src = fetchFromGitHub {
     owner = "homebridge";
     repo = "homebridge-config-ui-x";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-d3y8mPk/+b4MA7h9VpO3nn1DS3C/C2Vu9Yq3+0cDJno=";
+    hash = "sha256-/EXGGalXLl40BFwGBcUBaKKFsX/d/hAVlnAnwwXWKts=";
   };
 
   # Deps hash for the root package
-  npmDepsHash = "sha256-cIvGrBaRL9njfRd6FkUtpQZhl09ac/c3f61WvqfoMmI=";
+  npmDepsHash = "sha256-VIp1y7JlE11O3C34vjUIWQmEAGaodSyonYhRjYOeJ0w=";
 
   # Deps src and hash for ui subdirectory
   npmDeps_ui = fetchNpmDeps {
     name = "npm-deps-ui";
     src = "${finalAttrs.src}/ui";
-    hash = "sha256-9vmrGsdgWCfYmfpBK3C2xeddKycIZr9tu8gEMiLmuSw=";
+    hash = "sha256-JqRIQEiKbP7G7KHWoqSpNaCSq0cXO4AiFxYNoAn+HEg=";
     preBuild = patchLockfile "package-lock.json";
     nativeBuildInputs = [ python3 ];
   };
