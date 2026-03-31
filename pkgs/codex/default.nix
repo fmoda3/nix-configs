@@ -4,6 +4,7 @@
 , rustPlatform
 , fetchFromGitHub
 , installShellFiles
+, bubblewrap
 , clang
 , cmake
 , gitMinimal
@@ -23,18 +24,18 @@
 }:
 rustPlatform.buildRustPackage (finalAttrs: {
   pname = "codex";
-  version = "0.117.0";
+  version = "0.118.0";
 
   src = fetchFromGitHub {
     owner = "openai";
     repo = "codex";
     tag = "rust-v${finalAttrs.version}";
-    hash = "sha256-Ezd8KaEMVeJPKC74CSPhecPLZghm0v6JkQTCPhr/2nY=";
+    hash = "sha256-FdtV+CIqTInnegcXrXBxw4aE0JnNDh4GdYKwUDjSk9Y=";
   };
 
   sourceRoot = "${finalAttrs.src.name}/codex-rs";
 
-  cargoHash = "sha256-YbE6SQn8zWQUfSpEO2IynXzJhLl+AHc6sfh7E6PxYJk=";
+  cargoHash = "sha256-7rexlmc79eUkwcqTa8rN3GFDy1dWs+0h/SUllZqAcpM=";
 
   nativeBuildInputs = [
     clang
@@ -86,7 +87,9 @@ rustPlatform.buildRustPackage (finalAttrs: {
   '';
 
   postFixup = ''
-    wrapProgram $out/bin/codex --prefix PATH : ${lib.makeBinPath [ ripgrep ]}
+    wrapProgram $out/bin/codex --prefix PATH : ${
+      lib.makeBinPath ([ ripgrep ] ++ lib.optionals stdenv.hostPlatform.isLinux [ bubblewrap ])
+    }
   '';
 
   doInstallCheck = true;
