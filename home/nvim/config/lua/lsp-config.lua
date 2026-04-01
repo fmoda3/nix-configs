@@ -281,15 +281,14 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			},
 		})
 
-		-- Illuminate
-		require("illuminate").on_attach(client)
+		-- Lsp Document Highlight
 		require("which-key").add({
 			{
 				"]u",
 				function()
-					require("illuminate").next_reference({ wrap = true })
+					require("lsp-document-highlight").jump(vim.v.count1, true)
 				end,
-				desc = "Illuminate: Next reference",
+				desc = "Highlight: Next reference",
 				icon = "󰒭",
 				noremap = true,
 				silent = true,
@@ -298,9 +297,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			{
 				"[u",
 				function()
-					require("illuminate").next_reference({ reverse = true, wrap = true })
+					require("lsp-document-highlight").jump(-vim.v.count1, true)
 				end,
-				desc = "Illuminate: Previous reference",
+				desc = "Highlight: Previous reference",
 				icon = "󰒮",
 				noremap = true,
 				silent = true,
@@ -315,7 +314,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			client.server_capabilities.document_range_formatting = false
 		end
 
-		if client and client.supports_method("textDocument/inlayHint") then
+		if client and client:supports_method("textDocument/inlayHint") then
 			vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
 		end
 

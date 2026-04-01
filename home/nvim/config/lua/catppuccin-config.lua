@@ -8,10 +8,6 @@ require("catppuccin").setup({
 		dropbar = true,
 		fidget = true,
 		gitsigns = true,
-		illuminate = {
-			enabled = true,
-			lsp = true,
-		},
 		indent_blankline = {
 			enabled = true,
 			colored_indent_levels = true,

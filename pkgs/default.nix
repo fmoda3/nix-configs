@@ -42,6 +42,7 @@ final: prev:
   };
   vimPlugins = prev.vimPlugins // {
     claudecode-nvim = prev.callPackage ./vimPlugins/claudecode-nvim { };
+    lsp-document-highlight-nvim = prev.callPackage ./vimPlugins/lsp-document-highlight-nvim { };
     tiny-code-action-nvim = prev.callPackage ./vimPlugins/tiny-code-action-nvim { };
   };
 }

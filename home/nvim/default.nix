@@ -65,7 +65,7 @@ in
         (mkLuaPlugin nvim-lspconfig ./config/lua/lsp-config.lua)
         nvim-lsp-ts-utils
         none-ls-nvim # Mostly for linting
-        vim-illuminate # Highlight selected symbol
+        lsp-document-highlight-nvim # Highlight selected symbol
 
         # Better LSP references/definitions viewer
         (mkLuaPlugin glance-nvim ./config/lua/glance-config.lua)
@@ -142,7 +142,7 @@ in
         nodejs
         # Language Servers
         # Bash
-        nodePackages.bash-language-server
+        bash-language-server
         # Dart
         dart
         # Elixir
@@ -168,11 +168,11 @@ in
         python-debug
         black
         # Typescript
-        nodePackages.typescript-language-server
+        typescript-language-server
         # Typst
         tinymist
         # Web (ESLint, HTML, CSS, JSON)
-        nodePackages.vscode-langservers-extracted
+        vscode-langservers-extracted
         # Telescope tools
         ripgrep
         fd

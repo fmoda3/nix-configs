@@ -4,7 +4,7 @@ let
 
   extraPackages = with pkgs; [
     # Bash
-    nodePackages.bash-language-server
+    bash-language-server
     # Elixir
     expert
     # Kotlin
@@ -17,7 +17,7 @@ let
     pyright
     python3
     # Typescript
-    nodePackages.typescript-language-server
+    typescript-language-server
   ];
 
   wrappedClaude = pkgs.symlinkJoin {
