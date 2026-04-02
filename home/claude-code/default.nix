@@ -33,6 +33,7 @@ let
   # COMMON
   commonEnv = {
     CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY = "1";
+    CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS = "1";
   };
 
   commonStatusLine = {
@@ -151,11 +152,6 @@ let
     };
   };
 
-  # PERSONAL
-  personalEnv = commonEnv // {
-    CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS = "1";
-  };
-
   # WORK
   workEnv = commonEnv // {
     CLAUDE_CODE_USE_BEDROCK = "1";
@@ -174,8 +170,8 @@ let
 
   workMcpServers = commonMcpServers // {
     atlassian = {
-      type = "sse";
-      url = "https://mcp.atlassian.com/v1/sse";
+      type = "http";
+      url = "https://mcp.atlassian.com/v1/mcp";
     };
     buffet = {
       command = "npx";
@@ -211,9 +207,9 @@ in
     settings = {
       hooks = commonHooks;
       statusLine = commonStatusLine;
-    } // lib.optionalAttrs (!cfg.isWork) {
-      env = personalEnv;
       teammateMode = "tmux";
+    } // lib.optionalAttrs (!cfg.isWork) {
+      env = commonEnv;
     } // lib.optionalAttrs cfg.isWork {
       env = workEnv;
       apiKeyHelper = "${pkgs.toast.bedrock-llm-proxy}/bin/toastApiKeyHelper";
