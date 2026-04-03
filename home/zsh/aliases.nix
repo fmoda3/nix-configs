@@ -144,6 +144,9 @@ let
     h = "history";
     c = "clear";
     reload = "source ~/.zshrc";
+
+    # AWS
+    awsfed = "aws sso login --sso-session default";
   };
 
   # macOS-only aliases

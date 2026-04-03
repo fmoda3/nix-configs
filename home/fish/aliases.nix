@@ -135,6 +135,9 @@ let
 
     # Misc
     h = "history";
+
+    # AWS
+    awsfed = "aws sso login --sso-session default";
   };
 
   # Aliases that contain pipes or semicolons (can't be abbreviations)

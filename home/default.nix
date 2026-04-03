@@ -5,6 +5,7 @@ in
 {
 
   imports = [
+    ./aws
     ./atuin
     ./bat
     ./btop
@@ -98,7 +99,6 @@ in
           # Work packages
           android-tools
           autossh
-          awscli2
           colima
           docker
           docker-compose

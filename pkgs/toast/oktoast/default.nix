@@ -1,37 +1,32 @@
-{ stdenv
-, lib
+{ lib
+, buildGoModule
 , makeWrapper
-, writeShellScriptBin
 , saml2aws
-, gnused
-, awscli
+, awscli2
+, fzf
+, jq
 }:
-stdenv.mkDerivation {
+buildGoModule {
   pname = "oktoast";
-  version = "2026-01-13";
+  version = "2.36.0";
 
   src = fetchGit {
     url = "git@github.toasttab.com:toasttab/oktoast-setup.git";
-    rev = "8a029f7db84d4eeb07975e62dd0f6b4971f02447";
-    narHash = "sha256-XBvSlbwVRRKVEofdJVRyDHX3/3W3Y2wrsntFu1osrPw=";
+    rev = "d0d0580784f1d5ae7fe8ed72f4df8df807a5e01d";
+    narHash = "sha256-gCtrZqMPH3BZ4HvFZowNiTXHeK2A1lbLXRdokV8/1Xw=";
   };
 
-  nativeBuildInputs = [
-    makeWrapper
-  ];
+  vendorHash = "sha256-fIm9Qqr+BYIx7qxtDGGREHR/fVPcG2sVqPQI17EcuiA=";
 
-  installPhase = ''
-    mkdir -p $out/bin
-    cp oktoast $out/bin
-  '';
+  nativeBuildInputs = [ makeWrapper ];
 
   postFixup = ''
     wrapProgram $out/bin/oktoast \
       --prefix PATH : ${lib.makeBinPath [
         saml2aws
-        # gnused installs "sed", but oktoast needs "gsed"
-        (writeShellScriptBin "gsed" "exec -a $0 ${gnused}/bin/sed \"$@\"")
-        awscli
+        awscli2
+        fzf
+        jq
       ]}
   '';
 }
