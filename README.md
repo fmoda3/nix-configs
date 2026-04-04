@@ -22,7 +22,27 @@ Enable Flakes by creating a file in `~/.config/nix/nix.conf` and adding the foll
 experimental-features = nix-command flakes
 ```
 
-### 2.) [Determinate Systems Installer](https://zero-to-nix.com/concepts/nix-installer)
+### 2.) [New Official Installer](https://github.com/NixOS/nix-installer) (Beta)
+
+A next-generation installer maintained by the Nix project, forked from the Determinate Systems installer, and intended to replace the current official installer. Currently in beta. Installs standard Nix (unlike the Determinate Systems installer which now installs Determinate Nix).
+
+While currently in beta, this installer offers several improvements over the official installer:
+
+- **Clean uninstall**: Stores an install receipt at `/nix/receipt.json` and a copy of the installer binary, so Nix can be cleanly removed by running `/nix/nix-installer uninstall`
+- **Failure recovery**: Performs best-effort reversion of changes if the install fails partway through
+- **Install plans**: Uses planners to create an installation strategy for your system that you can review before proceeding
+- **Performance**: Maximizes parallel operations during install, making it faster than the shell-based official installer
+- **Broader compatibility**: Supports SELinux, OSTree-based distros, containers, WSL2, and CI/CD environments
+
+The following will install Nix with Flakes enabled on either Linux or macOS:
+
+```shell
+curl -sSfL https://artifacts.nixos.org/nix-installer | sh -s -- install --enable-flakes
+```
+
+### 3.) [Determinate Systems Installer](https://zero-to-nix.com/concepts/nix-installer)
+
+**Note:** This installer now installs Determinate Nix rather than standard Nix.
 
 The following will install Nix on either Linux or macOS:
 
