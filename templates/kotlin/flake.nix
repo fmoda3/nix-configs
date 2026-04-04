@@ -1,5 +1,5 @@
 {
-  description = "Example Java Project";
+  description = "Example Kotlin Project";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
@@ -14,7 +14,7 @@
           inherit system;
           overlays = [
             (final: prev: rec {
-              jdk = prev.jdk11;
+              jdk = prev.jdk25;
               gradle = prev.gradle.override {
                 java = jdk;
               };
@@ -26,7 +26,7 @@
           config = { };
         };
         devShells.default = pkgs.mkShell {
-          packages = with pkgs; [ kotlin gradle gcc ncurses patchelf zlib ];
+          packages = with pkgs; [ kotlin gradle ];
         };
       };
     };

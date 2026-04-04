@@ -14,7 +14,7 @@
           inherit system;
           overlays = [
             (final: prev: rec {
-              jdk = prev.jdk11;
+              jdk = prev.jdk25;
               gradle = prev.gradle.override {
                 java = jdk;
               };

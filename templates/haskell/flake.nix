@@ -13,7 +13,7 @@
         devShells.default = pkgs.haskellPackages.shellFor {
           packages = p: [ ];
 
-          buildInputs = with pkgs.haskellPackages; [ cabal-install ghcid ];
+          buildInputs = with pkgs.haskellPackages; [ cabal-install ghc ];
 
           withHoogle = true;
         };

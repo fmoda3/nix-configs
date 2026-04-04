@@ -18,8 +18,7 @@
 
           inputs = with pkgs;
             basePackages ++ lib.optionals stdenv.isLinux [ gigalixir inotify-tools libnotify ]
-            ++ lib.optionals stdenv.isDarwin [ terminal-notifier ] ++
-            (with darwin.apple_sdk.frameworks; [ CoreFoundation CoreServices ]);
+            ++ lib.optionals stdenv.isDarwin [ terminal-notifier ];
 
           hooks = ''
             # this allows mix to work on the local directory

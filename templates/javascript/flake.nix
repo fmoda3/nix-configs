@@ -12,9 +12,10 @@
       perSystem = { pkgs, ... }: {
         devShells.default = pkgs.mkShell {
           packages = with pkgs; [
+            nodejs
             yarn
             # Can override node version
-            # (yarn.override { nodejs = nodejs-12_x; })
+            # (yarn.override { nodejs = nodejs_24; })
           ];
         };
       };
