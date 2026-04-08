@@ -41,10 +41,12 @@ stdenv.mkDerivation {
     runHook preInstall
 
     mkdir -p $out/bin
-    cp toastApiKeyHelper $out/bin/toastApiKeyHelper
     cp toast-llm $out/bin/toast-llm
-    chmod +x $out/bin/toastApiKeyHelper
     chmod +x $out/bin/toast-llm
+    printf '#!/bin/sh\nexec "%s/bin/toast-llm" auth token "$@"\n' "$out" > $out/bin/toastApiKeyHelper
+    chmod +x $out/bin/toastApiKeyHelper
+    printf '#!/bin/sh\nexec "%s/bin/toast-llm" otel-headers "$@"\n' "$out" > $out/bin/otelHeadersHelper
+    chmod +x $out/bin/otelHeadersHelper
 
     runHook postInstall
   '';
