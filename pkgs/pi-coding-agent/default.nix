@@ -13,13 +13,13 @@
 }:
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "pi-coding-agent";
-  version = "0.65.2";
+  version = "0.66.1";
 
   src = fetchFromGitHub {
     owner = "badlogic";
     repo = "pi-mono";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-nHCQboyRT8k2t7dD0knmQSaUciQua17518CG/3jC7Rg=";
+    hash = "sha256-ZLa4IU7WpXixn9q158m17AvsofE43qj11JoaHCA1BWI=";
   };
 
   node_modules = stdenvNoCC.mkDerivation {
@@ -58,7 +58,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
 
     dontFixup = true;
 
-    outputHash = "sha256-WzjdWzPEdZKs1T26AJjYmayYz70dnNn3tFOZ4ti6XvI=";
+    outputHash = "sha256-NAv2PHCrf4E0v75Bp8LvEM+OJ7yZ8jSqcnPAZtvVCOg=";
     outputHashAlgo = "sha256";
     outputHashMode = "recursive";
   };
@@ -104,6 +104,8 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     cp CHANGELOG.md dist/
     mkdir -p dist/theme
     cp src/modes/interactive/theme/*.json dist/theme/
+    mkdir -p dist/assets
+    cp src/modes/interactive/assets/*.png dist/assets/
     mkdir -p dist/export-html/vendor
     cp src/core/export-html/template.html dist/export-html/
     cp src/core/export-html/vendor/*.js dist/export-html/vendor/
@@ -125,6 +127,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
 
     # Install runtime assets that the binary discovers via PI_PACKAGE_DIR
     cp -r packages/coding-agent/dist/theme $out/share/pi-coding-agent/
+    cp -r packages/coding-agent/dist/assets $out/share/pi-coding-agent/
     cp -r packages/coding-agent/dist/export-html $out/share/pi-coding-agent/
     cp -r packages/coding-agent/dist/docs $out/share/pi-coding-agent/
     cp -r packages/coding-agent/dist/examples $out/share/pi-coding-agent/
@@ -133,8 +136,9 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     cp packages/coding-agent/dist/CHANGELOG.md $out/share/pi-coding-agent/
     cp packages/coding-agent/dist/README.md $out/share/pi-coding-agent/
 
-    # Bun binary looks for theme/ and export-html/ relative to dirname(process.execPath)
+    # Bun binary looks for theme/, export-html/, and assets/ relative to dirname(process.execPath)
     ln -s $out/share/pi-coding-agent/theme $out/bin/theme
+    ln -s $out/share/pi-coding-agent/assets $out/bin/assets
     ln -s $out/share/pi-coding-agent/export-html $out/bin/export-html
 
     wrapProgram $out/bin/pi \
