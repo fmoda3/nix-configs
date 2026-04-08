@@ -12,6 +12,8 @@ in
       viAlias = true;
       vimAlias = true;
       vimdiffAlias = true;
+      withPython3 = false;
+      withRuby = false;
 
       initLua = ''
         ${builtins.readFile ./config/lua/settings.lua}

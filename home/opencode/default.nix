@@ -4,7 +4,6 @@
     enable = config.my-home.includeAI;
     settings = {
       autoupdate = false;
-      theme = "system";
       mcp = {
         context7 = {
           type = "remote";
@@ -19,6 +18,9 @@
           url = "https://remote.mcpservers.org/sequentialthinking/mcp";
         };
       };
+    };
+    tui = {
+      theme = "system";
     };
     rules = ./config/AGENT.md;
     agents = ./config/agents;
