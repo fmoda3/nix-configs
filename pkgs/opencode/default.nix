@@ -4,6 +4,7 @@
 , fetchFromGitHub
 , makeBinaryWrapper
 , models-dev
+, nodejs
 , nix-update-script
 , ripgrep
 , sysctl
@@ -15,6 +16,7 @@
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "opencode";
   version = "1.4.0";
+
   src = fetchFromGitHub {
     owner = "anomalyco";
     repo = "opencode";
@@ -44,8 +46,9 @@ stdenvNoCC.mkDerivation (finalAttrs: {
       bun install \
         --cpu="*" \
         --frozen-lockfile \
-        --filter ./packages/opencode \
+        --filter ./packages/app \
         --filter ./packages/desktop \
+        --filter ./packages/opencode \
         --ignore-scripts \
         --no-progress \
         --os="*"
@@ -75,6 +78,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
 
   nativeBuildInputs = [
     bun
+    nodejs
     installShellFiles
     makeBinaryWrapper
     models-dev
@@ -92,6 +96,8 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     runHook preConfigure
 
     cp -R ${finalAttrs.node_modules}/. .
+    patchShebangs node_modules
+    patchShebangs packages/*/node_modules
 
     runHook postConfigure
   '';
@@ -107,7 +113,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
 
     cd ./packages/opencode
     bun --bun ./script/build.ts --single --skip-install
-    bun --bun ./script/schema.ts schema.json
+    bun --bun ./script/schema.ts config.json tui.json
 
     runHook postBuild
   '';
@@ -128,7 +134,8 @@ stdenvNoCC.mkDerivation (finalAttrs: {
        )
      }
 
-    install -Dm644 schema.json $out/share/opencode/schema.json
+    install -Dm644 config.json $out/share/opencode/config.json
+    install -Dm644 tui.json $out/share/opencode/tui.json
 
     runHook postInstall
   '';
@@ -148,7 +155,10 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   versionCheckProgramArg = "--version";
 
   passthru = {
-    jsonschema = "${placeholder "out"}/share/opencode/schema.json";
+    jsonschema = {
+      config = "${placeholder "out"}/share/opencode/config.json";
+      tui = "${placeholder "out"}/share/opencode/tui.json";
+    };
     updateScript = nix-update-script {
       extraArgs = [
         "--subpackage"
