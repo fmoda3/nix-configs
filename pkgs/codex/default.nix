@@ -20,22 +20,23 @@
 , ripgrep
 , versionCheckHook
 , installShellCompletions ? stdenv.buildPlatform.canExecute stdenv.hostPlatform
+, cacert
 ,
 }:
 rustPlatform.buildRustPackage (finalAttrs: {
   pname = "codex";
-  version = "0.118.0";
+  version = "0.120.0";
 
   src = fetchFromGitHub {
     owner = "openai";
     repo = "codex";
     tag = "rust-v${finalAttrs.version}";
-    hash = "sha256-FdtV+CIqTInnegcXrXBxw4aE0JnNDh4GdYKwUDjSk9Y=";
+    hash = "sha256-kj8WWFNk0/ZIefA7xgDox8zvW3y4tyLT2lyi1SyeHz8=";
   };
 
   sourceRoot = "${finalAttrs.src.name}/codex-rs";
 
-  cargoHash = "sha256-7rexlmc79eUkwcqTa8rN3GFDy1dWs+0h/SUllZqAcpM=";
+  cargoHash = "sha256-VY97UmTju9p+0rjdHXPaIq7JWTebZCrFzzrxyIjxaOg=";
 
   nativeBuildInputs = [
     clang
@@ -44,6 +45,7 @@ rustPlatform.buildRustPackage (finalAttrs: {
     installShellFiles
     makeBinaryWrapper
     pkg-config
+    cacert
   ];
 
   buildInputs = [
