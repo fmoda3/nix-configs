@@ -13,6 +13,7 @@
 , librusty_v8 ? callPackage ./librusty_v8.nix {
     inherit (callPackage ./fetchers.nix { }) fetchLibrustyV8;
   }
+, livekit-libwebrtc
 , makeBinaryWrapper
 , nix-update-script
 , pkg-config
@@ -20,7 +21,6 @@
 , ripgrep
 , versionCheckHook
 , installShellCompletions ? stdenv.buildPlatform.canExecute stdenv.hostPlatform
-, cacert
 ,
 }:
 rustPlatform.buildRustPackage (finalAttrs: {
@@ -38,6 +38,11 @@ rustPlatform.buildRustPackage (finalAttrs: {
 
   cargoHash = "sha256-VY97UmTju9p+0rjdHXPaIq7JWTebZCrFzzrxyIjxaOg=";
 
+  postPatch = lib.optionalString stdenv.hostPlatform.isDarwin '' 
+    substituteInPlace $cargoDepsCopy/*/webrtc-sys-*/build.rs \
+      --replace-fail "cargo:rustc-link-lib=static=webrtc" "cargo:rustc-link-lib=dylib=webrtc"
+  '';
+
   nativeBuildInputs = [
     clang
     cmake
@@ -45,7 +50,6 @@ rustPlatform.buildRustPackage (finalAttrs: {
     installShellFiles
     makeBinaryWrapper
     pkg-config
-    cacert
   ];
 
   buildInputs = [
@@ -71,6 +75,9 @@ rustPlatform.buildRustPackage (finalAttrs: {
       ]
     );
     RUSTY_V8_ARCHIVE = librusty_v8;
+  }
+  // lib.optionalAttrs stdenv.hostPlatform.isDarwin {
+    LK_CUSTOM_WEBRTC = lib.getDev livekit-libwebrtc;
   };
 
   # NOTE: part of the test suite requires access to networking, local shells,
