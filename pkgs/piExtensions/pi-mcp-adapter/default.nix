@@ -8,11 +8,11 @@ buildNpmPackage {
   src = fetchFromGitHub {
     owner = "nicobailon";
     repo = "pi-mcp-adapter";
-    rev = "981b13490534b4abbe4396ed503842e94f0fac64";
-    sha256 = "sha256-tCgn19vGwfvOgmk9WGFLkmSWltzJE1Z25QNzIfeJwwY=";
+    rev = "999c735f2eb6f8c9237ad9b76668a93964d8be5c";
+    sha256 = "sha256-41f4kS6At7GQIfStEeQPRIQaFN5oMs6SrgDsNTeHhLE=";
   };
 
-  npmDepsHash = "sha256-sp1yphGR0P5BunmNGyyc67DXJG9DBuDvvbQp3fxG8Fs=";
+  npmDepsHash = "sha256-9P71EDq++Bmez3QDEbOL+PCtCFI2ajxy345stBOBp8k=";
   dontNpmBuild = true;
 
   installPhase = ''
