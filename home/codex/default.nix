@@ -16,7 +16,7 @@
         };
       };
     };
-    custom-instructions = builtins.readFile ./config/AGENT.md;
+    context = builtins.readFile ./config/AGENT.md;
   };
 
   # Codex prompts and skills are placed as files

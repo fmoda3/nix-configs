@@ -225,8 +225,8 @@ in
     lspServers = commonLspServers;
     agentsDir = ./config/agents;
     commandsDir = ./config/commands;
-    memory.source = ./config/CLAUDE.md;
-    skillsDir = ./config/skills;
+    context = ./config/CLAUDE.md;
+    skills = ./config/skills;
     outputStyles = {
       direct = ./config/output-styles/direct.md;
     };

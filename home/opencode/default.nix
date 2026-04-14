@@ -22,7 +22,7 @@
     tui = {
       theme = "system";
     };
-    rules = ./config/AGENT.md;
+    context = ./config/AGENT.md;
     agents = ./config/agents;
     commands = ./config/commands;
   };
