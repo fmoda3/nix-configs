@@ -52,6 +52,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
       --set-default FORCE_AUTOUPDATE_PLUGINS 1 \
       --set DISABLE_INSTALLATION_CHECKS 1 \
       --set USE_BUILTIN_RIPGREP 0 \
+      --set CLAUDE_CODE_TMUX_TRUECOLOR 1 \
       --prefix PATH : ${
         lib.makeBinPath (
           [
