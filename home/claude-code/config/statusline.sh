@@ -123,11 +123,16 @@ get_output_style() { echo "$INPUT" | jq -r '.output_style.name'; }
 get_session_cost() { echo "$INPUT" | jq -r '.cost.total_cost_usd // 0'; }
 get_total_lines_added() { echo "$INPUT" | jq -r '.cost.total_lines_added // 0'; }
 get_total_lines_removed() { echo "$INPUT" | jq -r '.cost.total_lines_removed // 0'; }
+get_total_duration_ms() { echo "$INPUT" | jq -r '.cost.total_duration_ms // 0'; }
+get_total_api_duration_ms() { echo "$INPUT" | jq -r '.cost.total_api_duration_ms // 0'; }
 get_current_input_tokens() { echo "$INPUT" | jq -r '.context_window.current_usage.input_tokens // 0'; }
 get_cache_creation_input_tokens() { echo "$INPUT" | jq -r '.context_window.current_usage.cache_creation_input_tokens // 0'; }
 get_cache_read_input_tokens() { echo "$INPUT" | jq -r '.context_window.current_usage.cache_read_input_tokens // 0'; }
 get_context_window_size() { echo "$INPUT" | jq -r '.context_window.context_window_size // 0'; }
 get_context_window_used_percentage() { echo "$INPUT" | jq -r '.context_window.used_percentage // 0'; }
+
+get_agent_name() { echo "$INPUT" | jq -r '.agent.name // empty'; }
+get_worktree_name() { echo "$INPUT" | jq -r '.worktree.name // empty'; }
 
 get_five_hour_used_percentage() { echo "$INPUT" | jq -r '.rate_limits.five_hour.used_percentage // empty'; }
 get_five_hour_resets_at() { echo "$INPUT" | jq -r '.rate_limits.five_hour.resets_at // empty'; }
@@ -146,13 +151,19 @@ get_remaining_seconds() {
 # Build statusline components
 STATUSLINE="${RESET}"
 
+# Add Agent name (if in a subagent)
+AGENT_NAME=$(get_agent_name)
+if [[ -n "$AGENT_NAME" ]]; then
+    STATUSLINE+="${LAVENDER} ${AGENT_NAME}${TEXT} | ${RESET}"
+fi
+
 # Add Model
 MODEL=$(get_model_name)
-STATUSLINE+="${LAVENDER}󱜙 ${MODEL}${TEXT} | ${RESET}"
+STATUSLINE+="${BLUE}󱜙 ${MODEL}${TEXT} | ${RESET}"
 
 # Add Output Style
 OUTPUT_STYLE=$(get_output_style)
-STATUSLINE+="${BLUE} ${OUTPUT_STYLE}${TEXT} | ${RESET}"
+STATUSLINE+="${TEAL} ${OUTPUT_STYLE}${TEXT} | ${RESET}"
 
 # Add Session Cost
 format_decimal() {
@@ -160,7 +171,28 @@ format_decimal() {
 }
 SESSION_COST=$(get_session_cost)
 FORMATTED_SESSION_COST=$(format_decimal $SESSION_COST)
-STATUSLINE+="${TEAL} \$${FORMATTED_SESSION_COST}${TEXT} | ${RESET}"
+STATUSLINE+="${GREEN} \$${FORMATTED_SESSION_COST}${TEXT} | ${RESET}"
+
+# Add session duration and API duration
+format_duration() {
+    local ms=$1
+    local total_secs=$((ms / 1000))
+    local hours=$((total_secs / 3600))
+    local mins=$(( (total_secs % 3600) / 60 ))
+    local secs=$((total_secs % 60))
+    if [ "$hours" -gt 0 ]; then
+        printf "%dh %dm %ds" "$hours" "$mins" "$secs"
+    elif [ "$mins" -gt 0 ]; then
+        printf "%dm %ds" "$mins" "$secs"
+    else
+        printf "%ds" "$secs"
+    fi
+}
+TOTAL_DURATION_MS=$(get_total_duration_ms)
+TOTAL_API_DURATION_MS=$(get_total_api_duration_ms)
+FORMATTED_TOTAL_DURATION=$(format_duration "$TOTAL_DURATION_MS")
+FORMATTED_API_DURATION=$(format_duration "$TOTAL_API_DURATION_MS")
+STATUSLINE+="${YELLOW}󱩷 ${FORMATTED_TOTAL_DURATION} 󱉊 ${FORMATTED_API_DURATION}${TEXT} | ${RESET}"
 
 # Add context window information
 CURRENT_INPUT_TOKENS=$(get_current_input_tokens)
@@ -169,12 +201,17 @@ CACHE_READ_INPUT_TOKENS=$(get_cache_read_input_tokens)
 CONTEXT_WINDOW_SIZE=$(get_context_window_size)
 CONTEXT_WINDOW_USAGE=$((CURRENT_INPUT_TOKENS + CACHE_CREATION_INPUT_TOKENS + CACHE_READ_INPUT_TOKENS))
 CONTEXT_WINDOW_USED_PERCENTAGE=$(get_context_window_used_percentage)
-STATUSLINE+="${YELLOW} ${CONTEXT_WINDOW_USAGE}/${CONTEXT_WINDOW_SIZE} (${CONTEXT_WINDOW_USED_PERCENTAGE}%) | ${RESET}"
+STATUSLINE+="${PEACH} ${CONTEXT_WINDOW_USAGE}/${CONTEXT_WINDOW_SIZE} (${CONTEXT_WINDOW_USED_PERCENTAGE}%) | ${RESET}"
 
-# Add added/removes lines
+# Add added/removed lines and worktree
 TOTAL_LINES_ADDED=$(get_total_lines_added)
 TOTAL_LINES_REMOVED=$(get_total_lines_removed)
-STATUSLINE+="${TEXT}(${GREEN} ${TOTAL_LINES_ADDED}${TEXT}, ${RED} ${TOTAL_LINES_REMOVED}${TEXT})${RESET}"
+WORKTREE_NAME=$(get_worktree_name)
+if [[ -n "$WORKTREE_NAME" ]]; then
+    STATUSLINE+="${MAROON} ${WORKTREE_NAME}${TEXT}, "
+fi
+STATUSLINE+="${TEXT}(${GREEN} ${TOTAL_LINES_ADDED}${TEXT} ${RED} ${TOTAL_LINES_REMOVED}${TEXT}"
+STATUSLINE+="${TEXT})${RESET}"
 
 echo -e "$STATUSLINE"
 
@@ -190,7 +227,7 @@ if [[ -n "$FIVE_HOUR_USED" || -n "$SEVEN_DAY_USED" ]]; then
         FIVE_HOUR_REMAINING_SECS=$(get_remaining_seconds "$FIVE_HOUR_RESETS_AT")
         FIVE_HOUR_HOURS=$((FIVE_HOUR_REMAINING_SECS / 3600))
         FIVE_HOUR_MINUTES=$(( (FIVE_HOUR_REMAINING_SECS % 3600) / 60 ))
-        RATE_LIMIT_LINE+="${MAROON} ${FIVE_HOUR_USED}% ${FIVE_HOUR_HOURS}h ${FIVE_HOUR_MINUTES}m${RESET}"
+        RATE_LIMIT_LINE+="${MAUVE} ${FIVE_HOUR_USED}% ${FIVE_HOUR_HOURS}h ${FIVE_HOUR_MINUTES}m${RESET}"
     fi
 
     if [[ -n "$SEVEN_DAY_USED" ]]; then
@@ -202,7 +239,7 @@ if [[ -n "$FIVE_HOUR_USED" || -n "$SEVEN_DAY_USED" ]]; then
         SEVEN_DAY_DAYS=$((SEVEN_DAY_REMAINING_SECS / 86400))
         SEVEN_DAY_HOURS=$(( (SEVEN_DAY_REMAINING_SECS % 86400) / 3600 ))
         SEVEN_DAY_MINUTES=$(( (SEVEN_DAY_REMAINING_SECS % 3600) / 60 ))
-        RATE_LIMIT_LINE+="${MAUVE}󰨳 ${SEVEN_DAY_USED}% ${SEVEN_DAY_DAYS}d ${SEVEN_DAY_HOURS}h ${SEVEN_DAY_MINUTES}m${RESET}"
+        RATE_LIMIT_LINE+="${FLAMINGO}󰨳 ${SEVEN_DAY_USED}% ${SEVEN_DAY_DAYS}d ${SEVEN_DAY_HOURS}h ${SEVEN_DAY_MINUTES}m${RESET}"
     fi
 
     echo -e "$RATE_LIMIT_LINE"
