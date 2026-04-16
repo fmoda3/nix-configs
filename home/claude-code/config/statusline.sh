@@ -32,52 +32,67 @@ readonly RESET="\033[0m"
 # Read JSON input once
 # Will be of format:
 # {
-#   "hook_event_name": "Status",
-#   "session_id": "b84192b5-5d67-425a-9569-36a10aa07f0e",
-#   "transcript_path": "/path/to/transcript.json",
 #   "cwd": "/current/working/directory",
+#   "session_id": "abc123...",
+#   "session_name": "my-session",
+#   "transcript_path": "/path/to/transcript.jsonl",
 #   "model": {
-#     "id": "claude-opus-4-1",
+#     "id": "claude-opus-4-7",
 #     "display_name": "Opus"
 #   },
 #   "workspace": {
 #     "current_dir": "/current/working/directory",
-#     "project_dir": "/original/project/directory"
+#     "project_dir": "/original/project/directory",
+#     "added_dirs": [],
+#     "git_worktree": "feature-xyz"
 #   },
-#   "version": "1.0.85",
+#   "version": "2.1.90",
 #   "output_style": {
 #     "name": "default"
 #   },
 #   "cost": {
-#     "total_cost_usd": 0.1082909,
-#     "total_duration_ms": 37521,
-#     "total_api_duration_ms": 20258,
-#     "total_lines_added": 0,
-#     "total_lines_removed": 0
+#     "total_cost_usd": 0.01234,
+#     "total_duration_ms": 45000,
+#     "total_api_duration_ms": 2300,
+#     "total_lines_added": 156,
+#     "total_lines_removed": 23
 #   },
 #   "context_window": {
-#     "total_input_tokens": 251080,
-#     "total_output_tokens": 10896,
+#     "total_input_tokens": 15234,
+#     "total_output_tokens": 4521,
 #     "context_window_size": 200000,
+#     "used_percentage": 8,
+#     "remaining_percentage": 92,
 #     "current_usage": {
-#       "input_tokens": 8,
-#       "output_tokens": 163,
-#       "cache_creation_input_tokens": 1008,
-#       "cache_read_input_tokens": 36646
-#     },
-#     "used_percentage": 12,
-#     "remaining_percentage": 88
+#       "input_tokens": 8500,
+#       "output_tokens": 1200,
+#       "cache_creation_input_tokens": 5000,
+#       "cache_read_input_tokens": 2000
+#     }
 #   },
 #   "exceeds_200k_tokens": false,
 #   "rate_limits": {
 #     "five_hour": {
-#       "used_percentage": 0,
-#       "resets_at": 1773979200
+#       "used_percentage": 23.5,
+#       "resets_at": 1738425600
 #     },
 #     "seven_day": {
-#       "used_percentage": 3,
-#       "resets_at": 1774036800
+#       "used_percentage": 41.2,
+#       "resets_at": 1738857600
 #     }
+#   },
+#   "vim": {
+#     "mode": "NORMAL"
+#   },
+#   "agent": {
+#     "name": "security-reviewer"
+#   },
+#   "worktree": {
+#     "name": "my-feature",
+#     "path": "/path/to/.claude/worktrees/my-feature",
+#     "branch": "worktree-my-feature",
+#     "original_cwd": "/path/to/project",
+#     "original_branch": "main"
 #   }
 # }
 INPUT=$(cat)
@@ -109,16 +124,15 @@ get_session_cost() { echo "$INPUT" | jq -r '.cost.total_cost_usd // 0'; }
 get_total_lines_added() { echo "$INPUT" | jq -r '.cost.total_lines_added // 0'; }
 get_total_lines_removed() { echo "$INPUT" | jq -r '.cost.total_lines_removed // 0'; }
 get_current_input_tokens() { echo "$INPUT" | jq -r '.context_window.current_usage.input_tokens // 0'; }
-get_current_output_tokens() { echo "$INPUT" | jq -r '.context_window.current_usage.output_tokens // 0'; }
 get_cache_creation_input_tokens() { echo "$INPUT" | jq -r '.context_window.current_usage.cache_creation_input_tokens // 0'; }
 get_cache_read_input_tokens() { echo "$INPUT" | jq -r '.context_window.current_usage.cache_read_input_tokens // 0'; }
 get_context_window_size() { echo "$INPUT" | jq -r '.context_window.context_window_size // 0'; }
 get_context_window_used_percentage() { echo "$INPUT" | jq -r '.context_window.used_percentage // 0'; }
 
-get_five_hour_used_percentage() { echo "$INPUT" | jq -r '.rate_limits.five_hour.used_percentage // 0'; }
-get_five_hour_resets_at() { echo "$INPUT" | jq -r '.rate_limits.five_hour.resets_at // 0'; }
-get_seven_day_used_percentage() { echo "$INPUT" | jq -r '.rate_limits.seven_day.used_percentage // 0'; }
-get_seven_day_resets_at() { echo "$INPUT" | jq -r '.rate_limits.seven_day.resets_at // 0'; }
+get_five_hour_used_percentage() { echo "$INPUT" | jq -r '.rate_limits.five_hour.used_percentage // empty'; }
+get_five_hour_resets_at() { echo "$INPUT" | jq -r '.rate_limits.five_hour.resets_at // empty'; }
+get_seven_day_used_percentage() { echo "$INPUT" | jq -r '.rate_limits.seven_day.used_percentage // empty'; }
+get_seven_day_resets_at() { echo "$INPUT" | jq -r '.rate_limits.seven_day.resets_at // empty'; }
 get_remaining_seconds() {
     local resets_at=$1
     local now=$(date +%s)
@@ -148,32 +162,14 @@ SESSION_COST=$(get_session_cost)
 FORMATTED_SESSION_COST=$(format_decimal $SESSION_COST)
 STATUSLINE+="${TEAL} \$${FORMATTED_SESSION_COST}${TEXT} | ${RESET}"
 
-# Add 5-hour rate limit window: usage% and time remaining
-FIVE_HOUR_USED=$(get_five_hour_used_percentage)
-FIVE_HOUR_RESETS_AT=$(get_five_hour_resets_at)
-FIVE_HOUR_REMAINING_SECS=$(get_remaining_seconds "$FIVE_HOUR_RESETS_AT")
-FIVE_HOUR_HOURS=$((FIVE_HOUR_REMAINING_SECS / 3600))
-FIVE_HOUR_MINUTES=$(( (FIVE_HOUR_REMAINING_SECS % 3600) / 60 ))
-STATUSLINE+="${YELLOW} ${FIVE_HOUR_USED}% ${FIVE_HOUR_HOURS}h ${FIVE_HOUR_MINUTES}m${TEXT} | ${RESET}"
-
-# Add 7-day rate limit window: usage% and time remaining
-SEVEN_DAY_USED=$(get_seven_day_used_percentage)
-SEVEN_DAY_RESETS_AT=$(get_seven_day_resets_at)
-SEVEN_DAY_REMAINING_SECS=$(get_remaining_seconds "$SEVEN_DAY_RESETS_AT")
-SEVEN_DAY_DAYS=$((SEVEN_DAY_REMAINING_SECS / 86400))
-SEVEN_DAY_HOURS=$(( (SEVEN_DAY_REMAINING_SECS % 86400) / 3600 ))
-SEVEN_DAY_MINUTES=$(( (SEVEN_DAY_REMAINING_SECS % 3600) / 60 ))
-STATUSLINE+="${MAROON}󰨳 ${SEVEN_DAY_USED}% ${SEVEN_DAY_DAYS}d ${SEVEN_DAY_HOURS}h ${SEVEN_DAY_MINUTES}m${TEXT} | ${RESET}"
-
 # Add context window information
 CURRENT_INPUT_TOKENS=$(get_current_input_tokens)
-CURRENT_OUTPUT_TOKENS=$(get_current_output_tokens)
 CACHE_CREATION_INPUT_TOKENS=$(get_cache_creation_input_tokens)
 CACHE_READ_INPUT_TOKENS=$(get_cache_read_input_tokens)
 CONTEXT_WINDOW_SIZE=$(get_context_window_size)
-CONTEXT_WINDOW_USAGE=$((CURRENT_INPUT_TOKENS + CURRENT_OUTPUT_TOKENS + CACHE_CREATION_INPUT_TOKENS + CACHE_READ_INPUT_TOKENS))
+CONTEXT_WINDOW_USAGE=$((CURRENT_INPUT_TOKENS + CACHE_CREATION_INPUT_TOKENS + CACHE_READ_INPUT_TOKENS))
 CONTEXT_WINDOW_USED_PERCENTAGE=$(get_context_window_used_percentage)
-STATUSLINE+="${MAUVE} ${CONTEXT_WINDOW_USAGE}/${CONTEXT_WINDOW_SIZE} (${CONTEXT_WINDOW_USED_PERCENTAGE}%) | ${RESET}"
+STATUSLINE+="${YELLOW} ${CONTEXT_WINDOW_USAGE}/${CONTEXT_WINDOW_SIZE} (${CONTEXT_WINDOW_USED_PERCENTAGE}%) | ${RESET}"
 
 # Add added/removes lines
 TOTAL_LINES_ADDED=$(get_total_lines_added)
@@ -181,3 +177,33 @@ TOTAL_LINES_REMOVED=$(get_total_lines_removed)
 STATUSLINE+="${TEXT}(${GREEN} ${TOTAL_LINES_ADDED}${TEXT}, ${RED} ${TOTAL_LINES_REMOVED}${TEXT})${RESET}"
 
 echo -e "$STATUSLINE"
+
+# Add rate limit information on a second line (only if rate limits exist)
+FIVE_HOUR_USED=$(get_five_hour_used_percentage)
+SEVEN_DAY_USED=$(get_seven_day_used_percentage)
+
+if [[ -n "$FIVE_HOUR_USED" || -n "$SEVEN_DAY_USED" ]]; then
+    RATE_LIMIT_LINE="${RESET}"
+
+    if [[ -n "$FIVE_HOUR_USED" ]]; then
+        FIVE_HOUR_RESETS_AT=$(get_five_hour_resets_at)
+        FIVE_HOUR_REMAINING_SECS=$(get_remaining_seconds "$FIVE_HOUR_RESETS_AT")
+        FIVE_HOUR_HOURS=$((FIVE_HOUR_REMAINING_SECS / 3600))
+        FIVE_HOUR_MINUTES=$(( (FIVE_HOUR_REMAINING_SECS % 3600) / 60 ))
+        RATE_LIMIT_LINE+="${MAROON} ${FIVE_HOUR_USED}% ${FIVE_HOUR_HOURS}h ${FIVE_HOUR_MINUTES}m${RESET}"
+    fi
+
+    if [[ -n "$SEVEN_DAY_USED" ]]; then
+        if [[ -n "$FIVE_HOUR_USED" ]]; then
+            RATE_LIMIT_LINE+="${TEXT} | ${RESET}"
+        fi
+        SEVEN_DAY_RESETS_AT=$(get_seven_day_resets_at)
+        SEVEN_DAY_REMAINING_SECS=$(get_remaining_seconds "$SEVEN_DAY_RESETS_AT")
+        SEVEN_DAY_DAYS=$((SEVEN_DAY_REMAINING_SECS / 86400))
+        SEVEN_DAY_HOURS=$(( (SEVEN_DAY_REMAINING_SECS % 86400) / 3600 ))
+        SEVEN_DAY_MINUTES=$(( (SEVEN_DAY_REMAINING_SECS % 3600) / 60 ))
+        RATE_LIMIT_LINE+="${MAUVE}󰨳 ${SEVEN_DAY_USED}% ${SEVEN_DAY_DAYS}d ${SEVEN_DAY_HOURS}h ${SEVEN_DAY_MINUTES}m${RESET}"
+    fi
+
+    echo -e "$RATE_LIMIT_LINE"
+fi
