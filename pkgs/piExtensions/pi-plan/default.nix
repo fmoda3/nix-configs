@@ -3,13 +3,13 @@
 }:
 stdenvNoCC.mkDerivation {
   pname = "pi-plan";
-  version = "2026-02-24";
+  version = "1.0.1";
 
   src = fetchFromGitHub {
-    owner = "devkade";
+    owner = "burneikis";
     repo = "pi-plan";
-    rev = "da5226a18b182641cfbfbae7912ff52638cccc67";
-    sha256 = "sha256-m4zyK0LiBj8nYHe+hADmmsSHqnBqIUq2c50yiv7CVf0=";
+    rev = "0eac3e305629a295a2d0fa17ff262854cf3cc7f5";
+    hash = "sha256-vE/aDCe4DnAOY0+M53xXoV3plH9RxJs9naAGZD1Nu/M=";
   };
 
   installPhase = ''
@@ -17,7 +17,6 @@ stdenvNoCC.mkDerivation {
 
     mkdir -p $out
     cp -r . $out/
-    rm -rf $out/.github
 
     runHook postInstall
   '';
