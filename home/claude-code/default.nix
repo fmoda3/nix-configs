@@ -211,6 +211,8 @@ in
       hooks = commonHooks;
       statusLine = commonStatusLine;
       teammateMode = "tmux";
+      skipAutoPermissionPrompt = true;
+      lspRecommendationDisabled = true;
     } // lib.optionalAttrs (!cfg.isWork) {
       env = commonEnv;
     } // lib.optionalAttrs cfg.isWork {
