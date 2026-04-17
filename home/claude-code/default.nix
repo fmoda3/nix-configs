@@ -26,7 +26,8 @@ let
     buildInputs = [ pkgs.makeBinaryWrapper ];
     postBuild = ''
       wrapProgram $out/bin/claude \
-        --prefix PATH : ${pkgs.lib.makeBinPath extraPackages}
+        --prefix PATH : ${pkgs.lib.makeBinPath extraPackages} \
+        --add-flags "--thinking-display summarized"
     '';
   };
 
