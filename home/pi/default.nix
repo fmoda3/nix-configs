@@ -62,6 +62,7 @@ let
     { name = "pi-status-footer"; package = pkgs.piExtensions.pi-status-footer; }
     { name = "pi-processes"; package = pkgs.piExtensions.pi-processes; }
     { name = "pi-subagents"; package = pkgs.piExtensions.pi-subagents; }
+    { name = "pi-tasks"; package = pkgs.piExtensions.pi-tasks; }
     { name = "pi-teams"; package = pkgs.piExtensions.pi-teams; }
   ];
 in
