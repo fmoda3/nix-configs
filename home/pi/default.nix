@@ -59,7 +59,7 @@ let
     { name = "pi-mcp-adapter"; package = pkgs.piExtensions.pi-mcp-adapter; }
     { name = "pi-notify"; package = pkgs.piExtensions.pi-notify; }
     { name = "pi-plan"; package = pkgs.piExtensions.pi-plan; }
-    { name = "pi-status-footer"; package = pkgs.piExtensions.pi-status-footer; }
+    { name = "pi-status-dashboard"; package = pkgs.piExtensions.pi-status-dashboard; }
     { name = "pi-processes"; package = pkgs.piExtensions.pi-processes; }
     { name = "pi-subagents"; package = pkgs.piExtensions.pi-subagents; }
     { name = "pi-tasks"; package = pkgs.piExtensions.pi-tasks; }
