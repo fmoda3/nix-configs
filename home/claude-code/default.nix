@@ -157,8 +157,8 @@ let
     CLAUDE_CODE_USE_BEDROCK = "1";
     CLAUDE_CODE_SKIP_BEDROCK_AUTH = "1";
     ANTHROPIC_BEDROCK_BASE_URL = "https://llm-proxy.build.eng.toasttab.com/bedrock";
-    ANTHROPIC_DEFAULT_OPUS_MODEL = "global.anthropic.claude-opus-4-6-v1";
-    ANTHROPIC_DEFAULT_SONNET_MODEL = "global.anthropic.claude-sonnet-4-6";
+    ANTHROPIC_DEFAULT_OPUS_MODEL = "global.anthropic.claude-opus-4-7[1m]";
+    ANTHROPIC_DEFAULT_SONNET_MODEL = "global.anthropic.claude-sonnet-4-6[1m]";
     ANTHROPIC_DEFAULT_HAIKU_MODEL = "global.anthropic.claude-haiku-4-5-20251001-v1:0";
     CLAUDE_CODE_SUBAGENT_MODEL = "global.anthropic.claude-sonnet-4-6";
     CLAUDE_CODE_ENABLE_TELEMETRY = "1";
