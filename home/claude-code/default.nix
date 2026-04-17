@@ -213,6 +213,7 @@ in
       teammateMode = "tmux";
       skipAutoPermissionPrompt = true;
       lspRecommendationDisabled = true;
+      showThinkingSummaries = true;
     } // lib.optionalAttrs (!cfg.isWork) {
       env = commonEnv;
     } // lib.optionalAttrs cfg.isWork {
