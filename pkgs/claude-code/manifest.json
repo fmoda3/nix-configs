@@ -1,45 +1,45 @@
 {
-  "version": "2.1.113",
-  "buildDate": "2026-04-17T18:24:31Z",
+  "version": "2.1.114",
+  "buildDate": "2026-04-17T22:43:08Z",
   "platforms": {
     "darwin-arm64": {
       "binary": "claude",
-      "checksum": "189b1c94ace3f3e90cd4836562cbb7f1eba69148b1353ba92a38ff966cb6cb00",
+      "checksum": "bf1b4da368da7970f0d1d4a1675acea99b6f2ad94f24e9f8ccfcc7940ac67894",
       "size": 204534752
     },
     "darwin-x64": {
       "binary": "claude",
-      "checksum": "5b9d04c3bf924d41962754c4c9371c9439a42ddeb838faeb01b63b074673e14e",
+      "checksum": "1a30360b6240056a58ba9187c8f9d2e88e949e0f970d5cf81f8d69bc65568f6a",
       "size": 206004048
     },
     "linux-arm64": {
       "binary": "claude",
-      "checksum": "7656fabaa2ba449a88cd3757827c62886a6f2cf7c050ef9d8357e6351da48ee1",
+      "checksum": "9556b74e2c912e7dcaef90c91fd0dd5095364f8a9d71398de3c5c669612b828a",
       "size": 236653120
     },
     "linux-x64": {
       "binary": "claude",
-      "checksum": "a81f7726b3b6b910e50c08a09f0090cb60714695d6d01bfe8698ff16cda9b87d",
+      "checksum": "12bd4b0916deb06be17ffc7b2f0485e140bf00b2db3dcb78469d66723d73c27f",
       "size": 236411520
     },
     "linux-arm64-musl": {
       "binary": "claude",
-      "checksum": "f17ebe686ff00b8a152e2b4742d7177cd6556c0f028f29f8651de3f03e556700",
+      "checksum": "20c68c312e76fb81f52cd2006b1461a0eedd470798f44b9b4a833ad583ccc05b",
       "size": 229378496
     },
     "linux-x64-musl": {
       "binary": "claude",
-      "checksum": "dbff20ca56382aed15ddb2ff8d232aa7a1081985907f5ff4abc03cb39d984573",
+      "checksum": "fbbcfa225e948d9263c39f8be29a956ea4bd3a445f79aa9396cdc3263ea05690",
       "size": 230676928
     },
     "win32-x64": {
       "binary": "claude.exe",
-      "checksum": "0e62752f68fc2e15264601279bec58bacb9b8a788497dad2c4a688e43ff2e358",
+      "checksum": "6f4a961ea8a1d656c41dd71cbef202cb71d13c443f86818c721167c33f8a51fd",
       "size": 245966496
     },
     "win32-arm64": {
       "binary": "claude.exe",
-      "checksum": "21bcce82b1a52f2c98ed34bc2145a268db093ea1233bf8c2fcfb11234754e05d",
+      "checksum": "acdc5b7004491662f10622124c509b018a6a6c5566adf3e217f2dd4dad64ef34",
       "size": 242697888
     }
   }
