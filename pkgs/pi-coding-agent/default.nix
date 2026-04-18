@@ -13,13 +13,13 @@
 }:
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "pi-coding-agent";
-  version = "0.67.6";
+  version = "0.67.68";
 
   src = fetchFromGitHub {
     owner = "badlogic";
     repo = "pi-mono";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-e9wQlGzveYrY4BWpRq1xq2PYjn5ZK7/hdnWgx7DMkLA=";
+    hash = "sha256-1k9tHb5Dle37a5qHm8xT14vI5cQZOb8ASGQ1KxzPCr4=";
   };
 
   node_modules = stdenvNoCC.mkDerivation {
@@ -58,7 +58,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
 
     dontFixup = true;
 
-    outputHash = "sha256-1hYc1Gnl9D0IlfCS3LjTUxqoLMAXqlR2s2gjgIxLq1Y=";
+    outputHash = "sha256-YKUH5osuYEqbO+z06Y93cMmrM0Cdkm2wtSvKafkdZXs=";
     outputHashAlgo = "sha256";
     outputHashMode = "recursive";
   };
@@ -135,11 +135,6 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     cp packages/coding-agent/dist/photon_rs_bg.wasm $out/share/pi-coding-agent/
     cp packages/coding-agent/dist/CHANGELOG.md $out/share/pi-coding-agent/
     cp packages/coding-agent/dist/README.md $out/share/pi-coding-agent/
-
-    # Bun binary looks for theme/, export-html/, and assets/ relative to dirname(process.execPath)
-    ln -s $out/share/pi-coding-agent/theme $out/bin/theme
-    ln -s $out/share/pi-coding-agent/assets $out/bin/assets
-    ln -s $out/share/pi-coding-agent/export-html $out/bin/export-html
 
     wrapProgram $out/bin/pi \
       --prefix PATH : ${lib.makeBinPath [ fd ripgrep ]} \
