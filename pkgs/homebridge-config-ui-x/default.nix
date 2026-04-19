@@ -10,49 +10,26 @@
 ,
 }:
 
-let
-  # Fix broken lockfile: monaco-editor pins dompurify@3.2.7 but the npm override
-  # in package.json forces 3.3.3. Update the lockfile to match the override so
-  # monaco-editor uses the top-level dompurify@3.3.3 instead of a missing 3.2.7.
-  patchLockfile = lockfile: ''
-    ${lib.getExe python3} -c "
-    import json
-    lockfile = '${lockfile}'
-    with open(lockfile) as f:
-        data = json.load(f)
-    me = data['packages']['node_modules/monaco-editor']
-    me['dependencies']['dompurify'] = '3.3.3'
-    with open(lockfile, 'w') as f:
-        json.dump(data, f, indent=2)
-        f.write('\n')
-    "
-  '';
-in
-
 buildNpmPackage.override { nodejs = nodejs_22; } (finalAttrs: {
   pname = "homebridge-config-ui-x";
-  version = "5.21.0";
+  version = "5.22.0";
 
   src = fetchFromGitHub {
     owner = "homebridge";
     repo = "homebridge-config-ui-x";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-/EXGGalXLl40BFwGBcUBaKKFsX/d/hAVlnAnwwXWKts=";
+    hash = "sha256-UVrl0TGSNQPnNZ76XkY+nf+a/6r037k0Y2RWe4nyBwI=";
   };
 
   # Deps hash for the root package
-  npmDepsHash = "sha256-VIp1y7JlE11O3C34vjUIWQmEAGaodSyonYhRjYOeJ0w=";
+  npmDepsHash = "sha256-AStDHQSDD2CpS9eSuDYeogs0PgHoQ4doTwzHD0XVU+A=";
 
   # Deps src and hash for ui subdirectory
   npmDeps_ui = fetchNpmDeps {
     name = "npm-deps-ui";
     src = "${finalAttrs.src}/ui";
-    hash = "sha256-JqRIQEiKbP7G7KHWoqSpNaCSq0cXO4AiFxYNoAn+HEg=";
-    preBuild = patchLockfile "package-lock.json";
-    nativeBuildInputs = [ python3 ];
+    hash = "sha256-20WItWmuHiNF/DNbenlxCro09O3bOTBsTD9T+gvvlJ0=";
   };
-
-  postPatch = patchLockfile "ui/package-lock.json";
 
   # Need to also run npm ci in the ui subdirectory
   preBuild = ''
@@ -70,7 +47,7 @@ buildNpmPackage.override { nodejs = nodejs_22; } (finalAttrs: {
   # Uses the prebuild version of @homebridge/node-pty-prebuilt-multiarch instead
   makeCacheWritable = stdenv.hostPlatform.isDarwin;
 
-  npmFlags = [ "--legacy-peer-deps" ];
+  # npmFlags = [ "--legacy-peer-deps" ];
 
   nativeBuildInputs = [
     python3
