@@ -56,11 +56,16 @@ visible_width() {
 repeat_char() {
   local char=$1
   local count=$2
+  local out=""
+  local i
   if (( count <= 0 )); then
     printf ""
     return
   fi
-  printf '%*s' "$count" '' | tr ' ' "$char"
+  for (( i=0; i<count; i++ )); do
+    out+="$char"
+  done
+  printf "%s" "$out"
 }
 
 pad_right() {
