@@ -12,14 +12,14 @@ stdenvNoCC.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "aliou";
     repo = "pi-processes";
-    rev = "44846ddeac8ade0799b17798fe93acce3c0387e5";
-    sha256 = "sha256-tEUcJq//twTtfYy07/vx8lSKLkUeAeMQy3B+PqQhHa8=";
+    rev = "bf6a71697850f8968926af64571309896952f69c";
+    sha256 = "sha256-rgSF2M9vZTERpgTo6fP9JAilclEK1vKhtKOJJgIYcDc=";
   };
 
   pnpmDeps = fetchPnpmDeps {
     inherit pname version src;
     fetcherVersion = 3;
-    hash = "sha256-g2NljQy55of+b1o3DpikgnxgFQaej2p3o/q8YC+sXkM=";
+    hash = "sha256-g4qudcq6HC05GOpvBtK+md4CVHZkSDvuqw7rDJHEQSM=";
     pnpm = pnpm_10;
   };
 
