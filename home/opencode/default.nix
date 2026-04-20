@@ -20,7 +20,7 @@
       };
     };
     tui = {
-      theme = "system";
+      theme = "catppuccin-frappe";
     };
     context = ./config/AGENT.md;
     agents = ./config/agents;
