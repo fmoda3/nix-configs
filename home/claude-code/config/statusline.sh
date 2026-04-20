@@ -467,16 +467,32 @@ build_runtime_panel() {
 
 build_rate_panel() {
   local five seven five_reset seven_reset rows=() lines=()
+  local five_label="" seven_label="" percent_width=0
   five=$(jq_get '.rate_limits.five_hour.used_percentage // empty')
   seven=$(jq_get '.rate_limits.seven_day.used_percentage // empty')
   five_reset=$(format_reset_from_epoch "$(jq_get '.rate_limits.five_hour.resets_at // empty')")
   seven_reset=$(format_reset_from_epoch "$(jq_get '.rate_limits.seven_day.resets_at // empty')")
 
   if [[ -n "$five" ]]; then
-    rows+=($'5h\t'"$(usage_color "$five")${five}% $(bar5 "$five")${TEXT} • ${five_reset}${RESET}")
+    five_label="${five}%"
+    if (( ${#five_label} > percent_width )); then
+      percent_width=${#five_label}
+    fi
   fi
   if [[ -n "$seven" ]]; then
-    rows+=($'7d\t'"$(usage_color "$seven")${seven}% $(bar5 "$seven")${TEXT} • ${seven_reset}${RESET}")
+    seven_label="${seven}%"
+    if (( ${#seven_label} > percent_width )); then
+      percent_width=${#seven_label}
+    fi
+  fi
+
+  if [[ -n "$five" ]]; then
+    printf -v five_label "%*s" "$percent_width" "$five_label"
+    rows+=($'5h\t'"$(usage_color "$five")${five_label} $(bar5 "$five")${TEXT} • ${five_reset}${RESET}")
+  fi
+  if [[ -n "$seven" ]]; then
+    printf -v seven_label "%*s" "$percent_width" "$seven_label"
+    rows+=($'7d\t'"$(usage_color "$seven")${seven_label} $(bar5 "$seven")${TEXT} • ${seven_reset}${RESET}")
   fi
   if (( ${#rows[@]} == 0 )); then
     return 0

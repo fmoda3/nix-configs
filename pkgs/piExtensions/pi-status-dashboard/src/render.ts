@@ -91,12 +91,18 @@ function buildRateLimitPanel(state: DashboardState): Panel | null {
   if (state.rateLimits.windows.length === 0) {
     rows.push({ key: "windows", value: plain("no data") });
   } else {
-    for (const window of state.rateLimits.windows.slice(0, 4)) {
+    const windows = state.rateLimits.windows.slice(0, 4);
+    const percentWidth = windows.reduce((max, window) => {
+      return Math.max(max, `${Math.round(window.usedPercent)}%`.length);
+    }, 0);
+
+    for (const window of windows) {
       const percent = Math.round(window.usedPercent);
+      const percentLabel = `${percent}%`.padStart(percentWidth);
       const reset = window.resetDescription ? ` • ${window.resetDescription}` : "";
       rows.push({
         key: window.label,
-        value: `${value(usageColor(percent), `${percent}%`)} ${value(usageColor(percent), makeBar(percent))}${plain(reset)}`,
+        value: `${value(usageColor(percent), percentLabel)} ${value(usageColor(percent), makeBar(percent))}${plain(reset)}`,
       });
     }
   }
