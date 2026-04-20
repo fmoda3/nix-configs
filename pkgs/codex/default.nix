@@ -25,18 +25,18 @@
 }:
 rustPlatform.buildRustPackage (finalAttrs: {
   pname = "codex";
-  version = "0.121.0";
+  version = "0.122.0";
 
   src = fetchFromGitHub {
     owner = "openai";
     repo = "codex";
     tag = "rust-v${finalAttrs.version}";
-    hash = "sha256-wjiUMox9V5tFggNgaFyHXWhRlpPerK7W+U/eR2Ddbbc=";
+    hash = "sha256-CpXWP64URsgt/PhQrUkrT87KG633hxRUIY0wWrTFmjk=";
   };
 
   sourceRoot = "${finalAttrs.src.name}/codex-rs";
 
-  cargoHash = "sha256-zpQ0vg9XuarLfdZYiRIhcwLHUOdunNbOb5xLW3MPzp8=";
+  cargoHash = "sha256-2qtMLWSdYWJ+blNfCHXtgmzizuM1HgpTGa5RQ3U/AEM=";
 
   postPatch = lib.optionalString stdenv.hostPlatform.isDarwin '' 
     substituteInPlace $cargoDepsCopy/*/webrtc-sys-*/build.rs \
