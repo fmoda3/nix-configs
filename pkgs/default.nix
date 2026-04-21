@@ -27,6 +27,7 @@ final: prev:
     pi-notify = prev.callPackage ./piExtensions/pi-notify { };
     pi-plan = prev.callPackage ./piExtensions/pi-plan { };
     pi-processes = prev.callPackage ./piExtensions/pi-processes { };
+    pi-working-indicator = prev.callPackage ./piExtensions/pi-working-indicator { };
     pi-status-dashboard = prev.callPackage ./piExtensions/pi-status-dashboard { };
     pi-status-footer = prev.callPackage ./piExtensions/pi-status-footer { };
     pi-subagents = prev.callPackage ./piExtensions/pi-subagents { };

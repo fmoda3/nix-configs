@@ -61,6 +61,7 @@ let
     { name = "pi-plan"; package = pkgs.piExtensions.pi-plan; }
     { name = "pi-status-dashboard"; package = pkgs.piExtensions.pi-status-dashboard; }
     { name = "pi-processes"; package = pkgs.piExtensions.pi-processes; }
+    { name = "pi-working-indicator"; package = pkgs.piExtensions.pi-working-indicator; }
     { name = "pi-subagents"; package = pkgs.piExtensions.pi-subagents; }
     { name = "pi-tasks"; package = pkgs.piExtensions.pi-tasks; }
     { name = "pi-teams"; package = pkgs.piExtensions.pi-teams; }
