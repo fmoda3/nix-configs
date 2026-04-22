@@ -5,7 +5,9 @@ import type { DashboardState } from "./types";
 export function formatCount(value: number): string {
   if (value < 1_000) return `${value}`;
   if (value < 10_000) return `${(value / 1_000).toFixed(1)}k`;
-  return `${Math.round(value / 1_000)}k`;
+  if (value < 1_000_000) return `${Math.round(value / 1_000)}k`;
+  if (value < 10_000_000) return `${(value / 1_000_000).toFixed(2)}M`;
+  return `${(value / 1_000_000).toFixed(1)}M`;
 }
 
 export function formatCost(value: number): string {
