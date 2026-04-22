@@ -83,14 +83,12 @@ function buildRuntimePanel(state: DashboardState): Panel {
 }
 
 function buildRateLimitPanel(state: DashboardState): Panel | null {
-  if (!state.rateLimits.provider) {
+  if (!state.rateLimits.provider || state.rateLimits.lastRefreshMs === null || state.rateLimits.windows.length === 0) {
     return null;
   }
 
   const rows: Array<{ key: string; value: string }> = [];
-  if (state.rateLimits.windows.length === 0) {
-    rows.push({ key: "windows", value: plain("no data") });
-  } else {
+  {
     const windows = state.rateLimits.windows.slice(0, 4);
     const percentWidth = windows.reduce((max, window) => {
       return Math.max(max, `${Math.round(window.usedPercent)}%`.length);

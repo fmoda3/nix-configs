@@ -106,6 +106,7 @@ in
           heroku
           postgresql
           toast.oktoast
+          toast.toast-bedrock-adapter
           toast.toast-services
         ];
       in

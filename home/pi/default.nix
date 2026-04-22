@@ -18,22 +18,20 @@ let
   };
 
   settings = {
-    defaultProvider = "openai-codex";
-    defaultModel = "gpt-5.4";
+    defaultProvider = if cfg.isWork then "anthropic" else "openai-codex";
+    defaultModel = if cfg.isWork then "claude-sonnet-4-6" else "gpt-5.4";
     theme = "catppuccin-frappe";
   };
 
-  mcpConfig = {
-    mcpServers = {
-      context7 = {
-        url = "https://mcp.context7.com/mcp";
-      };
-      deepwiki = {
-        url = "https://mcp.deepwiki.com/mcp";
-      };
-      sequential-thinking = {
-        url = "https://remote.mcpservers.org/sequentialthinking/mcp";
-      };
+  commonMcpServers = {
+    context7 = {
+      url = "https://mcp.context7.com/mcp";
+    };
+    deepwiki = {
+      url = "https://mcp.deepwiki.com/mcp";
+    };
+    sequential-thinking = {
+      url = "https://remote.mcpservers.org/sequentialthinking/mcp";
     };
   };
 
@@ -66,6 +64,40 @@ let
     { name = "pi-tasks"; package = pkgs.piExtensions.pi-tasks; }
     { name = "pi-teams"; package = pkgs.piExtensions.pi-teams; }
   ];
+
+  workModelsConfig = {
+    providers = {
+      anthropic = {
+        baseUrl = "http://localhost:3456";
+        apiKey = "toast-bedrock-adapter";
+        api = "anthropic-messages";
+      };
+    };
+  };
+
+  workMcpServers = {
+    atlassian = {
+      url = "https://mcp.atlassian.com/v1/mcp";
+      auth = "oauth";
+    };
+    buffet = {
+      command = "npx";
+      args = [
+        "--registry=https://artifactory.eng.toasttab.com/artifactory/api/npm/toast_npm/"
+        "@toasttab/buffet-mcp-server@next"
+      ];
+    };
+    figma = {
+      url = "http://127.0.0.1:3845/mcp";
+    };
+  };
+
+  mcpConfig = {
+    settings = {
+      autoAuth = true;
+    };
+    mcpServers = commonMcpServers // lib.optionalAttrs cfg.isWork workMcpServers;
+  };
 in
 {
   config = lib.mkIf cfg.includeAI {
@@ -99,6 +131,10 @@ in
         ".pi/agent/agents" = {
           source = ./config/agents;
           recursive = true;
+        };
+      } // lib.optionalAttrs cfg.isWork {
+        ".pi/agent/models.json" = {
+          text = builtins.toJSON workModelsConfig;
         };
       } // builtins.listToAttrs (map
         (ext: {
