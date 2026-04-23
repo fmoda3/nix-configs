@@ -9,8 +9,8 @@ stdenvNoCC.mkDerivation {
   src = fetchFromGitHub {
     owner = "nicobailon";
     repo = "pi-subagents";
-    rev = "9711a40f71d93acfd0e3712e1f036c8756ac88c9";
-    sha256 = "sha256-KkjB5x0d9b+0vkVhnjzVdjvcoVOyjCAiJfF8JurRAMw=";
+    rev = "10d4a7e486a7eb91992b05435ab2fe7e3f504ccf";
+    sha256 = "sha256-MkCRFuDa/OouSztuNgk+3lnKgWZbQSdL6kfCy4RNCyA=";
   };
 
   installPhase = ''
