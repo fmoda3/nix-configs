@@ -7,19 +7,19 @@
 }:
 stdenvNoCC.mkDerivation rec {
   pname = "pi-processes";
-  version = "2026-04-20";
+  version = "2026-04-23";
 
   src = fetchFromGitHub {
     owner = "aliou";
     repo = "pi-processes";
-    rev = "bf6a71697850f8968926af64571309896952f69c";
-    sha256 = "sha256-rgSF2M9vZTERpgTo6fP9JAilclEK1vKhtKOJJgIYcDc=";
+    rev = "45ba428d07163773be06e040016feec5d157863b";
+    sha256 = "sha256-L9O65iqx6vG0czX/S7HRXzvTQ8g/XMrvDY6WKUuobcw=";
   };
 
   pnpmDeps = fetchPnpmDeps {
     inherit pname version src;
     fetcherVersion = 3;
-    hash = "sha256-g4qudcq6HC05GOpvBtK+md4CVHZkSDvuqw7rDJHEQSM=";
+    hash = "sha256-r6z22jb6wt0YSeXUzmnBZNqUwxgVok4TJO4XmFkMeMc=";
     pnpm = pnpm_10;
   };
 
