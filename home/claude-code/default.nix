@@ -246,6 +246,10 @@ in
         source = ./config/conventions;
         recursive = true;
       };
+      ".claude/themes" = {
+        source = ./config/themes;
+        recursive = true;
+      };
     };
   };
 }
