@@ -212,6 +212,7 @@ in
       hooks = commonHooks;
       statusLine = commonStatusLine;
       teammateMode = "tmux";
+      theme = "custom:catppuccin-frappe";
       skipAutoPermissionPrompt = true;
       lspRecommendationDisabled = true;
       showThinkingSummaries = true;
