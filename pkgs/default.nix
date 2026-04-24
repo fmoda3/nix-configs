@@ -18,6 +18,7 @@ final: prev:
   nix-cleanup = prev.callPackage ./nix-cleanup { };
   opencode = prev.callPackage ./opencode { };
   pi-coding-agent = prev.callPackage ./pi-coding-agent { };
+  buildPiExtension = prev.callPackage ./buildPiExtension { };
   piExtensions = {
     pi-ask-tool = prev.callPackage ./piExtensions/pi-ask-tool { };
     pi-context = prev.callPackage ./piExtensions/pi-context { };

@@ -1,7 +1,8 @@
-{ stdenvNoCC
+{ buildPiExtension
 , fetchFromGitHub
 }:
-stdenvNoCC.mkDerivation {
+
+buildPiExtension {
   pname = "pi-ghostty";
   version = "2026-02-14";
 
@@ -12,16 +13,10 @@ stdenvNoCC.mkDerivation {
     sha256 = "sha256-XxnqAqkQivzRw1YmNJAz1bJPdlugMU0BXRrmiO2x86c=";
   };
 
-  installPhase = ''
-    runHook preInstall
+  prunePaths = [ ".github" ];
 
-    mkdir -p $out
-    cp -r . $out/
-    rm -rf $out/.github
-
+  postInstallCommands = ''
     # Add index.ts so Bun can resolve the "extensions" directory as a module
     echo 'export { default } from "./ghostty.ts";' > $out/extensions/index.ts
-
-    runHook postInstall
   '';
 }

@@ -1,7 +1,8 @@
-{ stdenvNoCC
+{ buildPiExtension
 , fetchFromGitHub
 }:
-stdenvNoCC.mkDerivation {
+
+buildPiExtension {
   pname = "pi-teams";
   version = "2026-04-03";
 
@@ -12,13 +13,5 @@ stdenvNoCC.mkDerivation {
     sha256 = "sha256-Pi9WFgeEn6+vgycfekSVW9ozmjvQ70S4alzL/mKRWwk=";
   };
 
-  installPhase = ''
-    runHook preInstall
-
-    mkdir -p $out
-    cp -r . $out/
-    rm -rf $out/.github
-
-    runHook postInstall
-  '';
+  prunePaths = [ ".github" ];
 }

@@ -1,7 +1,8 @@
-{ stdenvNoCC
+{ buildPiExtension
 , fetchFromGitHub
 }:
-stdenvNoCC.mkDerivation {
+
+buildPiExtension {
   pname = "pi-ask-tool";
   version = "2026-03-29";
 
@@ -12,13 +13,5 @@ stdenvNoCC.mkDerivation {
     sha256 = "sha256-ETZ5OmD2n9Uq7Z0eJpC3FYSguiLiPINXUXsLKJCdTKY=";
   };
 
-  installPhase = ''
-    runHook preInstall
-
-    mkdir -p $out
-    cp -r . $out/
-    rm -rf $out/.github
-
-    runHook postInstall
-  '';
+  prunePaths = [ ".github" ];
 }

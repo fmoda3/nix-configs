@@ -1,7 +1,8 @@
-{ buildNpmPackage
+{ buildPiExtension
 , fetchFromGitHub
 }:
-buildNpmPackage {
+
+buildPiExtension {
   pname = "pi-tasks";
   version = "2026-03-24";
 
@@ -13,15 +14,10 @@ buildNpmPackage {
   };
 
   npmDepsHash = "sha256-ng0q5Ml2hWPBV7cAnbqCRPukWCCC7WeANcEvyTYPO9c=";
-  dontNpmBuild = true;
 
-  installPhase = ''
-    runHook preInstall
-
-    mkdir -p $out
-    cp -r . $out/
-    rm -rf $out/.github $out/test $out/media
-
-    runHook postInstall
-  '';
+  prunePaths = [
+    ".github"
+    "test"
+    "media"
+  ];
 }

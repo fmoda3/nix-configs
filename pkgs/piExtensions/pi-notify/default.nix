@@ -1,7 +1,8 @@
-{ stdenvNoCC
+{ buildPiExtension
 , fetchFromGitHub
 }:
-stdenvNoCC.mkDerivation {
+
+buildPiExtension {
   pname = "pi-notify";
   version = "2026-02-12";
 
@@ -12,13 +13,5 @@ stdenvNoCC.mkDerivation {
     sha256 = "sha256-lQ2SOkeNB2wesquoztFaj1VUXZlDPnQhsrv03LaCK3E=";
   };
 
-  installPhase = ''
-    runHook preInstall
-
-    mkdir -p $out
-    cp -r . $out/
-    rm -rf $out/.github
-
-    runHook postInstall
-  '';
+  prunePaths = [ ".github" ];
 }

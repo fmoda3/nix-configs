@@ -1,11 +1,12 @@
-{ stdenvNoCC
+{ buildPiExtension
 , fetchFromGitHub
 , fetchPnpmDeps
 , nodejs
 , pnpm_10
 , pnpmConfigHook
 }:
-stdenvNoCC.mkDerivation rec {
+
+buildPiExtension rec {
   pname = "pi-processes";
   version = "2026-04-23";
 
@@ -31,13 +32,9 @@ stdenvNoCC.mkDerivation rec {
 
   env.npm_config_manage_package_manager_versions = "false";
 
-  installPhase = ''
-    runHook preInstall
-
-    mkdir -p $out
-    cp -r . $out/
-    rm -rf $out/.github $out/.changeset $out/.husky
-
-    runHook postInstall
-  '';
+  prunePaths = [
+    ".github"
+    ".changeset"
+    ".husky"
+  ];
 }

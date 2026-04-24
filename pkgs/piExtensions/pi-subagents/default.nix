@@ -1,8 +1,8 @@
-{ lib
-, stdenvNoCC
+{ buildPiExtension
 , fetchFromGitHub
 }:
-stdenvNoCC.mkDerivation {
+
+buildPiExtension {
   pname = "pi-subagents";
   version = "2026-04-23";
 
@@ -13,13 +13,5 @@ stdenvNoCC.mkDerivation {
     sha256 = "sha256-MkCRFuDa/OouSztuNgk+3lnKgWZbQSdL6kfCy4RNCyA=";
   };
 
-  installPhase = ''
-    runHook preInstall
-
-    mkdir -p $out
-    cp -r . $out/
-    rm -rf $out/.github
-
-    runHook postInstall
-  '';
+  prunePaths = [ ".github" ];
 }

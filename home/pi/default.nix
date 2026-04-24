@@ -52,20 +52,20 @@ let
     "tui.editor.cursorWordRight" = [ "alt+right" "alt+w" ];
   };
 
-  extensions = [
-    { name = "pi-ask-tool"; package = pkgs.piExtensions.pi-ask-tool; }
-    { name = "pi-context"; package = pkgs.piExtensions.pi-context; }
-    { name = "pi-direnv"; package = pkgs.piExtensions.pi-direnv; }
-    { name = "pi-ghostty"; package = pkgs.piExtensions.pi-ghostty; }
-    { name = "pi-mcp-adapter"; package = pkgs.piExtensions.pi-mcp-adapter; }
-    { name = "pi-notify"; package = pkgs.piExtensions.pi-notify; }
-    { name = "pi-plan"; package = pkgs.piExtensions.pi-plan; }
-    { name = "pi-status-dashboard"; package = pkgs.piExtensions.pi-status-dashboard; }
-    { name = "pi-processes"; package = pkgs.piExtensions.pi-processes; }
-    { name = "pi-working-indicator"; package = pkgs.piExtensions.pi-working-indicator; }
-    { name = "pi-subagents"; package = pkgs.piExtensions.pi-subagents; }
-    { name = "pi-tasks"; package = pkgs.piExtensions.pi-tasks; }
-    { name = "pi-teams"; package = pkgs.piExtensions.pi-teams; }
+  extensions = with pkgs.piExtensions; [
+    pi-ask-tool
+    pi-context
+    pi-direnv
+    pi-ghostty
+    pi-mcp-adapter
+    pi-notify
+    pi-plan
+    pi-status-dashboard
+    pi-processes
+    pi-working-indicator
+    pi-subagents
+    pi-tasks
+    pi-teams
   ];
 
   workModelsConfig = {
@@ -137,10 +137,10 @@ in
           text = builtins.toJSON workModelsConfig;
         };
       } // builtins.listToAttrs (map
-        (ext: {
-          name = ".pi/agent/extensions/${ext.name}";
+        (extension: {
+          name = ".pi/agent/extensions/${lib.getName extension}";
           value = {
-            source = ext.package;
+            source = extension;
           };
         })
         extensions);

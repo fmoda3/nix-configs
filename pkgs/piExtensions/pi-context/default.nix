@@ -1,7 +1,8 @@
-{ stdenvNoCC
+{ buildPiExtension
 , fetchFromGitHub
 }:
-stdenvNoCC.mkDerivation {
+
+buildPiExtension {
   pname = "pi-context";
   version = "2026-04-14";
 
@@ -12,13 +13,5 @@ stdenvNoCC.mkDerivation {
     sha256 = "sha256-UZTbJrCvEMUsp75iqmogdE4XWzMPaZDPZiiX9qFFvXo=";
   };
 
-  installPhase = ''
-    runHook preInstall
-
-    mkdir -p $out
-    cp -r . $out/
-    rm -rf $out/.github
-
-    runHook postInstall
-  '';
+  prunePaths = [ ".github" ];
 }

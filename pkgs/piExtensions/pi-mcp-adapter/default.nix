@@ -1,7 +1,8 @@
-{ buildNpmPackage
+{ buildPiExtension
 , fetchFromGitHub
 }:
-buildNpmPackage {
+
+buildPiExtension {
   pname = "pi-mcp-adapter";
   version = "2026-04-23";
 
@@ -13,14 +14,4 @@ buildNpmPackage {
   };
 
   npmDepsHash = "sha256-ehVDVQTLKDZNgKwm6ICnUl45MDN73hY95fDhYwMybbM=";
-  dontNpmBuild = true;
-
-  installPhase = ''
-    runHook preInstall
-
-    mkdir -p $out
-    cp -r . $out/
-
-    runHook postInstall
-  '';
 }
