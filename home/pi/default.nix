@@ -117,9 +117,6 @@ in
         ".pi/agent/keybindings.json" = {
           text = builtins.toJSON keybindings;
         };
-        ".pi/agent/pi-sub-bar-settings.json" = {
-          source = ./config/pi-sub-bar-settings.json;
-        };
         ".pi/agent/AGENTS.md" = {
           source = ./config/AGENT.md;
         };
