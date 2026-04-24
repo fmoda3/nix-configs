@@ -43,9 +43,15 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     buildPhase = ''
       runHook preBuild
 
+      export BUN_INSTALL_CACHE_DIR=$(mktemp -d)
       bun install \
         --cpu="*" \
         --frozen-lockfile \
+        --filter ./ \
+        --filter ./packages/app \
+        --filter ./packages/desktop \
+        --filter ./packages/opencode \
+        --filter ./packages/shared \
         --ignore-scripts \
         --no-progress \
         --os="*"
