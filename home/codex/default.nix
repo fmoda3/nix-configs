@@ -3,7 +3,7 @@
   programs.codex = {
     enable = config.my-home.includeAI;
     settings = {
-      model = "gpt-5.4";
+      model = "gpt-5.5";
       mcp_servers = {
         context7 = {
           url = "https://mcp.context7.com/mcp";
