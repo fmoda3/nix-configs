@@ -5,7 +5,7 @@
 
 args:
 let
-  builderArgs = builtins.removeAttrs args [
+  builderArgs = removeAttrs args [
     "postInstallCommands"
     "prunePaths"
   ];
