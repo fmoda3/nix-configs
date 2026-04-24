@@ -19,8 +19,11 @@ let
 
   settings = {
     defaultProvider = if cfg.isWork then "anthropic" else "openai-codex";
-    defaultModel = if cfg.isWork then "claude-sonnet-4-6" else "gpt-5.4";
+    defaultModel = if cfg.isWork then "claude-sonnet-4-6" else "gpt-5.5";
     theme = "catppuccin-frappe";
+    terminal = {
+      showTerminalProgress = true;
+    };
   };
 
   commonMcpServers = {
