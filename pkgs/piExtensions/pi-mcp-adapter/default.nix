@@ -9,9 +9,9 @@ buildPiExtension {
   src = fetchFromGitHub {
     owner = "nicobailon";
     repo = "pi-mcp-adapter";
-    rev = "daae745299db28f075f6e43d3b55133e7ff5ce2f";
-    sha256 = "sha256-qLdSf6f8mHQ9jOHiDTI/8qzh1MA5doieY7TasKY1i+k=";
+    rev = "720b677d36320e3c2ed1376a89239a66868c8ac9";
+    sha256 = "sha256-Vr1wD6ABj9ZNBgBEpxtvRHYbvUTukeqrS05btiQ5SBo=";
   };
 
-  npmDepsHash = "sha256-ml5sC0dUPpZU30tSNi48a0bP5SRUg2FtwR8nYRW4FhU=";
+  npmDepsHash = "sha256-Muc0bUf3N9R/1qrD9pn8/1WgNf2UqJWkcQ1nJmcjoeE=";
 }
