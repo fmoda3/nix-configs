@@ -38,6 +38,7 @@ final: prev:
   # python3Packages = prev.python3Packages // {
   #   toast-tools = prev.callPackage ./toast-tools { };
   # };
+  sudocode = prev.callPackage ./sudocode { };
   toast = {
     oktoast = prev.callPackage ./toast/oktoast { };
     toast-services = prev.callPackage ./toast/toast-services { };
