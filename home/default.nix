@@ -105,6 +105,7 @@ in
           docker-credential-helpers
           heroku
           postgresql
+          sudocode
           toast.oktoast
           toast.toast-bedrock-adapter
           toast.toast-services
