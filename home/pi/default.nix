@@ -4,7 +4,6 @@ let
 
   extraPackages = with pkgs; [
     python3
-    sudocode
   ];
 
   wrappedPi = pkgs.symlinkJoin {
