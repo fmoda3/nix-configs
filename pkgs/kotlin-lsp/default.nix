@@ -7,23 +7,23 @@
 
 let
   # Define binary information for each platform
-  version = "262.2310.0";
+  version = "262.4739.0";
   sources = {
     "aarch64-darwin" = {
-      url = "https://download-cdn.jetbrains.com/kotlin-lsp/${version}/kotlin-lsp-${version}-mac-aarch64.zip";
-      sha256 = "1iq98gvhmw50mgnvpm5z7z80y75mhkpcb344cd1j0rnpxjs0wmhi";
+      url = "https://download-cdn.jetbrains.com/kotlin-lsp/${version}/kotlin-server-${version}-aarch64.sit";
+      sha256 = "sha256-G3RXQ84irZJoGhvDsQRoA+lCpuHzbgT7ha6aQDNKLx4=";
     };
     "x86_64-darwin" = {
-      url = "https://download-cdn.jetbrains.com/kotlin-lsp/${version}/kotlin-lsp-${version}-mac-x64.zip";
-      sha256 = "1xavz4jmz48v95s4dlrfwqnvj9md7g9919i15yhzdzjccs8zbk54";
+      url = "https://download-cdn.jetbrains.com/kotlin-lsp/${version}/kotlin-server-${version}.sit";
+      sha256 = "sha256-bwbv56EPlLnIoCjE7+tsfhdp9HoB7ft0RQrPMKtWZeQ=";
     };
     "x86_64-linux" = {
-      url = "https://download-cdn.jetbrains.com/kotlin-lsp/${version}/kotlin-lsp-${version}-linux-x64.zip";
-      sha256 = "1c8nmp8hgf26i372nglalm7lhyd2yvk4in6x2zcy3dglb0hj8160";
+      url = "https://download-cdn.jetbrains.com/kotlin-lsp/${version}/kotlin-server-${version}.tar.gz";
+      sha256 = "sha256-RpcREMm4ozYM4/31Q3Rn9MRH2tN61z2/gdZK9neeQQU=";
     };
     "aarch64-linux" = {
-      url = "https://download-cdn.jetbrains.com/kotlin-lsp/${version}/kotlin-lsp-${version}-linux-aarch64.zip";
-      sha256 = "0p6ky0wjzny74blhrvs0fa7c9jvr0bxad0rblgxsjr4xz96q330z";
+      url = "https://download-cdn.jetbrains.com/kotlin-lsp/${version}/kotlin-server-${version}-aarch64.tar.gz";
+      sha256 = "sha256-YlhwrgkcbQ3uJVFNVFxwim6lDXy7UVSq8aqRI8z/M4s=";
     };
   };
 
@@ -45,9 +45,12 @@ stdenv.mkDerivation {
 
   unpackPhase = ''
     runHook preUnpack
-    
-    unzip $src
-    
+
+    case "${selectedSource.url}" in
+      *.tar.gz) tar -xzf $src ;;
+      *) unzip $src ;;
+    esac
+
     runHook postUnpack
   '';
 
@@ -60,20 +63,18 @@ stdenv.mkDerivation {
     mkdir -p $out/bin $out/share/kotlin-lsp
     
     # Copy all files to share directory
-    cp -r * $out/share/kotlin-lsp/
+    cp -r kotlin-server-${version}/* $out/share/kotlin-lsp/
 
-    # Make the shell script executable
-    chmod +x $out/share/kotlin-lsp/kotlin-lsp.sh
-
-    # Make the bundled Java executable (path differs between macOS and Linux)
+    # Make the server executable and bundled Java executable runnable.
+    chmod +x $out/share/kotlin-lsp/bin/intellij-server
     ${if stdenv.hostPlatform.isDarwin then ''
-      chmod +x $out/share/kotlin-lsp/jre/Contents/Home/bin/java
+      chmod +x $out/share/kotlin-lsp/jbr/Contents/Home/bin/java
     '' else ''
-      chmod +x $out/share/kotlin-lsp/jre/bin/java
+      chmod +x $out/share/kotlin-lsp/jbr/bin/java
     ''}
 
-    # Create wrapper script that points to the kotlin-lsp.sh script
-    makeWrapper $out/share/kotlin-lsp/kotlin-lsp.sh $out/bin/kotlin-lsp
+    # Create wrapper script that points to the standalone server executable.
+    makeWrapper $out/share/kotlin-lsp/bin/intellij-server $out/bin/kotlin-lsp
     
     runHook postInstall
   '';
