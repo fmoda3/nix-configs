@@ -15,6 +15,11 @@ let
     VISUAL = "vim";
   } // themeColors;
 
+  # Personal variables (when isWork = false)
+  personalVariables = lib.optionalAttrs (!config.my-home.isWork) {
+    OPENROUTER_API_KEY = ''$(${pkgs.coreutils}/bin/cat ${config.age.secrets."openrouter_key".path})'';
+  };
+
   # Work variables (when isWork = true)
   workVariables = lib.optionalAttrs config.my-home.isWork {
     TOAST_GIT = "${config.home.homeDirectory}/Development";
@@ -26,4 +31,4 @@ let
     OKTOAST_PROVIDER = "Browser";
   };
 in
-commonVariables // workVariables
+commonVariables // personalVariables // workVariables
