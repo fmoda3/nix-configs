@@ -9,11 +9,11 @@ buildPiExtension {
   src = fetchFromGitHub {
     owner = "tintinweb";
     repo = "pi-tasks";
-    rev = "d47a9acb861bede4c476c6e0fa50145940d35c5b";
-    sha256 = "sha256-7Fbap7TaoGZu9klMDsLXCQ4r5TkRAvNYRTAhNaIkIIg=";
+    rev = "30c3452fd1292860482f1afc7908edb76a46f1ed";
+    sha256 = "sha256-NQxXpA0Phze+cXGvyu5KLhNX9/hkGnnhQyoPtYGArSk=";
   };
 
-  npmDepsHash = "sha256-ng0q5Ml2hWPBV7cAnbqCRPukWCCC7WeANcEvyTYPO9c=";
+  npmDepsHash = "sha256-BU8Xni+K/+nk2FmK8FkWCg4iGG5PWR9FFLkckfd356c=";
 
   prunePaths = [
     ".github"
