@@ -12,8 +12,8 @@ buildGoModule {
 
   src = fetchGit {
     url = "git@github.toasttab.com:toasttab/oktoast-setup.git";
-    rev = "d0d0580784f1d5ae7fe8ed72f4df8df807a5e01d";
-    narHash = "sha256-gCtrZqMPH3BZ4HvFZowNiTXHeK2A1lbLXRdokV8/1Xw=";
+    rev = "1a69ec9da1caafd89b1fe78da750e6c0a75e2e6e";
+    narHash = "sha256-Kl3r0nH5OIrvsOAEwhlEhKHtYyAkDgntqT2Omt/ThCY=";
   };
 
   vendorHash = "sha256-fIm9Qqr+BYIx7qxtDGGREHR/fVPcG2sVqPQI17EcuiA=";
