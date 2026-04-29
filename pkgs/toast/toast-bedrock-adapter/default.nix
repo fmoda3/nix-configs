@@ -1,6 +1,5 @@
 { lib
 , buildNpmPackage
-, fetchgit
 , nodejs
 , toast
 }:
@@ -9,13 +8,14 @@ buildNpmPackage (finalAttrs: {
   pname = "toast-bedrock-adapter";
   version = "1.4.0";
 
-  src = fetchgit {
+  src = fetchGit {
     url = "git@github.toasttab.com:nathannorman-toast/toast-bedrock-adapter.git";
-    rev = "2f70872cc67ace9de40e271172e21c32c6946ba2";
-    hash = "sha256-+htEu5R9WdC5kXd1qOkGN4NVJSYZzscKwS5xXgQCsNo=";
+    rev = "78912c562f55b31d6a34b4fa53f61484da482be6";
+    ref = "main";
+    narHash = "sha256-NpaVa/YGkaS/1vWwxw527ExmmHEXyl8b9fSKADwkydo=";
   };
 
-  npmDepsHash = "sha256-kEiGzVB1pRUnj51AnN2TH3OXD3Jz3kPNbqPYaQhOP9Y=";
+  npmDepsHash = "sha256-eX7UtU2/J+rAdwqsWcjc0xWuxEAyl7ibn7U45pjIdyc=";
 
   installPhase = ''
     runHook preInstall
