@@ -53,7 +53,7 @@ let
   };
 
   extensions = with pkgs.piExtensions; [
-    pi-ask-tool
+    pi-ask
     pi-context
     pi-direnv
     pi-ghostty
