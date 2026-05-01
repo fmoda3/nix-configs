@@ -4,7 +4,7 @@
 
 buildPiExtension {
   pname = "pi-ask";
-  version = "0.6.1-unstable-2026-04-29";
+  version = "2026-04-28";
 
   src = fetchFromGitHub {
     owner = "eko24ive";
