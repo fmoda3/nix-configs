@@ -4,16 +4,16 @@
 
 buildPiExtension {
   pname = "pi-tasks";
-  version = "2026-04-28";
+  version = "2026-05-04";
 
   src = fetchFromGitHub {
     owner = "tintinweb";
     repo = "pi-tasks";
-    rev = "30c3452fd1292860482f1afc7908edb76a46f1ed";
-    sha256 = "sha256-NQxXpA0Phze+cXGvyu5KLhNX9/hkGnnhQyoPtYGArSk=";
+    rev = "530d2dbd29c5d8ae6bebc3e184855507008fa5d0";
+    sha256 = "sha256-/p6F6xaKIZSlgDWMCgBYGW4lROQN5wqr33lKJKmZ/LM=";
   };
 
-  npmDepsHash = "sha256-BU8Xni+K/+nk2FmK8FkWCg4iGG5PWR9FFLkckfd356c=";
+  npmDepsHash = "sha256-F8JFX/wE7+Nn7j5oS1sDB2SicrNY+DJMRdN+fFLH5aU=";
 
   prunePaths = [
     ".github"
