@@ -1,7 +1,6 @@
 { lib
 , buildNpmPackage
 , fetchFromGitHub
-, jq
 ,
 }:
 
