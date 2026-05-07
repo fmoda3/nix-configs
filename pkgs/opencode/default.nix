@@ -84,7 +84,6 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     nodejs
     installShellFiles
     makeBinaryWrapper
-    models-dev
     writableTmpDirAsHomeHook
   ];
 
