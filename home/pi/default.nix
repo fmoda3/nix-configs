@@ -18,6 +18,7 @@ let
   };
 
   settings = {
+    quietStartup = true;
     defaultProvider = if cfg.isWork then "anthropic" else "openai-codex";
     defaultModel = if cfg.isWork then "claude-sonnet-4-6" else "gpt-5.5";
     theme = "catppuccin-frappe";
