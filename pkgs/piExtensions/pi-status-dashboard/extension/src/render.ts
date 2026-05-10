@@ -1,5 +1,5 @@
-import type { ExtensionContext } from "@mariozechner/pi-coding-agent";
-import { truncateToWidth, visibleWidth } from "@mariozechner/pi-tui";
+import type { ExtensionContext } from "@earendil-works/pi-coding-agent";
+import { truncateToWidth, visibleWidth } from "@earendil-works/pi-tui";
 import { formatCost, formatCount, formatDuration, getAccumulatedApiMs } from "./format";
 import { CATPPUCCIN, fg } from "./theme";
 import type { DashboardState, Panel } from "./types";
