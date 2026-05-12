@@ -65,6 +65,7 @@ in
           dust
           fastfetch
           fd
+          herdr
           htop
           gping
           nh
