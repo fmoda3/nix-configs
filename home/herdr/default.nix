@@ -5,6 +5,11 @@ let
     theme = {
       name = "catppuccin";
     };
+    ui = {
+      toast = {
+        delivery = "terminal";
+      };
+    };
   };
 
   toml = pkgs.formats.toml { };
