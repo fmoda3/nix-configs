@@ -12,23 +12,23 @@
 
 buildNpmPackage.override { nodejs = nodejs_22; } (finalAttrs: {
   pname = "homebridge-config-ui-x";
-  version = "5.22.0";
+  version = "5.23.0";
 
   src = fetchFromGitHub {
     owner = "homebridge";
     repo = "homebridge-config-ui-x";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-UVrl0TGSNQPnNZ76XkY+nf+a/6r037k0Y2RWe4nyBwI=";
+    hash = "sha256-NRphlsSrO4G+jMrQl6ZNdH/mteu97QnXThkJYiRucRE=";
   };
 
   # Deps hash for the root package
-  npmDepsHash = "sha256-AStDHQSDD2CpS9eSuDYeogs0PgHoQ4doTwzHD0XVU+A=";
+  npmDepsHash = "sha256-S1MNGMfOgfj6/C9nMhYpK7CeSD7pjRt2SjjGLoJiQTE=";
 
   # Deps src and hash for ui subdirectory
   npmDeps_ui = fetchNpmDeps {
     name = "npm-deps-ui";
     src = "${finalAttrs.src}/ui";
-    hash = "sha256-20WItWmuHiNF/DNbenlxCro09O3bOTBsTD9T+gvvlJ0=";
+    hash = "sha256-zP1d7MNPAeSJSMdFsVPGSOQZ4wZJM1HnLmQy32ju05Q=";
   };
 
   # Need to also run npm ci in the ui subdirectory
