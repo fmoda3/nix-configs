@@ -20,6 +20,7 @@ in
     ./gh
     ./ghostty
     ./git
+    ./herdr
     ./jq
     # ./kitty
     ./lazygit
