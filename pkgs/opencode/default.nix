@@ -15,13 +15,13 @@
 }:
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "opencode";
-  version = "1.14.49";
+  version = "1.14.50";
 
   src = fetchFromGitHub {
     owner = "anomalyco";
     repo = "opencode";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-rh3FEUf8OjE1jSuiMT2RcRM5LIxHcrkBI2LFKpEjHV0=";
+    hash = "sha256-SMWJb0Ykxklnh8DQ6UcSv1JIeuqK2qKyUgrwB8ioZCI=";
   };
 
   node_modules = stdenvNoCC.mkDerivation {
