@@ -58,7 +58,6 @@ let
     pi-context
     pi-direnv
     pi-ghostty
-    pi-herdr-agent-state
     pi-mcp-adapter
     pi-notify
     pi-plan

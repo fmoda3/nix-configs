@@ -20,7 +20,6 @@ in
     ./gh
     ./ghostty
     ./git
-    ./herdr
     ./jq
     # ./kitty
     ./lazygit
@@ -66,7 +65,6 @@ in
           dust
           fastfetch
           fd
-          herdr
           htop
           gping
           nh

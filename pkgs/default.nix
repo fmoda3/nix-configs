@@ -12,7 +12,6 @@ final: prev:
   ccusage = prev.callPackage ./ccusage { };
   claude-code = prev.callPackage ./claude-code { };
   codex = prev.callPackage ./codex { };
-  herdr = prev.callPackage ./herdr { };
   homebridge = prev.callPackage ./homebridge { };
   homebridge-config-ui-x = prev.callPackage ./homebridge-config-ui-x { };
   kotlin-lsp = prev.callPackage ./kotlin-lsp { };
@@ -25,7 +24,6 @@ final: prev:
     pi-context = prev.callPackage ./piExtensions/pi-context { };
     pi-direnv = prev.callPackage ./piExtensions/pi-direnv { };
     pi-ghostty = prev.callPackage ./piExtensions/pi-ghostty { };
-    pi-herdr-agent-state = prev.callPackage ./piExtensions/pi-herdr-agent-state { };
     pi-mcp-adapter = prev.callPackage ./piExtensions/pi-mcp-adapter { };
     pi-notify = prev.callPackage ./piExtensions/pi-notify { };
     pi-plan = prev.callPackage ./piExtensions/pi-plan { };
