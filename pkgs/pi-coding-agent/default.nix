@@ -13,13 +13,13 @@
 }:
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "pi-coding-agent";
-  version = "0.74.0";
+  version = "0.75.1";
 
   src = fetchFromGitHub {
     owner = "earendil-works";
     repo = "pi";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-wEiqOezD8w08vyuenh3Kk+YCYBbQoEq67wATDEKy5XM=";
+    hash = "sha256-/mtTxi6kwf8I3KJime//QqwVuW2dY2PV66Z/xcfjAFc=";
   };
 
   node_modules = stdenvNoCC.mkDerivation {
@@ -58,7 +58,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
 
     dontFixup = true;
 
-    outputHash = "sha256-kMjKSC5xbDY0vw86y0PSRCIdPZSMWnAKBRC1taIJaEE=";
+    outputHash = "sha256-Si+9SU5VoXFSFZp7tEgZzBAcbp3gdtGAKBWiM1UICZc=";
     outputHashAlgo = "sha256";
     outputHashMode = "recursive";
   };
@@ -68,6 +68,20 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     nodejs_22
     makeBinaryWrapper
   ];
+
+  postPatch = ''
+    # Bun 1.3.13 treats "undici" as its built-in compatibility module when
+    # building/running compiled binaries. That module has dispatcher support,
+    # but does not export undici@8's install() helper, so pi --version fails at
+    # startup with: Export named 'install' not found in module 'undici'.
+    substituteInPlace packages/coding-agent/src/cli.ts \
+      --replace-fail \
+        'import { EnvHttpProxyAgent, install as installUndiciGlobals, setGlobalDispatcher } from "undici";' \
+        'import { EnvHttpProxyAgent, setGlobalDispatcher } from "undici";' \
+      --replace-fail \
+        'installUndiciGlobals();' \
+        '// installUndiciGlobals() is Node-specific and unavailable in Bun.'
+  '';
 
   configurePhase = ''
     runHook preConfigure
