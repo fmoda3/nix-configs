@@ -5,14 +5,14 @@
 
 buildNpmPackage (finalAttrs: {
   pname = "ccusage";
-  version = "18.0.11";
+  version = "19.0.3";
 
   src = fetchzip {
     url = "https://registry.npmjs.org/ccusage/-/ccusage-${finalAttrs.version}.tgz";
-    hash = "sha256-6MTCtMjE72uhcnj9zTkP2PIU7yKVXG+tby54o0gcTWQ=";
+    hash = "sha256-9nIZhmt9h2pzEtCpKs4SJ+2T6I+w4lFcAnRGeXvbgxk=";
   };
 
-  npmDepsHash = "sha256-kVj7Lhev2L78XaAeo04zWpbdzS2GHTRg0qU2TI8ezkw=";
+  npmDepsHash = "sha256-1Lvlt9F7hm8dleBiQ84oDl7xLk9a03uYkBRKx35vT2k=";
   forceEmptyCache = true;
 
   postPatch = ''
@@ -28,14 +28,14 @@ buildNpmPackage (finalAttrs: {
     cp -r . $out/lib/node_modules/ccusage/
     
     # Create symlink for the binary
-    ln -s $out/lib/node_modules/ccusage/dist/index.js $out/bin/ccusage
+    ln -s $out/lib/node_modules/ccusage/dist/cli.js $out/bin/ccusage
     chmod +x $out/bin/ccusage
     
     runHook postInstall
   '';
 
   meta = {
-    description = "Analyze your Claude Code token usage and costs from local JSONL files";
+    description = "Analyze coding (agent) CLI token usage and costs from local data";
     homepage = "https://github.com/ryoppippi/ccusage";
     license = lib.licenses.mit;
     mainProgram = "ccusage";
