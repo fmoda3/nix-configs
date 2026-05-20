@@ -34,9 +34,6 @@ let
     deepwiki = {
       url = "https://mcp.deepwiki.com/mcp";
     };
-    sequential-thinking = {
-      url = "https://remote.mcpservers.org/sequentialthinking/mcp";
-    };
   };
 
   keybindings = {

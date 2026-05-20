@@ -76,10 +76,6 @@ let
       type = "http";
       url = "https://mcp.deepwiki.com/mcp";
     };
-    sequential-thinking = {
-      type = "http";
-      url = "https://remote.mcpservers.org/sequentialthinking/mcp";
-    };
   };
 
   commonLspServers = {

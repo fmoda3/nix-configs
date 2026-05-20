@@ -11,9 +11,6 @@
         deepwiki = {
           url = "https://mcp.deepwiki.com/mcp";
         };
-        sequential-thinking = {
-          url = "https://remote.mcpservers.org/sequentialthinking/mcp";
-        };
       };
     };
     context = builtins.readFile ./config/AGENT.md;

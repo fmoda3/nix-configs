@@ -13,10 +13,6 @@
           type = "remote";
           url = "https://mcp.deepwiki.com/mcp";
         };
-        sequential-thinking = {
-          type = "remote";
-          url = "https://remote.mcpservers.org/sequentialthinking/mcp";
-        };
       };
     };
     tui = {
