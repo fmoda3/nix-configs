@@ -9,8 +9,8 @@ buildPiExtension {
   src = fetchFromGitHub {
     owner = "eko24ive";
     repo = "pi-ask";
-    rev = "77228ca5668a6f14f97438dac888a2917ad37edd";
-    sha256 = "sha256-FeFXZ5g+/V3kBvHwgNkgtF4Qp/27rw5d/Nb5s7C+n+s=";
+    rev = "bf3c26d9aa03a7d6128e122705b5740294d3d5e6";
+    sha256 = "sha256-O0Nazvn7w9+8u+Hp61V1w5nLBdImgiz7tuEDKlMEyZk=";
   };
 
   prunePaths = [ ".github" ];
