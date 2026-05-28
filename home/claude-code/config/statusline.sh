@@ -30,27 +30,24 @@ jq_get() {
 }
 
 strip_ansi() {
-  perl -pe 's/\e\[[0-9;]*m//g'
+  local esc=$'\033'
+  local rest=$1
+  local out=""
+  while [[ $rest == *"${esc}["* ]]; do
+    out+="${rest%%"${esc}["*}"
+    rest="${rest#*"${esc}["}"
+    rest="${rest#*m}"
+  done
+  printf "%s" "${out}${rest}"
 }
 
 unicode_width() {
-  python3 - "$1" <<'PY'
-import sys
-import unicodedata
-s = sys.argv[1]
-width = 0
-for ch in s:
-    if unicodedata.combining(ch):
-        continue
-    width += 2 if unicodedata.east_asian_width(ch) in ('W', 'F') else 1
-print(width)
-PY
+  local LC_ALL=en_US.UTF-8
+  printf "%s" "${#1}"
 }
 
 visible_width() {
-  local plain
-  plain=$(printf "%s" "$1" | strip_ansi)
-  unicode_width "$plain"
+  unicode_width "$(strip_ansi "$1")"
 }
 
 repeat_char() {
@@ -187,34 +184,25 @@ render_panel_pack() {
 }
 
 truncate_plain() {
+  local LC_ALL=en_US.UTF-8
   local text=$1
   local width=$2
   if (( width <= 0 )); then
     printf ""
     return
   fi
-  python3 - "$text" "$width" <<'PY'
-import sys
-import unicodedata
-s = sys.argv[1]
-limit = int(sys.argv[2])
-out = []
-used = 0
-for ch in s:
-    ch_width = 0 if unicodedata.combining(ch) else (2 if unicodedata.east_asian_width(ch) in ('W', 'F') else 1)
-    if used + ch_width > limit:
-        break
-    out.append(ch)
-    used += ch_width
-print(''.join(out), end='')
-PY
+  if (( ${#text} <= width )); then
+    printf "%s" "$text"
+  else
+    printf "%s" "${text:0:width}"
+  fi
 }
 
 truncate_colored() {
   local text=$1
   local width=$2
   local plain
-  plain=$(printf "%s" "$text" | strip_ansi)
+  plain=$(strip_ansi "$text")
   local plain_width
   plain_width=$(unicode_width "$plain")
   if (( plain_width <= width )); then
@@ -247,22 +235,19 @@ format_decimal() {
 
 format_count() {
   local value=${1:-0}
-  python3 - "$value" <<'PY'
-import sys
-value = float(sys.argv[1])
-abs_value = abs(value)
-if abs_value < 1000:
-    out = f"{int(value)}"
-elif abs_value < 10000:
-    out = f"{value/1000:.1f}k"
-elif abs_value < 1000000:
-    out = f"{round(value/1000):.0f}k"
-elif abs_value < 10000000:
-    out = f"{value/1000000:.1f}M"
-else:
-    out = f"{round(value/1000000):.0f}M"
-print(out)
-PY
+  value=${value%.*}
+  local abs=${value#-}
+  if (( abs < 1000 )); then
+    printf "%d" "$value"
+  elif (( abs < 10000 )); then
+    printf "%d.%dk" $(( value / 1000 )) $(( (abs % 1000) / 100 ))
+  elif (( abs < 1000000 )); then
+    printf "%dk" $(( (value + (value < 0 ? -500 : 500)) / 1000 ))
+  elif (( abs < 10000000 )); then
+    printf "%d.%dM" $(( value / 1000000 )) $(( (abs % 1000000) / 100000 ))
+  else
+    printf "%dM" $(( (value + (value < 0 ? -500000 : 500000)) / 1000000 ))
+  fi
 }
 
 format_duration() {

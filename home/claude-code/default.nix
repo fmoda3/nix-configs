@@ -31,6 +31,17 @@ let
     '';
   };
 
+  statuslineDeps = with pkgs; [ bash jq git ];
+
+  wrappedStatusline = pkgs.runCommand "claude-statusline"
+    {
+      nativeBuildInputs = [ pkgs.makeBinaryWrapper ];
+    } ''
+    mkdir -p $out/bin
+    makeWrapper ${./config/statusline.sh} $out/bin/statusline.sh \
+      --prefix PATH : ${pkgs.lib.makeBinPath statuslineDeps}
+  '';
+
   # COMMON
   commonEnv = {
     CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY = "1";
@@ -239,7 +250,7 @@ in
   home = {
     file = {
       ".claude/statusline.sh" = {
-        source = ./config/statusline.sh;
+        source = "${wrappedStatusline}/bin/statusline.sh";
         executable = true;
       };
       ".claude/conventions" = {
