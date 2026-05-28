@@ -25,9 +25,51 @@ INPUT=$(cat)
 
 echo "$INPUT" > /tmp/claude-code-input-debug.json
 
-jq_get() {
-  echo "$INPUT" | jq -r "$1"
-}
+mapfile -t INPUT_FIELDS < <(jq -r '
+  .model.display_name // .model.id // "n/a",
+  .output_style.name // "default",
+  .agent.name // "",
+  .context_window.total_input_tokens // 0,
+  .context_window.total_output_tokens // 0,
+  .cost.total_cost_usd // 0,
+  .context_window.used_percentage // 0,
+  .context_window.context_window_size // 0,
+  .context_window.current_usage.input_tokens // 0,
+  .context_window.current_usage.cache_creation_input_tokens // 0,
+  .context_window.current_usage.cache_read_input_tokens // 0,
+  .cost.total_duration_ms // 0,
+  .cost.total_api_duration_ms // 0,
+  .rate_limits.five_hour.used_percentage // "",
+  .rate_limits.seven_day.used_percentage // "",
+  .rate_limits.five_hour.resets_at // "",
+  .rate_limits.seven_day.resets_at // "",
+  .worktree.name // .workspace.git_worktree // "",
+  .worktree.branch // "",
+  .cost.total_lines_added // 0,
+  .cost.total_lines_removed // 0
+' <<< "$INPUT")
+
+MODEL_DISPLAY_NAME=${INPUT_FIELDS[0]}
+OUTPUT_STYLE_NAME=${INPUT_FIELDS[1]}
+AGENT_NAME=${INPUT_FIELDS[2]}
+TOTAL_INPUT_TOKENS=${INPUT_FIELDS[3]}
+TOTAL_OUTPUT_TOKENS=${INPUT_FIELDS[4]}
+TOTAL_COST_USD=${INPUT_FIELDS[5]}
+USED_PERCENTAGE=${INPUT_FIELDS[6]}
+CONTEXT_WINDOW_SIZE=${INPUT_FIELDS[7]}
+CURRENT_INPUT_TOKENS=${INPUT_FIELDS[8]}
+CACHE_CREATION_TOKENS=${INPUT_FIELDS[9]}
+CACHE_READ_TOKENS=${INPUT_FIELDS[10]}
+TOTAL_DURATION_MS=${INPUT_FIELDS[11]}
+TOTAL_API_DURATION_MS=${INPUT_FIELDS[12]}
+FIVE_HOUR_PCT=${INPUT_FIELDS[13]}
+SEVEN_DAY_PCT=${INPUT_FIELDS[14]}
+FIVE_HOUR_RESET=${INPUT_FIELDS[15]}
+SEVEN_DAY_RESET=${INPUT_FIELDS[16]}
+WORKTREE_NAME=${INPUT_FIELDS[17]}
+WORKTREE_BRANCH=${INPUT_FIELDS[18]}
+LINES_ADDED=${INPUT_FIELDS[19]}
+LINES_REMOVED=${INPUT_FIELDS[20]}
 
 strip_ansi() {
   local esc=$'\033'
@@ -295,8 +337,7 @@ format_reset_from_epoch() {
 }
 
 get_model_name() {
-  local display_name
-  display_name=$(jq_get '.model.display_name // .model.id // "n/a"')
+  local display_name=$MODEL_DISPLAY_NAME
   if [[ "$display_name" =~ anthropic\.claude-([a-z]+)-([0-9])-([0-9]) ]]; then
     local family="${BASH_REMATCH[1]}"
     local major="${BASH_REMATCH[2]}"
@@ -392,8 +433,8 @@ make_panel() {
 build_model_panel() {
   local model thinking agent
   model=$(get_model_name)
-  thinking=$(jq_get '.output_style.name // "default"')
-  agent=$(jq_get '.agent.name // empty')
+  thinking=$OUTPUT_STYLE_NAME
+  agent=$AGENT_NAME
   local rows=(
     $'model\t'"${BLUE}${model}${RESET}"
     $'style\t'"${SKY}${thinking}${RESET}"
@@ -408,14 +449,14 @@ build_model_panel() {
 
 build_usage_panel() {
   local total_in total_out cost used pct window current cache_create cache_read tokens_summary color bar
-  total_in=$(format_count "$(jq_get '.context_window.total_input_tokens // 0')")
-  total_out=$(format_count "$(jq_get '.context_window.total_output_tokens // 0')")
-  cost=$(format_decimal "$(jq_get '.cost.total_cost_usd // 0')")
-  pct=$(jq_get '.context_window.used_percentage // 0')
-  window=$(format_count "$(jq_get '.context_window.context_window_size // 0')")
-  current=$(jq_get '.context_window.current_usage.input_tokens // 0')
-  cache_create=$(jq_get '.context_window.current_usage.cache_creation_input_tokens // 0')
-  cache_read=$(jq_get '.context_window.current_usage.cache_read_input_tokens // 0')
+  total_in=$(format_count "$TOTAL_INPUT_TOKENS")
+  total_out=$(format_count "$TOTAL_OUTPUT_TOKENS")
+  cost=$(format_decimal "$TOTAL_COST_USD")
+  pct=$USED_PERCENTAGE
+  window=$(format_count "$CONTEXT_WINDOW_SIZE")
+  current=$CURRENT_INPUT_TOKENS
+  cache_create=$CACHE_CREATION_TOKENS
+  cache_read=$CACHE_READ_TOKENS
   used=$(format_count "$((current + cache_create + cache_read))")
   color=$(usage_color "$pct")
   bar=$(bar5 "$pct")
@@ -429,8 +470,8 @@ build_usage_panel() {
 
 build_runtime_panel() {
   local session api lines
-  session=$(format_duration "$(jq_get '.cost.total_duration_ms // 0')")
-  api=$(format_duration "$(jq_get '.cost.total_api_duration_ms // 0')")
+  session=$(format_duration "$TOTAL_DURATION_MS")
+  api=$(format_duration "$TOTAL_API_DURATION_MS")
   mapfile -t lines < <(format_rows \
     $'session\t'"${YELLOW}${session}${RESET}" \
     $'api\t'"${YELLOW}${api}${RESET}")
@@ -440,10 +481,10 @@ build_runtime_panel() {
 build_rate_panel() {
   local five seven five_reset seven_reset rows=() lines=()
   local five_label="" seven_label="" percent_width=0
-  five=$(jq_get '.rate_limits.five_hour.used_percentage // empty')
-  seven=$(jq_get '.rate_limits.seven_day.used_percentage // empty')
-  five_reset=$(format_reset_from_epoch "$(jq_get '.rate_limits.five_hour.resets_at // empty')")
-  seven_reset=$(format_reset_from_epoch "$(jq_get '.rate_limits.seven_day.resets_at // empty')")
+  five=$FIVE_HOUR_PCT
+  seven=$SEVEN_DAY_PCT
+  five_reset=$(format_reset_from_epoch "$FIVE_HOUR_RESET")
+  seven_reset=$(format_reset_from_epoch "$SEVEN_DAY_RESET")
 
   if [[ -n "$five" ]]; then
     five_label="${five}%"
@@ -476,8 +517,8 @@ build_rate_panel() {
 
 build_git_panel() {
   local worktree branch added removed diff_summary lines
-  worktree=$(jq_get '.worktree.name // .workspace.git_worktree // empty')
-  branch=$(jq_get '.worktree.branch // empty')
+  worktree=$WORKTREE_NAME
+  branch=$WORKTREE_BRANCH
   if [[ -z "$branch" ]]; then
     branch=$(get_git_branch)
   fi
@@ -487,8 +528,8 @@ build_git_panel() {
   if [[ -z "$branch" ]]; then
     branch="detached"
   fi
-  added=$(jq_get '.cost.total_lines_added // 0')
-  removed=$(jq_get '.cost.total_lines_removed // 0')
+  added=$LINES_ADDED
+  removed=$LINES_REMOVED
   diff_summary="${GREEN}+${added}${TEXT} ${RED}-${removed}${RESET}"
   mapfile -t lines < <(format_rows \
     $'branch\t'"${FLAMINGO}${branch}${RESET}" \
@@ -499,19 +540,19 @@ build_git_panel() {
 render_compact() {
   local model style cost session api pct used window worktree five seven current cache_create cache_read
   model=$(get_model_name)
-  style=$(jq_get '.output_style.name // "default"')
-  cost=$(format_decimal "$(jq_get '.cost.total_cost_usd // 0')")
-  session=$(format_duration "$(jq_get '.cost.total_duration_ms // 0')")
-  api=$(format_duration "$(jq_get '.cost.total_api_duration_ms // 0')")
-  pct=$(jq_get '.context_window.used_percentage // 0')
-  current=$(jq_get '.context_window.current_usage.input_tokens // 0')
-  cache_create=$(jq_get '.context_window.current_usage.cache_creation_input_tokens // 0')
-  cache_read=$(jq_get '.context_window.current_usage.cache_read_input_tokens // 0')
+  style=$OUTPUT_STYLE_NAME
+  cost=$(format_decimal "$TOTAL_COST_USD")
+  session=$(format_duration "$TOTAL_DURATION_MS")
+  api=$(format_duration "$TOTAL_API_DURATION_MS")
+  pct=$USED_PERCENTAGE
+  current=$CURRENT_INPUT_TOKENS
+  cache_create=$CACHE_CREATION_TOKENS
+  cache_read=$CACHE_READ_TOKENS
   used=$(format_count "$((current + cache_create + cache_read))")
-  window=$(format_count "$(jq_get '.context_window.context_window_size // 0')")
-  worktree=$(jq_get '.worktree.name // .workspace.git_worktree // empty')
-  five=$(jq_get '.rate_limits.five_hour.used_percentage // empty')
-  seven=$(jq_get '.rate_limits.seven_day.used_percentage // empty')
+  window=$(format_count "$CONTEXT_WINDOW_SIZE")
+  worktree=$WORKTREE_NAME
+  five=$FIVE_HOUR_PCT
+  seven=$SEVEN_DAY_PCT
 
   printf "%b󱜙 %s%b | %b %s%b | %b $%s%b | %b󱩷 %s%b | %b󱉊 %s%b\n" \
     "$BLUE" "$model" "$RESET" \
@@ -544,7 +585,7 @@ render_panels() {
   mapfile -t usage < <(build_usage_panel)
   mapfile -t runtime < <(build_runtime_panel)
 
-  if [[ -n "$(jq_get '.rate_limits.five_hour.used_percentage // empty')" || -n "$(jq_get '.rate_limits.seven_day.used_percentage // empty')" ]]; then
+  if [[ -n "$FIVE_HOUR_PCT" || -n "$SEVEN_DAY_PCT" ]]; then
     mapfile -t rate < <(build_rate_panel)
     panels+=(rate)
   fi
