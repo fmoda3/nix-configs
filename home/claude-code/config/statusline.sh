@@ -224,24 +224,6 @@ truncate_colored() {
   truncate_plain "$plain" "$width"
 }
 
-get_width() {
-  local term_cols=""
-
-  term_cols=$(stty size < /dev/tty 2>/dev/null | awk '{print $2}')
-  if [[ -n "$term_cols" && "$term_cols" =~ ^[0-9]+$ && "$term_cols" -gt 20 ]]; then
-    echo "$term_cols"
-    return
-  fi
-
-  term_cols=$(tput cols 2>/dev/null || true)
-  if [[ -n "$term_cols" && "$term_cols" =~ ^[0-9]+$ && "$term_cols" -gt 20 ]]; then
-    echo "$term_cols"
-    return
-  fi
-
-  echo 80
-}
-
 usage_color() {
   local percent=${1%.*}
   if (( percent >= 90 )); then echo "$RED"
@@ -612,8 +594,7 @@ render_panels() {
   fi
 }
 
-WIDTH=$(get_width)
-printf '%s\n' "WIDTH=$WIDTH" > /tmp/claude-code-statusline-width-debug.txt
+WIDTH=$COLUMNS
 
 if (( WIDTH < 80 )); then
   render_compact
