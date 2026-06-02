@@ -10,9 +10,9 @@ buildNpmPackage (finalAttrs: {
 
   src = fetchGit {
     url = "git@github.toasttab.com:nathannorman-toast/toast-bedrock-adapter.git";
-    rev = "7506a8475a3b34aa999de094f86ccb1a564a6f8d";
+    rev = "44d3287a353158b13e582d29523b6b196813cbd2";
     ref = "main";
-    narHash = "sha256-fyC/5gs6w4Bw2Q4z/Tw/HCp+2p0FjUwGBaS0kZOxNvM=";
+    narHash = "sha256-XC7yNhBenL8umL/kArtCF0uLRpYRUHAjGLNLza07JIc=";
   };
 
   npmDepsHash = "sha256-2sFtn11I8UreVQckBgs5VyK1Us2/wJylgHy87mU/LWY=";
