@@ -54,6 +54,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
       --set DISABLE_INSTALLATION_CHECKS 1 \
       --set USE_BUILTIN_RIPGREP 0 \
       --set CLAUDE_CODE_TMUX_TRUECOLOR 1 \
+      --set CLAUDE_CODE_ENABLE_AUTO_MODE 1 \
       ${lib.optionalString stdenv.hostPlatform.isLinux ''
         --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ alsa-lib ]} \
       ''}--prefix PATH : ${

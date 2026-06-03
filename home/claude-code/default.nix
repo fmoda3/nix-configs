@@ -27,7 +27,8 @@ let
     postBuild = ''
       wrapProgram $out/bin/claude \
         --prefix PATH : ${pkgs.lib.makeBinPath extraPackages} \
-        --add-flags "--thinking-display summarized"
+        --add-flags "--thinking-display summarized" \
+        --add-flags "--allow-dangerously-skip-permissions"
     '';
   };
 
@@ -224,6 +225,7 @@ in
       teammateMode = "tmux";
       theme = "custom:catppuccin-frappe";
       skipAutoPermissionPrompt = true;
+      skipDangerousModePermissionPrompt = true;
       lspRecommendationDisabled = true;
       showThinkingSummaries = true;
     } // lib.optionalAttrs (!cfg.isWork) {
