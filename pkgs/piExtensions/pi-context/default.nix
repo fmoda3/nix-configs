@@ -4,13 +4,13 @@
 
 buildPiExtension {
   pname = "pi-context";
-  version = "2026-06-02";
+  version = "2026-06-04";
 
   src = fetchFromGitHub {
     owner = "ttttmr";
     repo = "pi-context";
-    rev = "b55558cdde91797a4dfd04a24f0f590307e248d1";
-    sha256 = "sha256-rx6kIKD1fdva9U5jWRsBoaM+MnEGkhpedYhpbZcyG5Y=";
+    rev = "f3886fa544d47d3084ca990532100f69342f79e7";
+    sha256 = "sha256-A/YqBJSmk+Yv1R/HZrqBb6d34QUsQVX/QVTabghQMok=";
   };
 
   prunePaths = [ ".github" ];
