@@ -106,6 +106,7 @@ in
           heroku
           postgresql
           sudocode
+          toast.bedrock-llm-proxy
           toast.oktoast
           toast.toast-bedrock-adapter
           toast.toast-services
