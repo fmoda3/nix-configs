@@ -25,18 +25,18 @@
 }:
 rustPlatform.buildRustPackage (finalAttrs: {
   pname = "codex";
-  version = "0.137.0";
+  version = "0.138.0";
 
   src = fetchFromGitHub {
     owner = "openai";
     repo = "codex";
     tag = "rust-v${finalAttrs.version}";
-    hash = "sha256-puszZqi1lZeq8iXWAD9U9+WMnNvzMYKf6wVT9mtjSUU=";
+    hash = "sha256-FYoAcX0sdhaE31H3JwgZetyYaFKJyxJ0dmuZmitoWSQ=";
   };
 
   sourceRoot = "${finalAttrs.src.name}/codex-rs";
 
-  cargoHash = "sha256-SX5LMO+IWismbH61Jd0g1mgykfav8DrqG+wjyNCWyCo=";
+  cargoHash = "sha256-IgQwUYqKTb+qbCQ0/O855HkbK9CayhFN8mONCYMiINw=";
 
   # Match upstream's release build for the codex binary only.
   cargoBuildFlags = [
@@ -56,7 +56,6 @@ rustPlatform.buildRustPackage (finalAttrs: {
     substituteInPlace $cargoDepsCopy/*/webrtc-sys-*/build.rs \
       --replace-fail "cargo:rustc-link-lib=static=webrtc" "cargo:rustc-link-lib=dylib=webrtc"
     substituteInPlace Cargo.toml \
-      --replace-fail 'lto = "fat"' "" \
       --replace-fail 'codegen-units = 1' ""
   '';
 
