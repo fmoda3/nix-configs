@@ -96,7 +96,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     chmod +x dist/cli.js
 
     # Build standalone binary with Bun
-    bun build --compile ./dist/cli.js --outfile dist/pi
+    bun build --compile ./dist/bun/cli.js ./src/utils/image-resize-worker.ts --outfile dist/pi
 
     # Copy binary assets alongside
     cp package.json dist/
