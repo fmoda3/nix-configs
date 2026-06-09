@@ -149,7 +149,7 @@ export default function (pi: ExtensionAPI) {
 
   pi.on("session_start", async (_event, ctx) => {
     lastContext = ctx;
-    state = createInitialState(ctx.model?.id ?? null);
+    state = createInitialState(ctx.model?.id ?? null, ctx.model?.name ?? null);
     refreshUsage(ctx);
 
     installWidget(ctx);
@@ -163,6 +163,7 @@ export default function (pi: ExtensionAPI) {
     state = {
       ...state,
       modelId: event.model.id,
+      modelName: event.model.name ?? null,
     };
     await refreshRateLimits(ctx, true);
     rerender();

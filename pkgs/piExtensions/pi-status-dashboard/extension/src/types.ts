@@ -35,6 +35,7 @@ export type DashboardState = {
   totalAgentMs: number;
   totalApiMs: number;
   modelId: string | null;
+  modelName: string | null;
   repo: RepoState;
   rateLimits: RateLimitState;
   totals: {

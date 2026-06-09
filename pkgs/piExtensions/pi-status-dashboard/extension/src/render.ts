@@ -45,7 +45,7 @@ function buildModelPanel(state: DashboardState, thinkingLevel: string | null): P
   return {
     title: "MODEL",
     lines: formatPanelRows([
-      { key: "model", value: value(CATPPUCCIN.blue, state.modelId ?? "n/a") },
+      { key: "model", value: value(CATPPUCCIN.blue, state.modelName ?? state.modelId ?? "n/a") },
       { key: "thinking", value: value(CATPPUCCIN.sky, thinkingLevel ?? "default") },
     ]),
   };
