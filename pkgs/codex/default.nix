@@ -14,6 +14,7 @@
     inherit (callPackage ./fetchers.nix { }) fetchLibrustyV8;
   }
 , livekit-libwebrtc
+, lld
 , makeBinaryWrapper
 , nix-update-script
 , pkg-config
@@ -38,6 +39,8 @@ rustPlatform.buildRustPackage (finalAttrs: {
 
   cargoHash = "sha256-8mN4OTRJvt2mBYHQXZS55PSOChLqEIiXwPu2y+2MZ9o=";
 
+  __structuredAttrs = true;
+
   # Match upstream's release build for the codex binary only.
   cargoBuildFlags = [
     "--package"
@@ -56,6 +59,7 @@ rustPlatform.buildRustPackage (finalAttrs: {
     substituteInPlace $cargoDepsCopy/*/webrtc-sys-*/build.rs \
       --replace-fail "cargo:rustc-link-lib=static=webrtc" "cargo:rustc-link-lib=dylib=webrtc"
     substituteInPlace Cargo.toml \
+      --replace-fail 'lto = "thin"' "" \
       --replace-fail 'codegen-units = 1' ""
   '';
 
@@ -92,6 +96,11 @@ rustPlatform.buildRustPackage (finalAttrs: {
       ]
     );
     RUSTY_V8_ARCHIVE = librusty_v8;
+  }
+  // lib.optionalAttrs stdenv.hostPlatform.isDarwin {
+    # Link with lld on Darwin. nixpkgs' classic open-source ld64 fails to insert
+    # ARM64 branch thunks for this binary, producing `b(l) ARM64 branch out of range`.
+    NIX_CFLAGS_LINK = "-fuse-ld=${lib.getExe' lld "ld64.lld"}";
   };
 
   # NOTE: part of the test suite requires access to networking, local shells,
