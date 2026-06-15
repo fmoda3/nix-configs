@@ -16,14 +16,14 @@ require("which-key").add({
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = { "NvimTree", "neo-tree", "oil" },
 	callback = function()
-		require("which-key").register({
+		require("which-key").add({
 			{
 				"<leader>as",
 				"<cmd>ClaudeCodeTreeAdd<cr>",
 				desc = "Add file",
-				ft = { "NvimTree", "neo-tree", "oil" },
 				icon = "󱜙",
+				buffer = 0,
 			},
-		}, { buffer = 0 })
+		})
 	end,
 })
