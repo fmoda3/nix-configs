@@ -5,14 +5,14 @@
 
 buildNpmPackage (finalAttrs: {
   pname = "ccusage";
-  version = "20.0.11";
+  version = "20.0.13";
 
   src = fetchzip {
     url = "https://registry.npmjs.org/ccusage/-/ccusage-${finalAttrs.version}.tgz";
-    hash = "sha256-1OwhJWNZ2iaHPpdd1wUGVG1JI9Ij9VGCiSZ7xuwJMYo=";
+    hash = "sha256-DT1U4KgF8hY+vCUT2bledFHpfJ68TYC6dAKYZf+5y58=";
   };
 
-  npmDepsHash = "sha256-GIUYXc3ZlCCM+ntBEhj3KmT3SNjipPtYySvTx8yy1Kc=";
+  npmDepsHash = "sha256-wjQIBTPx1+aMqnMg+orJQmfhjzJGl57J6BzkIxKX5k4=";
   forceEmptyCache = true;
 
   postPatch = ''
@@ -33,7 +33,7 @@ buildNpmPackage (finalAttrs: {
     find $out/lib/node_modules/ccusage/node_modules/@ccusage -path '*/bin/ccusage*' -type f -exec chmod +x {} \;
     
     # Create symlink for the binary
-    ln -s $out/lib/node_modules/ccusage/dist/cli.js $out/bin/ccusage
+    ln -s $out/lib/node_modules/ccusage/src/cli.js $out/bin/ccusage
     chmod +x $out/bin/ccusage
     
     runHook postInstall
