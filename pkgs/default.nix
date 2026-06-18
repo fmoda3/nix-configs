@@ -33,6 +33,7 @@ final: prev:
     pi-status-footer = prev.callPackage ./piExtensions/pi-status-footer { };
     pi-subagents = prev.callPackage ./piExtensions/pi-subagents { };
     pi-tasks = prev.callPackage ./piExtensions/pi-tasks { };
+    pi-toast = prev.callPackage ./piExtensions/pi-toast { };
     pi-teams = prev.callPackage ./piExtensions/pi-teams { };
   };
   # python3Packages = prev.python3Packages // {

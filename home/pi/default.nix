@@ -19,8 +19,8 @@ let
 
   settings = {
     quietStartup = true;
-    defaultProvider = if cfg.isWork then "anthropic" else "openai-codex";
-    defaultModel = if cfg.isWork then "claude-sonnet-4-6" else "gpt-5.5";
+    defaultProvider = if cfg.isWork then "amazon-bedrock" else "openai-codex";
+    defaultModel = if cfg.isWork then "global.anthropic.claude-sonnet-4-6" else "gpt-5.5";
     theme = "catppuccin-frappe";
     terminal = {
       showTerminalProgress = true;
@@ -66,15 +66,9 @@ let
     pi-teams
   ];
 
-  workModelsConfig = {
-    providers = {
-      anthropic = {
-        baseUrl = "http://localhost:3456";
-        apiKey = "toast-bedrock-adapter";
-        api = "anthropic-messages";
-      };
-    };
-  };
+  workExtensions = with pkgs.piExtensions; [
+    pi-toast
+  ];
 
   workMcpServers = {
     atlassian = {
@@ -133,10 +127,6 @@ in
           source = ./config/agents;
           recursive = true;
         };
-      } // lib.optionalAttrs cfg.isWork {
-        ".pi/agent/models.json" = {
-          text = builtins.toJSON workModelsConfig;
-        };
       } // builtins.listToAttrs (map
         (extension: {
           name = ".pi/agent/extensions/${lib.getName extension}";
@@ -144,7 +134,7 @@ in
             source = extension;
           };
         })
-        extensions);
+        (extensions ++ lib.optionals cfg.isWork workExtensions));
     };
   };
 }
