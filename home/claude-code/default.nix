@@ -12,6 +12,7 @@ let
     # Lua
     lua-language-server
     # Nix
+    mcp-nixos
     nixd
     # Python
     pyright
@@ -87,6 +88,9 @@ let
     deepwiki = {
       type = "http";
       url = "https://mcp.deepwiki.com/mcp";
+    };
+    nixos = {
+      command = "mcp-nixos";
     };
   };
 

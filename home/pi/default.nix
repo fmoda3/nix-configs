@@ -3,6 +3,7 @@ let
   cfg = config.my-home;
 
   extraPackages = with pkgs; [
+    mcp-nixos
     python3
   ];
 
@@ -33,6 +34,9 @@ let
     };
     deepwiki = {
       url = "https://mcp.deepwiki.com/mcp";
+    };
+    nixos = {
+      command = "mcp-nixos";
     };
   };
 
