@@ -85,9 +85,6 @@ let
     figma = {
       url = "http://127.0.0.1:3845/mcp";
     };
-    sudocode = {
-      command = "sudocode-mcp";
-    };
   };
 
   mcpConfig = {
