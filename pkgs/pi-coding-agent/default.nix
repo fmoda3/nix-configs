@@ -13,13 +13,13 @@
 }:
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "pi-coding-agent";
-  version = "0.79.10";
+  version = "0.80.1";
 
   src = fetchFromGitHub {
     owner = "earendil-works";
     repo = "pi";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-UMRkOzJpA1XcEHzRwHxgBg6idEmpVJzBKlrXZaVf4MQ=";
+    hash = "sha256-JL35ltBWLv1btQAyqtFUbYH5uG4zabJyEJa4Ccz2nEM=";
   };
 
   node_modules = stdenvNoCC.mkDerivation {
@@ -58,7 +58,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
 
     dontFixup = true;
 
-    outputHash = "sha256-Ksd4YzvmNvWHgQP+Xk2XhRVwbGfRJvz8Lsp4OVmqRJI=";
+    outputHash = "sha256-szf6+Cy/GqA12B4HFI4uqixo1VkxnJckobsLK7CmXJI=";
     outputHashAlgo = "sha256";
     outputHashMode = "recursive";
   };
