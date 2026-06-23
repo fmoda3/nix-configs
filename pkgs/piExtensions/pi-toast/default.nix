@@ -2,12 +2,12 @@
 
 buildPiExtension {
   pname = "pi-toast";
-  version = "2026-06-19";
+  version = "2026-06-23";
 
   src = fetchGit {
     url = "git@github.toasttab.com:toasttab/pi-toast.git";
-    rev = "80a9e5981fcafa109ea570becc3d32a3967a142d";
-    narHash = "sha256-oG5DWy5WQRq3Bj5P+CTaWwSP3BcyfhOUwrmx0ngk+VY=";
+    rev = "c8ada514d6ce8b94660b575b301777a858a97f08";
+    narHash = "sha256-yEB0QPx21dvdG7usdhPRXXKZFqMZJha7I7+iBvx7j4Q=";
   };
 
   postPatch = ''
