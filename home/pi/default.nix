@@ -21,7 +21,7 @@ let
   settings = {
     quietStartup = true;
     defaultProvider = if cfg.isWork then "amazon-bedrock" else "openai-codex";
-    defaultModel = if cfg.isWork then "global.anthropic.claude-sonnet-4-6" else "gpt-5.5";
+    defaultModel = if cfg.isWork then "global.anthropic.claude-opus-4-8" else "gpt-5.5";
     theme = "catppuccin-frappe";
     terminal = {
       showTerminalProgress = true;
