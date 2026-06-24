@@ -6,7 +6,6 @@ import { loadRepoState } from "./repo";
 import { createInitialState } from "./state";
 import type { DashboardState } from "./types";
 
-const WIDGET_ID = "pi-status-dashboard";
 const CLOCK_REFRESH_MS = 1000;
 
 export default function (pi: ExtensionAPI) {
@@ -17,7 +16,6 @@ export default function (pi: ExtensionAPI) {
   let clockRefreshTimer: ReturnType<typeof setInterval> | undefined;
   let rateLimitRefreshInFlight = false;
   let lastContext: ExtensionContext | undefined;
-  let getExtensionStatuses: (() => ReadonlyMap<string, string>) | undefined;
 
   const rerender = () => requestRender?.();
 
@@ -32,9 +30,8 @@ export default function (pi: ExtensionAPI) {
     }
   };
 
-  const installWidget = (ctx: ExtensionContext) => {
+  const installDashboard = (ctx: ExtensionContext) => {
     if (!enabled) {
-      ctx.ui.setWidget(WIDGET_ID, undefined);
       ctx.ui.setFooter(undefined);
       requestRender = undefined;
       stopTimers();
@@ -42,7 +39,7 @@ export default function (pi: ExtensionAPI) {
     }
 
     ctx.ui.setFooter((tui, _theme, footerData) => {
-      getExtensionStatuses = () => footerData.getExtensionStatuses();
+      requestRender = () => tui.requestRender();
 
       // Prime Pi's internal branch cache so onBranchChange can compare future
       // filesystem updates against the current branch. The dashboard keeps its
@@ -59,32 +56,18 @@ export default function (pi: ExtensionAPI) {
       return {
         dispose() {
           unsubscribeBranchChange();
-          getExtensionStatuses = undefined;
+          requestRender = undefined;
         },
         invalidate() {},
-        render(): string[] {
-          return [];
+        render(width: number): string[] {
+          const activeContext = lastContext ?? ctx;
+          const extensionStatuses = Array.from(footerData.getExtensionStatuses().values()).filter(
+            (status) => status && status.trim().length > 0,
+          );
+          return renderDashboard(state, activeContext, pi.getThinkingLevel(), extensionStatuses, width);
         },
       };
     });
-
-    ctx.ui.setWidget(
-      WIDGET_ID,
-      (tui) => {
-        requestRender = () => tui.requestRender();
-        return {
-          invalidate() {},
-          render(width: number): string[] {
-            const activeContext = lastContext ?? ctx;
-            const extensionStatuses = Array.from(getExtensionStatuses?.().values() ?? []).filter(
-              (status) => status && status.trim().length > 0,
-            );
-            return renderDashboard(state, activeContext, pi.getThinkingLevel(), extensionStatuses, width);
-          },
-        };
-      },
-      { placement: "belowEditor" },
-    );
 
     stopTimers();
     clockRefreshTimer = setInterval(() => rerender(), CLOCK_REFRESH_MS);
@@ -148,14 +131,14 @@ export default function (pi: ExtensionAPI) {
   };
 
   pi.registerCommand("status-dashboard", {
-    description: "Toggle the status dashboard widget (usage: /status-dashboard [on|off])",
+    description: "Toggle the status dashboard footer (usage: /status-dashboard [on|off])",
     handler: async (args, ctx) => {
       const normalized = args.trim().toLowerCase();
       if (normalized === "on") enabled = true;
       else if (normalized === "off") enabled = false;
       else enabled = !enabled;
 
-      installWidget(ctx);
+      installDashboard(ctx);
       if (enabled) {
         await refreshRepo(ctx);
       }
@@ -169,7 +152,7 @@ export default function (pi: ExtensionAPI) {
     state = createInitialState(ctx.model?.id ?? null, ctx.model?.name ?? null);
     refreshUsage(ctx);
 
-    installWidget(ctx);
+    installDashboard(ctx);
     await refreshRepo(ctx);
     await refreshRateLimits(ctx, true);
     rerender();
@@ -243,6 +226,6 @@ export default function (pi: ExtensionAPI) {
   pi.on("session_shutdown", async (_event, ctx) => {
     stopTimers();
     requestRender = undefined;
-    ctx.ui.setWidget(WIDGET_ID, undefined);
+    ctx.ui.setFooter(undefined);
   });
 }
