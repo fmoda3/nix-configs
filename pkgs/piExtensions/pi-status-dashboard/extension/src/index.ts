@@ -1,6 +1,4 @@
 import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
-import { watch, type FSWatcher } from "node:fs";
-import { dirname, join } from "node:path";
 import { sumAssistantUsage } from "./format";
 import { fetchRateLimitsForProvider, detectUsageProvider, RATE_LIMIT_REFRESH_MS } from "./provider-usage";
 import { renderDashboard } from "./render";
@@ -10,7 +8,6 @@ import type { DashboardState } from "./types";
 
 const WIDGET_ID = "pi-status-dashboard";
 const CLOCK_REFRESH_MS = 1000;
-const GIT_REFRESH_DEBOUNCE_MS = 150;
 
 export default function (pi: ExtensionAPI) {
   let enabled = true;
@@ -18,23 +15,11 @@ export default function (pi: ExtensionAPI) {
   let requestRender: (() => void) | undefined;
   let rateLimitRefreshTimer: ReturnType<typeof setInterval> | undefined;
   let clockRefreshTimer: ReturnType<typeof setInterval> | undefined;
-  let gitRefreshTimer: ReturnType<typeof setTimeout> | undefined;
-  let gitWatchers: FSWatcher[] = [];
   let rateLimitRefreshInFlight = false;
   let lastContext: ExtensionContext | undefined;
   let getExtensionStatuses: (() => ReadonlyMap<string, string>) | undefined;
 
   const rerender = () => requestRender?.();
-
-  const stopGitWatchers = () => {
-    for (const watcher of gitWatchers) watcher.close();
-    gitWatchers = [];
-
-    if (gitRefreshTimer) {
-      clearTimeout(gitRefreshTimer);
-      gitRefreshTimer = undefined;
-    }
-  };
 
   const stopTimers = () => {
     if (clockRefreshTimer) {
@@ -45,7 +30,6 @@ export default function (pi: ExtensionAPI) {
       clearInterval(rateLimitRefreshTimer);
       rateLimitRefreshTimer = undefined;
     }
-    stopGitWatchers();
   };
 
   const installWidget = (ctx: ExtensionContext) => {
@@ -57,10 +41,24 @@ export default function (pi: ExtensionAPI) {
       return;
     }
 
-    ctx.ui.setFooter((_tui, _theme, footerData) => {
+    ctx.ui.setFooter((tui, _theme, footerData) => {
       getExtensionStatuses = () => footerData.getExtensionStatuses();
+
+      // Prime Pi's internal branch cache so onBranchChange can compare future
+      // filesystem updates against the current branch. The dashboard keeps its
+      // richer repo state separately because it also displays worktree/diff info.
+      footerData.getGitBranch();
+
+      const unsubscribeBranchChange = footerData.onBranchChange(() => {
+        lastContext = ctx;
+        void refreshRepo(ctx).then(() => {
+          tui.requestRender();
+        });
+      });
+
       return {
         dispose() {
+          unsubscribeBranchChange();
           getExtensionStatuses = undefined;
         },
         invalidate() {},
@@ -107,76 +105,6 @@ export default function (pi: ExtensionAPI) {
       ...state,
       repo: await loadRepoState(pi, ctx.cwd),
     };
-  };
-
-  const scheduleGitRefresh = (ctx: ExtensionContext) => {
-    if (gitRefreshTimer) clearTimeout(gitRefreshTimer);
-
-    gitRefreshTimer = setTimeout(async () => {
-      lastContext = ctx;
-      await refreshRepo(ctx);
-      await startGitWatchers(ctx);
-      rerender();
-    }, GIT_REFRESH_DEBOUNCE_MS);
-  };
-
-  const watchGitPath = (path: string, ctx: ExtensionContext, recursive = false) => {
-    try {
-      const watcher = watch(path, { recursive }, () => scheduleGitRefresh(ctx));
-      watcher.on("error", () => {
-        gitWatchers = gitWatchers.filter((candidate) => candidate !== watcher);
-        watcher.close();
-      });
-      gitWatchers.push(watcher);
-    } catch {
-      // Git metadata paths vary across normal repos, worktrees, and packed refs.
-      // Missing or unsupported watch targets should not break the dashboard.
-    }
-  };
-
-  const loadAbsoluteGitPath = async (ctx: ExtensionContext, key: "--absolute-git-dir" | "--git-common-dir") => {
-    const result = await pi.exec("git", ["rev-parse", "--path-format=absolute", key], {
-      cwd: ctx.cwd,
-      timeout: 5000,
-    });
-    if (result.code !== 0) return null;
-
-    const path = result.stdout.trim();
-    return path.length > 0 ? path : null;
-  };
-
-  const startGitWatchers = async (ctx: ExtensionContext) => {
-    stopGitWatchers();
-
-    const gitDir = await loadAbsoluteGitPath(ctx, "--absolute-git-dir");
-    if (!gitDir) return;
-
-    const commonDir = (await loadAbsoluteGitPath(ctx, "--git-common-dir")) ?? gitDir;
-
-    // Watch directories as well as individual files. Git often rewrites files
-    // like HEAD via atomic rename, which can invalidate file-level watchers
-    // after the first branch switch on some platforms.
-    watchGitPath(gitDir, ctx);
-    if (commonDir !== gitDir) watchGitPath(commonDir, ctx);
-    watchGitPath(join(gitDir, "HEAD"), ctx);
-    watchGitPath(join(gitDir, "index"), ctx);
-    watchGitPath(join(gitDir, "packed-refs"), ctx);
-    watchGitPath(join(gitDir, "logs"), ctx);
-    watchGitPath(join(gitDir, "logs", "HEAD"), ctx);
-    watchGitPath(join(commonDir, "packed-refs"), ctx);
-    watchGitPath(join(commonDir, "refs"), ctx, true);
-    watchGitPath(join(commonDir, "refs", "heads"), ctx, true);
-
-    const branchResult = await pi.exec("git", ["symbolic-ref", "--quiet", "--short", "HEAD"], {
-      cwd: ctx.cwd,
-      timeout: 5000,
-    });
-    const branch = branchResult.code === 0 ? branchResult.stdout.trim() : "";
-    if (branch) {
-      const branchRef = join(commonDir, "refs", "heads", ...branch.split("/"));
-      watchGitPath(branchRef, ctx);
-      watchGitPath(dirname(branchRef), ctx);
-    }
   };
 
   const refreshRateLimits = async (ctx: ExtensionContext, force = false) => {
@@ -230,7 +158,6 @@ export default function (pi: ExtensionAPI) {
       installWidget(ctx);
       if (enabled) {
         await refreshRepo(ctx);
-        await startGitWatchers(ctx);
       }
       rerender();
       ctx.ui.notify(`status dashboard ${enabled ? "enabled" : "disabled"}`, "info");
@@ -244,7 +171,6 @@ export default function (pi: ExtensionAPI) {
 
     installWidget(ctx);
     await refreshRepo(ctx);
-    await startGitWatchers(ctx);
     await refreshRateLimits(ctx, true);
     rerender();
   });
