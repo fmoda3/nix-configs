@@ -103,6 +103,7 @@ in
           docker
           docker-compose
           docker-credential-helpers
+          gws
           heroku
           postgresql
           src-cli
