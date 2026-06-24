@@ -44,6 +44,7 @@ final: prev:
     toast-services = prev.callPackage ./toast/toast-services { };
     bedrock-llm-proxy = prev.callPackage ./toast/bedrock-llm-proxy { };
     toast-bedrock-adapter = prev.callPackage ./toast/toast-bedrock-adapter { };
+    idp-cli = prev.callPackage ./toast/idp-cli { };
   };
   vimPlugins = prev.vimPlugins // {
     claudecode-nvim = prev.callPackage ./vimPlugins/claudecode-nvim { };

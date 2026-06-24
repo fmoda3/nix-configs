@@ -106,6 +106,7 @@ in
           heroku
           postgresql
           toast.bedrock-llm-proxy
+          toast.idp-cli
           toast.oktoast
           toast.toast-bedrock-adapter
           toast.toast-services
