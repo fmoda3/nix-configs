@@ -105,6 +105,7 @@ in
           docker-credential-helpers
           heroku
           postgresql
+          src-cli
           toast.bedrock-llm-proxy
           toast.idp-cli
           toast.oktoast
