@@ -69,6 +69,7 @@ let
     pi-subagents
     pi-tasks
     pi-teams
+    pi-web-access
   ];
 
   workExtensions = with pkgs.piExtensions; [

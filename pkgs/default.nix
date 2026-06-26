@@ -36,6 +36,7 @@ final: prev:
     pi-tasks = prev.callPackage ./piExtensions/pi-tasks { };
     pi-toast = prev.callPackage ./piExtensions/pi-toast { };
     pi-teams = prev.callPackage ./piExtensions/pi-teams { };
+    pi-web-access = prev.callPackage ./piExtensions/pi-web-access { };
   };
   # python3Packages = prev.python3Packages // {
   #   toast-tools = prev.callPackage ./toast-tools { };
