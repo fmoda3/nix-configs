@@ -59,6 +59,7 @@ let
     pi-context
     pi-direnv
     pi-ghostty
+    pi-intercom
     pi-mcp-adapter
     pi-notify
     pi-plan
