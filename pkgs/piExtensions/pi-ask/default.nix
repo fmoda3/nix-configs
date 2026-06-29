@@ -4,13 +4,13 @@
 
 buildPiExtension {
   pname = "pi-ask";
-  version = "2026-06-22";
+  version = "2026-06-29";
 
   src = fetchFromGitHub {
     owner = "eko24ive";
     repo = "pi-ask";
-    rev = "bbb7017d606e81565e6b1f1d864189c35a07e665";
-    sha256 = "sha256-CDV+ZBt5UX9nWYeYm/ZUWXh4dLKwxxWUYonD8wvxC6s=";
+    rev = "2bba8543263c042c454d7f5eea557e1dd1381a0c";
+    sha256 = "sha256-Zvqv0EF/TXXNP6NqFgD0VPrLNhUkWHGmFLjCbhzxkV8=";
   };
 
   prunePaths = [ ".github" ];
