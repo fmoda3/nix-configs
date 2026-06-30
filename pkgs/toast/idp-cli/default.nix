@@ -8,13 +8,13 @@
 
 let
   pname = "idp-cli";
-  version = "0.2.0";
+  version = "2026-06-29";
 
   src = fetchGit {
     url = "git@github.toasttab.com:toasttab/idp-cli.git";
-    rev = "e8f84196d370689673a5688bdd8273ae83f0fa83";
+    rev = "07b1715110ee8d15e33272e1106d9e3dc3891606";
     ref = "main";
-    narHash = "sha256-AYBF1T34c9T5E5BTwtriTuVvHIn9GjzdfOMrjkFgW8Y=";
+    narHash = "sha256-+VRkiYn1nzXkM8UUv5X6jSMB2c/6Gp/F1poP0vp7OMU=";
   };
 
   # The OpenAPI codegen (`npm run generate`) pulls schemas from the internal
@@ -55,7 +55,7 @@ in
 buildNpmPackage {
   inherit pname version src;
 
-  npmDepsHash = "sha256-dydPbc6cn5PFTD9myMmeEbmucyNTXbAVt9sbbYleiY8=";
+  npmDepsHash = "sha256-R6jQa/IEZulC7eRhCnqvtyI1E0KFcRkcBynXPY040HU=";
 
   # The postinstall script downloads a Chromium browser, which fails in the
   # sandbox. Skip lifecycle scripts and provide the browser from nixpkgs at
