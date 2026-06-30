@@ -65,7 +65,6 @@ in
 
         # LSP
         (mkLuaPlugin nvim-lspconfig ./config/lua/lsp-config.lua)
-        nvim-lsp-ts-utils
         none-ls-nvim # Mostly for linting
         lsp-document-highlight-nvim # Highlight selected symbol
 
