@@ -8,12 +8,12 @@
 }:
 buildGoModule {
   pname = "oktoast";
-  version = "2026-05-21";
+  version = "2026-06-29";
 
   src = fetchGit {
     url = "git@github.toasttab.com:toasttab/oktoast-setup.git";
-    rev = "482ce77a1c095285fb5a8ae1017bfb61560fde04";
-    narHash = "sha256-dj7+Ei4v1ZA5sN1Sxd9CZAiK5x5aby9CmGgIATmpMWk=";
+    rev = "d67799d6f04358e765ffa3f0994d28f0db5806a7";
+    narHash = "sha256-JkuoLPx5ItXR+PrsqjEdr0IGVk3E/bCfsEdOguQaSo4=";
   };
 
   vendorHash = "sha256-fIm9Qqr+BYIx7qxtDGGREHR/fVPcG2sVqPQI17EcuiA=";
