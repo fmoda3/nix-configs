@@ -43,6 +43,17 @@ stdenvNoCC.mkDerivation (finalAttrs: {
 
     dontConfigure = true;
 
+    postPatch = ''
+      # Upstream v${finalAttrs.version} locks ghostty-web to an older commit while
+      # package.json depends on the moving #main ref. Bun 1.3.13 refreshes the
+      # resolved commit even with --frozen-lockfile, so make the lockfile match
+      # the current resolution to keep this fixed-output derivation reproducible.
+      substituteInPlace bun.lock \
+        --replace-fail \
+          '"ghostty-web": ["ghostty-web@github:anomalyco/ghostty-web#20bd361", {}, "anomalyco-ghostty-web-20bd361", "sha512-dW0nwaiBBcun9y5WJSvm3HxDLe5o9V0xLCndQvWonRVubU8CS1PHxZpLffyPt1YujPWC13ez03aWxcuKBPYYGQ=="]' \
+          '"ghostty-web": ["ghostty-web@github:anomalyco/ghostty-web#513463a", {}, "anomalyco-ghostty-web-513463a", "sha512-GZR8LSmgGzViWnBJrqRI8MpAZRCJxhcr1Hi9Tyeh7YRooHZQjK9J97FQRD3tbBaM2wjq05gzGY2UEsG+JtZeBw=="]'
+    '';
+
     buildPhase = ''
       runHook preBuild
 
@@ -77,7 +88,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     # NOTE: Required else we get errors that our fixed-output derivation references store paths
     dontFixup = true;
 
-    outputHash = "sha256-JWT//c5TuF0Tlz51RbUVIE8YYRdhb/WoDJb2XqGosfc=";
+    outputHash = "sha256-PhFDNxeJHTQdT8mAJz7hVKnsUL3Ez6NSgnUSMz3LUqY=";
     outputHashAlgo = "sha256";
     outputHashMode = "recursive";
   };
