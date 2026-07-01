@@ -9,8 +9,8 @@ buildPiExtension {
   src = fetchFromGitHub {
     owner = "nicobailon";
     repo = "pi-intercom";
-    rev = "5caa4aa1bd060cf0aebbf1a5dfbb1abb6e23e457";
-    sha256 = "sha256-cYh7zsSbDqsq5JpNQbAZFGS/beRN7oh/KuTN3QQZn34=";
+    rev = "1ab886f6242a48956ebf3bb9578afbd79a57df9c";
+    sha256 = "sha256-0TvWelxesSkaEEam/LutKAXvWJIszJ1Vr10lgSKkffY=";
   };
 
   postPatch = ''
@@ -18,5 +18,5 @@ buildPiExtension {
   '';
 
   npmDepsFetcherVersion = 2;
-  npmDepsHash = "sha256-phUBANqAAiYzjOAfiG/CpMLVG3ORAJ5SYt5QIAbyMyI=";
+  npmDepsHash = "sha256-KNETPl4rV2IHiWChy1megGIjxPIc6NudQ0FOEH3J/Xs=";
 }
