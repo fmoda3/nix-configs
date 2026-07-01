@@ -9,8 +9,8 @@ buildPiExtension {
   src = fetchFromGitHub {
     owner = "nicobailon";
     repo = "pi-intercom";
-    rev = "1ab886f6242a48956ebf3bb9578afbd79a57df9c";
-    sha256 = "sha256-0TvWelxesSkaEEam/LutKAXvWJIszJ1Vr10lgSKkffY=";
+    rev = "9f23b97d5b3e9e8f28f2c1aac6ff326408bf7177";
+    sha256 = "sha256-waHyZuzhsAJ0X02t07P/UXW5Rzy0hoc6lubUh8i4DN4=";
   };
 
   postPatch = ''
