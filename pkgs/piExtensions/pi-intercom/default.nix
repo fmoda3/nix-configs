@@ -4,7 +4,7 @@
 
 buildPiExtension {
   pname = "pi-intercom";
-  version = "0.6.0";
+  version = "2026-07-01";
 
   src = fetchFromGitHub {
     owner = "nicobailon";
