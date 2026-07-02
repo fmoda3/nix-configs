@@ -4,7 +4,7 @@
 
 buildPiExtension {
   pname = "pi-plan";
-  version = "1.0.1";
+  version = "2026-03-26";
 
   src = fetchFromGitHub {
     owner = "burneikis";
