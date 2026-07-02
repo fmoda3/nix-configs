@@ -4,7 +4,7 @@
 
 buildPiExtension {
   pname = "pi-web-access";
-  version = "0.13.0";
+  version = "2026-06-25";
 
   src = fetchFromGitHub {
     owner = "nicobailon";
