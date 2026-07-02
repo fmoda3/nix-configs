@@ -4,7 +4,7 @@
 
 buildPiExtension {
   pname = "pi-prompt-template-model";
-  version = "0.10.0";
+  version = "2026-07-01";
 
   src = fetchFromGitHub {
     owner = "nicobailon";
