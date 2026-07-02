@@ -65,6 +65,7 @@ let
     pi-plan
     pi-status-dashboard
     pi-processes
+    pi-prompt-template-model
     pi-working-indicator
     pi-subagents
     pi-tasks
