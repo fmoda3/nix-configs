@@ -4,13 +4,13 @@
 
 buildPiExtension {
   pname = "pi-intercom";
-  version = "2026-07-01";
+  version = "2026-07-02";
 
   src = fetchFromGitHub {
     owner = "nicobailon";
     repo = "pi-intercom";
-    rev = "9f23b97d5b3e9e8f28f2c1aac6ff326408bf7177";
-    sha256 = "sha256-waHyZuzhsAJ0X02t07P/UXW5Rzy0hoc6lubUh8i4DN4=";
+    rev = "e234a4446e2b3f9c13a1ec3151ae2169315c810f";
+    sha256 = "sha256-ksBWgJ+1hGIFRCtLcfod1ALMEFRkrC+pg0sF7Io56Ys=";
   };
 
   postPatch = ''
