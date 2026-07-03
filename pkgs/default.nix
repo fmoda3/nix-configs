@@ -24,11 +24,9 @@ final: prev:
     pi-context = prev.callPackage ./piExtensions/pi-context { };
     pi-direnv = prev.callPackage ./piExtensions/pi-direnv { };
     pi-ghostty = prev.callPackage ./piExtensions/pi-ghostty { };
-    pi-intercom = prev.callPackage ./piExtensions/pi-intercom { };
     pi-mcp-adapter = prev.callPackage ./piExtensions/pi-mcp-adapter { };
     pi-notify = prev.callPackage ./piExtensions/pi-notify { };
     pi-plan = prev.callPackage ./piExtensions/pi-plan { };
-    pi-prompt-template-model = prev.callPackage ./piExtensions/pi-prompt-template-model { };
     pi-processes = prev.callPackage ./piExtensions/pi-processes { };
     pi-working-indicator = prev.callPackage ./piExtensions/pi-working-indicator { };
     pi-status-dashboard = prev.callPackage ./piExtensions/pi-status-dashboard { };

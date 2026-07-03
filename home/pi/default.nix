@@ -59,13 +59,11 @@ let
     pi-context
     pi-direnv
     pi-ghostty
-    pi-intercom
     pi-mcp-adapter
     pi-notify
     pi-plan
     pi-status-dashboard
     pi-processes
-    pi-prompt-template-model
     pi-working-indicator
     pi-subagents
     pi-tasks
