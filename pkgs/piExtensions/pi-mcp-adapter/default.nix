@@ -4,13 +4,13 @@
 
 buildPiExtension {
   pname = "pi-mcp-adapter";
-  version = "2026-06-13";
+  version = "2026-07-03";
 
   src = fetchFromGitHub {
     owner = "nicobailon";
     repo = "pi-mcp-adapter";
-    rev = "a764c25609d8daf76e607bc99557621fc3ed8aa9";
-    sha256 = "sha256-MrorLzxbn3O81B47Nd0d0xnd0xhXgMdobnXgD0axldE=";
+    rev = "87963d8a93282d1be967af4d2a22f836eb313852";
+    sha256 = "sha256-ZuOHheuEkRj0e7TDZN8xH/n520vaenVWPA24ZfjYRbA=";
   };
 
   postPatch = ''
