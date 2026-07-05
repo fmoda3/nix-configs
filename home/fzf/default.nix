@@ -3,6 +3,7 @@
     enable = true;
     enableZshIntegration = true;
     enableFishIntegration = true;
+    historyWidget.command = "";
     # Has Catppuccin theme support
     colors = {
       # Catppuccin Frappe colors
