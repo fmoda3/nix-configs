@@ -12,27 +12,30 @@
 
 buildNpmPackage.override { nodejs = nodejs_22; } (finalAttrs: {
   pname = "homebridge-config-ui-x";
-  version = "5.24.0";
+  version = "5.27.0";
 
   src = fetchFromGitHub {
     owner = "homebridge";
     repo = "homebridge-config-ui-x";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-vvn/TkTegppe7FGaTHDXFk1BWgT6uWr4zBXgo6mU13M=";
+    hash = "sha256-45a0QPguxRrxSXVhyoHi59jK5qt3onkdoh2ALnO0LJg=";
   };
 
   # Deps hash for the root package
-  npmDepsHash = "sha256-DFe639Ws9/HiiLMaxsGKs7iRlyT+X7YjhubS0SwH/Zk=";
+  npmDepsHash = "sha256-BA7sEC7exQrq4BBK9J7mF+qkGGp7wjOUIoYk4IyuOTM=";
 
   # Deps src and hash for ui subdirectory
   npmDeps_ui = fetchNpmDeps {
     name = "npm-deps-ui";
     src = "${finalAttrs.src}/ui";
-    hash = "sha256-cwfF+J+zLLyj0iTdP+rh/Tz0OaJPMUtyo/SuCubZx5Y=";
+    hash = "sha256-OAzb1cSc6SxO5xZRY5upx42T0wJzUEW3GkkXBo8sMIg=";
   };
 
   # Need to also run npm ci in the ui subdirectory
   preBuild = ''
+    # Apply upstream package patch before TypeScript compilation.
+    npm run prepare
+
     # Tricky way to run npmConfigHook multiple times
     (
       source ${npmHooks.npmConfigHook}/nix-support/setup-hook
@@ -48,6 +51,7 @@ buildNpmPackage.override { nodejs = nodejs_22; } (finalAttrs: {
   makeCacheWritable = stdenv.hostPlatform.isDarwin;
 
   # npmFlags = [ "--legacy-peer-deps" ];
+  npmInstallFlags = [ "--ignore-scripts" ];
 
   nativeBuildInputs = [
     python3
