@@ -22,7 +22,8 @@ let
   ];
 
   wrappedClaude = pkgs.symlinkJoin {
-    name = "claude-code-wrapped";
+    pname = "claude-code-wrapped";
+    version = pkgs.claude-code.version;
     paths = [ pkgs.claude-code ];
     buildInputs = [ pkgs.makeBinaryWrapper ];
     postBuild = ''
