@@ -4,13 +4,13 @@
 
 buildPiExtension {
   pname = "pi-mcp-adapter";
-  version = "2026-07-24";
+  version = "2026-07-25";
 
   src = fetchFromGitHub {
     owner = "nicobailon";
     repo = "pi-mcp-adapter";
-    rev = "0bc673458e4ae4411b7d1230fc55051ef3723fa0";
-    sha256 = "sha256-aoU1S+6SPS3G/2I18OW9hliR3aNRf8p/cbJL2LqwF08=";
+    rev = "2dd2a4ad6dd1d1efc334061c6df8ad491e4a6aec";
+    sha256 = "sha256-EPHh7DLj8H03ovMtO8u/V/ZbnSTE2zIZYM5PeILNoq0=";
   };
 
   # Upstream ships its own package-lock.json, but the nested @earendil-works/*
@@ -25,5 +25,5 @@ buildPiExtension {
   '';
 
   npmDepsFetcherVersion = 2;
-  npmDepsHash = "sha256-H/HFQVJcbB96caGW0gM9rxAxaZELYHxIsJjRqoloRy4=";
+  npmDepsHash = "sha256-EvNqpDosjuffL38A3ysZ2LkKpnQZ2NeDyK1pu1gEbQc=";
 }
