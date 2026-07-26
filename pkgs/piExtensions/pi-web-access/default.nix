@@ -9,8 +9,8 @@ buildPiExtension {
   src = fetchFromGitHub {
     owner = "nicobailon";
     repo = "pi-web-access";
-    rev = "a1135b8ca054ba5f16ec4410d06928ce10da13c0";
-    sha256 = "sha256-hvzXsooZ1N4a4swcY7od/z+yYyfWXxiFShhE5gTNWSc=";
+    rev = "58ce1566b5959552cf9e8b9f227b158b199a4975";
+    sha256 = "sha256-M3LvILyZU7q+6ZG4pch35aXJLY3xzYTzvsC4E3DZdio=";
   };
 
   postPatch = ''
@@ -18,5 +18,5 @@ buildPiExtension {
   '';
 
   npmDepsFetcherVersion = 2;
-  npmDepsHash = "sha256-ojzAmEeFsWLIsFO0DshtTHzdfIvSfXqbSXooqJ73yhI=";
+  npmDepsHash = "sha256-QHUcP518ATpoMGr+7aLfOe4oOtH0GpCu/nQYA42gqKU=";
 }
