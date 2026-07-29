@@ -13,7 +13,6 @@
 , librusty_v8 ? callPackage ./librusty_v8.nix {
     inherit (callPackage ./fetchers.nix { }) fetchLibrustyV8;
   }
-, livekit-libwebrtc
 , lld
 , makeBinaryWrapper
 , nix-update-script
@@ -41,27 +40,22 @@ rustPlatform.buildRustPackage (finalAttrs: {
 
   __structuredAttrs = true;
 
-  # Match upstream's release build for the codex binary only.
+  # Match upstream's release build for the codex binary, plus its
+  # codex-code-mode-host runtime companion for out-of-process V8 execution.
   cargoBuildFlags = [
     "--package"
     "codex-cli"
+    "--package"
+    "codex-code-mode-host"
   ];
   cargoCheckFlags = [
     "--package"
     "codex-cli"
+    "--package"
+    "codex-code-mode-host"
   ];
 
   postPatch = ''
-    # webrtc-sys asks rustc to link libwebrtc statically by default,
-    # but nixpkgs provides libwebrtc as a shared library.
-    # use LK_CUSTOM_WEBRTC to point to the packaged library and adjust linking
-    # to use the shared library instead
-    for build_rs in $cargoDepsCopy/*/webrtc-sys-*/build.rs; do
-      if [ -e "$build_rs" ]; then
-        substituteInPlace "$build_rs" \
-          --replace-fail "cargo:rustc-link-lib=static=webrtc" "cargo:rustc-link-lib=dylib=webrtc"
-      fi
-    done
     substituteInPlace Cargo.toml \
       --replace-fail 'lto = "thin"' "" \
       --replace-fail 'codegen-units = 4' ""
@@ -90,7 +84,6 @@ rustPlatform.buildRustPackage (finalAttrs: {
   # character-conversion warning-as-error disabled.
   env = {
     LIBCLANG_PATH = "${lib.getLib libclang}/lib";
-    LK_CUSTOM_WEBRTC = lib.getDev livekit-libwebrtc;
     NIX_CFLAGS_COMPILE = toString (
       lib.optionals stdenv.cc.isGNU [
         "-Wno-error=stringop-overflow"
