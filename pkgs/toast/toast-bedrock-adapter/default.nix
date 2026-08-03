@@ -6,16 +6,16 @@
 
 buildNpmPackage (finalAttrs: {
   pname = "toast-bedrock-adapter";
-  version = "2026-06-29";
+  version = "2026-07-29";
 
   src = fetchGit {
     url = "git@github.toasttab.com:nathannorman-toast/toast-bedrock-adapter.git";
-    rev = "4803b048efcc3c3e8fec396ceda1b1cd88a03b03";
+    rev = "781eb6d4f3dd30b0ce799f20f8cb54830a79cc89";
     ref = "main";
-    narHash = "sha256-SetBtcy3m5bCKEyFoj/IKS6f2wYW+JEYzQfK13VmuYg=";
+    narHash = "sha256-/GejF3zgUQugXbbOXl6Fmzp1DXCXVuUQkt+0Db7paAM=";
   };
 
-  npmDepsHash = "sha256-AQToJ+oGPHIO0zyHjZlxZDOuexIq/AZu9vf9R8Axaqc=";
+  npmDepsHash = "sha256-Q7rikVQMcVRv0PiD659kOBk+pLwnIB3gJbTuIffMdUQ=";
 
   installPhase = ''
     runHook preInstall
