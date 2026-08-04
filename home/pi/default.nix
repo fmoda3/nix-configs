@@ -95,6 +95,7 @@ let
   mcpConfig = {
     settings = {
       autoAuth = true;
+      showStatusIcon = false;
     };
     mcpServers = commonMcpServers // lib.optionalAttrs cfg.isWork workMcpServers;
   };
