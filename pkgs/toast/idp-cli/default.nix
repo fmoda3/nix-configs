@@ -83,9 +83,38 @@ buildNpmPackage {
     mkdir -p $out/bin $out/lib/node_modules/idp-cli
     cp -r dist node_modules package.json skills $out/lib/node_modules/idp-cli/
 
+    # The bundled playwright-core pins exact browser revisions (e.g.
+    # chromium-1217), while nixpkgs' playwright-driver ships the revisions of
+    # its own playwright version (e.g. chromium-1228). Expose the nix browsers
+    # under the revision names the bundled playwright looks for.
+    browsersDir=$out/lib/node_modules/idp-cli/playwright-browsers
+    mkdir -p $browsersDir
+    for d in ${playwright-driver.browsers}/*; do
+      ln -s "$d" "$browsersDir/$(basename "$d")"
+    done
+
+    ${nodejs}/bin/node -e '
+      const fs = require("fs");
+      const path = require("path");
+      const dir = process.argv[1];
+      const browsers = JSON.parse(fs.readFileSync(process.argv[2], "utf8")).browsers;
+      const present = fs.readdirSync(dir);
+      for (const b of browsers) {
+        // playwright maps e.g. "chromium-headless-shell" -> "chromium_headless_shell-<rev>"
+        const base = b.name.replace(/-/g, "_");
+        const want = base + "-" + b.revision;
+        if (present.includes(want)) continue;
+        const have = present.find(d => new RegExp("^" + base + "-[0-9]+$").test(d));
+        if (!have) continue;
+        fs.symlinkSync(have, path.join(dir, want));
+        console.log("playwright: aliased " + want + " -> " + have);
+      }
+    ' "$browsersDir" \
+      "$out/lib/node_modules/idp-cli/node_modules/playwright-core/browsers.json"
+
     makeWrapper ${nodejs}/bin/node $out/bin/idp \
       --add-flags "$out/lib/node_modules/idp-cli/dist/index.js" \
-      --set PLAYWRIGHT_BROWSERS_PATH ${playwright-driver.browsers} \
+      --set PLAYWRIGHT_BROWSERS_PATH "$browsersDir" \
       --set PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS true
 
     runHook postInstall
