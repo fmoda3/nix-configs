@@ -97,6 +97,7 @@ in
         vimPackage = [ vim ];
         workPackages = [
           # Work packages
+          acli
           android-tools
           autossh
           colima
