@@ -11,7 +11,10 @@
 , libcap
 , libclang
 , librusty_v8 ? callPackage ./librusty_v8.nix {
-    inherit (callPackage ./fetchers.nix { }) fetchLibrustyV8 fetchRustyV8Binding;
+    inherit (callPackage ./fetchers.nix { }) fetchLibrustyV8;
+  }
+, librusty_v8_src_binding ? callPackage ./librusty_v8_src_binding.nix {
+    inherit (callPackage ./fetchers.nix { }) fetchLibrustyV8SrcBinding;
   }
 , lld
 , makeBinaryWrapper
@@ -21,6 +24,7 @@
 , ripgrep
 , versionCheckHook
 , installShellCompletions ? stdenv.buildPlatform.canExecute stdenv.hostPlatform
+, _experimental-update-script-combinators
 ,
 }:
 rustPlatform.buildRustPackage (finalAttrs: {
@@ -92,8 +96,8 @@ rustPlatform.buildRustPackage (finalAttrs: {
         "-Wno-error=character-conversion"
       ]
     );
-    RUSTY_V8_ARCHIVE = librusty_v8.archive;
-    RUSTY_V8_SRC_BINDING_PATH = librusty_v8.binding;
+    RUSTY_V8_ARCHIVE = librusty_v8;
+    RUSTY_V8_SRC_BINDING_PATH = librusty_v8_src_binding;
   }
   // lib.optionalAttrs stdenv.hostPlatform.isDarwin {
     # Link with lld on Darwin. nixpkgs' classic open-source ld64 fails to insert
@@ -125,15 +129,16 @@ rustPlatform.buildRustPackage (finalAttrs: {
   doInstallCheck = true;
   nativeInstallCheckInputs = [ versionCheckHook ];
 
-  passthru = {
-    updateScript = nix-update-script {
+  passthru.updateScript = _experimental-update-script-combinators.sequence [
+    (nix-update-script {
       extraArgs = [
         "--use-github-releases"
         "--version-regex"
         "^rust-v(\\d+\\.\\d+\\.\\d+)$"
       ];
-    };
-  };
+    })
+    ./update-librusty.sh
+  ];
 
   meta = {
     description = "Lightweight coding agent that runs in your terminal";

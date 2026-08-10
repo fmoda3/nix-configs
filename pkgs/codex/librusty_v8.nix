@@ -1,26 +1,12 @@
 # auto-generated file -- DO NOT EDIT!
-{ fetchLibrustyV8, fetchRustyV8Binding }:
-let
-  version = "150.4.0";
-in
-{
-  archive = fetchLibrustyV8 {
-    inherit version;
-    shas = {
-      x86_64-linux = "sha256-o1x10fJuapg4haRbM0kKTr5U8FBQVosyuJz7QhswtYM=";
-      aarch64-linux = "sha256-0VF+7UBUaFNwKbAF1f6ZfsdNXI01H5FrOm3yC30oEbo=";
-      x86_64-darwin = "sha256-4Nm7ZOizoDTCkwyDly8/NXYCERSDQvoEB7OCUO8zCFY=";
-      aarch64-darwin = "sha256-AK27SHmISMd1UEQcaGc6XoUpuOG3PqvN7iMss5tA9KE=";
-    };
-  };
+{ fetchLibrustyV8 }:
 
-  binding = fetchRustyV8Binding {
-    inherit version;
-    shas = {
-      x86_64-linux = "sha256-dyeCauR5vbZF6Acjn7EtH44uI956bPFvXuWSaQ0dhQY=";
-      aarch64-linux = "sha256-dyeCauR5vbZF6Acjn7EtH44uI956bPFvXuWSaQ0dhQY=";
-      x86_64-darwin = "sha256-ylrfDPicmnCtRgrnNkiy/om3SqETs8t/dXtqArdYOU8=";
-      aarch64-darwin = "sha256-ylrfDPicmnCtRgrnNkiy/om3SqETs8t/dXtqArdYOU8=";
-    };
+fetchLibrustyV8 {
+  version = "150.4.0";
+  shas = {
+    x86_64-linux = "sha256-WGn9twcbHyHyAKl86X0gElh34PMc2ALtmd4sU/SIsGw=";
+    aarch64-linux = "sha256-txd9Uq0zNycv4NO453gjnIIalcJdWVnexiue/WVPfdM=";
+    x86_64-darwin = "sha256-5ex9E/kUgT6/IB1Ee/j9J2h7exkuFsR/KCb+VBUXHyk=";
+    aarch64-darwin = "sha256-zNj4FIW4IsWxiuun+d65KaM4LYasZzu/DzZvBod+axA=";
   };
 }

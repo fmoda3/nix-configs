@@ -4,16 +4,12 @@
 , fetchurl
 ,
 }:
-let
-  releaseUrl = version: "https://github.com/openai/codex/releases/download/rusty-v8-v${version}";
-  target = stdenv.hostPlatform.rust.rustcTarget;
-in
 {
   fetchLibrustyV8 =
     args:
     fetchurl {
       name = "librusty_v8-${args.version}";
-      url = "${releaseUrl args.version}/librusty_v8_ptrcomp_sandbox_release_${target}.a.gz";
+      url = "https://github.com/denoland/rusty_v8/releases/download/v${args.version}/librusty_v8_release_${stdenv.hostPlatform.rust.rustcTarget}.a.gz";
       sha256 = args.shas.${stdenv.hostPlatform.system};
       meta = {
         inherit (args) version;
@@ -21,11 +17,15 @@ in
       };
     };
 
-  fetchRustyV8Binding =
+  fetchLibrustyV8SrcBinding =
     args:
     fetchurl {
-      name = "src_binding-${args.version}.rs";
-      url = "${releaseUrl args.version}/src_binding_ptrcomp_sandbox_release_${target}.rs";
+      name = "src_binding-${args.version}";
+      url = "https://github.com/denoland/rusty_v8/releases/download/v${args.version}/src_binding_release_${stdenv.hostPlatform.rust.rustcTarget}.rs";
       sha256 = args.shas.${stdenv.hostPlatform.system};
+      meta = {
+        inherit (args) version;
+        sourceProvenance = with lib.sourceTypes; [ binaryNativeCode ];
+      };
     };
 }
