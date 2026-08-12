@@ -8,19 +8,19 @@
 
 buildPiExtension rec {
   pname = "pi-processes";
-  version = "2026-08-08";
+  version = "2026-08-11";
 
   src = fetchFromGitHub {
     owner = "aliou";
     repo = "pi-processes";
-    rev = "71472f163769b19c144f6a16d492323c5f04c64e";
-    sha256 = "sha256-gW77wZyEUB00/PsoeOoGVNA3XsgviWskC6mJzTg+rsI=";
+    rev = "b8f067a943ca976cdfed44822c5737bde40c033b";
+    sha256 = "sha256-kuEzmlAs0I3MH4k215+ceqkhmmDBolJj9mRvXrecbjo=";
   };
 
   pnpmDeps = fetchPnpmDeps {
     inherit pname version src;
     fetcherVersion = 4;
-    hash = "sha256-TEAOhrJ2iDlH+0c16mN5TbJwk1XVl2ucL2716qbK4s4=";
+    hash = "sha256-mwJu7+wk77A2OotiX4pUl45TTK/J+VF5ZkPF3WLn52c=";
     pnpm = pnpm_11;
   };
 
