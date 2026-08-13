@@ -13,6 +13,7 @@ let
     PAGER = "bat --style=plain --paging=always";
     EDITOR = "vim";
     VISUAL = "vim";
+    NH_SHOW_ACTIVATION_LOGS = 1;
   } // themeColors;
 
   # Personal variables (when isWork = false)
