@@ -26,6 +26,7 @@ let
     terminal = {
       showTerminalProgress = true;
     };
+    tuiMode = "fullscreen";
   };
 
   commonMcpServers = {
