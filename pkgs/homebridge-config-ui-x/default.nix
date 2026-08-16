@@ -6,29 +6,29 @@
 , npmHooks
 , python3
 , cacert
-, nodejs_22
+, nodejs_24
 ,
 }:
 
-buildNpmPackage.override { nodejs = nodejs_22; } (finalAttrs: {
+buildNpmPackage.override { nodejs = nodejs_24; } (finalAttrs: {
   pname = "homebridge-config-ui-x";
-  version = "5.27.0";
+  version = "5.28.0";
 
   src = fetchFromGitHub {
     owner = "homebridge";
     repo = "homebridge-config-ui-x";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-45a0QPguxRrxSXVhyoHi59jK5qt3onkdoh2ALnO0LJg=";
+    hash = "sha256-2Rz3UE3VES0w0MEn032/Kupz04S+ufffyOzsonJZhLI=";
   };
 
   # Deps hash for the root package
-  npmDepsHash = "sha256-BA7sEC7exQrq4BBK9J7mF+qkGGp7wjOUIoYk4IyuOTM=";
+  npmDepsHash = "sha256-w7hxD9Y2GTvOFpkVt5/Gchl2XP6cXGXWE2YFyobhZzY=";
 
   # Deps src and hash for ui subdirectory
   npmDeps_ui = fetchNpmDeps {
     name = "npm-deps-ui";
     src = "${finalAttrs.src}/ui";
-    hash = "sha256-OAzb1cSc6SxO5xZRY5upx42T0wJzUEW3GkkXBo8sMIg=";
+    hash = "sha256-z81mGGT8U8FAb7ta680Gy1YrOgkDruI87ULc3WWC7rU=";
   };
 
   # Need to also run npm ci in the ui subdirectory
