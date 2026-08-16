@@ -4,24 +4,39 @@
 
 buildPiExtension {
   pname = "pi-tasks";
-  version = "2026-07-22";
+  version = "2026-08-16";
 
   src = fetchFromGitHub {
     owner = "tintinweb";
     repo = "pi-tasks";
-    rev = "03a13011eb7bfb63d6d348959fe738ab7365ea75";
-    sha256 = "sha256-aKCJKkl1jmAQ17eJ6wmnu6cjhwY2t3PB0yIqyYgqQHY=";
+    rev = "ef37c25de14b3f7d0c09010b721e3419dc557b10";
+    sha256 = "sha256-KcOqt8DPUHaUZX2vxoKINFDCLFZD1SmHZw0Lpt1Nk/4=";
   };
 
   postPatch = ''
-    substituteInPlace package-lock.json \
-      --replace-fail $'"node_modules/@earendil-works/pi-coding-agent/node_modules/@earendil-works/pi-agent-core": {\n      "version": "0.81.1",\n      "resolved": "https://registry.npmjs.org/@earendil-works/pi-agent-core/-/pi-agent-core-0.81.1.tgz",\n      "license": "MIT",' $'"node_modules/@earendil-works/pi-coding-agent/node_modules/@earendil-works/pi-agent-core": {\n      "version": "0.81.1",\n      "resolved": "https://registry.npmjs.org/@earendil-works/pi-agent-core/-/pi-agent-core-0.81.1.tgz",\n      "integrity": "sha512-yqbh68CyhqxMov/jUogFJfMqlu2Gd37GAki+tr59YCmAPHfomiCA5ESzusXtpGzABeiZFC/OrRdQ4GwCCOMIHA==",\n      "license": "MIT",' \
-      --replace-fail $'"node_modules/@earendil-works/pi-coding-agent/node_modules/@earendil-works/pi-ai": {\n      "version": "0.81.1",\n      "resolved": "https://registry.npmjs.org/@earendil-works/pi-ai/-/pi-ai-0.81.1.tgz",\n      "license": "MIT",' $'"node_modules/@earendil-works/pi-coding-agent/node_modules/@earendil-works/pi-ai": {\n      "version": "0.81.1",\n      "resolved": "https://registry.npmjs.org/@earendil-works/pi-ai/-/pi-ai-0.81.1.tgz",\n      "integrity": "sha512-hzHE7Z8l5mgJk+ke67Lge0rwS2+wbKJrFKl9o5M1R1rh33+cCT7D1AHz1OAtX5wFs90E1/BTGhyJRTUHaMxGvQ==",\n      "license": "MIT",' \
-      --replace-fail $'"node_modules/@earendil-works/pi-coding-agent/node_modules/@earendil-works/pi-tui": {\n      "version": "0.81.1",\n      "resolved": "https://registry.npmjs.org/@earendil-works/pi-tui/-/pi-tui-0.81.1.tgz",\n      "license": "MIT",' $'"node_modules/@earendil-works/pi-coding-agent/node_modules/@earendil-works/pi-tui": {\n      "version": "0.81.1",\n      "resolved": "https://registry.npmjs.org/@earendil-works/pi-tui/-/pi-tui-0.81.1.tgz",\n      "integrity": "sha512-OMEe+Zt8oQYi/rCq3upxsTlIScWL0FPhXwQus34TbQb3EmTx88S7Uzx32JxvQiEeWOw8eDCdJf2PBUBE9r6wIg==",\n      "license": "MIT",'
+    addIntegrity() {
+      local package="$1"
+      local integrity="$2"
+      local resolved="https://registry.npmjs.org/@earendil-works/$package/-/$package-0.84.2.tgz"
+      local missingIntegrity
+      local withIntegrity
+      missingIntegrity=$(printf '"resolved": "%s",\n      "dev": true,' "$resolved")
+      withIntegrity=$(printf '"resolved": "%s",\n      "integrity": "%s",\n      "dev": true,' "$resolved" "$integrity")
+
+      substituteInPlace package-lock.json \
+        --replace-fail "$missingIntegrity" "$withIntegrity"
+    }
+
+    addIntegrity pi-agent-core "sha512-8Pn3wSCxj0cfo5I6jxQYVB/3uuQRmHhAlEclyjqpOuMEdQMIODHizRogv56FLdbU+dTiGnybeHQ2N+sV1/L2YA=="
+    addIntegrity pi-ai "sha512-6MzsrYIYNVlE7SfpbL2yYb67Qo58p/7Q+xWG1RZvoX1P80aRCHSod2/13aFpxkow1lPO2LEh3c495J0Gwmyjig=="
+    addIntegrity pi-client "sha512-/RFSPhD/bZbpOp1oJj+UneSUFSgZhWxzcSENUY+8+8xhoBrWXMYI2t77XNx4Yf+c8YK2qTHquForhNcelYpXvg=="
+    addIntegrity pi-protocol "sha512-jbBh03fkeckWEroHpcZBr4w5/Ibat8WwdXFlXHivYQImrQNFtLpDeL0t1cku4hmK0q3pceIRQHkw4fwbM4YILQ=="
+    addIntegrity pi-telemetry "sha512-wg5caea7uIv1BHRBm2Y116RvFG4oSAiP5qk9tA2463PDGIr4K8M1Ceyyg5DOpF/shUUl0gk826yQJAeAcHYB9g=="
+    addIntegrity pi-tui "sha512-ds2TLihOnM5sLJB3VpXV6y0uR5efVuHf4MN7yDpsty6hA2DUO/EDVzjp/0od0G2JslzVLMjT8T8zavtxVb+qbg=="
   '';
 
   npmDepsFetcherVersion = 2;
-  npmDepsHash = "sha256-t/sBkRjYSRRhMjKsCU5RvuGbIGRakBel5TAGX4xKAT0=";
+  npmDepsHash = "sha256-TE/Ku1N+z8TMm7HO1f2QexWn8LzgA8UkSwYjiJ3ji0k=";
 
   prunePaths = [
     ".github"
