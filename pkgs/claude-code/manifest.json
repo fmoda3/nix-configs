@@ -1,52 +1,51 @@
 {
-  "version": "2.1.236",
-  "commit": "82959839e9405dd642b4e3eaa6ef4101bf285fee",
-  "buildDate": "2026-08-19T16:49:51Z",
+  "version": "2.1.237",
+  "commit": "45590910f0b746ddad3fe7d8135c5c29b33ccf88",
+  "buildDate": "2026-08-19T22:55:17Z",
   "platforms": {
     "darwin-arm64": {
       "binary": "claude",
-      "checksum": "6bc4ba992d2786cbf0237c4453ca53c1fdf0c3b3d83ffa0025c0d8190ed27848",
-      "size": 317044624
+      "checksum": "338901351d4ff17495738c67fc3e12a32c1b506738ac5e012eb782d3d8b5be43",
+      "size": 317110288
     },
     "darwin-x64": {
       "binary": "claude",
-      "checksum": "3ce6a8e016fcae45ad3f2dc78f1980600d3908c302355396a0d6bc17b5d43333",
-      "size": 325726960
+      "checksum": "9f00789754a7b95febc6d4e37a3b6523d4d9c4c2333a2ce4bd596ad82186224e",
+      "size": 325793008
     },
     "linux-arm64": {
       "binary": "claude",
-      "checksum": "c38d37deaf1643083326c48a6acc0afb09dada126e6bda77ef1a4410ae60ca12",
-      "size": 331798760
+      "checksum": "a701cfb6bb4703abc6f3ce47508c878ca8158ebdbeacd5c35c7d510c7bc70177",
+      "size": 331864296
     },
     "linux-x64": {
       "binary": "claude",
-      "checksum": "6c8818fa22187aa555c242be4abbacc44d6b71a32ac9631ee7b2b5d12f51f752",
-      "size": 334645552
+      "checksum": "73975167f0108693cf6fd6614994781657ebb8456ebef5d247458734abfb3916",
+      "size": 334715184
     },
     "linux-arm64-musl": {
       "binary": "claude",
-      "checksum": "56fe9241267b0187538a9cf7dafa0df12d94fd27789fa7207a59c2a0b4121b8f",
-      "size": 324943640
+      "checksum": "60d832e81dd5076333e9f91286f660f2aaacc630079863599555caa8fe134eba",
+      "size": 325009176
     },
     "linux-x64-musl": {
       "binary": "claude",
-      "checksum": "979acf4877fa3dca24d6d15043022b5005cc8502fdb4c68992dd91651af31731",
-      "size": 328769504
+      "checksum": "b2c81ba8f2b0086b2536a56bf074bbf643043c2bd1aeea6ac8905709ae296168",
+      "size": 328843232
     },
     "win32-x64": {
       "binary": "claude.exe",
-      "checksum": "647e736f20c9ff0553c754624cbf8a6dcac196e8595509d8f63dce8bbe818757",
-      "size": 330097824
+      "checksum": "406167231b3636e55a01d0ce93567256c61e7973489e645883302f14808ae668",
+      "size": 330167456
     },
     "win32-arm64": {
       "binary": "claude.exe",
-      "checksum": "95726b1cb3bd6541a695e4d3ee00716b4e1e5157cdef0a3cbce614d5cc140e9d",
-      "size": 317997728
+      "checksum": "35978113ca98721cbf14c3abac90482d467419b9669d849c89d91c5664a5f95d",
+      "size": 318066848
     }
   },
   "sdkCompat": {
     "testedWrapperVersions": [
-      "0.3.198",
       "0.3.199",
       "0.3.200",
       "0.3.201",
