@@ -30,6 +30,7 @@ let
     BRAID_PULSAR_MDC_PROPAGATION_KEYS = "Toast-Braid-Route,Toast-Braid-Services";
     GH_HOST = "github.toasttab.com";
     OKTOAST_PROVIDER = "Browser";
+    SRC_ENDPOINT = "https://toast.sourcegraph.com";
   };
 in
 commonVariables // personalVariables // workVariables

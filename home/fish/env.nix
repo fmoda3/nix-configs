@@ -30,6 +30,7 @@ let
     BRAID_PULSAR_MDC_PROPAGATION_KEYS = "Toast-Braid-Route,Toast-Braid-Services";
     GH_HOST = "github.toasttab.com";
     OKTOAST_PROVIDER = "Browser";
+    SRC_ENDPOINT = "https://toast.sourcegraph.com";
   };
   workCommandVariables = lib.optionalAttrs config.my-home.isWork {
     FLAGGY_TOKEN = "${pkgs.coreutils}/bin/cat ${config.age.secrets."flaggy_token".path}";
