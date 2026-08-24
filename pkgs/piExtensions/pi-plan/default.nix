@@ -4,12 +4,12 @@
 
 buildPiExtension {
   pname = "pi-plan";
-  version = "2026-03-26";
+  version = "2026-08-22";
 
   src = fetchFromGitHub {
     owner = "burneikis";
     repo = "pi-plan";
-    rev = "0eac3e305629a295a2d0fa17ff262854cf3cc7f5";
-    hash = "sha256-vE/aDCe4DnAOY0+M53xXoV3plH9RxJs9naAGZD1Nu/M=";
+    rev = "bf6365411fdd8813c609754329863e79a22655dd";
+    hash = "sha256-O6UbQvOv5X3meTUdlRSBAuGtqbpjXyM9i9jYRSY6Dh0=";
   };
 }
