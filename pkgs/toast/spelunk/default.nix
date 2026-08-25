@@ -6,13 +6,13 @@
 
 buildNpmPackage {
   pname = "spelunk";
-  version = "2026-07-13";
+  version = "2026-08-20";
 
   src = fetchGit {
     url = "git@github.toasttab.com:cakeface/spelunk.git";
-    rev = "cafd846e937afd38b880a4fed1477fb59ad74ee9";
+    rev = "5a44b7e94ba2d5e6231e8d9c06a990bcfce39b3b";
     ref = "main";
-    narHash = "sha256-oZy2tQG25YY/cqTFfwlSWibqKg7Dx4ltPklBNhx38MQ=";
+    narHash = "sha256-CahfM3odxh61GjCH+58yBmhF2am6ydTwSRXQhsMpZ2Y=";
   };
 
   npmDepsHash = "sha256-MJsRxV56EAssyhuF946KI+lFa0grqimsQ+G3qAtlBus=";
