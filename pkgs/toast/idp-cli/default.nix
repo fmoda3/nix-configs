@@ -8,13 +8,13 @@
 
 let
   pname = "idp-cli";
-  version = "2026-07-17";
+  version = "2026-08-18";
 
   src = fetchGit {
     url = "git@github.toasttab.com:toasttab/idp-cli.git";
-    rev = "15e29d9819e3ea00cbe44fc8e395ce3b6a538f2d";
+    rev = "d37e9d7dde1a7cead73f965d96e8c661f22694a9";
     ref = "main";
-    narHash = "sha256-nIJRd5y/VqkpiUTAWiN4o8s9KdZyON5F8o0cbjx1kj0=";
+    narHash = "sha256-zr+FiRnAkm8l2l8u2EAUmsAn/zz3cclEAsCI/xgXgbA=";
   };
 
   # The OpenAPI codegen (`npm run generate`) pulls schemas from the internal
