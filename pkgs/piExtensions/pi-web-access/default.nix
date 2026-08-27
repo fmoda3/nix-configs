@@ -9,8 +9,8 @@ buildPiExtension {
   src = fetchFromGitHub {
     owner = "nicobailon";
     repo = "pi-web-access";
-    rev = "17b04cf3669fecace0c97a22d8dc731f6a58c954";
-    sha256 = "sha256-IGccvoMzqfKhyVqO13/Qbmm0b2O0Lkep8Ps4UPus96M=";
+    rev = "6559ab29ddb881d099d16b05612e7589afc678f3";
+    sha256 = "sha256-3r8steyZxwmifbJKTdz+RPnj/TttT6+1uQW2d3NGrb8=";
   };
 
   postPatch = ''
