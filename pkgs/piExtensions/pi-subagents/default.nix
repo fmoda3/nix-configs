@@ -9,8 +9,8 @@ buildPiExtension {
   src = fetchFromGitHub {
     owner = "nicobailon";
     repo = "pi-subagents";
-    rev = "2155514dfc4c4d0f0223cef7f194ca6a95b5e90c";
-    sha256 = "sha256-+e4K6Jw1pM9kD7taG/OQtfiT/QR++Xu0oSxlvo0D5c8=";
+    rev = "d8ff22d9290cc7ad49c1ee68e83779d8a730a34a";
+    sha256 = "sha256-IeQPEleDSkHMhtFWHTqT8VDusMxC3X6bwdJDvwALhEA=";
   };
 
   npmDepsHash = "sha256-Rdm4REYhKfFZkwpTLpEpsiqF03OTLfQp+z49q+JSqpE=";
