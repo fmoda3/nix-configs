@@ -7,6 +7,7 @@ import type { DashboardState, Panel } from "./types";
 const PANEL_GAP = 1;
 const MIN_PANEL_INNER_WIDTH = 14;
 const PANEL_PADDING = 1;
+const DEFAULT_PANEL_LINES = 2;
 
 function plain(text: string): string {
   return fg(CATPPUCCIN.text, text);
@@ -112,14 +113,21 @@ function buildRateLimitPanel(state: DashboardState): Panel | null {
   };
 }
 
-function buildExtensionStatusPanel(extensionStatuses: readonly string[]): Panel | null {
+function buildExtensionStatusPanels(extensionStatuses: readonly string[], maxLines?: number): Panel[] {
   const statuses = extensionStatuses.map((status) => status.trim()).filter((status) => status.length > 0);
-  if (statuses.length === 0) return null;
+  if (statuses.length === 0) return [];
 
-  return {
-    title: "EXTENSIONS",
-    lines: statuses.map((status) => plain(status)),
-  };
+  const linesPerPanel = maxLines && maxLines > 0 ? maxLines : statuses.length;
+  const panels: Panel[] = [];
+
+  for (let index = 0; index < statuses.length; index += linesPerPanel) {
+    panels.push({
+      title: "EXTENSIONS",
+      lines: statuses.slice(index, index + linesPerPanel).map((status) => plain(status)),
+    });
+  }
+
+  return panels;
 }
 
 function buildGitPanel(state: DashboardState): Panel {
@@ -252,13 +260,18 @@ export function renderDashboard(
   extensionStatuses: readonly string[],
   width: number,
 ): string[] {
+  const rateLimitPanel = buildRateLimitPanel(state);
+  const extensionPanels = buildExtensionStatusPanels(
+    extensionStatuses,
+    rateLimitPanel?.lines.length ?? DEFAULT_PANEL_LINES,
+  );
   const panels = [
     buildModelPanel(state, thinkingLevel),
     buildUsagePanel(state, ctx),
     buildRuntimePanel(state),
-    buildRateLimitPanel(state),
+    rateLimitPanel,
     buildGitPanel(state),
-    buildExtensionStatusPanel(extensionStatuses),
+    ...extensionPanels,
   ].filter((panel): panel is Panel => panel !== null);
 
   const maxPanelWidth = Math.max(MIN_PANEL_INNER_WIDTH + 2, width);
