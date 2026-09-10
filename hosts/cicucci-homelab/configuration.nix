@@ -46,7 +46,7 @@
 
   services.home-assistant = {
     enable = true;
-    openFirewall = true;
+    openFirewallForComponents = true;
     extraComponents = [
       # List of components required to complete the onboarding
       "default_config"
@@ -79,7 +79,7 @@
   };
 
   networking.firewall = {
-    allowedTCPPorts = [ 21063 21064 21065 ];
+    allowedTCPPorts = [ 8123 21063 21064 21065 ];
   };
 
   my-linux = {
