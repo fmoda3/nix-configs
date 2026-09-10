@@ -150,14 +150,14 @@ let
   };
 
   # macOS-only aliases
-  darwinAliases = lib.optionalAttrs pkgs.stdenv.isDarwin {
+  darwinAliases = lib.optionalAttrs pkgs.stdenv.hostPlatform.isDarwin {
     localip = "ipconfig getifaddr en0";
     flushdns = "sudo dscacheutil -flushcache";
     caff = "caffeinate -d -i -m -s"; # Prevents computer from falling asleep
   };
 
   # Linux-only aliases
-  linuxAliases = lib.optionalAttrs pkgs.stdenv.isLinux {
+  linuxAliases = lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
     localip = "hostname -I | awk '{print $1}'";
     flushdns = "resolvectl flush-caches";
   };

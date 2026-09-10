@@ -4,7 +4,7 @@
     enable = true;
     enableZshIntegration = true;
     enableFishIntegration = true;
-    package = if pkgs.stdenv.isLinux then pkgs.ghostty else null;
+    package = if pkgs.stdenv.hostPlatform.isLinux then pkgs.ghostty else null;
     settings = {
       command = "${config.home.homeDirectory}/.nix-profile/bin/fish";
       theme = "catppuccin-frappe";

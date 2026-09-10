@@ -152,19 +152,19 @@ let
   };
 
   # macOS-only
-  darwinAbbreviations = lib.optionalAttrs pkgs.stdenv.isDarwin {
+  darwinAbbreviations = lib.optionalAttrs pkgs.stdenv.hostPlatform.isDarwin {
     localip = "ipconfig getifaddr en0";
     flushdns = "sudo dscacheutil -flushcache";
     caff = "caffeinate -d -i -m -s";
   };
 
   # Linux-only
-  linuxAbbreviations = lib.optionalAttrs pkgs.stdenv.isLinux {
+  linuxAbbreviations = lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
     flushdns = "resolvectl flush-caches";
   };
 
   # Linux-only aliases (contain pipes)
-  linuxAliases = lib.optionalAttrs pkgs.stdenv.isLinux {
+  linuxAliases = lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
     localip = "hostname -I | awk '{print $1}'";
   };
 in

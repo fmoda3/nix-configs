@@ -147,7 +147,7 @@ in
         # Dart
         dart
         # Elixir
-        expert
+        beamPackages.expert
         # Flix
         flix
         # Gleam

@@ -2,9 +2,9 @@
 {
   programs.nh = {
     enable = true;
-  } // lib.optionalAttrs pkgs.stdenv.isDarwin {
+  } // lib.optionalAttrs pkgs.stdenv.hostPlatform.isDarwin {
     darwinFlake = config.my-home.flake;
-  } // lib.optionalAttrs pkgs.stdenv.isLinux {
+  } // lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
     osFlake = config.my-home.flake;
   };
 }

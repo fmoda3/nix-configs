@@ -11,7 +11,7 @@ writeShellApplication {
 
   text = lib.replaceStrings
     [ "@isNixOS@" ]
-    [ (if stdenv.isLinux then "1" else "0") ]
+    [ (if stdenv.hostPlatform.isLinux then "1" else "0") ]
     (builtins.readFile ./nix-cleanup.sh);
 
   runtimeInputs = [ coreutils gawk gnugrep nix ];

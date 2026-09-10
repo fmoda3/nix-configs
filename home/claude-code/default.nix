@@ -6,7 +6,7 @@ let
     # Bash
     bash-language-server
     # Elixir
-    expert
+    beamPackages.expert
     # Kotlin
     kotlin-lsp
     # Lua

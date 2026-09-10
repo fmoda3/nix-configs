@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }:
 let
-  dwarf-fortress-package = if pkgs.stdenv.isDarwin then pkgs.pkgsx86_64Darwin.dwarf-fortress else pkgs.dwarf-fortress;
+  dwarf-fortress-package = if pkgs.stdenv.hostPlatform.isDarwin then pkgs.pkgsx86_64Darwin.dwarf-fortress else pkgs.dwarf-fortress;
   dwarf-fortress-custom = dwarf-fortress-package.override {
     theme = "mayday";
     enableSoundSense = true;

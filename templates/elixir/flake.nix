@@ -17,8 +17,8 @@
           ];
 
           inputs = with pkgs;
-            basePackages ++ lib.optionals stdenv.isLinux [ gigalixir inotify-tools libnotify ]
-            ++ lib.optionals stdenv.isDarwin [ terminal-notifier ];
+            basePackages ++ lib.optionals stdenv.hostPlatform.isLinux [ gigalixir inotify-tools libnotify ]
+            ++ lib.optionals stdenv.hostPlatform.isDarwin [ terminal-notifier ];
 
           hooks = ''
             # this allows mix to work on the local directory
