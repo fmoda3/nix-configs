@@ -9,15 +9,21 @@ buildPiExtension {
   src = fetchFromGitHub {
     owner = "nicobailon";
     repo = "pi-mcp-adapter";
-    rev = "a183681acf2f64c7e1ac3008553eb2ff86022191";
-    sha256 = "sha256-0bHp4gQK7ybq9xLXslxMgEHrzmlEe6cLG1BlVG7kTVk=";
+    rev = "32b67f916745b31a30a80371a86f00f70ba0a561";
+    sha256 = "sha256-6p0uDmtGse+vIH0yiYKBSpQQG0eiWcj9Q+uDcRs/Ulg=";
   };
 
   # Upstream ships its own package-lock.json, but the nested @earendil-works/*
   # dev dependencies are missing integrity fields, which makes prefetch-npm-deps
   # panic ("non-git dependencies should have associated integrity"). Inject the
-  # published sha512 integrity hashes so the lock can be used as-is.
+  # published sha512 integrity hashes. The MCP preview packages refer to each
+  # other using the short commit, so normalize the root specs to the same URL
+  # that npm requests from the offline cache.
   postPatch = ''
+    substituteInPlace package.json package-lock.json \
+      --replace-fail 'https://pkg.pr.new/@modelcontextprotocol/client@3b205e7dd2f997b6a87e479e36421f7eaa2058e0' 'https://pkg.pr.new/modelcontextprotocol/typescript-sdk/@modelcontextprotocol/client@3b205e7' \
+      --replace-fail 'https://pkg.pr.new/@modelcontextprotocol/core@3b205e7dd2f997b6a87e479e36421f7eaa2058e0' 'https://pkg.pr.new/modelcontextprotocol/typescript-sdk/@modelcontextprotocol/core@3b205e7'
+
     substituteInPlace package-lock.json \
       --replace-fail $'"resolved": "https://registry.npmjs.org/@earendil-works/pi-agent-core/-/pi-agent-core-0.84.1.tgz",\n      "dev": true,' $'"resolved": "https://registry.npmjs.org/@earendil-works/pi-agent-core/-/pi-agent-core-0.84.1.tgz",\n      "integrity": "sha512-evyzXYWCLQGmcaBYHlmSku02r8qoN4SGI60GZABo6iV+H+nqX+P9ud8fEZ4GmRq9mUSREvvfX+w9dA9ThF9C6w==",\n      "dev": true,' \
       --replace-fail $'"resolved": "https://registry.npmjs.org/@earendil-works/pi-ai/-/pi-ai-0.84.1.tgz",\n      "dev": true,' $'"resolved": "https://registry.npmjs.org/@earendil-works/pi-ai/-/pi-ai-0.84.1.tgz",\n      "integrity": "sha512-wMsAdJMxuNri08vLqTyYVI201DQQezGhPSTkzYsHdw5dYX3rCNwEmSvpaAwhi7ELKI/2tE/CEgSWg/6iRxSgdQ==",\n      "dev": true,' \
@@ -28,5 +34,5 @@ buildPiExtension {
   '';
 
   npmDepsFetcherVersion = 2;
-  npmDepsHash = "sha256-unD9MEVzoszlmz5LkG8dXfZGIgHVvhlJre+6dT6mVD4=";
+  npmDepsHash = "sha256-HYjvyJSsUB+fNF8L1o60rs8+8vNNEnTiGF/yH8x5YsQ=";
 }
