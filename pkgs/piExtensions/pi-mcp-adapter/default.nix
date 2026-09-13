@@ -4,26 +4,20 @@
 
 buildPiExtension {
   pname = "pi-mcp-adapter";
-  version = "2026-09-12";
+  version = "2026-09-13";
 
   src = fetchFromGitHub {
     owner = "nicobailon";
     repo = "pi-mcp-adapter";
-    rev = "f0b83bc2dadac2dc22154c71a2d42936ae0763b4";
-    sha256 = "sha256-05q706M1u9q7djyru2TzZn+bEnzp781EY/kK7AXRMdY=";
+    rev = "464337bc9be7e0806756812d206d9ca0a7be1d5e";
+    sha256 = "sha256-Jlzo/5A5qWl/sNc8z9jXLYdw8u3n1u/CuFpOKmatfoI=";
   };
 
   # Upstream ships its own package-lock.json, but the nested @earendil-works/*
   # dev dependencies are missing integrity fields, which makes prefetch-npm-deps
   # panic ("non-git dependencies should have associated integrity"). Inject the
-  # published sha512 integrity hashes. The MCP preview packages refer to each
-  # other using the short commit, so normalize the root specs to the same URL
-  # that npm requests from the offline cache.
+  # published sha512 integrity hashes.
   postPatch = ''
-    substituteInPlace package.json package-lock.json \
-      --replace-fail 'https://pkg.pr.new/@modelcontextprotocol/client@3b205e7dd2f997b6a87e479e36421f7eaa2058e0' 'https://pkg.pr.new/modelcontextprotocol/typescript-sdk/@modelcontextprotocol/client@3b205e7' \
-      --replace-fail 'https://pkg.pr.new/@modelcontextprotocol/core@3b205e7dd2f997b6a87e479e36421f7eaa2058e0' 'https://pkg.pr.new/modelcontextprotocol/typescript-sdk/@modelcontextprotocol/core@3b205e7'
-
     substituteInPlace package-lock.json \
       --replace-fail $'"resolved": "https://registry.npmjs.org/@earendil-works/pi-agent-core/-/pi-agent-core-0.84.1.tgz",\n      "dev": true,' $'"resolved": "https://registry.npmjs.org/@earendil-works/pi-agent-core/-/pi-agent-core-0.84.1.tgz",\n      "integrity": "sha512-evyzXYWCLQGmcaBYHlmSku02r8qoN4SGI60GZABo6iV+H+nqX+P9ud8fEZ4GmRq9mUSREvvfX+w9dA9ThF9C6w==",\n      "dev": true,' \
       --replace-fail $'"resolved": "https://registry.npmjs.org/@earendil-works/pi-ai/-/pi-ai-0.84.1.tgz",\n      "dev": true,' $'"resolved": "https://registry.npmjs.org/@earendil-works/pi-ai/-/pi-ai-0.84.1.tgz",\n      "integrity": "sha512-wMsAdJMxuNri08vLqTyYVI201DQQezGhPSTkzYsHdw5dYX3rCNwEmSvpaAwhi7ELKI/2tE/CEgSWg/6iRxSgdQ==",\n      "dev": true,' \
@@ -34,5 +28,5 @@ buildPiExtension {
   '';
 
   npmDepsFetcherVersion = 2;
-  npmDepsHash = "sha256-HYjvyJSsUB+fNF8L1o60rs8+8vNNEnTiGF/yH8x5YsQ=";
+  npmDepsHash = "sha256-qgIjHjJ4C0wlKZxRvn4I7JJpJIzYr9AWEucYSe8uRYI=";
 }
