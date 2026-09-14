@@ -1,5 +1,5 @@
 { lib
-, stdenvNoCC
+, stdenv
 , bun
 , nodejs_22
 , fetchFromGitHub
@@ -10,9 +10,10 @@
 , cacert
 , fd
 , ripgrep
+, darwin
 ,
 }:
-stdenvNoCC.mkDerivation (finalAttrs: {
+stdenv.mkDerivation (finalAttrs: {
   pname = "pi-coding-agent";
   version = "0.85.1";
 
@@ -33,7 +34,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     hash = "sha256-r30RmGF5RFzm/oizfVfeIvgjwP/TplyuMcVVt/XpklM=";
   };
 
-  node_modules = stdenvNoCC.mkDerivation {
+  node_modules = stdenv.mkDerivation {
     pname = "${finalAttrs.pname}-node_modules";
     inherit (finalAttrs) version src;
 
@@ -78,7 +79,14 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     bun
     nodejs_22
     makeBinaryWrapper
-  ];
+  ] ++ lib.optionals stdenv.hostPlatform.isDarwin [ darwin.sigtool ];
+
+  # bun build --compile appends the JS bundle to the Mach-O after the linker
+  # has signed it, leaving an ad-hoc signature that does not validate. macOS 27
+  # AMFI rejects the mapping and SIGKILLs at exec. Re-sign after wrapping.
+  postFixup = lib.optionalString stdenv.hostPlatform.isDarwin ''
+    codesign --force --sign - $out/bin/.pi-wrapped
+  '';
 
   configurePhase = ''
     runHook preConfigure
