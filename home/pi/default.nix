@@ -74,6 +74,7 @@ let
 
   workExtensions = with pkgs.piExtensions; [
     pi-toast
+    pi-toast-plugins
   ];
 
   workMcpServers = {

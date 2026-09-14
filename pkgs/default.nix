@@ -34,6 +34,7 @@ final: prev:
     pi-subagents = prev.callPackage ./piExtensions/pi-subagents { };
     pi-tasks = prev.callPackage ./piExtensions/pi-tasks { };
     pi-toast = prev.callPackage ./piExtensions/pi-toast { };
+    pi-toast-plugins = prev.callPackage ./piExtensions/pi-toast-plugins { };
     pi-teams = prev.callPackage ./piExtensions/pi-teams { };
     pi-web-access = prev.callPackage ./piExtensions/pi-web-access { };
   };
