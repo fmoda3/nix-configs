@@ -4,23 +4,23 @@
 
 let
   # Define binary information for each platform
-  version = "1.0.194";
+  version = "1.0.215";
   sources = {
     "aarch64-darwin" = {
       url = "https://artifactory.eng.toasttab.com/artifactory/go-binaries/bedrock-llm-proxy/${version}/bedrock-llm-proxy_toast-llm-utils_${version}_darwin_arm64.tar.gz";
-      sha256 = "sha256-XICKvj1e7J1c5xBm+WsvYDmcj+wxBC1/cR+5bawy22I=";
+      sha256 = "sha256-jtvGK0qeFFt8QVeunv8TXllXpX86R8GazGtN+b85/TA=";
     };
     "x86_64-darwin" = {
       url = "https://artifactory.eng.toasttab.com/artifactory/go-binaries/bedrock-llm-proxy/${version}/bedrock-llm-proxy_toast-llm-utils_${version}_darwin_amd64.tar.gz";
-      sha256 = "sha256-e1CV8e+QQJkWAMSNzXlF1xfijJmQIHe6fuNQXx5Tf+c=";
+      sha256 = "sha256-U85ToMeAcfNRWj0J/JcpdyJ3/9bN+5O7HD2vMATL7h4=";
     };
     "x86_64-linux" = {
       url = "https://artifactory.eng.toasttab.com/artifactory/go-binaries/bedrock-llm-proxy/${version}/bedrock-llm-proxy_toast-llm-utils_${version}_linux_amd64.tar.gz";
-      sha256 = "sha256-oXy2UDPBG4sIuLGxpss/bH5ogBrpLSLv9AArHqJ5fPI=";
+      sha256 = "sha256-zdv4dLxn0drIEFnPgCSYw0GH4KpKqyTJ759gQCfVEto=";
     };
     "aarch64-linux" = {
       url = "https://artifactory.eng.toasttab.com/artifactory/go-binaries/bedrock-llm-proxy/${version}/bedrock-llm-proxy_toast-llm-utils_${version}_linux_arm64.tar.gz";
-      sha256 = "sha256-ayCCEs6umgQsfThe+UlZWt16org7HkRQYRIM7vAovrg=";
+      sha256 = "sha256-SYBEdXCy6YBM4ZQj/nlsJ5EdWUBUaE5Eim0Y3GGtgMI=";
     };
   };
 
