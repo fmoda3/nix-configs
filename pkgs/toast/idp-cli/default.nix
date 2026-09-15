@@ -12,9 +12,9 @@ let
 
   src = fetchGit {
     url = "git@github.toasttab.com:toasttab/idp-cli.git";
-    rev = "d37e9d7dde1a7cead73f965d96e8c661f22694a9";
+    rev = "78f15de0417330c6dcd3c1c41e00ae191bd20f69";
     ref = "main";
-    narHash = "sha256-zr+FiRnAkm8l2l8u2EAUmsAn/zz3cclEAsCI/xgXgbA=";
+    narHash = "sha256-Ef6s2a7Qdh0N2cEmm94IuSpgQJXB+NrknuaGEx8V6BE=";
   };
 
   # The OpenAPI codegen (`npm run generate`) pulls schemas from the internal
