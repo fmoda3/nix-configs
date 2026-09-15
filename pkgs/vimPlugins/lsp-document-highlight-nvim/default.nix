@@ -3,12 +3,12 @@
 }:
 vimUtils.buildVimPlugin {
   pname = "lsp-document-highlight-nvim";
-  version = "2026-09-12";
+  version = "2026-09-14";
   src = fetchFromGitHub {
     owner = "akioweh";
     repo = "lsp-document-highlight.nvim";
-    rev = "2097274ed9339beb36bb37cec3fe46890a970a2f";
-    sha256 = "sha256-KjwbH5sMLZfDmKpgEgIowUu1PqfZkNbRH4Ci3B03oyY=";
+    rev = "bdc7ab26b3360c43dfe0b354414e628ba95ab506";
+    sha256 = "sha256-6XohY0yHKqizEBa6qQcyWo8lCPdoFrSMgGm7MlzSN3A=";
   };
   meta.homepage = "https://github.com/akioweh/lsp-document-highlight.nvim/";
 }
