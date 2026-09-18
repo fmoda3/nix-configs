@@ -5,14 +5,14 @@
 
 buildNpmPackage (finalAttrs: {
   pname = "ccusage";
-  version = "20.0.21";
+  version = "20.0.22";
 
   src = fetchzip {
     url = "https://registry.npmjs.org/ccusage/-/ccusage-${finalAttrs.version}.tgz";
-    hash = "sha256-BC2QVlGCy1i4Us7ZfAG/wnEhEavkD1vkWkRgYS3NAj0=";
+    hash = "sha256-obrVdpznFrm7RaQM+tG3S21drJbXi+Ifmdvbt0T7kk8=";
   };
 
-  npmDepsHash = "sha256-/D4T4yxQBTkjoVSrdfHxBUAzTRRU69FeofJZGOnV9T0=";
+  npmDepsHash = "sha256-fqVDi9sc4PjixY5VrVeQsLQLDMhvlDlcmsO0xM/JvfY=";
   forceEmptyCache = true;
 
   postPatch = ''
