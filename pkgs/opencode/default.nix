@@ -77,7 +77,7 @@ let
       # NOTE: Required else we get errors that our fixed-output derivation references store paths
       dontFixup = true;
 
-      outputHash = "sha256-3BXy+zxgav8IZCBtMS3cUZc3Vq/1WPQ8msGriwxUXmw=";
+      outputHash = "sha256-qWZuOpolZAr7EZlAgfVx8nw8axoOMauoXwcqiJUGu24=";
       outputHashAlgo = "sha256";
       outputHashMode = "recursive";
     };
@@ -110,6 +110,11 @@ stdenv.mkDerivation (finalAttrs: {
         --replace-fail \
         'if (item.os === process.platform && item.arch === process.arch && !item.abi)' \
         'if (false)'
+    ''
+    # Bun 1.4.x regressed compiled executable code splitting.
+    + ''
+      substituteInPlace packages/opencode/script/build.ts \
+        --replace-fail 'splitting: true,' 'splitting: false,'
     '';
 
   nativeBuildInputs = [
