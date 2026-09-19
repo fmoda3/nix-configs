@@ -1,7 +1,6 @@
 { lib
 , stdenvNoCC
 , fetchurl
-, installShellFiles
 , makeBinaryWrapper
 , autoPatchelfHook
 , alsa-lib
@@ -9,9 +8,10 @@
 , ripgrep
 , bubblewrap
 , socat
+, zstd
 , versionCheckHook
 , writableTmpDirAsHomeHook
-, manifest ? lib.importJSON ./manifest.json
+, manifest ? lib.importJSON ./manifest.zst.json
 ,
 }:
 let
@@ -20,12 +20,12 @@ let
   platformKey = "${stdenv.hostPlatform.node.platform}-${stdenv.hostPlatform.node.arch}";
   platformManifestEntry = manifest.platforms.${platformKey};
 in
-stdenvNoCC.mkDerivation (finalAttrs: {
+stdenv.mkDerivation (finalAttrs: {
   pname = "claude-code";
   inherit (manifest) version;
 
   src = fetchurl {
-    url = "${baseUrl}/${finalAttrs.version}/${platformKey}/claude";
+    url = "${baseUrl}/${finalAttrs.version}/${platformKey}/${platformManifestEntry.binary}";
     sha256 = platformManifestEntry.checksum;
   };
 
@@ -36,8 +36,8 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   dontStrip = true;
 
   nativeBuildInputs = [
-    installShellFiles
     makeBinaryWrapper
+    zstd
   ]
   ++ lib.optionals stdenv.hostPlatform.isElf [ autoPatchelfHook ];
 
@@ -46,10 +46,12 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   installPhase = ''
     runHook preInstall
 
-    installBin $src
+    mkdir -p $out/bin
+    unzstd -q $src -o $out/bin/claude
+    chmod 755 $out/bin/claude
 
     wrapProgram $out/bin/claude \
-      --set DISABLE_UPDATES 1 \
+      --set DISABLE_AUTOUPDATER 1 \
       --set-default FORCE_AUTOUPDATE_PLUGINS 1 \
       --set DISABLE_INSTALLATION_CHECKS 1 \
       --set USE_BUILTIN_RIPGREP 0 \
@@ -90,12 +92,11 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     description = "Agentic coding tool that lives in your terminal, understands your codebase, and helps you code faster";
     homepage = "https://github.com/anthropics/claude-code";
     downloadPage = "https://claude.com/product/claude-code";
-    changelog = "https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md";
+    changelog = "https://github.com/anthropics/claude-code/blob/v${finalAttrs.version}/CHANGELOG.md";
     license = lib.licenses.unfree;
     sourceProvenance = with lib.sourceTypes; [ binaryNativeCode ];
     platforms = [
       "aarch64-darwin"
-      "x86_64-darwin"
       "aarch64-linux"
       "x86_64-linux"
     ];
