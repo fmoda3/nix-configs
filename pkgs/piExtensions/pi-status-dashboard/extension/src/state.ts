@@ -4,13 +4,18 @@ export function createInitialState(modelId: string | null, modelName: string | n
   return {
     sessionStartMs: Date.now(),
     currentAgentStartMs: null,
-    currentApiStartMs: null,
     totalAgentMs: 0,
-    totalApiMs: 0,
     modelId,
     modelName,
     repo: { kind: "no-git" },
     rateLimits: { provider: null, windows: [], lastRefreshMs: null },
-    totals: { input: 0, output: 0, cost: 0 },
+    totals: {
+      input: 0,
+      output: 0,
+      cacheRead: 0,
+      cacheWrite: 0,
+      cost: 0,
+      latestCacheHitRate: null,
+    },
   };
 }

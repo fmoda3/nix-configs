@@ -1,5 +1,5 @@
 import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
-import { sumAssistantUsage } from "./format";
+import { sumSessionUsage } from "./format";
 import { fetchRateLimitsForProvider, detectUsageProvider, RATE_LIMIT_REFRESH_MS } from "./provider-usage";
 import { renderDashboard } from "./render";
 import { loadRepoState } from "./repo";
@@ -79,7 +79,7 @@ export default function (pi: ExtensionAPI) {
   const refreshUsage = (ctx: ExtensionContext) => {
     state = {
       ...state,
-      totals: sumAssistantUsage(ctx),
+      totals: sumSessionUsage(ctx),
     };
   };
 
@@ -189,29 +189,20 @@ export default function (pi: ExtensionAPI) {
     rerender();
   });
 
-  pi.on("before_provider_request", async (_event, ctx) => {
+  pi.on("message_end", async (_event, ctx) => {
     lastContext = ctx;
-    state = {
-      ...state,
-      currentApiStartMs: Date.now(),
-    };
+    refreshUsage(ctx);
     rerender();
   });
 
-  pi.on("after_provider_response", async (_event, ctx) => {
+  pi.on("session_compact", async (_event, ctx) => {
     lastContext = ctx;
-    const elapsed = state.currentApiStartMs ? Date.now() - state.currentApiStartMs : 0;
-    state = {
-      ...state,
-      currentApiStartMs: null,
-      totalApiMs: state.totalApiMs + elapsed,
-    };
+    refreshUsage(ctx);
     rerender();
   });
 
-  pi.on("message_end", async (event, ctx) => {
+  pi.on("session_tree", async (_event, ctx) => {
     lastContext = ctx;
-    if (event.message.role !== "assistant") return;
     refreshUsage(ctx);
     rerender();
   });

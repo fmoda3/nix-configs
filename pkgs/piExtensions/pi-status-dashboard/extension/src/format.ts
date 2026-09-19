@@ -41,29 +41,43 @@ export function formatReset(date: Date): string {
   return remHours > 0 ? `${days}d${remHours}h` : `${days}d`;
 }
 
-export function sumAssistantUsage(ctx: ExtensionContext): DashboardState["totals"] {
-  let input = 0;
-  let output = 0;
-  let cost = 0;
+export function sumSessionUsage(ctx: ExtensionContext): DashboardState["totals"] {
+  const totals: DashboardState["totals"] = {
+    input: 0,
+    output: 0,
+    cacheRead: 0,
+    cacheWrite: 0,
+    cost: 0,
+    latestCacheHitRate: null,
+  };
 
-  for (const entry of ctx.sessionManager.getBranch()) {
-    if (entry.type !== "message" || entry.message.role !== "assistant") continue;
+  const addUsage = (usage: AssistantMessage["usage"] | undefined) => {
+    if (!usage) return;
+    totals.input += usage.input ?? 0;
+    totals.output += usage.output ?? 0;
+    totals.cacheRead += usage.cacheRead ?? 0;
+    totals.cacheWrite += usage.cacheWrite ?? 0;
+    totals.cost += usage.cost?.total ?? 0;
+  };
 
-    const message = entry.message as AssistantMessage;
-    input += message.usage?.input ?? 0;
-    output += message.usage?.output ?? 0;
-    cost += message.usage?.cost?.total ?? 0;
+  for (const entry of ctx.sessionManager.getEntries()) {
+    if (entry.type === "message" && entry.message.role === "assistant") {
+      const usage = (entry.message as AssistantMessage).usage;
+      addUsage(usage);
+
+      const promptTokens = usage.input + usage.cacheRead + usage.cacheWrite;
+      totals.latestCacheHitRate = promptTokens > 0 ? (usage.cacheRead / promptTokens) * 100 : null;
+    } else if (entry.type === "message" && entry.message.role === "toolResult") {
+      addUsage(entry.message.usage);
+    } else if ((entry.type === "branch_summary" || entry.type === "compaction") && entry.usage) {
+      addUsage(entry.usage);
+    }
   }
 
-  return { input, output, cost };
+  return totals;
 }
 
 export function getAccumulatedAgentMs(state: DashboardState): number {
   const current = state.currentAgentStartMs ? Date.now() - state.currentAgentStartMs : 0;
   return state.totalAgentMs + current;
-}
-
-export function getAccumulatedApiMs(state: DashboardState): number {
-  const current = state.currentApiStartMs ? Date.now() - state.currentApiStartMs : 0;
-  return state.totalApiMs + current;
 }

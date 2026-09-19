@@ -1,13 +1,13 @@
 import type { ExtensionContext } from "@earendil-works/pi-coding-agent";
 import { truncateToWidth, visibleWidth } from "@earendil-works/pi-tui";
-import { formatCost, formatCount, formatDuration, getAccumulatedApiMs } from "./format";
+import { formatCost, formatCount, formatDuration, getAccumulatedAgentMs } from "./format";
 import { CATPPUCCIN, fg } from "./theme";
 import type { DashboardState, Panel } from "./types";
 
 const PANEL_GAP = 1;
 const MIN_PANEL_INNER_WIDTH = 14;
 const PANEL_PADDING = 1;
-const DEFAULT_PANEL_LINES = 2;
+const MAX_PANEL_LINES = 2;
 
 function plain(text: string): string {
   return fg(CATPPUCCIN.text, text);
@@ -53,9 +53,21 @@ function buildModelPanel(state: DashboardState, thinkingLevel: string | null): P
 }
 
 function buildUsagePanel(state: DashboardState, ctx: ExtensionContext): Panel {
-  const tokenSummary = `${value(CATPPUCCIN.lavender, `↑${formatCount(state.totals.input)}`)} ${value(CATPPUCCIN.lavender, `↓${formatCount(state.totals.output)}`)}`;
+  const tokenSummary = [
+    `↑${formatCount(state.totals.input)}`,
+    `↓${formatCount(state.totals.output)}`,
+    `R${formatCount(state.totals.cacheRead)}`,
+    `W${formatCount(state.totals.cacheWrite)}`,
+  ]
+    .map((summary) => value(CATPPUCCIN.lavender, summary))
+    .join(" ");
+  const cacheHit = state.totals.latestCacheHitRate;
+  const cacheHitSummary = cacheHit === null ? "CH n/a" : `CH ${cacheHit.toFixed(1)}%`;
   const rows: Array<{ key: string; value: string }> = [
-    { key: "cost", value: value(CATPPUCCIN.green, formatCost(state.totals.cost)) },
+    {
+      key: "cost",
+      value: `${value(CATPPUCCIN.green, formatCost(state.totals.cost))} ${label("•")} ${value(CATPPUCCIN.mauve, cacheHitSummary)}`,
+    },
   ];
 
   const usage = ctx.getContextUsage();
@@ -78,7 +90,7 @@ function buildRuntimePanel(state: DashboardState): Panel {
     title: "RUNTIME",
     lines: formatPanelRows([
       { key: "session", value: value(CATPPUCCIN.yellow, formatDuration(Date.now() - state.sessionStartMs)) },
-      { key: "api", value: value(CATPPUCCIN.yellow, formatDuration(getAccumulatedApiMs(state))) },
+      { key: "agent", value: value(CATPPUCCIN.yellow, formatDuration(getAccumulatedAgentMs(state))) },
     ]),
   };
 }
@@ -90,7 +102,7 @@ function buildRateLimitPanel(state: DashboardState): Panel | null {
 
   const rows: Array<{ key: string; value: string }> = [];
   {
-    const windows = state.rateLimits.windows.slice(0, 4);
+    const windows = state.rateLimits.windows.slice(0, MAX_PANEL_LINES);
     const percentWidth = windows.reduce((max, window) => {
       return Math.max(max, `${Math.round(window.usedPercent)}%`.length);
     }, 0);
@@ -113,17 +125,16 @@ function buildRateLimitPanel(state: DashboardState): Panel | null {
   };
 }
 
-function buildExtensionStatusPanels(extensionStatuses: readonly string[], maxLines?: number): Panel[] {
+function buildExtensionStatusPanels(extensionStatuses: readonly string[]): Panel[] {
   const statuses = extensionStatuses.map((status) => status.trim()).filter((status) => status.length > 0);
   if (statuses.length === 0) return [];
 
-  const linesPerPanel = maxLines && maxLines > 0 ? maxLines : statuses.length;
   const panels: Panel[] = [];
 
-  for (let index = 0; index < statuses.length; index += linesPerPanel) {
+  for (let index = 0; index < statuses.length; index += MAX_PANEL_LINES) {
     panels.push({
       title: "EXTENSIONS",
-      lines: statuses.slice(index, index + linesPerPanel).map((status) => plain(status)),
+      lines: statuses.slice(index, index + MAX_PANEL_LINES).map((status) => plain(status)),
     });
   }
 
@@ -180,7 +191,7 @@ function drawPanel(panel: Panel, targetWidth: number): string[] {
   const top = buildTopBorder(panel, innerWidth);
   const bottom = `${border("╰")}${border("─".repeat(innerWidth))}${border("╯")}`;
 
-  const body = panel.lines.map((line) => {
+  const body = panel.lines.slice(0, MAX_PANEL_LINES).map((line) => {
     const truncated = truncateToWidth(line, innerWidth - PANEL_PADDING * 2);
     const content = `${" ".repeat(PANEL_PADDING)}${truncated}${" ".repeat(Math.max(0, innerWidth - PANEL_PADDING * 2 - visibleWidth(truncated)))}${" ".repeat(PANEL_PADDING)}`;
     return `${border("│")}${content}${border("│")}`;
@@ -261,10 +272,7 @@ export function renderDashboard(
   width: number,
 ): string[] {
   const rateLimitPanel = buildRateLimitPanel(state);
-  const extensionPanels = buildExtensionStatusPanels(
-    extensionStatuses,
-    rateLimitPanel?.lines.length ?? DEFAULT_PANEL_LINES,
-  );
+  const extensionPanels = buildExtensionStatusPanels(extensionStatuses);
   const panels = [
     buildModelPanel(state, thinkingLevel),
     buildUsagePanel(state, ctx),

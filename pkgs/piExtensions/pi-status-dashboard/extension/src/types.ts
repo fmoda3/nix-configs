@@ -31,9 +31,7 @@ export type RepoState =
 export type DashboardState = {
   sessionStartMs: number;
   currentAgentStartMs: number | null;
-  currentApiStartMs: number | null;
   totalAgentMs: number;
-  totalApiMs: number;
   modelId: string | null;
   modelName: string | null;
   repo: RepoState;
@@ -41,7 +39,10 @@ export type DashboardState = {
   totals: {
     input: number;
     output: number;
+    cacheRead: number;
+    cacheWrite: number;
     cost: number;
+    latestCacheHitRate: number | null;
   };
 };
 
