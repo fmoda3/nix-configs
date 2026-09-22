@@ -6,13 +6,13 @@
 }:
 stdenv.mkDerivation {
   pname = "toast-services";
-  version = "2026-03-09";
+  version = "2026-09-15";
 
   src = fetchGit {
     url = "git@github.toasttab.com:toasttab/toast-services.git";
-    rev = "270e228429830e19417d2f3c4a3c8b374a2ccdbe";
+    rev = "6bf8f1caaa097c30d4929bc77edd98f375e3d563";
     ref = "development";
-    narHash = "sha256-pmEqatHYKbAheXPRERolWrQXcKO+7h7Hr9CIKE56Jw4=";
+    narHash = "sha256-9WQhFjIuwVNFm0EUKx2RFNAvT9wB5xYXZJCAnLUBjOw=";
   };
 
   nativeBuildInputs = [
