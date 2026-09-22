@@ -4,13 +4,13 @@
 
 buildPiExtension {
   pname = "pi-mcp-adapter";
-  version = "2026-09-21";
+  version = "2026-09-22";
 
   src = fetchFromGitHub {
     owner = "nicobailon";
     repo = "pi-mcp-adapter";
-    rev = "d417fb885c7f4d4d76f6c9598ab2436575d678f6";
-    sha256 = "sha256-DPxPfHys/R/lBDLJtjmEjni0Mr3qwTE/R1EXii14zMs=";
+    rev = "0e88e19e6dc0a72847d4ab8740c02f42d5aeecab";
+    sha256 = "sha256-+S/JEA5QjrSBl40UtMIwdAenauZTjSQUNq6f/pZ2EOQ=";
   };
 
   # Upstream ships its own package-lock.json, but the nested @earendil-works/*
