@@ -2,20 +2,20 @@
 
 buildPiExtension {
   pname = "pi-toast";
-  version = "2026-09-22";
+  version = "2026-09-23";
 
   src = fetchGit {
     url = "git@github.toasttab.com:toasttab/pi-toast.git";
-    rev = "4a9f56f651a2a735ee2c31188703a48eaccd8f28";
+    rev = "3bfc1877ee58f26fd910176dc7a0a7cc5bef524d";
     ref = "main";
-    narHash = "sha256-drMFZYZOfNlNjqSL5wyxQmHxy2nnt2Tgk7KXSkQHbQg=";
+    narHash = "sha256-nMYJtFEMgB9DgwcG2wGuCrLIfhwleVR8glaxx6Sywso=";
   };
 
   postPatch = ''
     addIntegrity() {
       local package="$1"
       local integrity="$2"
-      local resolved="https://registry.npmjs.org/@earendil-works/$package/-/$package-0.86.1.tgz"
+      local resolved="https://registry.npmjs.org/@earendil-works/$package/-/$package-0.87.1.tgz"
       local missingIntegrity
       local withIntegrity
       missingIntegrity=$(printf '"resolved": "%s",\n      "license": "MIT",\n      "peer": true,' "$resolved")
@@ -25,15 +25,15 @@ buildPiExtension {
         --replace-fail "$missingIntegrity" "$withIntegrity"
     }
 
-    addIntegrity chord "sha512-GzUr5n4tFBHUYxN9CjcRHK8QWo9tbxNrZu6iWPQ+PFiFrLASvSZOKeAVAgh3gHv/t0X5OvUpFlrMQ/nEFfCYpg=="
-    addIntegrity pi-agent-core "sha512-8TbBzhYsDeu5V1Zl2NsyrBqJAzX1EiEL3Np3ZjGpy0pSDdGRVOpcyW1qruLqfWmEqGcnxmvgnTMLS/wJNZO2XQ=="
-    addIntegrity pi-ai "sha512-1XHhI6D/fyQdsBieHC/E/4zGKVOoGe4yDyX67VXvzoYkFsX/qE7NpZE7E1RC8e6Bz8B9oG/P+MQFXikv2/BGEg=="
-    addIntegrity pi-telemetry "sha512-SOcEqOS3oVGgKeahs2jHB906d8hFjuLP+RBee8xKYMRgw5KAeWHNg+YABfL0ALlp3Bt6tW4b632MLghc3vnTog=="
-    addIntegrity pi-tui "sha512-FU/zU/zG4RWokcZt+BVXXcieWi5ggvYnWP2kkB5XXjMaHRoy5BDhcZJ9JAnLTN9MwrCRoXgPQxOI0bFqwYeZkQ=="
+    addIntegrity chord "sha512-bg7IkJGFcEaMqqYgOGUiq5Ky9RghpRfrlZ8I/v/1b4bBZ02A7t3E+6uhPRbadwWb/kWsnVFbZsqOKRN4a3LLCg=="
+    addIntegrity pi-agent-core "sha512-Zev3B0HK7YS5A4EZQ2XnEqiJuirx6QBiltJ+LpmjV5a/+2IU0cfKtIfnkNkORK707XOvKBY2WRtk7cAwHpbh2Q=="
+    addIntegrity pi-ai "sha512-X/3PfQBnnoeVdO9Cv8zHghUMglzlgNZYGNzoPnbRoGnHl3Rw3TlA2UKSUB7BRHUOxMryHXYa8dnjWZlbRheDZA=="
+    addIntegrity pi-telemetry "sha512-MC6TRQH5lgMXpcN+Vku2WMI2T8BsiUPzMQHGo81uqFZD3/9O79WWJAysEDGuzduP6R4tvtgwMLwmqIxynM10JQ=="
+    addIntegrity pi-tui "sha512-YEH2vRyOeiO7hhN6j6AE6YwKSq2Kz2f3XR8bj1TbR+aGE/JsnY1hLPMI2pvaZfRM1n9Y00tejxFQ4zbzvF7nkQ=="
   '';
 
   npmDepsFetcherVersion = 2;
-  npmDepsHash = "sha256-WBjyM95PURiXEf1MFqTFql/Kujo+Ac5vwc8Rp2akppU=";
+  npmDepsHash = "sha256-wdyrN5TufU62OcfDaOsjf6zTnqR2zN+UboYaRF5OF5I=";
 
   prunePaths = [
     ".github"
