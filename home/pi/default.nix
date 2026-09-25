@@ -20,7 +20,7 @@ let
 
   settings = {
     quietStartup = true;
-    defaultProvider = if cfg.isWork then "amazon-bedrock" else "openai-codex";
+    defaultProvider = if cfg.isWork then "toast" else "openai-codex";
     defaultModel = if cfg.isWork then "global.anthropic.claude-opus-5-5" else "gpt-6-sol";
     theme = "catppuccin-frappe";
     terminal = {
