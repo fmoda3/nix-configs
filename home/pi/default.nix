@@ -111,7 +111,7 @@ in
         ".pi/agent/settings.json" = {
           text = builtins.toJSON settings;
         };
-        ".pi/agent/mcp.json" = {
+        ".pi/agent/mcp-adapter.json" = {
           text = builtins.toJSON mcpConfig;
         };
         ".pi/agent/keybindings.json" = {
