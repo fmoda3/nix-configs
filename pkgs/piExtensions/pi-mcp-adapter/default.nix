@@ -4,13 +4,13 @@
 
 buildPiExtension {
   pname = "pi-mcp-adapter";
-  version = "2026-09-29";
+  version = "2026-09-30";
 
   src = fetchFromGitHub {
     owner = "nicobailon";
     repo = "pi-mcp-adapter";
-    rev = "b33382ac057d033b0368c4dfdf10dbb3c634d7dc";
-    sha256 = "sha256-8bxWtGgx5FfvVDR9dPOLlHv0RNI8kUc/F7kcRykR6IA=";
+    rev = "e12ef733fd876ea197728fcd5e6be3f9d2aacff1";
+    sha256 = "sha256-TKo577jSLCPXkmenC+McFEZohtfGWnFTE57MH5um6+c=";
   };
 
   # Upstream ships its own package-lock.json, but the nested @earendil-works/*
@@ -18,14 +18,28 @@ buildPiExtension {
   # panic ("non-git dependencies should have associated integrity"). Inject the
   # published sha512 integrity hashes.
   postPatch = ''
-    substituteInPlace package-lock.json \
-      --replace-fail $'"resolved": "https://registry.npmjs.org/@earendil-works/chord/-/chord-0.87.0.tgz",\n      "dev": true,' $'"resolved": "https://registry.npmjs.org/@earendil-works/chord/-/chord-0.87.0.tgz",\n      "integrity": "sha512-t8QOTf0GTHrsDSfcdtXuA9RCkh6mnR4l25N0SM/sgH7Ih25jH4tGXNbkGs9MWpV5xTu9MRPj4A7Zn1UEwQm9+g==",\n      "dev": true,' \
-      --replace-fail $'"resolved": "https://registry.npmjs.org/@earendil-works/pi-agent-core/-/pi-agent-core-0.87.0.tgz",\n      "dev": true,' $'"resolved": "https://registry.npmjs.org/@earendil-works/pi-agent-core/-/pi-agent-core-0.87.0.tgz",\n      "integrity": "sha512-c5b2FMdJ7C++HBa6AyBmusdf96gdgRqpF7J+UCq2yVGB28UETJvJ190HkgDWUaLPnOQQPbanjKMAm/TgRmFE2w==",\n      "dev": true,' \
-      --replace-fail $'"resolved": "https://registry.npmjs.org/@earendil-works/pi-ai/-/pi-ai-0.87.0.tgz",\n      "dev": true,' $'"resolved": "https://registry.npmjs.org/@earendil-works/pi-ai/-/pi-ai-0.87.0.tgz",\n      "integrity": "sha512-lbRm+EMY6Jx3l+HLpbqbm9Yrhkc5u7EffLk2id+zJQEoBuR5I+tijGiZU8zlnuuCclmQOgH0PVjL9PLbeqJ9MQ==",\n      "dev": true,' \
-      --replace-fail $'"resolved": "https://registry.npmjs.org/@earendil-works/pi-telemetry/-/pi-telemetry-0.87.0.tgz",\n      "dev": true,' $'"resolved": "https://registry.npmjs.org/@earendil-works/pi-telemetry/-/pi-telemetry-0.87.0.tgz",\n      "integrity": "sha512-IEUMnV6mgHyOMfAxa4CKXoBKKfHM8KxNjbXWM4Bps/iLJcFMf8hQsEZ+95VnVTc7C0cU77Rmdxt773C35jb5AA==",\n      "dev": true,' \
-      --replace-fail $'"resolved": "https://registry.npmjs.org/@earendil-works/pi-tui/-/pi-tui-0.87.0.tgz",\n      "dev": true,' $'"resolved": "https://registry.npmjs.org/@earendil-works/pi-tui/-/pi-tui-0.87.0.tgz",\n      "integrity": "sha512-7gTC0XOgQfVWg4yGxwHINBpCnGl9p4KEC7PXIc8gAwc/cyxSW4VuFQrp+r1YD3oM+rBkoepKwAt6w6+VJ7BCaw==",\n      "dev": true,'
+    addIntegrity() {
+      local package="$1"
+      local integrity="$2"
+      local resolved="https://registry.npmjs.org/@earendil-works/$package/-/$package-0.99.1.tgz"
+      local missingIntegrity
+      local withIntegrity
+      missingIntegrity=$(printf '"resolved": "%s",\n      "dev": true,' "$resolved")
+      withIntegrity=$(printf '"resolved": "%s",\n      "integrity": "%s",\n      "dev": true,' "$resolved" "$integrity")
+
+      substituteInPlace package-lock.json \
+        --replace-fail "$missingIntegrity" "$withIntegrity"
+    }
+
+    addIntegrity chord "sha512-4xyn0IBzJ+Xu/iOGi2hjXJGAR61QEhEWZsIqTDqr+GmItdquYwBO5jYFnqGiBaTqlY12/EpM7QHoEKSHbyvOug=="
+    addIntegrity pi-agent-core "sha512-zywvWnj5FujeuFI/x/CJHwwxhcLIQgjqseTA+bQgX4O8gJTcgjRd/I8SZnQDqJvxC9QcV12ujiGLviv6EgwcCg=="
+    addIntegrity pi-ai "sha512-4nV9JKc94iPX8bwdGPc2nTuVPKIPsffhnp3WoN9NYCNqbtoOF8LhYcIs/+Sn/alroqJK/5QRu6/Z6Ck+n0hyBA=="
+    addIntegrity pi-codemode "sha512-oh8TMsBI3SWTN3xTQtX8u5n+BKhnVXcFagroWumfn6/WWfBnDYL/LmeQtjLb83WRTb9rcu+ZdK8rFa4vggvCJg=="
+    addIntegrity pi-mcp "sha512-YCFGPkmDzLwQuIzwfbP6Vuk/g/ukKpZhwTpbcfzomuI1Fkiu6hHRkOGwAqsO3G8cTkZWkM8vmOkFJjStQNC4qA=="
+    addIntegrity pi-telemetry "sha512-9PBPjGk+TXRtuMianpqBbHBpYpyKusESF6rwdmgD0WTZSTUQXhcKEO0hAINRLuSwy4V7yPvXV+EVV0ONY7mbpQ=="
+    addIntegrity pi-tui "sha512-gZp0Guat96Fr1AuC/xqVz5B2lulZakp/PxD1lXx3lSgBdjiqmwYhJbcQ0HRrGAfy0WtMGn9b05RJr5qJf7oIuw=="
   '';
 
   npmDepsFetcherVersion = 2;
-  npmDepsHash = "sha256-Ex+psk69z1Fe9UTTj4rxPy+zr4PWDz7mKZECsGctwHQ=";
+  npmDepsHash = "sha256-WgF4pBrMvv5/Hyof3WCZSuVOCGf+OK6Of0b0qzex2wU=";
 }
