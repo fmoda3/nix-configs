@@ -22,6 +22,9 @@ let
     quietStartup = true;
     defaultProvider = if cfg.isWork then "toast" else "openai-codex";
     defaultModel = if cfg.isWork then "global.anthropic.claude-opus-5-5" else "gpt-6.1-sol";
+    defaultTools = [
+      "+codemode"
+    ];
     theme = "catppuccin-frappe";
     terminal = {
       showTerminalProgress = true;
