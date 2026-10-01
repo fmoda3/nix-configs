@@ -54,9 +54,7 @@ stdenv.mkDerivation (finalAttrs: {
     buildPhase = ''
       runHook preBuild
 
-      # Include every platform's optional native dependency (notably TypeScript 7)
-      # so this fixed-output node_modules tree is reusable across host systems.
-      npm ci --ignore-scripts --force
+      npm ci --ignore-scripts
 
       runHook postBuild
     '';
@@ -94,7 +92,6 @@ stdenv.mkDerivation (finalAttrs: {
     runHook preConfigure
 
     cp -R ${finalAttrs.node_modules}/. .
-    patchShebangs node_modules
 
     runHook postConfigure
   '';
