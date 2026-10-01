@@ -42,11 +42,27 @@ function usageColor(percent: number): string {
   return CATPPUCCIN.green;
 }
 
+/**
+ * The model panel.
+ *
+ * `thinking` is always the level *selected*. For a virtual selection
+ * (e.g. `toast/auto-*`) that level is the router's effort offset, so the
+ * routed model and the effort it actually runs at go on the model row instead:
+ * `Auto (Claude) → Claude Opus 5.5 · high`.
+ */
 function buildModelPanel(state: DashboardState, thinkingLevel: string | null): Panel {
+  const selected = value(CATPPUCCIN.blue, state.modelName ?? state.modelId ?? "n/a");
+  const routed = state.routed;
+  const routedEffort = routed?.thinkingLevel
+    ? ` ${border("·")} ${value(CATPPUCCIN.sky, routed.thinkingLevel)}`
+    : "";
+  const model = routed
+    ? `${selected} ${border("→")} ${value(CATPPUCCIN.blue, routed.modelName ?? routed.modelId)}${routedEffort}`
+    : selected;
   return {
     title: "MODEL",
     lines: formatPanelRows([
-      { key: "model", value: value(CATPPUCCIN.blue, state.modelName ?? state.modelId ?? "n/a") },
+      { key: "model", value: model },
       { key: "thinking", value: value(CATPPUCCIN.sky, thinkingLevel ?? "default") },
     ]),
   };
@@ -70,10 +86,13 @@ function buildUsagePanel(state: DashboardState, ctx: ExtensionContext): Panel {
     },
   ];
 
+  // pi resolves the context window from the model that actually answers, so a
+  // virtual selection (e.g. `toast/auto-*`, whose own contextWindow is 0) gets
+  // its routed model's window here. Prefer it over ctx.model.
   const usage = ctx.getContextUsage();
-  const contextWindow = ctx.model?.contextWindow ?? 0;
-  if (usage && contextWindow > 0) {
-    const percent = Math.round((usage.tokens / contextWindow) * 100);
+  const contextWindow = usage?.contextWindow ?? ctx.model?.contextWindow ?? 0;
+  if (usage && usage.tokens !== null && contextWindow > 0) {
+    const percent = Math.round(usage.percent ?? (usage.tokens / contextWindow) * 100);
     rows.push({
       key: "context",
       value: `${value(usageColor(percent), `${percent}%`)} ${value(usageColor(percent), makeBar(percent))} ${plain(`${formatCount(usage.tokens)}/${formatCount(contextWindow)}`)}`,

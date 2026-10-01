@@ -2,6 +2,15 @@ import type { AssistantMessage } from "@earendil-works/pi-ai";
 import type { ExtensionContext } from "@earendil-works/pi-coding-agent";
 import type { DashboardState } from "./types";
 
+/**
+ * The `api` of a virtual model (e.g. `toast/auto-claude`) that routes each
+ * request to a physical model. pi does not export its constant, so it is
+ * mirrored here.
+ */
+export const VIRTUAL_MODEL_API = "pi-virtual";
+
+type ResponseModel = { provider: string; modelId: string; thinkingLevel: string | null };
+
 export function formatCount(value: number): string {
   if (value < 1_000) return `${value}`;
   if (value < 10_000) return `${(value / 1_000).toFixed(1)}k`;
@@ -75,6 +84,59 @@ export function sumSessionUsage(ctx: ExtensionContext): DashboardState["totals"]
   }
 
   return totals;
+}
+
+/** Whether a model is a virtual selection that routes to physical models. */
+export function isVirtualSelection(model: { api?: unknown } | undefined): boolean {
+  return model !== undefined && String(model.api) === VIRTUAL_MODEL_API;
+}
+
+/**
+ * The physical model and level of the latest successful response on a branch.
+ *
+ * Failed and aborted responses are skipped, as pi does: a failed routing
+ * attempt records the virtual model, which is not what answered.
+ */
+export function latestResponseModel(entries: readonly { type: string; message?: unknown }[]): ResponseModel | null {
+  for (let index = entries.length - 1; index >= 0; index--) {
+    const entry = entries[index];
+    if (entry.type !== "message") continue;
+    const model = responseModel(entry.message);
+    if (model) return model;
+  }
+  return null;
+}
+
+/**
+ * The physical model and level of one assistant message, or null when it is not
+ * a usable response: not an assistant message, failed or aborted, or a failed
+ * routing attempt that still names the virtual model.
+ *
+ * Used directly on `message_start`/`message_end` events, because pi hands those
+ * to extensions *before* the message is saved to the session — reading the
+ * branch there sees the previous response, one behind.
+ */
+export function responseModel(message: unknown): ResponseModel | null {
+  const assistant = message as Partial<AssistantMessage> | undefined;
+  if (assistant?.role !== "assistant") return null;
+  if (assistant.stopReason === "error" || assistant.stopReason === "aborted") return null;
+  if (String(assistant.api) === VIRTUAL_MODEL_API || !assistant.provider || !assistant.model) return null;
+  return { provider: assistant.provider, modelId: assistant.model, thinkingLevel: assistant.thinkingLevel ?? null };
+}
+
+/**
+ * Combine a newly seen route with the one shown.
+ *
+ * pi only attaches `thinkingLevel` to a *finished* assistant message, so the
+ * partial message at `message_start` has none. When the model is unchanged,
+ * keep the effort already known; when the model changed, the old effort is not
+ * this model's, so show none until the response finishes.
+ */
+export function mergeRoute<R extends ResponseModel>(shown: R | null, next: R): R {
+  if (next.thinkingLevel !== null || !shown) return next;
+  return shown.provider === next.provider && shown.modelId === next.modelId
+    ? { ...next, thinkingLevel: shown.thinkingLevel }
+    : next;
 }
 
 export function getAccumulatedAgentMs(state: DashboardState): number {

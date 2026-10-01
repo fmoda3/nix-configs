@@ -7,6 +7,7 @@ export function createInitialState(modelId: string | null, modelName: string | n
     totalAgentMs: 0,
     modelId,
     modelName,
+    routed: null,
     repo: { kind: "no-git" },
     rateLimits: { provider: null, windows: [], lastRefreshMs: null },
     totals: {
