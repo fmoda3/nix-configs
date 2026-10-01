@@ -143,9 +143,6 @@ stdenv.mkDerivation (finalAttrs: {
     OPENCODE_DISABLE_MODELS_FETCH = true;
     OPENCODE_VERSION = finalAttrs.version;
     OPENCODE_CHANNEL = "prod";
-  } // lib.optionalAttrs stdenv.hostPlatform.isLinux {
-    # The embedded web UI build exceeds Node's default heap on small builders.
-    NODE_OPTIONS = "--max-old-space-size=4096";
   };
 
   buildPhase = ''
