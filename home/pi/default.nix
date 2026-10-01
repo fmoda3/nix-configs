@@ -63,7 +63,6 @@ let
     pi-context
     pi-direnv
     pi-ghostty
-    pi-mcp-adapter
     pi-notify
     pi-plan
     pi-status-dashboard
@@ -83,7 +82,6 @@ let
   workMcpServers = {
     atlassian = {
       url = "https://mcp.atlassian.com/v1/mcp";
-      auth = "oauth";
     };
     buffet = {
       command = "npx";
@@ -98,10 +96,6 @@ let
   };
 
   mcpConfig = {
-    settings = {
-      autoAuth = true;
-      showStatusIcon = false;
-    };
     mcpServers = commonMcpServers // lib.optionalAttrs cfg.isWork workMcpServers;
   };
 in
@@ -114,7 +108,7 @@ in
         ".pi/agent/settings.json" = {
           text = builtins.toJSON settings;
         };
-        ".pi/agent/mcp-adapter.json" = {
+        ".pi/agent/mcp.json" = {
           text = builtins.toJSON mcpConfig;
         };
         ".pi/agent/keybindings.json" = {

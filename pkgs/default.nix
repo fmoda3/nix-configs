@@ -24,7 +24,6 @@ final: prev:
     pi-context = prev.callPackage ./piExtensions/pi-context { };
     pi-direnv = prev.callPackage ./piExtensions/pi-direnv { };
     pi-ghostty = prev.callPackage ./piExtensions/pi-ghostty { };
-    pi-mcp-adapter = prev.callPackage ./piExtensions/pi-mcp-adapter { };
     pi-notify = prev.callPackage ./piExtensions/pi-notify { };
     pi-plan = prev.callPackage ./piExtensions/pi-plan { };
     pi-processes = prev.callPackage ./piExtensions/pi-processes { };
