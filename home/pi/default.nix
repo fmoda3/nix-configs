@@ -60,6 +60,7 @@ let
 
   extensions = with pkgs.piExtensions; [
     pi-ask
+    pi-auto-router
     pi-context
     pi-direnv
     pi-ghostty

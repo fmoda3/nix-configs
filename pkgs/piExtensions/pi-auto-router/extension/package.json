@@ -1,0 +1,25 @@
+{
+  "name": "pi-auto-router",
+  "version": "0.1.0",
+  "description": "Auto-routing virtual models for pi: anthropic/auto-claude and openai-codex/auto-gpt pick a model and effort per session",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "keywords": [
+    "pi",
+    "pi-extension",
+    "pi-package",
+    "router",
+    "virtual-model"
+  ],
+  "pi": {
+    "extensions": [
+      "./index.ts"
+    ]
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-ai": "^1.0.0",
+    "@earendil-works/pi-coding-agent": "^1.0.0",
+    "@earendil-works/pi-tui": "^1.0.0"
+  }
+}

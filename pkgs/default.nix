@@ -21,6 +21,7 @@ final: prev:
   buildPiExtension = prev.callPackage ./buildPiExtension { };
   piExtensions = {
     pi-ask = prev.callPackage ./piExtensions/pi-ask { };
+    pi-auto-router = prev.callPackage ./piExtensions/pi-auto-router { };
     pi-context = prev.callPackage ./piExtensions/pi-context { };
     pi-direnv = prev.callPackage ./piExtensions/pi-direnv { };
     pi-ghostty = prev.callPackage ./piExtensions/pi-ghostty { };
