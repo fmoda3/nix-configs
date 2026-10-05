@@ -4,16 +4,16 @@
 
 buildPiExtension {
   pname = "pi-subagents";
-  version = "2026-10-04";
+  version = "2026-10-05";
 
   src = fetchFromGitHub {
     owner = "nicobailon";
     repo = "pi-subagents";
-    rev = "8983754bb3ef6603cbbe46dcc2314ec8563ffc23";
-    sha256 = "sha256-Z8PloXdWn0Am1fErHP6oVTk4QSyYRsBUmzhGBX68HKw=";
+    rev = "6826b0545216077195ae8ffe468a6434715814b7";
+    sha256 = "sha256-1VPyNY5dFbFMPs9OJd/fwhPgqFcPLZxwd15sAtNsn/Y=";
   };
 
-  npmDepsHash = "sha256-4OQ8aB9FNBfh+k8GB9ajzQgUMdD4nBzAzqIrtQvoizU=";
+  npmDepsHash = "sha256-8HIc7Ep8OOKUM3hsGtg3t4aunupvZ10h797jizvz1p0=";
   npmFlags = [ "--omit=dev" ];
 
   prunePaths = [ ".github" ];
