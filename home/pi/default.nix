@@ -40,7 +40,7 @@ let
       url = "https://mcp.deepwiki.com/mcp";
     };
     nixos = {
-      command = "mcp-nixos";
+      command = lib.getExe pkgs.mcp-nixos;
     };
   };
 
@@ -62,7 +62,6 @@ let
     pi-ask
     pi-auto-router
     pi-context
-    pi-direnv
     pi-ghostty
     pi-notify
     pi-plan
