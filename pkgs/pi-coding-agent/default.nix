@@ -24,13 +24,13 @@ let
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "pi-coding-agent";
-  version = "1.0.3";
+  version = "1.0.4";
 
   src = fetchFromGitHub {
     owner = "earendil-works";
     repo = "pi";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-2SfC8zEf6emG1sDG1J7hjjSBt+3hFIz1/TcwBLa/hRU=";
+    hash = "sha256-twDmQRr7vsrYzhS8o3TrlqdBzRFCbOOn/4hbCXD/u3Q=";
   };
 
   # Use the release's content-addressed, typed catalog rather than generated
