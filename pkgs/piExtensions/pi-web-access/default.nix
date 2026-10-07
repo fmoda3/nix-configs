@@ -4,13 +4,13 @@
 
 buildPiExtension {
   pname = "pi-web-access";
-  version = "2026-10-05";
+  version = "2026-10-06";
 
   src = fetchFromGitHub {
     owner = "nicobailon";
     repo = "pi-web-access";
-    rev = "9a0779976ba47350be18f8cfacaffbe2a407113e";
-    sha256 = "sha256-bFaxlTVmNiPWXK1gBIhKr7VSsC2MS1ciR/iEAAyRvn4=";
+    rev = "f0c0a96a8f19198e767cbec2e447f38779ccca50";
+    sha256 = "sha256-iD8q2t6OdbVmV7BKaKn8EhNqCeMnv25WyZNuVOEI9bw=";
   };
 
   postPatch = ''
@@ -18,5 +18,5 @@ buildPiExtension {
   '';
 
   npmDepsFetcherVersion = 2;
-  npmDepsHash = "sha256-BuRoUb5XohX6TxNRYrGiMdikK4o9tIbew04tifEdYzQ=";
+  npmDepsHash = "sha256-RXW3ymqoqq6AnYqmfhgPrMhwB/6jYmaFQdT196vKvf4=";
 }
