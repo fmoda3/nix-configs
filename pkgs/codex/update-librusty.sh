@@ -6,7 +6,7 @@ set -eu -o pipefail
 
 echo "librusty_v8: UPDATING"
 
-# ASSUMES: The Cargo.lock file is located at <REPO>/codex-rs/Cargo.lock
+# ASSUMES; The Cargo.lock file is located at <REPO>/codex-rs/Cargo.toml
 
 CODEX_LATEST_VERSION=$(curl ${GITHUB_TOKEN:+-u ":$GITHUB_TOKEN"} --silent --fail --location "https://api.github.com/repos/openai/codex/releases/latest" | jq --raw-output .tag_name)
 CARGO_LOCK=$(curl ${GITHUB_TOKEN:+-u ":$GITHUB_TOKEN"} --silent --fail --location "https://github.com/openai/codex/raw/$CODEX_LATEST_VERSION/codex-rs/Cargo.lock")
@@ -35,7 +35,7 @@ fetchLibrustyV8 {
   shas = {
     x86_64-linux = "$(nix-prefetch-url --type sha256 https://github.com/denoland/rusty_v8/releases/download/v"$NEW_VERSION"/librusty_v8_release_x86_64-unknown-linux-gnu.a.gz)";
     aarch64-linux = "$(nix-prefetch-url --type sha256 https://github.com/denoland/rusty_v8/releases/download/v"$NEW_VERSION"/librusty_v8_release_aarch64-unknown-linux-gnu.a.gz)";
-    x86_64-darwin = "$(nix-prefetch-url --type sha256 https://github.com/denoland/rusty_v8/releases/download/v"$NEW_VERSION"/librusty_v8_release_x86_64-apple-darwin.a.gz)";
+    riscv64-linux = "$(nix-prefetch-url --type sha256 https://github.com/denoland/rusty_v8/releases/download/v"$NEW_VERSION"/librusty_v8_release_riscv64gc-unknown-linux-gnu.a.gz)";
     aarch64-darwin = "$(nix-prefetch-url --type sha256 https://github.com/denoland/rusty_v8/releases/download/v"$NEW_VERSION"/librusty_v8_release_aarch64-apple-darwin.a.gz)";
   };
 }
@@ -54,7 +54,7 @@ fetchLibrustyV8SrcBinding {
   shas = {
     x86_64-linux = "$(nix-prefetch-url --type sha256 https://github.com/denoland/rusty_v8/releases/download/v"$NEW_VERSION"/src_binding_release_x86_64-unknown-linux-gnu.rs)";
     aarch64-linux = "$(nix-prefetch-url --type sha256 https://github.com/denoland/rusty_v8/releases/download/v"$NEW_VERSION"/src_binding_release_aarch64-unknown-linux-gnu.rs)";
-    x86_64-darwin = "$(nix-prefetch-url --type sha256 https://github.com/denoland/rusty_v8/releases/download/v"$NEW_VERSION"/src_binding_release_x86_64-apple-darwin.rs)";
+    riscv64-linux = "$(nix-prefetch-url --type sha256 https://github.com/denoland/rusty_v8/releases/download/v"$NEW_VERSION"/src_binding_release_riscv64gc-unknown-linux-gnu.rs)";
     aarch64-darwin = "$(nix-prefetch-url --type sha256 https://github.com/denoland/rusty_v8/releases/download/v"$NEW_VERSION"/src_binding_release_aarch64-apple-darwin.rs)";
   };
 }
