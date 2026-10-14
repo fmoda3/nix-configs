@@ -25,6 +25,7 @@ let
     defaultTools = [
       "+codemode"
     ];
+    showCacheMissNotices = true;
     theme = "catppuccin-frappe";
     terminal = {
       showTerminalProgress = true;
