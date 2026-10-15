@@ -10,7 +10,7 @@ Use `nix develop` (or `direnv allow`) to enter the devshell with pinned tooling.
 Format Nix code with `nix fmt` (treefmt + `nixpkgs-fmt`). Keep indentation at two spaces, sort attribute sets logically (systems first, then modules), and prefer explicit attribute names over aliases. Host folders use kebab-case (e.g., `cicucci-builder`), module files use snake_case when multiple variants exist, and secrets follow `<service>.age` under `secrets/`.
 
 ## Testing Guidelines
-Rely on `nix flake check` for structural validation and run host builds for any machine you touch. When editing a module shared across platforms, compile at least one Darwin and one NixOS target (for example, `. #darwinConfigurations.work-laptop.system` and `. #nixosConfigurations.cicucci-dns.system`). Capture build output or failure logs in the pull request if tests expose regressions.
+Rely on `nix flake check` for structural validation and run host builds for any machine you touch. When editing a module shared across platforms, compile at least one Darwin and one NixOS target (for example, `. #darwinConfigurations.work-laptop.system` and `. #nixosConfigurations.cicucci-homelab.config.system.build.toplevel`). Capture build output or failure logs in the pull request if tests expose regressions.
 
 ## Commit & Pull Request Guidelines
 Follow the existing history: imperative, present-tense subjects (`Update ccusage`, `Add fd, sd, xh, and navi`). Keep commits scoped to a single concern and mention affected hosts in the body when relevant. Pull requests should summarize the intent, list tested commands, and link any related issues. Include screenshots only when UI-facing templates or assets change.

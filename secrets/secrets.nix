@@ -16,16 +16,14 @@ let
 
   # get system's ssh public key by command:
   #    cat /etc/ssh/ssh_host_ed25519_key.pub
-  cicucci-dns = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGfR61TZ2/54tN4NJXhp9+NJRw0gIELXm0c+nzpACLKo";
   cicucci-homelab = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFjpYheKaxVXLCQH4hQ2Y9uCmWuWfHPaWwEaVovNr2Am";
-  systems = [ cicucci-dns cicucci-homelab ];
+  systems = [ cicucci-homelab ];
 
   all = users ++ systems;
   work = [ work-laptop-fmoda3 ];
-  personal = [ cicucci-desktop-fmoda3 cicucci-laptop-fmoda3 cicucci-server-fmoda3 cicucci-homelab-fmoda3 cicucci-dns cicucci-homelab ];
+  personal = [ cicucci-desktop-fmoda3 cicucci-laptop-fmoda3 cicucci-server-fmoda3 cicucci-homelab-fmoda3 cicucci-homelab ];
 in
 {
-  "dns_tailscale_key.age".publicKeys = [ cicucci-dns ];
   "homelab_tailscale_key.age".publicKeys = [ cicucci-homelab cicucci-homelab-fmoda3 ];
   "openrouter_key.age".publicKeys = personal;
   "flaggy_token.age".publicKeys = work;

@@ -141,36 +141,9 @@ This image builds a bootable iso, that boots into a standard NixOS installation,
 
 This image builds the `cicucci-builder` configuration directly into a vmware image.  After building, the image can be booted from vmware.
 
-### cicucci-dns-sd
-
-This image builds a bootable sd image, that boots directly into a system with the `cicucci-dns` configuration.  This configuration is intended to be used on a Raspberry Pi 3.
-
-1. Build sd via
-   ```shell
-   nix build ".#images.cicucci-dns-sd"
-   ```
-2. Burn sd image to an sd card using a sd burning utility of your choice.
-3. Boot Raspberry Pi directly from sd.  The `cicucci-dns` system will already be installed.
-
-Note that the sd image doesn't have a Disko config and therefore doesn't do any partition or mounting.  This is because the base NixOS sd image automatically resizes the base partition to fill the available size of the sd card on first boot.
-
 ### bootable-x86_64-iso, bootable-aarch64-iso, and bootable-aarch64-sd
 
 These images are general purpose installers, that don't target a specific configuration.  They do add a few pieces of my config on top of the base installer that are useful to have, like my zsh configs.
-
-# Remote Deployment
-
-I use [colmena](https://github.com/zhaofengli/colmena/tree/main) to deploy the `cicucci-dns` configuration remotely to my Raspberry Pi.  I do this because running `nixos-rebuild` on the Pi itself is very slow.  I deploy from a macOS machine, that is also running a NixOS vm, setup with the `cicucci-builder` configuration.
-
-## Setup
-
-1. Ensure a `aarch64-linux` machine is available to build.  I run an `aarch64-linux` NixOS vm with the `cicucci-builder` configuration inside vmware on a `aarch64-darwin` machine.
-2. If the `aarch64-linux` machine is a remote builder (i.e., not your current machine), ensure that your current machine's `root` user can ssh into the `root` user of the remote builder, via ssh key authentication (add your computer's public rsa key into the `authorized_keys` file of the remote builder)
-3. Ensure that the user you are going to deploy from on your current machine can ssh into the `root` user of the Raspberry Pi, also via ssh key authentication explained above.
-
-## Deploy
-
-1. Simply run `colmena apply`
 
 # Using Templates
 

@@ -12,7 +12,7 @@ This is a comprehensive Nix configuration repository managing multiple machines 
 ```bash
 # Build and switch configurations
 darwin-rebuild switch --flake ".#cicucci-desktop"  # macOS
-sudo nixos-rebuild switch --flake ".#cicucci-dns"  # Linux
+sudo nixos-rebuild switch --flake ".#cicucci-homelab"  # Linux
 
 # Update flake inputs
 nix flake update
@@ -32,18 +32,13 @@ nix fmt    # Alternative formatting
 ```bash
 create-aarch64-iso    # ARM64 installation ISO
 create-x86_64-iso     # x86_64 installation ISO
-create-dns-sd         # Raspberry Pi SD card image
+create-aarch64-sd     # General-purpose ARM64 SD card installer
 ```
 
 ### Secrets Management
 ```bash
 age-edit <file>       # Edit encrypted secrets
 age-rekey            # Rekey all secrets
-```
-
-### Deployment
-```bash
-colmena apply               # Deploy to remote systems
 ```
 
 ## Architecture
@@ -59,7 +54,7 @@ colmena apply               # Deploy to remote systems
 
 ### System Types
 - **darwinConfigurations**: macOS systems (cicucci-desktop, cicucci-laptop, work-laptop)
-- **nixosConfigurations**: Linux systems (cicucci-dns, cicucci-homelab, cicucci-builder)
+- **nixosConfigurations**: Linux systems (cicucci-homelab, cicucci-builder)
 - **images**: Bootable installation media
 
 ### Package Management
@@ -83,11 +78,6 @@ colmena apply               # Deploy to remote systems
 - Uses agenix for encrypted secrets
 - Secrets are per-machine and can be shared across machines
 - Automatic rekeying when keys change
-
-### Remote Deployment
-- Uses colmena for remote system management
-- Configurations for multiple remote systems
-- Automated deployment pipelines
 
 ### Development Environment
 - Direnv integration for automatic environment loading

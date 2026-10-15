@@ -5,10 +5,8 @@ in
 {
 
   imports = [
-    ./adguardhome
     ./openssh
     ./tailscale
-    ./unbound
   ];
 
   options.my-linux = {
@@ -30,18 +28,6 @@ in
               A one-time use tailscale key
             '';
           };
-        };
-      };
-    };
-
-    adblocker = lib.mkOption {
-      description = "adblocker submodule";
-      default = { };
-      type = lib.types.submodule {
-        options = {
-          enable = lib.mkEnableOption "adblocker";
-          # Should the adblocker run unbound as the backing dns provider
-          useUnbound = lib.mkEnableOption "unbound";
         };
       };
     };

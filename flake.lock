@@ -29,38 +29,6 @@
         "type": "github"
       }
     },
-    "colmena": {
-      "inputs": {
-        "flake-compat": [
-          "flake-compat"
-        ],
-        "flake-utils": [
-          "flake-utils"
-        ],
-        "nix-github-actions": [
-          "nix-github-actions"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "stable": [
-          "nixos-stable"
-        ]
-      },
-      "locked": {
-        "lastModified": 1786742289,
-        "narHash": "sha256-r61K9svFDQkI5jONYksneDtDT5c4SkWrZVD3ni5O6Ak=",
-        "owner": "zhaofengli",
-        "repo": "colmena",
-        "rev": "dc22786a43315b212eeafe13409a7203328e5a30",
-        "type": "github"
-      },
-      "original": {
-        "owner": "zhaofengli",
-        "repo": "colmena",
-        "type": "github"
-      }
-    },
     "comma": {
       "inputs": {
         "flake-compat": [
@@ -306,26 +274,6 @@
         "type": "github"
       }
     },
-    "nix-github-actions": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1737420293,
-        "narHash": "sha256-F1G5ifvqTpJq7fdkT34e/Jy9VCyzd5XfJ9TO8fHhJWE=",
-        "owner": "nix-community",
-        "repo": "nix-github-actions",
-        "rev": "f4158fa080ef4503c8f4c820967d946c2af31ec9",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "nix-github-actions",
-        "type": "github"
-      }
-    },
     "nix-index-database": {
       "inputs": {
         "nixpkgs": [
@@ -464,7 +412,6 @@
     "root": {
       "inputs": {
         "agenix": "agenix",
-        "colmena": "colmena",
         "comma": "comma",
         "darwin": "darwin",
         "devshell": "devshell",
@@ -476,7 +423,6 @@
         "git-hooks": "git-hooks",
         "home-manager": "home-manager",
         "naersk": "naersk",
-        "nix-github-actions": "nix-github-actions",
         "nix-index-database": "nix-index-database",
         "nixos-generators": "nixos-generators",
         "nixos-stable": "nixos-stable",

@@ -29,10 +29,6 @@
       url = "github:edolstra/flake-compat";
       flake = false;
     };
-    nix-github-actions = {
-      url = "github:nix-community/nix-github-actions";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -48,16 +44,6 @@
         darwin.follows = "darwin";
         home-manager.follows = "home-manager";
         systems.follows = "systems";
-      };
-    };
-    colmena = {
-      url = "github:zhaofengli/colmena";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        stable.follows = "nixos-stable";
-        flake-utils.follows = "flake-utils";
-        flake-compat.follows = "flake-compat";
-        nix-github-actions.follows = "nix-github-actions";
       };
     };
     nixos-generators = {
@@ -93,7 +79,7 @@
       };
     };
   };
-  outputs = inputs@{ self, nixpkgs, darwin, flake-parts, flake-root, colmena, treefmt-nix, devshell, nixos-generators, git-hooks, ... }:
+  outputs = inputs@{ self, nixpkgs, darwin, flake-parts, flake-root, treefmt-nix, devshell, nixos-generators, git-hooks, ... }:
     let
       # "pkgs" currently points to unstable
       # The following overlay allows you to specify "pkgs.stable" for stable versions
@@ -195,14 +181,6 @@
         modules = nixosModules { inherit user host; flakeRef = ""; } ++ installerModules { inherit targetSystem; };
         specialArgs = { inherit inputs nixpkgs; };
       };
-      mkColmenaNode = { user, host, system, targetHost }: {
-        nixpkgs = nixpkgsConfig // { inherit system; };
-        imports = nixosModules { inherit user host; flakeRef = ""; };
-        deployment = {
-          inherit targetHost;
-          targetUser = "root";
-        };
-      };
     in
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
@@ -235,11 +213,6 @@
           };
         };
         nixosConfigurations = {
-          cicucci-dns = mkNixOSSystem {
-            system = "aarch64-linux";
-            user = "fmoda3";
-            host = "cicucci-dns";
-          };
           cicucci-homelab = mkNixOSSystem {
             system = "x86_64-linux";
             user = "fmoda3";
@@ -270,12 +243,6 @@
             host = "bootable-iso";
             format = "install-iso";
           };
-          cicucci-dns-sd = mkImage {
-            system = "aarch64-linux";
-            user = "fmoda3";
-            host = "cicucci-dns";
-            format = "sd-aarch64";
-          };
           cicucci-builder-vm = mkImage {
             system = "aarch64-linux";
             user = "fmoda3";
@@ -295,14 +262,6 @@
             host = "bootable-iso";
             format = "install-iso";
             targetSystem = self.nixosConfigurations.cicucci-homelab;
-          };
-        };
-        colmenaHive = colmena.lib.makeHive {
-          cicucci-dns = mkColmenaNode {
-            user = "fmoda3";
-            host = "cicucci-dns";
-            system = "aarch64-linux";
-            targetHost = "192.168.1.251";
           };
         };
         templates = import ./templates;
@@ -334,7 +293,6 @@
           packages = with pkgs; [
             nixd
             statix
-            inputs'.colmena.packages.colmena
             inputs'.agenix.packages.default
           ];
           commands = [
@@ -387,12 +345,6 @@
               command = "nix build \".#images.bootable-aarch64-sd\"";
             }
             {
-              name = "create-dns-sd";
-              category = "image builds";
-              help = "Creates an sd image for cicucci-dns";
-              command = "nix build \".#images.cicucci-dns-sd\"";
-            }
-            {
               name = "create-homelab-iso";
               category = "image builds";
               help = "Creates an iso image for cicucci-homelab";
@@ -409,18 +361,6 @@
               category = "image builds";
               help = "Creates a vmware image for cicucci-builder";
               command = "nix build \".#images.cicucci-builder-vm\"";
-            }
-            {
-              name = "deploy-dns";
-              category = "deployment";
-              help = "Deploy configuration to cicucci-dns";
-              command = "colmena apply --on cicucci-dns";
-            }
-            {
-              name = "build-deployments";
-              category = "deployment";
-              help = "Build all configurations without deploying";
-              command = "colmena build";
             }
           ];
         };
