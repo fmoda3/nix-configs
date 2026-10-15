@@ -29,7 +29,7 @@
 
       settings = {
         dashboard.theme = "mono";
-        plugins.enabled = [ "conduit_push" ];
+        plugins.enabled = [ "conduit_push" "disk-cleanup" ];
         model = {
           provider = "openai-codex";
           default = "gpt-6.1-sol";
