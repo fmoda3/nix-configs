@@ -17,9 +17,10 @@
       ];
 
       settings = {
+        dashboard.theme = "mono";
         model = {
-          provider = "anthropic";
-          default = "claude-sonnet-5-5";
+          provider = "openai-codex";
+          default = "gpt-6.1-sol";
           persist_switch_by_default = false;
         };
         # Other built-in providers become available once authenticated. Never
