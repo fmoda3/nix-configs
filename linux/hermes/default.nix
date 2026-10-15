@@ -26,7 +26,7 @@
         # Other built-in providers become available once authenticated. Never
         # silently spend on a different provider when the selected one fails.
         fallback_providers = [ ];
-        fallback_model = null;
+        fallback_model = [ ];
         terminal.backend = "local";
       };
 
