@@ -26,5 +26,6 @@ in
 {
   "homelab_tailscale_key.age".publicKeys = [ cicucci-homelab cicucci-homelab-fmoda3 ];
   "openrouter_key.age".publicKeys = personal;
+  "hermes_env.age".publicKeys = personal;
   "flaggy_token.age".publicKeys = work;
 }

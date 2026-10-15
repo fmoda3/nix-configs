@@ -84,6 +84,7 @@
 
   my-linux = {
     enableNixOptimise = true;
+    hermes.enable = true;
     tailscale = {
       enable = true;
       authkey = config.age.secrets.homelab_tailscale_key.path;

@@ -7,10 +7,19 @@ in
   imports = [
     ./openssh
     ./tailscale
+    ./hermes
   ];
 
   options.my-linux = {
     enableNixOptimise = lib.mkEnableOption "nix auto optimizations";
+
+    hermes = lib.mkOption {
+      description = "hermes submodule";
+      default = { };
+      type = lib.types.submodule {
+        options.enable = lib.mkEnableOption "Hermes Agent";
+      };
+    };
 
     tailscale = lib.mkOption {
       description = "tailscale submodule";
