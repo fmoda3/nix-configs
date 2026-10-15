@@ -1,4 +1,4 @@
-{ config, inputs, lib, ... }:
+{ config, inputs, lib, pkgs, ... }:
 {
   imports = [ inputs.hermes-agent.nixosModules.default ];
 
@@ -12,12 +12,24 @@
       enable = true;
       addToSystemPackages = true;
 
+      extraPlugins = [
+        (pkgs.fetchFromGitHub {
+          name = "hermes-conduit-notifier";
+          owner = "kaishi00";
+          repo = "hermes-conduit-notifier";
+          # Plugin 0.34.1; pin independently of the Hermes release.
+          rev = "9cf64e1bbccbc57914c5ced8b8b1756df0a6e1a1";
+          hash = "sha256-Isr1M9ma6gHShr0DLuecUHwDuImPnTe9BRYzYJR4RTI=";
+        })
+      ];
+
       environmentFiles = [
         config.age.secrets.hermes_env.path
       ];
 
       settings = {
         dashboard.theme = "mono";
+        plugins.enabled = [ "conduit_push" ];
         model = {
           provider = "openai-codex";
           default = "gpt-6.1-sol";
