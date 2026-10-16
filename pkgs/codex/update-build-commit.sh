@@ -5,7 +5,7 @@
 set -eu -o pipefail
 
 package_dir=$(dirname "$(readlink --canonicalize-existing "${BASH_SOURCE[0]}")")
-package_file="$package_dir/package.nix"
+package_file="$package_dir/default.nix"
 release=$(curl ${GITHUB_TOKEN:+-u ":$GITHUB_TOKEN"} --silent --fail --location \
   "https://api.github.com/repos/openai/codex/releases/latest")
 tag=$(jq --exit-status --raw-output '.tag_name' <<<"$release")
