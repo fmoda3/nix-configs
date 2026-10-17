@@ -4,6 +4,24 @@
 
   config = lib.mkIf config.my-linux.hermes.enable {
     age.secrets.hermes_env.file = ../../secrets/hermes_env.age;
+    age.secrets.searx_env.file = ../../secrets/searx_env.age;
+
+    services.searx = {
+      enable = true;
+      package = pkgs.searxng;
+      openFirewall = false;
+      environmentFile = config.age.secrets.searx_env.path;
+      settings = {
+        general.debug = false;
+        server = {
+          bind_address = "127.0.0.1";
+          port = 8888;
+          # Only local clients; no Redis/bot-protection service needed.
+          limiter = false;
+        };
+        search.formats = [ "html" "json" ];
+      };
+    };
 
     # Hermes manages downloaded tools; provide their conventional ELF loader.
     # This is host-wide compatibility, enabled only on Hermes hosts.
@@ -34,6 +52,8 @@
 
     # System services do not inherit login-shell session variables.
     systemd.services = lib.genAttrs [ "hermes-agent" "hermes-backend" ] (_: {
+      wants = [ "searx.service" ];
+      after = [ "searx.service" ];
       environment = {
         inherit (config.environment.sessionVariables) NIX_LD NIX_LD_LIBRARY_PATH;
       };
@@ -45,6 +65,7 @@
     services.hermes-agent = {
       enable = true;
       addToSystemPackages = true;
+      environment.SEARXNG_URL = "http://127.0.0.1:8888";
 
       extraPlugins = [
         (pkgs.fetchFromGitHub {
@@ -63,6 +84,11 @@
 
       settings = {
         dashboard.theme = "mono";
+        # Local search with Exa page extraction; MCP servers are independent.
+        web = {
+          search_backend = "searxng";
+          extract_backend = "exa";
+        };
         plugins.enabled = [ "conduit_push" "disk-cleanup" ];
         # Vendor-hosted MCP servers; anonymous access, no local executables.
         mcp_servers = {
