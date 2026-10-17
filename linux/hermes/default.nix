@@ -64,6 +64,12 @@
       settings = {
         dashboard.theme = "mono";
         plugins.enabled = [ "conduit_push" "disk-cleanup" ];
+        # Vendor-hosted MCP servers; anonymous access, no local executables.
+        mcp_servers = {
+          exa.url = "https://mcp.exa.ai/mcp";
+          deepwiki.url = "https://mcp.deepwiki.com/mcp";
+          context7.url = "https://mcp.context7.com/mcp";
+        };
         model = {
           provider = "openai-codex";
           default = "gpt-6.1-sol";
