@@ -9,7 +9,27 @@
     # This is host-wide compatibility, enabled only on Hermes hosts.
     programs.nix-ld = {
       enable = true;
-      libraries = [ pkgs.glib pkgs.nspr ];
+      libraries = with pkgs; [
+        glib
+        nspr
+        nss
+        at-spi2-core
+        dbus
+        cups
+        expat
+        libxcb
+        libxkbcommon
+        libX11
+        libXcomposite
+        libXdamage
+        libXext
+        libXfixes
+        libXrandr
+        libgbm
+        cairo
+        pango
+        alsa-lib
+      ];
     };
 
     # System services do not inherit login-shell session variables.
