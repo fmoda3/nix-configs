@@ -7,7 +7,10 @@
 
     # Hermes manages downloaded tools; provide their conventional ELF loader.
     # This is host-wide compatibility, enabled only on Hermes hosts.
-    programs.nix-ld.enable = true;
+    programs.nix-ld = {
+      enable = true;
+      libraries = [ pkgs.glib ];
+    };
 
     # System services do not inherit login-shell session variables.
     systemd.services = lib.genAttrs [ "hermes-agent" "hermes-backend" ] (_: {
