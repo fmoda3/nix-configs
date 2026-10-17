@@ -5,6 +5,17 @@
   config = lib.mkIf config.my-linux.hermes.enable {
     age.secrets.hermes_env.file = ../../secrets/hermes_env.age;
 
+    # Hermes manages downloaded tools; provide their conventional ELF loader.
+    # This is host-wide compatibility, enabled only on Hermes hosts.
+    programs.nix-ld.enable = true;
+
+    # System services do not inherit login-shell session variables.
+    systemd.services = lib.genAttrs [ "hermes-agent" "hermes-backend" ] (_: {
+      environment = {
+        inherit (config.environment.sessionVariables) NIX_LD NIX_LD_LIBRARY_PATH;
+      };
+    });
+
     # Rely on the USG and tailnet policy for network-level access restrictions.
     networking.firewall.allowedTCPPorts = [ 9119 ];
 
