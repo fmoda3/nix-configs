@@ -3,9 +3,9 @@
 let
   src = fetchGit {
     url = "git@github.toasttab.com:toasttab/pi-toast.git";
-    rev = "e643dc88f4c6392cb640904aa2896b219a69bc3d";
+    rev = "94ab90267d3107b350d423a0fae220a14b1417e1";
     ref = "main";
-    narHash = "sha256-vDzX01Jp+mKqWPx+gjMAzE/yQSrNwCMky3VbOanAbpw=";
+    narHash = "sha256-OrSbzQQXLHSuB6g6lxv19K41mYcBUOV+/9pMa+yU65s=";
   };
 in
 buildPiExtension {
