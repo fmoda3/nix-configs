@@ -23,10 +23,7 @@ final: prev:
     pi-ask = prev.callPackage ./piExtensions/pi-ask { };
     pi-auto-router = prev.callPackage ./piExtensions/pi-auto-router { };
     pi-context = prev.callPackage ./piExtensions/pi-context { };
-    pi-direnv = prev.callPackage ./piExtensions/pi-direnv { };
-    pi-ghostty = prev.callPackage ./piExtensions/pi-ghostty { };
     pi-notify = prev.callPackage ./piExtensions/pi-notify { };
-    pi-plan = prev.callPackage ./piExtensions/pi-plan { };
     pi-processes = prev.callPackage ./piExtensions/pi-processes { };
     pi-working-indicator = prev.callPackage ./piExtensions/pi-working-indicator { };
     pi-status-dashboard = prev.callPackage ./piExtensions/pi-status-dashboard { };

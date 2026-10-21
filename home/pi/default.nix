@@ -63,9 +63,7 @@ let
     pi-ask
     pi-auto-router
     pi-context
-    pi-ghostty
     pi-notify
-    pi-plan
     pi-status-dashboard
     pi-processes
     pi-working-indicator
