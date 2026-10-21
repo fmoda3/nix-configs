@@ -49,7 +49,7 @@ let
     outputHashAlgo = "sha256";
     # Regenerate (VPN required) when upstream schemas change:
     #   nix build .#... 2>&1 | grep 'got:'
-    outputHash = "sha256-ZT7T4gFtrvgVsTqptvZTiuEeDDUawEWPUUQ8cyjXQj0=";
+    outputHash = "sha256-Ul3gdwl3vRcmdn+jvXw9uNQUKMnQAV2vCwHdzD+2/gw=";
   };
 in
 buildNpmPackage {
