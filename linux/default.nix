@@ -8,6 +8,8 @@ in
     ./openssh
     ./tailscale
     ./hermes
+    ./homebridge
+    ./home-assistant
   ];
 
   options.my-linux = {
@@ -18,6 +20,22 @@ in
       default = { };
       type = lib.types.submodule {
         options.enable = lib.mkEnableOption "Hermes Agent";
+      };
+    };
+
+    homebridge = lib.mkOption {
+      description = "homebridge submodule";
+      default = { };
+      type = lib.types.submodule {
+        options.enable = lib.mkEnableOption "Homebridge";
+      };
+    };
+
+    home-assistant = lib.mkOption {
+      description = "home-assistant submodule";
+      default = { };
+      type = lib.types.submodule {
+        options.enable = lib.mkEnableOption "Home Assistant";
       };
     };
 
