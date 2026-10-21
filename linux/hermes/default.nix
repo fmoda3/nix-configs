@@ -72,9 +72,9 @@
           name = "hermes-conduit-notifier";
           owner = "kaishi00";
           repo = "hermes-conduit-notifier";
-          # Plugin 0.34.1; pin independently of the Hermes release.
-          rev = "9cf64e1bbccbc57914c5ced8b8b1756df0a6e1a1";
-          hash = "sha256-Isr1M9ma6gHShr0DLuecUHwDuImPnTe9BRYzYJR4RTI=";
+          # Plugin 0.52.1; pin independently of the Hermes release.
+          rev = "debe0d2c5d33ac62ff26e73ae696f69b3e52baa6";
+          hash = "sha256-ZegXhiVL34oy2MahYAHWv9H/WJQhYnWmyEICEdqF/oU=";
         })
       ];
 
