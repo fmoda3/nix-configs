@@ -19,7 +19,6 @@
         "libffi"
         "cocoapods"
         "toasttab/toast/lunchbox"
-        "toasttab/toast/braid"
         "snyk/tap/snyk"
         "toasttab/toast/flaggy"
       ] ++
