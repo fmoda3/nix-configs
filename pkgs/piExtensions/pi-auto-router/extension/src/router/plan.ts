@@ -24,8 +24,8 @@
  */
 
 import type { Message } from "@earendil-works/pi-ai";
-import type { Effort, Level, RoutedState, RouterState } from "./types.ts";
-import { DECLINED_LEVEL, LEVELS, isPremiumLevel, isScouting } from "./types.ts";
+import type { Effort, Family, Level, RoutedState, RouterState } from "./types.ts";
+import { LEVELS, declinedLevel, isPremiumLevel, isScouting } from "./types.ts";
 
 /**
  * The subset of pi's `ModelRouteRequest` the planner looks at.
@@ -218,18 +218,18 @@ export function shiftLevel(level: Level, offset: number): Level {
  * `moderate`, shifted by effort, but never into a premium level. A fallback
  * must not be what triggers a spend confirmation — nothing was judged to need it.
  */
-export function fallbackLevel(offset: number): Level {
-  return cappedShift(DEFAULT_ROUTE.level, offset);
+export function fallbackLevel(offset: number, family: Family): Level {
+  return cappedShift(DEFAULT_ROUTE.level, offset, family);
 }
 
 /** The scout rung's level, shifted by effort like the fallback and likewise never premium. */
-export function scoutLevel(offset: number): Level {
-  return cappedShift(SCOUT_LEVEL, offset);
+export function scoutLevel(offset: number, family: Family): Level {
+  return cappedShift(SCOUT_LEVEL, offset, family);
 }
 
-function cappedShift(level: Level, offset: number): Level {
+function cappedShift(level: Level, offset: number, family: Family): Level {
   const shifted = shiftLevel(level, offset);
-  return isPremiumLevel(shifted) ? DECLINED_LEVEL : shifted;
+  return isPremiumLevel(shifted, family) ? declinedLevel(family) : shifted;
 }
 
 // ─── Spend confirmation ───────────────────────────────────────────────────────
@@ -253,14 +253,18 @@ export type PremiumDecision =
  * up again — asks again, because it is a new, bigger expense.
  *
  * Declining routes to the highest level already approved below the request,
- * else `complex`: there is no "keep current" for a virtual model, so declining
- * has to mean "the same, but cheaper".
+ * else the family's `declinedLevel`: there is no "keep current" for a virtual
+ * model, so declining has to mean "the same, but cheaper".
  */
-export function premiumDecision(level: Level, state: Pick<RoutedState, "approved" | "declined"> | undefined): PremiumDecision {
-  if (!isPremiumLevel(level)) return { kind: "route", level };
+export function premiumDecision(
+  level: Level,
+  family: Family,
+  state: Pick<RoutedState, "approved" | "declined"> | undefined,
+): PremiumDecision {
+  if (!isPremiumLevel(level, family)) return { kind: "route", level };
   const approved = state?.approved;
   if (approved !== undefined && rank(level) <= rank(approved)) return { kind: "route", level };
-  const fallback = approved !== undefined && rank(approved) < rank(level) ? approved : DECLINED_LEVEL;
+  const fallback = approved !== undefined && rank(approved) < rank(level) ? approved : declinedLevel(family);
   const declined = state?.declined;
   if (declined !== undefined && rank(level) <= rank(declined)) return { kind: "declined", level: fallback };
   return { kind: "confirm", level, fallback };
@@ -312,6 +316,7 @@ export type LevelStep =
  */
 export function planLevel(input: {
   readonly state: RoutedState;
+  readonly family: Family;
   readonly selectedEffort: string;
   readonly resolve: (level: Level) => Level;
   readonly canAsk: boolean;
@@ -320,7 +325,7 @@ export function planLevel(input: {
   const requested = shiftLevel(state.level, effortOffset(input.selectedEffort));
   const resolvedLevel = input.resolve(requested);
   const base = { requested, premiumPrompted: false, state };
-  const decision = premiumDecision(resolvedLevel, state);
+  const decision = premiumDecision(resolvedLevel, input.family, state);
   switch (decision.kind) {
     case "route":
       return { kind: "done", outcome: { ...base, level: resolvedLevel, declined: false } };

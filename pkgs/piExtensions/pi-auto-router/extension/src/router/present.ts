@@ -57,8 +57,9 @@ export function confirmPrompt(
   effort: Effort,
   costMultiple: number,
   declined: { readonly target: ResolvedTarget; readonly effort: Effort },
+  family: Family,
 ): { readonly title: string; readonly message: string } | undefined {
-  if (!isPremiumLevel(target.level)) return undefined;
+  if (!isPremiumLevel(target.level, family)) return undefined;
   return {
     title: `Use ${describeRoute(target, effort)}?`,
     message:

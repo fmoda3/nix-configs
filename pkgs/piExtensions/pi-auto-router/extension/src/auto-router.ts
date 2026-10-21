@@ -33,9 +33,10 @@
  *
  *   - Suggestions are applied without a picker, because the user opted in by
  *     selecting an auto model and there is no "keep current" for a virtual
- *     model. The one exception is spend: the `hard` and `extreme` levels still
- *     ask — whether the classifier or an effort offset put the route there —
- *     and declining routes to `complex` (`premiumDecision`). Each answer is
+ *     model. The one exception is spend: the premium levels (`hard` and
+ *     `extreme` for Claude, `extreme` for GPT) still ask — whether the
+ *     classifier or an effort offset put the route there — and declining
+ *     routes to the family's `declinedLevel` (`premiumDecision`). Each answer is
  *     remembered on the branch, so a session is asked once, not every prompt.
  *     Without a UI to ask on, the cheaper route is taken.
  *   - A classifier failure routes to the default level and stores no state, so
@@ -152,6 +153,7 @@ export function registerAutoRouter(pi: ExtensionAPI) {
   ): Promise<LevelOutcome & { chosen: ResolvedRoute }> => {
     const step = planLevel({
       state,
+      family,
       selectedEffort,
       resolve: (level) => resolveRoute(ctx, family, level).target.level,
       canAsk: ctx.hasUI,
@@ -160,7 +162,7 @@ export function registerAutoRouter(pi: ExtensionAPI) {
     if (step.kind === "ask") {
       const premium = resolveRoute(ctx, family, step.level);
       const fallback = resolveRoute(ctx, family, step.fallback);
-      const prompt = confirmPrompt(premium.target, premium.effort, costMultiple(family, step.level), fallback)!;
+      const prompt = confirmPrompt(premium.target, premium.effort, costMultiple(family, step.level), fallback, family)!;
       outcome = step.answer(await ctx.ui.confirm(prompt.title, prompt.message));
     } else {
       outcome = step.outcome;
@@ -186,7 +188,7 @@ export function registerAutoRouter(pi: ExtensionAPI) {
 
   /** The fallback route: `moderate` shifted by effort, never premium. */
   const fallbackRoute = (ctx: ExtensionContext, family: Family, selectedEffort: string) =>
-    resolveRoute(ctx, family, fallbackLevel(effortOffset(selectedEffort)));
+    resolveRoute(ctx, family, fallbackLevel(effortOffset(selectedEffort), family));
 
   /**
    * Classify and route: the first user prompt of a branch, a new prompt on a
@@ -209,7 +211,7 @@ export function registerAutoRouter(pi: ExtensionAPI) {
 
     /** Route to the scout rung while the agent reads what the prompt points to. */
     const scout = (why: { scoutTrigger: "reference"; references: readonly string[] } | { scoutTrigger: "classifier"; suggestion: Suggestion }) => {
-      const resolved = resolveRoute(ctx, family, scoutLevel(offset));
+      const resolved = resolveRoute(ctx, family, scoutLevel(offset, family));
       emit({
         virtualModel,
         ...why,
@@ -342,7 +344,7 @@ export function registerAutoRouter(pi: ExtensionAPI) {
             clampEffort(
               rungFor(
                 family,
-                !state ? fallbackLevel(offset) : isScouting(state) ? scoutLevel(offset) : shiftLevel(state.level, offset),
+                !state ? fallbackLevel(offset, family) : isScouting(state) ? scoutLevel(offset, family) : shiftLevel(state.level, offset),
               ).effort,
               supportedEfforts(effortsFor(plan.choice.model)),
             ),
@@ -352,7 +354,7 @@ export function registerAutoRouter(pi: ExtensionAPI) {
       case "default":
         return toModelRoute(fallbackRoute(ctx, family, String(request.thinkingLevel)));
       case "scout":
-        return toModelRoute(resolveRoute(ctx, family, scoutLevel(offset)));
+        return toModelRoute(resolveRoute(ctx, family, scoutLevel(offset, family)));
       case "classify":
         return classifyAndRoute(auto, request, ctx, plan.withContext, scouting);
     }

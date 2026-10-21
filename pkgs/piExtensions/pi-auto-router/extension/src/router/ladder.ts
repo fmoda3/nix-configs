@@ -32,24 +32,36 @@ export interface AvailableModel {
 }
 
 /**
- * The Claude ladder: Haiku 4.5 as the floor, then Opus 5.5 across its efforts.
+ * The Claude ladder: Haiku 5.5 at the bottom, then Opus 5.5 from `medium` up.
  *
- * On the Artificial Analysis Intelligence Index every Opus 5.5 effort from
- * `low` to `max` is on the frontier, and nothing else from $0.55 per task up
- * is: Fable 5.1 is beaten at every effort by an Opus 5.5 setting that is both
- * cheaper and higher (Opus `medium` matches Fable `high` for a third of the
- * cost), and Sonnet 5 from `medium` up likewise. Sonnet 5 at `low` is only
- * nominally on the frontier — Opus 5.5 `low` costs 8% more for +18 points — so
- * it is left out rather than given a level of its own.
+ * Haiku 5.5 took over the bottom of the frontier: every effort from `low` (29,
+ * $0.02) to `max` (43, $0.21) is on it, and it dominates both former bottom
+ * rungs — Haiku 4.5 (16.9, $0.28) at every effort, and Opus 5.5 `low` (42.3,
+ * $0.55) by Haiku `max`, with Haiku `xhigh` 1.3 points behind at under a
+ * quarter of the cost. From there Opus 5.5 `medium` to `max` is the frontier;
+ * Fable 5.1 and Sonnet 5 stay dominated at every effort.
  *
- * Haiku 4.5 is the floor: the cheapest thing that works, for trivial requests
- * and for running the classifier itself. AA measured it at one reasoning
- * setting only; `low` is the cheapest reasoning pi offers on it (thinking off is
- * never on the frontier for any model measured).
+ * Sonnet 5.5 is on the frontier only at `high` (46.8, $0.88), in the gap
+ * between Haiku `max` and Opus `medium`, and about a point below the line
+ * joining them; it gets no level, since that would mean dropping Opus `max` or
+ * weakening `moderate`. Every other Sonnet 5.5 effort is beaten by a cheaper,
+ * higher Haiku 5.5 or Opus 5.5 one. Haiku's provisional costs are what make
+ * this close: re-check when AA prices the 100k step.
+ *
+ * `trivial` is Haiku `medium` (+5 over `low` for three cents), `simple` is
+ * `xhigh` rather than `max`: +2 points for 1.8x the tokens, and every extra
+ * token makes a request likelier to cross the 100k input step where Haiku 5.5
+ * bills the whole request at 5x. AA's Haiku 5.5 costs are provisional and do
+ * not yet include that step.
+ *
+ * Haiku 5.5 is also the Claude classifier (the `trivial` rung). Sent with no
+ * reasoning option, pi-ai's anthropic-messages api turns its adaptive thinking
+ * off (`thinking: {type: "disabled"}`), so the classifier tool can still be
+ * forced.
  */
 const CLAUDE_RUNGS: Readonly<Record<Level, Rung>> = {
-  trivial: { model: "claude-haiku-4-5", effort: "low", benchmark: { index: 16.9, costPerTask: 0.28 } },
-  simple: { model: "claude-opus-5-5", effort: "low", benchmark: { index: 42.3, costPerTask: 0.55 } },
+  trivial: { model: "claude-haiku-5-5", effort: "medium", benchmark: { index: 34, costPerTask: 0.05 } },
+  simple: { model: "claude-haiku-5-5", effort: "xhigh", benchmark: { index: 41, costPerTask: 0.12 } },
   moderate: { model: "claude-opus-5-5", effort: "medium", benchmark: { index: 51.2, costPerTask: 1.34 } },
   complex: { model: "claude-opus-5-5", effort: "high", benchmark: { index: 53.6, costPerTask: 1.82 } },
   hard: { model: "claude-opus-5-5", effort: "xhigh", benchmark: { index: 56.0, costPerTask: 3.46 } },
@@ -57,14 +69,16 @@ const CLAUDE_RUNGS: Readonly<Record<Level, Rung>> = {
 };
 
 /**
- * The GPT ladder: a staircase through Luna, Sol and Astra.
+ * The GPT ladder: Luna at the bottom, GPT-6.1 Sol through the middle, Astra on top.
  *
- * The GPT-6 frontier runs through all three models (Luna `low`→`max`, Sol
- * `medium`→`max`, Astra `low`→`max`); these six rungs sample it at the points
- * that also hold up on Terminal-Bench 4.0, the closest single eval to agentic
- * coding. Dropped from the frontier: Sol `max` (beaten on Terminal-Bench by
- * Astra `high` at the same cost) and Astra `max` (no better than `xhigh` on
- * Terminal-Bench, 1.4× the cost). Thinking off, and Sol `low`, are never on it.
+ * GPT-6.1 Sol pushed the GPT-6 frontier out at every effort: Sol 6.1 `medium`
+ * beats every GPT-6 Sol point and Astra `low`; `high` beats Astra `medium`;
+ * `xhigh` matches Astra `high` (index and Terminal-Bench 4.0) at under a
+ * quarter of the cost. What survives around it is Luna `low`→`max` below and
+ * Astra `xhigh` above (the best GPT Terminal-Bench score, 59.6%). Sol 6.1 `max`
+ * is skipped: +0.8 index for 1.8× the cost of `xhigh`, and AA's Coding Agent
+ * Index has `xhigh` 3 points ahead of it. Sol 6.1 `low` (42, $0.13) is on the
+ * frontier but `simple` stays on Luna `max` at half the cost.
  *
  * The `openai-codex` provider declares `max` for every GPT-6 model, and pi
  * sends it as `reasoning.effort`, so every rung's effort reaches the model.
@@ -72,9 +86,9 @@ const CLAUDE_RUNGS: Readonly<Record<Level, Rung>> = {
 const GPT_RUNGS: Readonly<Record<Level, Rung>> = {
   trivial: { model: "gpt-6-luna", effort: "medium", benchmark: { index: 29.5, costPerTask: 0.018 } },
   simple: { model: "gpt-6-luna", effort: "max", benchmark: { index: 37.3, costPerTask: 0.068 } },
-  moderate: { model: "gpt-6-sol", effort: "high", benchmark: { index: 42.8, costPerTask: 0.375 } },
-  complex: { model: "gpt-6-astra", effort: "low", benchmark: { index: 45.8, costPerTask: 0.82 } },
-  hard: { model: "gpt-6-astra", effort: "high", benchmark: { index: 50.9, costPerTask: 1.73 } },
+  moderate: { model: "gpt-6.1-sol", effort: "medium", benchmark: { index: 48, costPerTask: 0.21 } },
+  complex: { model: "gpt-6.1-sol", effort: "high", benchmark: { index: 50, costPerTask: 0.32 } },
+  hard: { model: "gpt-6.1-sol", effort: "xhigh", benchmark: { index: 51, costPerTask: 0.39 } },
   extreme: { model: "gpt-6-astra", effort: "xhigh", benchmark: { index: 52.4, costPerTask: 2.31 } },
 };
 
@@ -192,7 +206,7 @@ export interface ClassifierTarget {
 }
 
 /**
- * The model that runs the classifier: the family's `trivial` rung (Haiku 4.5
+ * The model that runs the classifier: the family's `trivial` rung (Haiku 5.5
  * for Claude, GPT-6 Luna for GPT), degrading cheaper-first like any other
  * level — so a classifier call can never land on an expensive model and cost
  * more than the turn it is trying to optimise.
@@ -213,9 +227,10 @@ export function resolveClassifierModel(family: Family, available: readonly Avail
  *
  * This is not cosmetic. Support genuinely varies across the catalogue:
  *
- *   claude-haiku-4-5    off → high          (no thinkingLevelMap)
+ *   claude-haiku-5-5    off, low → max      (`minimal` disabled)
  *   claude-opus-5-5     low → max           (`off` and `minimal` disabled)
- *   gpt-6-luna, -sol    off → max
+ *   gpt-6-luna          off → max
+ *   gpt-6.1-sol         minimal → max       (`off` is explicitly disabled)
  *   gpt-6-astra         minimal → max       (`off` is explicitly disabled)
  *
  * Applying an unsupported level is worse than merely useless: pi's

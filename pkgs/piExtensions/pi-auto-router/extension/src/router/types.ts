@@ -38,22 +38,33 @@ export type Level = "trivial" | "simple" | "moderate" | "complex" | "hard" | "ex
 export const LEVELS: readonly Level[] = ["trivial", "simple", "moderate", "complex", "hard", "extreme"];
 
 /**
- * Levels whose cost warrants an explicit acknowledgement before being applied.
+ * Levels whose cost warrants an explicit acknowledgement before being applied,
+ * per family.
  *
- * `hard` and `extreme` cost 2.6–4.5× a `moderate` route per task on both
- * ladders. The classifier may suggest them, because refusing would make it
- * useless for the work that genuinely needs them, but spending that much must
- * not happen without the user saying so.
+ * On the Claude ladder `hard` and `extreme` cost 2.6–4.5× a `moderate` route
+ * per task. On the GPT ladder GPT-6.1 Sol made `hard` cheap (≈1.9× moderate),
+ * so only `extreme` (GPT-6 Astra, ≈11×) is gated. The classifier may suggest a
+ * gated level, because refusing would make it useless for the work that
+ * genuinely needs it, but spending that much must not happen without the user
+ * saying so.
  */
-export function isPremiumLevel(level: Level): boolean {
-  return level === "hard" || level === "extreme";
+const PREMIUM_LEVELS: Readonly<Record<Family, readonly Level[]>> = {
+  claude: ["hard", "extreme"],
+  gpt: ["extreme"],
+};
+
+export function isPremiumLevel(level: Level, family: Family): boolean {
+  return PREMIUM_LEVELS[family].includes(level);
 }
 
 /**
  * Where a declined premium route goes: the most capable level that needs no
- * confirmation. There is no "keep current" for a virtual model.
+ * confirmation on that family's ladder (`complex` for Claude, `hard` for GPT).
+ * There is no "keep current" for a virtual model.
  */
-export const DECLINED_LEVEL: Level = "complex";
+export function declinedLevel(family: Family): Level {
+  return [...LEVELS].reverse().find((level) => !isPremiumLevel(level, family))!;
+}
 
 /**
  * Thinking effort. The full set pi supports, matching pi-ai's
