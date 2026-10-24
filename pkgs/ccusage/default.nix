@@ -33,13 +33,13 @@ let
 in
 rustPlatform.buildRustPackage (finalAttrs: {
   pname = "ccusage";
-  version = "20.0.41";
+  version = "20.0.42";
 
   src = fetchFromGitHub {
     owner = "ccusage";
     repo = "ccusage";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-K3B3hNYVAVziC/ItxEh8g9P7vtBDAq3zAXP4JSOovv8=";
+    hash = "sha256-2rpV5D5DvsI/iJ1ZhSwv4urKSHQkT5oyZw9kLPLnSmM=";
   };
 
   # The Cargo workspace lives in rust/, not at the repo root.
