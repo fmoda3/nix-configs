@@ -9,10 +9,10 @@ buildPiExtension {
   src = fetchFromGitHub {
     owner = "nicobailon";
     repo = "pi-web-access";
-    rev = "f6c2f54051bae8e57252d22acf03879117ac40bb";
-    sha256 = "sha256-1tt/mmHUm711zyx4K/RqU8gVbtiTylVCT7yqsdJ9K6Q=";
+    rev = "d95fb1eb4350b90bd4285cbc84958085d136aa43";
+    sha256 = "sha256-P2dRLePZuM9ZTP1nnMtrbZbTb70uicxdR9fJby61Cpg=";
   };
 
   npmDepsFetcherVersion = 2;
-  npmDepsHash = "sha256-fw/HcePRMdJNNe+vNo4oBHWBUB9X2i2FAsl8BFr4qOc=";
+  npmDepsHash = "sha256-jyIrcH9OmEPV9bn+BGLEccImRFRHd7ZxMSYGuISXg4Y=";
 }
