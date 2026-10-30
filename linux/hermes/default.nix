@@ -64,6 +64,10 @@
 
     services.hermes-agent = {
       enable = true;
+      # Upstream defaults the runtime install stamp to 0.0.0, even on release tags.
+      package = inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
+        version = "0.22.5";
+      };
       addToSystemPackages = true;
       environment.SEARXNG_URL = "http://127.0.0.1:8888";
 
