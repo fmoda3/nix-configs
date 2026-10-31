@@ -73,6 +73,10 @@ let
     pi-web-access
   ];
 
+  personalExtensions = with pkgs.piExtensions; [
+    pi-claude-bridge
+  ];
+
   workExtensions = with pkgs.piExtensions; [
     pi-toast
     pi-toast-plugins
@@ -128,6 +132,16 @@ in
           source = ./config/agents;
           recursive = true;
         };
+      } // lib.optionalAttrs (!cfg.isWork) {
+        ".pi/agent/claude-bridge.json" = {
+          text = builtins.toJSON {
+            provider = {
+              plan = "max";
+              longContextExtraUsage = false;
+              pathToClaudeCodeExecutable = "${config.programs.claude-code.package}/bin/claude";
+            };
+          };
+        };
       } // builtins.listToAttrs (map
         (extension: {
           name = ".pi/agent/extensions/${lib.getName extension}";
@@ -135,7 +149,7 @@ in
             source = extension;
           };
         })
-        (extensions ++ lib.optionals cfg.isWork workExtensions));
+        (extensions ++ (if cfg.isWork then workExtensions else personalExtensions)));
     };
   };
 }

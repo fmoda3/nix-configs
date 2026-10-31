@@ -22,6 +22,7 @@ final: prev:
   piExtensions = {
     pi-ask = prev.callPackage ./piExtensions/pi-ask { };
     pi-auto-router = prev.callPackage ./piExtensions/pi-auto-router { };
+    pi-claude-bridge = prev.callPackage ./piExtensions/pi-claude-bridge { };
     pi-context = prev.callPackage ./piExtensions/pi-context { };
     pi-notify = prev.callPackage ./piExtensions/pi-notify { };
     pi-processes = prev.callPackage ./piExtensions/pi-processes { };
