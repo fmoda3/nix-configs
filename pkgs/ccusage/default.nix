@@ -24,8 +24,8 @@ let
   #
   # Both values below are kept in sync with the package version by
   # passthru.updateScript — do not edit them by hand.
-  litellmPricingRev = "f96200bcea3a08adcd08ad4eb5ad169d226cdda5";
-  litellmPricingHash = "sha256-yNDB8oJhPmh0ZUuJ2JBMg8sqAno/ejCeqWtdMdCLkus=";
+  litellmPricingRev = "467847b2e9da67dd1c4ef43ff7d95ca56c013fa3";
+  litellmPricingHash = "sha256-evifDJpybw7l+5XduEdks37H9KTPZz+jARSq2YkfjUI=";
   litellmPricing = fetchurl {
     url = "https://raw.githubusercontent.com/BerriAI/litellm/${litellmPricingRev}/model_prices_and_context_window.json";
     hash = litellmPricingHash;
@@ -33,20 +33,20 @@ let
 in
 rustPlatform.buildRustPackage (finalAttrs: {
   pname = "ccusage";
-  version = "20.0.45";
+  version = "20.0.46";
 
   src = fetchFromGitHub {
     owner = "ccusage";
     repo = "ccusage";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-4nFUpdXNtWOLJuYfxjb0hkT/y1Q3x6HUy7b8bxMmdYg=";
+    hash = "sha256-wwGn9jTj/ZESAdYxyIPyyIEuydXz8ZNyse06yxlISSc=";
   };
 
   # The Cargo workspace lives in rust/, not at the repo root.
   cargoRoot = "rust";
   buildAndTestSubdir = "rust";
 
-  cargoHash = "sha256-YcNmxK/+aOI7G0tK4VN1suc7oG4Q9AsT0eBLjk4zUgE=";
+  cargoHash = "sha256-nSmD/1mEma3yJQEcCVxRBtgfMqNH5RG9GlfRv7fYhEU=";
 
   __structuredAttrs = true;
 
@@ -98,7 +98,12 @@ rustPlatform.buildRustPackage (finalAttrs: {
         version=$(nix-instantiate --eval --raw -A "$attr.version")
         rev=$(curl --fail --silent --show-error --location \
           "https://raw.githubusercontent.com/ccusage/ccusage/v''${version}/flake.lock" \
-          | jq --raw-output '.nodes.litellm.locked.rev')
+          | jq --exit-status --raw-output '
+              .nodes.litellm.locked
+              | (.rev // ((.url // "") | capture("^https://raw[.]githubusercontent[.]com/BerriAI/litellm/(?<rev>[0-9a-f]{40})/model_prices_and_context_window[.]json$").rev))
+              | if type == "string" and test("^[0-9a-f]{40}$") then .
+                else error("Invalid LiteLLM pricing revision") end
+            ')
         hash=$(nix-prefetch-url --type sha256 \
           "https://raw.githubusercontent.com/BerriAI/litellm/''${rev}/model_prices_and_context_window.json" \
           | xargs nix --extra-experimental-features nix-command hash convert --hash-algo sha256 --to sri)
