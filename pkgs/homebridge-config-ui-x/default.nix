@@ -6,6 +6,7 @@
 , npmHooks
 , python3
 , cacert
+, autoPatchelfHook
 , nodejs_24
 ,
 }:
@@ -41,6 +42,13 @@ buildNpmPackage.override { nodejs = nodejs_24; } (finalAttrs: {
       source ${npmHooks.npmConfigHook}/nix-support/setup-hook
       npmRoot=ui npmDeps=${finalAttrs.npmDeps_ui} makeCacheWritable= npmConfigHook
     )
+  '' + lib.optionalString stdenv.hostPlatform.isLinux ''
+    # @angular/build uses sass-embedded, which spawns a prebuilt dart binary
+    # linked against an FHS dynamic loader. Patch it so it runs in the sandbox.
+    for dir in ui/node_modules/sass-embedded-linux-{x64,arm64}/dart-sass; do
+      if [ -d "$dir" ]; then autoPatchelf "$dir"; fi
+    done
+  '' + ''
     # Required to prevent "ng build" from failing due to
     # prompting user for autocompletion
     export CI=true
@@ -55,7 +63,12 @@ buildNpmPackage.override { nodejs = nodejs_24; } (finalAttrs: {
 
   nativeBuildInputs = [
     python3
-  ] ++ lib.optionals stdenv.hostPlatform.isDarwin [ cacert ];
+  ] ++ lib.optionals stdenv.hostPlatform.isLinux [ autoPatchelfHook ]
+  ++ lib.optionals stdenv.hostPlatform.isDarwin [ cacert ];
+
+  # autoPatchelf is only invoked manually in preBuild for sass-embedded; leave
+  # the installed output (prebuilt node-pty binaries, etc.) untouched.
+  dontAutoPatchelf = true;
 
   passthru.updateScript = ./update.sh;
 
