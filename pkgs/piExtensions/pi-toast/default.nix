@@ -3,9 +3,9 @@
 let
   src = fetchGit {
     url = "git@github.toasttab.com:toasttab/pi-toast.git";
-    rev = "5a36954650e8593c00cd0dae2367a0d606fde05a";
+    rev = "303a0a2dd15610c6d75db4882d8a3113e86f3929";
     ref = "main";
-    narHash = "sha256-Cwv7JlPoxc7pIEsOV8eAeuRWysGfq9IxeBwKDk8L1z0=";
+    narHash = "sha256-+EA1eP7ZS0rQacURjVheJcLJqdywRzku7zttDU1DpbU=";
   };
 in
 buildPiExtension {
@@ -14,7 +14,7 @@ buildPiExtension {
 
   inherit src;
 
-  npmDepsHash = "sha256-s22INags8/LWJ0S6ua0VT9pircNeO77ZXpirR4ARCdc=";
+  npmDepsHash = "sha256-y523EPcHA4lBEt0SGZ9uckwn/YpgIUwbA58gXfEpmwE=";
 
   prunePaths = [
     ".github"
