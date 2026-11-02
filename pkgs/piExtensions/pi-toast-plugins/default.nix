@@ -9,9 +9,9 @@ buildPiExtension {
 
   src = fetchGit {
     url = "git@github.toasttab.com:toasttab/claude-marketplace.git";
-    rev = "fe235769f6f5a1baac4071dc4dd6d6c95ca0c975";
+    rev = "dab9a872e9deee4883fcbfb4c2b866dcca9d1ec7";
     ref = "main";
-    narHash = "sha256-T4SlHQuj/TvtzeonXtedlvPclRKg9R67JHGUrgX88jc=";
+    narHash = "sha256-fB763IV82Dn6ZEIXFbfe3MnZPQzxdkGSIIRM4b3yQWI=";
   };
 
   prunePaths = [
