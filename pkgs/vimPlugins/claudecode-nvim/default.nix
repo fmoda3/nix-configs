@@ -8,8 +8,8 @@ vimUtils.buildVimPlugin {
   src = fetchFromGitHub {
     owner = "coder";
     repo = "claudecode.nvim";
-    rev = "6714ed528523d8c310e68d7c80a96b05ca9d0bad";
-    sha256 = "sha256-UxEoP1hy3OHFwXmRifvV2RrFjZsLY5N85Ggh7uR4NpE=";
+    rev = "9c11940c1aabd94db580816b58d1784d1992df17";
+    sha256 = "sha256-dEv+4FlZ1iPEJLIwK+0rbPu/QJGn2EHe+6pa/aj274I=";
   };
   dependencies = [ vimPlugins.snacks-nvim ];
   meta.homepage = "https://github.com/coder/claudecode.nvim/";
