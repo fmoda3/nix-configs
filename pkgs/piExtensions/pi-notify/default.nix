@@ -4,13 +4,13 @@
 
 buildPiExtension {
   pname = "pi-notify";
-  version = "2026-06-02";
+  version = "2026-10-22";
 
   src = fetchFromGitHub {
     owner = "ferologics";
     repo = "pi-notify";
-    rev = "a17c63ef1c3071d793aad7e9d327a3728f2ad88c";
-    sha256 = "sha256-8oiWZhV/HpwAZyPL3Upi5EHDcqLwRdJd6SJBJk940tI=";
+    rev = "930b5b73d77c0545eb8bd4e56780cbbda3e7f305";
+    sha256 = "sha256-7hgWi6CiqJ68R2Z3zivlIEdX12ZmY+zedMvXr0u+UYs=";
   };
 
   prunePaths = [ ".github" ];
