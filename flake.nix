@@ -18,7 +18,7 @@
     };
 
     # Keep Hermes' own nixpkgs pin: its Python/toolchain versions are lock-derived.
-    hermes-agent.url = "github:NousResearch/hermes-agent/v0.22.6";
+    hermes-agent.url = "github:NousResearch/hermes-agent/v0.22.7";
 
     # Other sources
     systems.url = "github:nix-systems/default";
