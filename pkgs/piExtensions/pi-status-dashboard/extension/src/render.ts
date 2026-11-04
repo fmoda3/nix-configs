@@ -42,28 +42,48 @@ function usageColor(percent: number): string {
   return CATPPUCCIN.green;
 }
 
+const ROUTE_ARROW = " → ";
+
+/**
+ * Spaces between the selected level and the routed effort on the thinking row,
+ * so the effort starts under the routed model's name. The model row is
+ * `selected + ROUTE_ARROW + routed`, so the routed name starts that many columns
+ * in. At least one space, so the two never run together when the level is wider.
+ */
+function routedEffortGap(selectedName: string, selectedLevel: string): number {
+  const routedColumn = visibleWidth(selectedName) + visibleWidth(ROUTE_ARROW);
+  return Math.max(1, routedColumn - visibleWidth(selectedLevel));
+}
+
 /**
  * The model panel.
  *
  * `thinking` is always the level *selected*. For a virtual selection
- * (e.g. `toast/auto-*`) that level is the router's effort offset, so the
- * routed model and the effort it actually runs at go on the model row instead:
- * `Auto (Claude) → Claude Opus 5.5 · high`.
+ * (e.g. `toast/auto-*`) that level is the router's effort offset. The routed
+ * model goes on the model row, and the effort it actually runs at goes on the
+ * thinking row, indented to sit under the routed model's name:
+ *
+ *   model    │ Auto (Claude) → Claude Opus 5.5
+ *   thinking │ medium          high
  */
 function buildModelPanel(state: DashboardState, thinkingLevel: string | null): Panel {
-  const selected = value(CATPPUCCIN.blue, state.modelName ?? state.modelId ?? "n/a");
+  const selectedName = state.modelName ?? state.modelId ?? "n/a";
   const routed = state.routed;
-  const routedEffort = routed?.thinkingLevel
-    ? ` ${border("·")} ${value(CATPPUCCIN.sky, routed.thinkingLevel)}`
-    : "";
   const model = routed
-    ? `${selected} ${border("→")} ${value(CATPPUCCIN.blue, routed.modelName ?? routed.modelId)}${routedEffort}`
-    : selected;
+    ? `${value(CATPPUCCIN.blue, selectedName)}${border(ROUTE_ARROW)}${value(CATPPUCCIN.blue, routed.modelName ?? routed.modelId)}`
+    : value(CATPPUCCIN.blue, selectedName);
+
+  const level = thinkingLevel ?? "default";
+  const selectedLevel = value(CATPPUCCIN.sky, level);
+  const thinking = routed?.thinkingLevel
+    ? `${selectedLevel}${" ".repeat(routedEffortGap(selectedName, level))}${value(CATPPUCCIN.sky, routed.thinkingLevel)}`
+    : selectedLevel;
+
   return {
     title: "MODEL",
     lines: formatPanelRows([
       { key: "model", value: model },
-      { key: "thinking", value: value(CATPPUCCIN.sky, thinkingLevel ?? "default") },
+      { key: "thinking", value: thinking },
     ]),
   };
 }
