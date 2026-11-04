@@ -14,7 +14,8 @@ let
     postBuild = ''
       wrapProgram $out/bin/pi \
         --prefix PATH : ${pkgs.lib.makeBinPath extraPackages} \
-        --set POWERLINE_NERD_FONTS 1
+        --set POWERLINE_NERD_FONTS 1 \
+        --set CLAUDE_CODE_ENTRYPOINT pi-claude-bridge
     '';
   };
 
