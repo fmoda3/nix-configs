@@ -19,7 +19,8 @@
 import type { ClassifyOutcome, Level } from "./types.ts";
 import { LEVELS } from "./types.ts";
 import { normalizeModelId } from "./ladder.ts";
-import { StringEnum, Type } from "@earendil-works/pi-ai";
+import { StringEnum } from "@earendil-works/pi-ai";
+import { Type } from "typebox";
 
 /**
  * The classifier tool — the mechanism that actually makes classification

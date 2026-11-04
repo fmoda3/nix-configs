@@ -9,7 +9,7 @@
  * the wording stays testable.
  */
 
-import type { ClassifyFailure, Effort, Family, ResolvedTarget, RouteExplanation } from "./types.ts";
+import type { ClassifyFailure, Effort, Family, Level, ResolvedTarget, RouteExplanation } from "./types.ts";
 import { isPremiumLevel, providerFor } from "./types.ts";
 
 function effortLabel(effort: Effort): string {
@@ -43,7 +43,38 @@ export function adjustments(route: RouteExplanation): string[] {
 }
 
 /**
+ * Why the route being confirmed is expensive — the basis for answering.
+ *
+ * `rationale` is the classifier's reason, present only when the prompt was
+ * classified just now. A later prompt that reaches a premium level only because
+ * effort was turned up has no fresh rationale: the stored one explains the
+ * classified level, not the shift, so it is not repeated as if it did.
+ */
+export interface ConfirmReason {
+  readonly classified: Level;
+  /** After the effort offset. */
+  readonly requested: Level;
+  readonly offset: number;
+  readonly selectedEffort: string;
+  readonly rationale?: string;
+}
+
+/** The "Why:" and effort-shift lines of the confirmation, in that order. */
+function confirmReasonLines(why: ConfirmReason): string[] {
+  const lines: string[] = [];
+  if (why.rationale !== undefined) lines.push(`Why: ${why.rationale}`);
+  const offset = describeOffset(why.offset, why.selectedEffort);
+  if (offset !== "" && why.requested !== why.classified) {
+    lines.push(`Classified ${why.classified}; ${offset} → ${why.requested}.`);
+  }
+  return lines;
+}
+
+/**
  * Confirmation copy for an expensive route.
+ *
+ * `why` comes first in the message: the dialog is shown before the routing
+ * record, so it is the only place the user sees the reason before answering.
  *
  * `undefined` means no confirmation is required, which keeps the "does this
  * need a second step" rule in one place. `costMultiple` is the route's cost per
@@ -58,11 +89,14 @@ export function confirmPrompt(
   costMultiple: number,
   declined: { readonly target: ResolvedTarget; readonly effort: Effort },
   family: Family,
+  why: ConfirmReason,
 ): { readonly title: string; readonly message: string } | undefined {
   if (!isPremiumLevel(target.level, family)) return undefined;
+  const reason = confirmReasonLines(why);
   return {
     title: `Use ${describeRoute(target, effort)}?`,
     message:
+      (reason.length > 0 ? `${reason.join("\n")}\n\n` : "") +
       `The ${target.level} route costs about ${costMultiple}× a moderate one per task. ` +
       `Route this session to ${describeRoute(target, effort)}? ` +
       `Declining routes to ${describeRoute(declined.target, declined.effort)} instead.`,

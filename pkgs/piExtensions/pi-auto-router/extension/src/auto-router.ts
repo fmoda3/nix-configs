@@ -144,12 +144,16 @@ export function registerAutoRouter(pi: ExtensionAPI) {
   /**
    * Carry out `planLevel`: show the spend confirmation if it asks, then resolve
    * the outcome to a physical model. The decision itself is pure (src/router/plan.ts).
+   *
+   * `rationale` is the classifier's reason when the level was classified just
+   * now; a level read from state has none to show (see `ConfirmReason`).
    */
   const routeLevel = async (
     family: Family,
     ctx: ExtensionContext,
     state: RoutedState,
     selectedEffort: string,
+    rationale?: string,
   ): Promise<LevelOutcome & { chosen: ResolvedRoute }> => {
     const step = planLevel({
       state,
@@ -162,7 +166,13 @@ export function registerAutoRouter(pi: ExtensionAPI) {
     if (step.kind === "ask") {
       const premium = resolveRoute(ctx, family, step.level);
       const fallback = resolveRoute(ctx, family, step.fallback);
-      const prompt = confirmPrompt(premium.target, premium.effort, costMultiple(family, step.level), fallback, family)!;
+      const prompt = confirmPrompt(premium.target, premium.effort, costMultiple(family, step.level), fallback, family, {
+        classified: state.level,
+        requested: step.requested,
+        offset: effortOffset(selectedEffort),
+        selectedEffort,
+        ...(rationale !== undefined ? { rationale } : {}),
+      })!;
       outcome = step.answer(await ctx.ui.confirm(prompt.title, prompt.message));
     } else {
       outcome = step.outcome;
@@ -272,7 +282,7 @@ export function registerAutoRouter(pi: ExtensionAPI) {
       return scout({ scoutTrigger: "classifier", suggestion });
     }
 
-    const routed = await routeLevel(family, ctx, { level: suggestion.level }, selectedEffort);
+    const routed = await routeLevel(family, ctx, { level: suggestion.level }, selectedEffort, suggestion.rationale);
     emit({
       virtualModel,
       kind: "routed",

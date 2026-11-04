@@ -5,7 +5,7 @@ Two [virtual models](https://pi.dev/docs/latest/virtual-models) for pi (1.0+). S
 | Model | Available when | Routes on |
 |---|---|---|
 | `anthropic/auto-claude` — *Auto (Claude)* | you are signed in to `anthropic` | the [Claude ladder](#what-it-routes-to): Haiku 5.5, then Opus 5.5 from `medium` to `max` effort |
-| `openai-codex/auto-gpt` — *Auto (GPT)* | you are signed in to `openai-codex` | the [GPT ladder](#what-it-routes-to): GPT-6 Luna → GPT-6.1 Sol → GPT-6 Astra |
+| `openai-codex/auto-gpt` — *Auto (GPT)* | you are signed in to `openai-codex` | the [GPT ladder](#what-it-routes-to): GPT-6 Luna → GPT-6.1 Terra → GPT-6.1 Sol → GPT-6 Astra |
 
 ```bash
 pi --model anthropic/auto-claude      # or pick it in /model, or set it as your default
@@ -53,17 +53,17 @@ A prompt like `implement PROJ-1234`, `fix the issue at <url>` or `do what docs/p
 
 Code files don't trigger it: a prompt that names `src/auth.ts` describes its own task, and reading code is the agent's normal work. Then:
 
-1. The session starts on the **scout rung** — the `simple` level, Haiku 5.5 · xhigh or Luna · max — which is plenty for reading a ticket, an issue, a page or a file.
+1. The session starts on the **scout rung** — the `simple` level, Haiku 5.5 · xhigh or GPT-6.1 Terra · medium — which is plenty for reading a ticket, an issue, a page or a file.
 2. At the first request after the agent's first tool results, the classifier runs again with the prompt **and an excerpt of what was read** (each result capped at 3,000 characters, 8,000 in total), and the real level is stored.
 3. The route switches there, mid-turn. That costs one prompt-cache miss; everything after it is sticky as usual.
 
 ```
  can you look at .pi/feature-ideas.md and see whats left to implement
- [Auto (Claude)] Reading context first: routed to Claude Opus 5.5 · low thinking (simple)
+ [Auto (Claude)] Reading context first: routed to Claude Haiku 5.5 · xhigh thinking (simple)
  The request names .pi/feature-ideas.md; classifying once it has been read.
  read .pi/feature-ideas.md
  [Auto (Claude)] ⋯ Assessing route with what was read…
- [Auto (Claude)] Routed to Claude Opus 5.5 · low thinking (simple)
+ [Auto (Claude)] Routed to Claude Haiku 5.5 · xhigh thinking (simple)
  Why: Request asks to audit a feature-ideas document against code; document lists 4 numbered items…
  (classified after reading the context)
 ```
@@ -77,11 +77,14 @@ pi's footer shows both halves — the selected auto model and the routed model �
 The premium levels need an explicit yes: `hard` and `extreme` on `auto-claude` (2.6–4.5× a `moderate` route per task), and `extreme` on `auto-gpt` (GPT-6 Astra, ≈11×; GPT-6.1 Sol keeps `hard` under 2×):
 
 ```
-Use claude-opus-5-5 · max thinking?
-The extreme route costs about 4.5× a moderate one per task. Route this session
-to claude-opus-5-5 · max thinking? Declining routes to claude-opus-5-5 · high
-thinking instead.
+Use Claude Opus 5.5 · max thinking?
+Why: Race condition spanning the scheduler and two consumers.
+Classified hard; +1 for xhigh effort → extreme.
+
+The extreme route costs about 4.5× a moderate one per task. Route this session to Claude Opus 5.5 · max thinking? Declining routes to Claude Opus 5.5 · high thinking instead.
 ```
+
+The dialog opens before the routing record is printed, so it carries the reason itself: the classifier's `Why:` when the prompt was just classified, and the effort shift when effort is what pushed it over. A later prompt that crosses into a gated level only because you turned effort up shows just the shift line — there is no new classification, and the original reason explains the classified level, not the increase.
 
 There is no "keep current" for a virtual model — the auto model *is* the current selection — so declining routes to the most capable level that doesn't ask — `complex` on `auto-claude`, `hard` on `auto-gpt` — instead. Without a UI to ask on (`pi -p`), the cheaper route is taken.
 
@@ -92,7 +95,7 @@ The classifier never picks a model or an effort. It picks one of six **levels** 
 | Level | `auto-claude` | `auto-gpt` |
 |---|---|---|
 | `trivial` | `claude-haiku-5-5` · medium | `gpt-6-luna` · medium |
-| `simple` | `claude-haiku-5-5` · xhigh | `gpt-6-luna` · max |
+| `simple` | `claude-haiku-5-5` · xhigh | `gpt-6.1-terra` · medium |
 | `moderate` | `claude-opus-5-5` · medium | `gpt-6.1-sol` · medium |
 | `complex` | `claude-opus-5-5` · high | `gpt-6.1-sol` · high |
 | `hard` | `claude-opus-5-5` · xhigh ⚠ | `gpt-6.1-sol` · xhigh |

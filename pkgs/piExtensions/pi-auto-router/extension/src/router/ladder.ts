@@ -69,7 +69,15 @@ const CLAUDE_RUNGS: Readonly<Record<Level, Rung>> = {
 };
 
 /**
- * The GPT ladder: Luna at the bottom, GPT-6.1 Sol through the middle, Astra on top.
+ * The GPT ladder: Luna, then GPT-6.1 Terra, GPT-6.1 Sol through the middle, Astra on top.
+ *
+ * GPT-6.1 Terra filled the 3× cost gap between Luna `max` ($0.068) and Sol 6.1
+ * `medium` ($0.21): Terra `low`→`xhigh` are all on the frontier there, and
+ * Terra `medium` (41.3, $0.095) takes `simple` from Luna `max` (38.1, $0.068):
+ * +3.2 index and +20 points on Terminal-Bench 4.0 (32% vs 13%) for 1.4× the
+ * cost, with a ninth of the output tokens, so it answers far sooner. Terra
+ * `max` (48.1, $0.40) is dominated by Sol 6.1 `xhigh`, and Terra never reaches
+ * `moderate`: Sol 6.1 `medium` is +2.4 over Terra `xhigh` for 10% more.
  *
  * GPT-6.1 Sol pushed the GPT-6 frontier out at every effort: Sol 6.1 `medium`
  * beats every GPT-6 Sol point and Astra `low`; `high` beats Astra `medium`;
@@ -78,17 +86,17 @@ const CLAUDE_RUNGS: Readonly<Record<Level, Rung>> = {
  * Astra `xhigh` above (the best GPT Terminal-Bench score, 59.6%). Sol 6.1 `max`
  * is skipped: +0.8 index for 1.8× the cost of `xhigh`, and AA's Coding Agent
  * Index has `xhigh` 3 points ahead of it. Sol 6.1 `low` (42, $0.13) is on the
- * frontier but `simple` stays on Luna `max` at half the cost.
+ * frontier, but Terra `high` beats it (+1.8) at about the same cost.
  *
  * The `openai-codex` provider declares `max` for every GPT-6 model, and pi
  * sends it as `reasoning.effort`, so every rung's effort reaches the model.
  */
 const GPT_RUNGS: Readonly<Record<Level, Rung>> = {
-  trivial: { model: "gpt-6-luna", effort: "medium", benchmark: { index: 29.5, costPerTask: 0.018 } },
-  simple: { model: "gpt-6-luna", effort: "max", benchmark: { index: 37.3, costPerTask: 0.068 } },
-  moderate: { model: "gpt-6.1-sol", effort: "medium", benchmark: { index: 48, costPerTask: 0.21 } },
-  complex: { model: "gpt-6.1-sol", effort: "high", benchmark: { index: 50, costPerTask: 0.32 } },
-  hard: { model: "gpt-6.1-sol", effort: "xhigh", benchmark: { index: 51, costPerTask: 0.39 } },
+  trivial: { model: "gpt-6-luna", effort: "medium", benchmark: { index: 29.9, costPerTask: 0.017 } },
+  simple: { model: "gpt-6.1-terra", effort: "medium", benchmark: { index: 41.3, costPerTask: 0.095 } },
+  moderate: { model: "gpt-6.1-sol", effort: "medium", benchmark: { index: 47.8, costPerTask: 0.21 } },
+  complex: { model: "gpt-6.1-sol", effort: "high", benchmark: { index: 50.2, costPerTask: 0.32 } },
+  hard: { model: "gpt-6.1-sol", effort: "xhigh", benchmark: { index: 51.0, costPerTask: 0.39 } },
   extreme: { model: "gpt-6-astra", effort: "xhigh", benchmark: { index: 52.4, costPerTask: 2.31 } },
 };
 
