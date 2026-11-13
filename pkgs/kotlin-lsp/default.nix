@@ -7,23 +7,23 @@
 
 let
   # Define binary information for each platform
-  version = "263.7084.0";
+  version = "271.2085.0";
   sources = {
     "aarch64-darwin" = {
       url = "https://download.jetbrains.com/language-server/kotlin-server/${version}/kotlin-server-${version}-aarch64.sit";
-      sha256 = "sha256-tAO/ilS9RY47pnMc+KuzNAvgi0OcA1dt/AKxP682lLg=";
+      sha256 = "sha256-LSI4j1i+b036eo8YweIxhxFk3KzBbkB1WQKdcjKBa0o=";
     };
     "x86_64-darwin" = {
       url = "https://download.jetbrains.com/language-server/kotlin-server/${version}/kotlin-server-${version}.sit";
-      sha256 = "sha256-spw5Ol5UEVPQPWJueUYmhDfjWKZnpfkUoSbbtAB2ZLE=";
+      sha256 = "sha256-aEV6sYJTMePqyFGRt8MnN8vYmThn9anFDf4BLFUJ6Pc=";
     };
     "x86_64-linux" = {
       url = "https://download.jetbrains.com/language-server/kotlin-server/${version}/kotlin-server-${version}.tar.gz";
-      sha256 = "sha256-rgxLAeF6tzpKUienjqmebcvj5JlgAxWyJ1mk5M3dEd8=";
+      sha256 = "sha256-45jnmQJ/QXSeoz+qV0cDB9E9QPkQlhhYx+MK29d4rgg=";
     };
     "aarch64-linux" = {
       url = "https://download.jetbrains.com/language-server/kotlin-server/${version}/kotlin-server-${version}-aarch64.tar.gz";
-      sha256 = "sha256-RQq3wdgOSBBqpCm0jLQibYLKEqiiQARHrgI4Z5R4DKw=";
+      sha256 = "sha256-h3ruYSoX2rSBREZigqZBTsWKtCihC5fH4T7dm2s9yW4=";
     };
   };
 
