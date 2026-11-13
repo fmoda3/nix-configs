@@ -24,8 +24,8 @@ let
   #
   # Both values below are kept in sync with the package version by
   # passthru.updateScript — do not edit them by hand.
-  litellmPricingRev = "0b070d25d336a41bbac76fb8b0d1638509d61b6d";
-  litellmPricingHash = "sha256-eSfioX6vK24uJatFP7dRBrdS0JvizoEiYnw6OIKcCc0=";
+  litellmPricingRev = "20d53f2951c79bb9164af9032588c8b0a561727b";
+  litellmPricingHash = "sha256-dpiVrPsVyEacsLCStpazgGIax+OX6COUjS1GmxYQ1/g=";
   litellmPricing = fetchurl {
     url = "https://raw.githubusercontent.com/BerriAI/litellm/${litellmPricingRev}/model_prices_and_context_window.json";
     hash = litellmPricingHash;
@@ -33,13 +33,13 @@ let
 in
 rustPlatform.buildRustPackage (finalAttrs: {
   pname = "ccusage";
-  version = "20.0.49";
+  version = "20.0.50";
 
   src = fetchFromGitHub {
     owner = "ccusage";
     repo = "ccusage";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-fugMKg379Un/C6b6hRToKiuzq4Wg0eFZG0tRYVFmTIs=";
+    hash = "sha256-iG8GD+cbW9oJ7LafE71Zl1IraV671y7urmyaE3DOKJ0=";
   };
 
   # The Cargo workspace lives in rust/, not at the repo root.
