@@ -3,14 +3,14 @@
 let
   src = fetchGit {
     url = "git@github.toasttab.com:toasttab/pi-toast.git";
-    rev = "e340da74c4a68bacdbbc2283be989c1e7769805f";
+    rev = "d357e5542b0678054491a7c14f87d4296dee057b";
     ref = "main";
-    narHash = "sha256-5Z07/5fC03leune9o243PsRgeggH7e6D4dnpy05iQ8E=";
+    narHash = "sha256-jI4VfdkFFppaxHUKGTE/xXoDNARILfR2LIJ3okYzqzw=";
   };
 in
 buildPiExtension {
   pname = "pi-toast";
-  version = "2026-10-30";
+  version = "2026-11-17";
 
   inherit src;
 
