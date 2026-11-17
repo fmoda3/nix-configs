@@ -66,7 +66,7 @@
       enable = true;
       # Upstream defaults the runtime install stamp to 0.0.0, even on release tags.
       package = inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
-        version = "0.23.0";
+        version = "0.23.2";
       };
       addToSystemPackages = true;
       environment.SEARXNG_URL = "http://127.0.0.1:8888";
@@ -76,9 +76,9 @@
           name = "hermes-conduit-notifier";
           owner = "kaishi00";
           repo = "hermes-conduit-notifier";
-          # Plugin 0.153.8; pin independently of the Hermes release.
-          rev = "6ea3201b276f0a01e08e881a74b3140d699f015f";
-          hash = "sha256-r8Le0SOyntRl3OtmEij4+IpX6QDZikJ7ryn+xJ9ZdFc=";
+          # Plugin 0.177.28; pin independently of the Hermes release.
+          rev = "933358dbaa9cac00131c172f39a5a4ec861be898";
+          hash = "sha256-Y3F5GV2x2bKniedbnQtTtkmP5JFqlk0OdZWB85Tol48=";
         })
       ];
 
