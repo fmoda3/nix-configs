@@ -140,9 +140,11 @@ export function toolChoiceFor(api: string): Record<string, unknown> {
  * `tool_choice: type "tool" and "any" are not supported for this model`. Opus 5.5
  * is the Claude classifier's fallback when Haiku is unavailable, so forcing there
  * would fail every classification. Offered the tool instead, it called it 72/72 times.
- * Normalized ids, matched exactly.
+ * Claude Fable 5.2 also always thinks and rejects forcing the same way. It is the
+ * classifier only when neither Haiku 5.5 nor Opus 5.5 is available. Normalized
+ * ids, matched exactly.
  */
-const REJECTS_FORCED_TOOL_CHOICE = new Set(["claude-opus-5-5"]);
+const REJECTS_FORCED_TOOL_CHOICE = new Set(["claude-opus-5-5", "claude-fable-5-2"]);
 
 export function rejectsForcedToolChoice(model: { readonly id: string }): boolean {
   return REJECTS_FORCED_TOOL_CHOICE.has(normalizeModelId(model.id));
@@ -162,7 +164,7 @@ const MAX_TOKENS_UNFORCED = 2048;
  *
  * No reasoning option is sent. On `anthropic-messages` that means thinking is
  * off; on `openai-codex-responses` pi then sends the model's `off` effort
- * (`none` for GPT-6 Luna and Sol), which is what a fast classification wants.
+ * (`none` for GPT-6.1 Terra), which is what a fast classification wants.
  * `temperature` is never sent either: the 5.x Claude models reject it.
  */
 export function classifierOptions(model: { readonly api: string; readonly id: string }): Record<string, unknown> {

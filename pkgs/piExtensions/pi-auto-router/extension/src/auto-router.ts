@@ -33,9 +33,9 @@
  *
  *   - Suggestions are applied without a picker, because the user opted in by
  *     selecting an auto model and there is no "keep current" for a virtual
- *     model. The one exception is spend: the premium levels (`hard` and
- *     `extreme` for Claude, `extreme` for GPT) still ask — whether the
- *     classifier or an effort offset put the route there — and declining
+ *     model. The one exception is spend: the `extreme` level still
+ *     asks — whether the classifier or an effort offset put the route there —
+ *     and declining
  *     routes to the family's `declinedLevel` (`premiumDecision`). Each answer is
  *     remembered on the branch, so a session is asked once, not every prompt.
  *     Without a UI to ask on, the cheaper route is taken.

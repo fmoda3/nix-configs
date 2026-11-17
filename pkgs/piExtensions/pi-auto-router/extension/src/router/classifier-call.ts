@@ -31,7 +31,8 @@ const VIRTUAL_MODEL_API = "pi-virtual";
  * Budget for the classifier round-trip. Past this, routing is not worth the
  * wait. Falls through to the default route.
  *
- * 10s rather than 6s: GPT-6 Luna's latency has a tail (occasional calls well
+ * 10s rather than 6s: GPT-6 Luna's latency had a tail when it was the GPT
+ * classifier (occasional calls well
  * past 6s), which cut off a noticeable share of auto-gpt classifications.
  * Haiku stays around 1.5s, so the longer budget only costs anything when the
  * classifier is already slow. Paid at most once per session, before the first

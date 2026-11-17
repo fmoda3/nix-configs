@@ -4,8 +4,8 @@ Two [virtual models](https://pi.dev/docs/latest/virtual-models) for pi (1.0+). S
 
 | Model | Available when | Routes on |
 |---|---|---|
-| `anthropic/auto-claude` — *Auto (Claude)* | you are signed in to `anthropic` | the [Claude ladder](#what-it-routes-to): Haiku 5.5, then Opus 5.5 from `medium` to `max` effort |
-| `openai-codex/auto-gpt` — *Auto (GPT)* | you are signed in to `openai-codex` | the [GPT ladder](#what-it-routes-to): GPT-6 Luna → GPT-6.1 Terra → GPT-6.1 Sol → GPT-6 Astra |
+| `anthropic/auto-claude` — *Auto (Claude)* | you are signed in to `anthropic` | the [Claude ladder](#what-it-routes-to): Haiku 5.5 at `medium` and `xhigh`, Opus 5.5 at `medium`, then Fable 5.2 from `low` to `high` effort |
+| `openai-codex/auto-gpt` — *Auto (GPT)* | you are signed in to `openai-codex` | the [GPT ladder](#what-it-routes-to): GPT-6.1 Terra → GPT-6.1 Sol → GPT-6 Astra |
 
 ```bash
 pi --model anthropic/auto-claude      # or pick it in /model, or set it as your default
@@ -21,7 +21,7 @@ On the first prompt of a session, a small fast model judges how demanding the re
 
 ```
  [Auto (Claude)] ⋯ Assessing route…
- [Auto (Claude)] Routed to Claude Opus 5.5 · high thinking (complex)
+ [Auto (Claude)] Routed to Claude Fable 5.2 · low thinking (complex)
  Why: Touches auth and billing together, so a mistake is expensive.
 ```
 
@@ -74,19 +74,19 @@ pi's footer shows both halves — the selected auto model and the routed model �
 
 ## Expensive routes still ask
 
-The premium levels need an explicit yes: `hard` and `extreme` on `auto-claude` (2.6–4.5× a `moderate` route per task), and `extreme` on `auto-gpt` (GPT-6 Astra, ≈11×; GPT-6.1 Sol keeps `hard` under 2×):
+On both ladders only `extreme` needs an explicit yes: Fable 5.2 `high` costs about 3.7× a `moderate` route per task, and GPT-6 Astra about 10×. `hard` runs without asking (about 1.6× on Claude, 2.1× on GPT):
 
 ```
-Use Claude Opus 5.5 · max thinking?
+Use Claude Fable 5.2 · high thinking?
 Why: Race condition spanning the scheduler and two consumers.
-Classified hard; +1 for xhigh effort → extreme.
+Classified hard; +1 for high effort → extreme.
 
-The extreme route costs about 4.5× a moderate one per task. Route this session to Claude Opus 5.5 · max thinking? Declining routes to Claude Opus 5.5 · high thinking instead.
+The extreme route costs about 3.7× a moderate one per task. Route this session to Claude Fable 5.2 · high thinking? Declining routes to Claude Fable 5.2 · medium thinking instead.
 ```
 
 The dialog opens before the routing record is printed, so it carries the reason itself: the classifier's `Why:` when the prompt was just classified, and the effort shift when effort is what pushed it over. A later prompt that crosses into a gated level only because you turned effort up shows just the shift line — there is no new classification, and the original reason explains the classified level, not the increase.
 
-There is no "keep current" for a virtual model — the auto model *is* the current selection — so declining routes to the most capable level that doesn't ask — `complex` on `auto-claude`, `hard` on `auto-gpt` — instead. Without a UI to ask on (`pi -p`), the cheaper route is taken.
+There is no "keep current" for a virtual model — the auto model *is* the current selection — so declining routes to the most capable level that doesn't ask — `hard` on both ladders — instead. Without a UI to ask on (`pi -p`), the cheaper route is taken.
 
 ## What it routes to
 
@@ -94,22 +94,22 @@ The classifier never picks a model or an effort. It picks one of six **levels** 
 
 | Level | `auto-claude` | `auto-gpt` |
 |---|---|---|
-| `trivial` | `claude-haiku-5-5` · medium | `gpt-6-luna` · medium |
+| `trivial` | `claude-haiku-5-5` · medium | `gpt-6.1-terra` · low |
 | `simple` | `claude-haiku-5-5` · xhigh | `gpt-6.1-terra` · medium |
 | `moderate` | `claude-opus-5-5` · medium | `gpt-6.1-sol` · medium |
-| `complex` | `claude-opus-5-5` · high | `gpt-6.1-sol` · high |
-| `hard` | `claude-opus-5-5` · xhigh ⚠ | `gpt-6.1-sol` · xhigh |
-| `extreme` | `claude-opus-5-5` · max ⚠ | `gpt-6-astra` · xhigh ⚠ |
+| `complex` | `claude-fable-5-2` · low | `gpt-6.1-sol` · high |
+| `hard` | `claude-fable-5-2` · medium | `gpt-6.1-sol` · xhigh |
+| `extreme` | `claude-fable-5-2` · high ⚠ | `gpt-6-astra` · xhigh ⚠ |
 
 ⚠ asks first — see [above](#expensive-routes-still-ask).
 
-**Model and effort are chosen together because they overlap.** A bigger model at low effort is often both smarter *and* cheaper than a smaller one at high effort, since the smaller model burns far more reasoning tokens to get there. Every pair above is on the Pareto frontier of capability against measured cost per task; everything off it is never routed to. That is why Haiku 4.5 and Opus 5.5 · low are gone (Haiku 5.5 beats both for a fraction of the cost), why Fable 5.1 and Sonnet 5 do not appear (dominated at every effort), why Sonnet 5.5 gets no level (on the frontier only at `high`, just below the Haiku 5.5 `max` → Opus 5.5 `medium` line), why GPT-6 Sol and most of Astra are gone (GPT-6.1 Sol beats them for less), and why thinking `off` is never used. Points are from the [Artificial Analysis Intelligence Index](https://artificialanalysis.ai/evaluations/artificial-analysis-intelligence-index) v4.3.2, cost per task at list price; the reasoning for each rung is in [`src/router/ladder.ts`](src/router/ladder.ts).
+**Model and effort are chosen together because they overlap.** A bigger model at low effort is often both smarter *and* cheaper than a smaller one at high effort, since the smaller model burns far more reasoning tokens to get there. Every pair above is on the Pareto frontier of capability against measured cost per task; everything off it is never routed to. That is why Opus 5.5 appears only at `medium` (Fable 5.2 `low` beats Opus `high`, and Fable `high` beats Opus `max`, each for less), and Fable 5.1 not at all (Fable 5.2 beats it at every effort). It is also why GPT-6 Luna is gone (GPT-6.1 Terra at `low` beats Luna at `high` and above), Haiku 4.5 too (Haiku 5.5 beats it for a fraction of the cost), Sonnet 5.5 (beaten at every effort but `high`, which sits in the gap below Opus 5.5 `medium` but gets no level), Opus 5.5 at `low` (Haiku 5.5 at `max` scores higher for under half the cost), GPT-6 Sol and most of Astra (GPT-6.1 Sol beats them for less), and thinking `off`. Points are from the [Artificial Analysis Intelligence Index](https://artificialanalysis.ai/evaluations/artificial-analysis-intelligence-index) v5.0.1, cost per task at list price; the reasoning for each rung is in [`src/router/ladder.ts`](src/router/ladder.ts).
 
 The ladders live in [`src/router/ladder.ts`](src/router/ladder.ts), with each rung's benchmark point alongside it. Each ladder strictly increases in both capability and cost, which is what "on the frontier" means.
 
 Every rung of a ladder is served by one provider — `anthropic` for Claude, `openai-codex` for GPT — and the auto model is listed under it, so it is available exactly when you are signed in there. The router dispatches to any authenticated rung of that provider regardless of your `enabledModels` scope — the scope controls what you cycle between, and scoping down to `anthropic/auto-claude` alone should still reach the models behind it. The same model served by another provider (Bedrock, OpenRouter, …) is never used.
 
-If a level's model is unavailable, the router uses another level's rung — cheaper levels first — and says so. A rung is always taken whole: a missing Opus sends `complex` to Haiku at Haiku's effort, never Haiku at `high`. If nothing on the ladder is available, the request fails with a message pointing at `/login anthropic` or `/login openai-codex`.
+If a level's model is unavailable, the router uses another level's rung — cheaper levels first — and says so. A rung is always taken whole: a missing Fable 5.2 sends `complex` to Opus 5.5 at the `moderate` rung's `medium`, never Opus at `low`. If nothing on the ladder is available, the request fails with a message pointing at `/login anthropic` or `/login openai-codex`.
 
 ### How model ids are matched
 
@@ -137,7 +137,7 @@ The thinking level you pick on an auto model (`/thinking`, `--thinking`, Shift+T
 It is clamped to the ends of the ladder. `off` and `max` are not offered. The routing record says when effort moved the route:
 
 ```
- [Auto (Claude)] Routed to Claude Opus 5.5 · high thinking (complex)
+ [Auto (Claude)] Routed to Claude Fable 5.2 · low thinking (complex)
  Why: Normal feature work across two files.
  (classified moderate; +1 for high effort → complex)
 ```
@@ -149,7 +149,7 @@ It is clamped to the ends of the ladder. `off` and `max` are not offered. The ro
  (classified trivial; +2 for xhigh effort → moderate)
 ```
 
-**The spend confirmation still applies** whenever effort pushes the route into a premium level (`hard`/`extreme` on Claude, `extreme` on GPT). Each answer is remembered for the session: approving `hard` covers `hard`; declining it means later prompts at that level take the cheaper route without asking. Only a route *above* what you answered asks again. A classifier failure falls back to `moderate` shifted by effort, but never into a premium level.
+**The spend confirmation still applies** whenever effort pushes the route into `extreme`, the one gated level. Each answer is remembered for the session: approving `extreme` covers later `extreme` routes; declining it means they take the cheaper route without asking. A classifier failure falls back to `moderate` shifted by effort, but never into a premium level.
 
 > **Check your default thinking level.** When you switch to a model, pi applies your saved thinking level for that model, else your global `defaultThinkingLevel`, clamped to what the model offers. If your global default is `high`, every auto session starts one level up. To make auto models route as classified by default, select one, run `/thinking`, pick `medium`, and press Ctrl+S to save it for that model.
 
@@ -190,4 +190,4 @@ If the classifier replies without calling its tool, the block includes the reply
 
 ## Costs to be aware of
 
-One small-model round-trip before the first response of each session, plus a spend confirmation when the classifier reaches for a premium level. The classifier is each family's cheapest rung on its own provider — Claude Haiku 5.5 (thinking off) for `auto-claude`, GPT-6 Luna at effort `none` for `auto-gpt` — so it never costs more than the turn it is optimising; the classifier only picks a level, and the family's ladder picks the model.
+One small-model round-trip before the first response of each session, plus a spend confirmation when the classifier reaches for a premium level. The classifier is each family's cheapest rung on its own provider — Claude Haiku 5.5 (thinking off) for `auto-claude`, GPT-6.1 Terra at effort `none` for `auto-gpt` — so it never costs more than the turn it is optimising; the classifier only picks a level, and the family's ladder picks the model.

@@ -41,15 +41,16 @@ export const LEVELS: readonly Level[] = ["trivial", "simple", "moderate", "compl
  * Levels whose cost warrants an explicit acknowledgement before being applied,
  * per family.
  *
- * On the Claude ladder `hard` and `extreme` cost 2.6–4.5× a `moderate` route
- * per task. On the GPT ladder GPT-6.1 Sol made `hard` cheap (≈1.9× moderate),
- * so only `extreme` (GPT-6 Astra, ≈11×) is gated. The classifier may suggest a
+ * Only `extreme` is gated on either ladder: Fable 5.2 `high` on Claude (≈3.7×
+ * a `moderate` route per task) and GPT-6 Astra on GPT (≈10×). `hard` is cheap
+ * enough to run unasked: Fable 5.2 `medium` is ≈1.6× on Claude, GPT-6.1 Sol
+ * `xhigh` ≈2.1× on GPT. The classifier may suggest a
  * gated level, because refusing would make it useless for the work that
  * genuinely needs it, but spending that much must not happen without the user
  * saying so.
  */
 const PREMIUM_LEVELS: Readonly<Record<Family, readonly Level[]>> = {
-  claude: ["hard", "extreme"],
+  claude: ["extreme"],
   gpt: ["extreme"],
 };
 
@@ -59,7 +60,7 @@ export function isPremiumLevel(level: Level, family: Family): boolean {
 
 /**
  * Where a declined premium route goes: the most capable level that needs no
- * confirmation on that family's ladder (`complex` for Claude, `hard` for GPT).
+ * confirmation on that family's ladder (`hard` on both).
  * There is no "keep current" for a virtual model.
  */
 export function declinedLevel(family: Family): Level {
@@ -165,7 +166,7 @@ export interface Rung {
   readonly model: string;
   readonly effort: Effort;
   /**
-   * Artificial Analysis Intelligence Index v4.3.2 score and cost per index task
+   * Artificial Analysis Intelligence Index v5.0.1 score and cost per index task
    * (USD, list price incl. cache) for this pair: the evidence that put it on the
    * frontier. At runtime it is read for one thing, the cost multiple stated in
    * the spend confirmation (`costMultiple`).
