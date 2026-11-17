@@ -4,16 +4,16 @@
 
 buildPiExtension {
   pname = "pi-claude-bridge";
-  version = "0.12.0";
+  version = "0.13.0";
 
   src = fetchFromGitHub {
     owner = "elidickinson";
     repo = "pi-claude-bridge";
-    tag = "v0.12.0";
-    sha256 = "sha256-XRe0dQsRs7Hmu/gQWrY8Og885DHFFVD72oapDmYvcRE=";
+    tag = "v0.13.0";
+    sha256 = "sha256-y7AU77cK1S1poglQA3UmnR8kul3LO3HB8dft5uJ+eMU=";
   };
 
-  npmDepsHash = "sha256-cpMJpUqJgGFW3dxUDrQnkXDUAZivqcGranBRFaZ6N7o=";
+  npmDepsHash = "sha256-CPwQO76XLihf2sSb5g1BeGKeVvBog7SrXEuNkFQNzQ0=";
   npmFlags = [ "--omit=dev" ];
 
   prunePaths = [ ".github" ];
