@@ -5,13 +5,13 @@
 # so pi loads it from the repository root and the bridge finds plugins/ beside it.
 buildPiExtension {
   pname = "pi-toast-plugins";
-  version = "2026-10-30";
+  version = "2026-11-17";
 
   src = fetchGit {
     url = "git@github.toasttab.com:toasttab/claude-marketplace.git";
-    rev = "dab9a872e9deee4883fcbfb4c2b866dcca9d1ec7";
+    rev = "ef1ad50f7209828eab98284f0b9b1d734ed774a2";
     ref = "main";
-    narHash = "sha256-fB763IV82Dn6ZEIXFbfe3MnZPQzxdkGSIIRM4b3yQWI=";
+    narHash = "sha256-FQdX6lX8rXUAwRPQHMnlQ4iOJTU9AgFZYNy0RrJQReE=";
   };
 
   prunePaths = [
