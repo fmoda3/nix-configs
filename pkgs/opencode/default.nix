@@ -77,14 +77,14 @@ let
       # NOTE: Required else we get errors that our fixed-output derivation references store paths
       dontFixup = true;
 
-      outputHash = "sha256-JLdeDli5XOza6QHHmkx5ZQ5VSz9iToPqAxlPTaHW36c=";
+      outputHash = "sha256-d+VEyFQADZc0QEab4V/FM4grH6X8085Tzdrj4eyFrOk=";
       outputHashAlgo = "sha256";
       outputHashMode = "recursive";
     };
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "opencode";
-  version = "1.19.5";
+  version = "1.19.6";
 
   __structuredAttrs = true;
   strictDeps = true;
@@ -93,7 +93,7 @@ stdenv.mkDerivation (finalAttrs: {
     owner = "anomalyco";
     repo = "opencode";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-tmFnVEBsnLZNuBaSIt7rZYuBV4jf/Ccaq2a6AwjyCec=";
+    hash = "sha256-BljW36xeL0YYUp23EetqeGaFv3CdzVF4BPE4VJ1lXGk=";
   };
 
   postPatch =
@@ -103,13 +103,6 @@ stdenv.mkDerivation (finalAttrs: {
         --replace-fail \
         'throw new Error(`This script requires bun@''${expectedBunVersionRange}' \
         'console.warn(`Warning: This script requires bun@''${expectedBunVersionRange}'
-    ''
-    # Skip smoke test
-    + ''
-      substituteInPlace packages/opencode/script/build.ts \
-        --replace-fail \
-        'if (item.os === process.platform && item.arch === process.arch && !item.abi)' \
-        'if (false)'
     ''
     # Bun 1.4.x regressed compiled executable code splitting.
     + ''
@@ -149,7 +142,7 @@ stdenv.mkDerivation (finalAttrs: {
     runHook preBuild
 
     cd ./packages/opencode
-    bun --bun ./script/build.ts --single --skip-install
+    bun --bun ./script/build.ts --single --skip-install --skip-smoke
     bun --bun ./script/schema.ts config.json tui.json
     substituteInPlace config.json \
       --replace-fail "https://models.dev/model-schema.json" \
