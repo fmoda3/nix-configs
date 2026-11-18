@@ -51,6 +51,11 @@ in
         # Use nix-darwin's managed Linux builder VM.
         enable = cfg.enableRemoteBuilder;
         systems = [ "aarch64-linux" "x86_64-linux" ];
+        config = {
+          # Large FOD builds (e.g. opencode's node_modules, ~5 GB output) need
+          # far more scratch space than the 20 GB default.
+          virtualisation.darwin-builder.diskSize = 60 * 1024;
+        };
       };
     };
 
