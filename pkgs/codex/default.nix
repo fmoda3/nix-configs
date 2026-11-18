@@ -5,6 +5,7 @@
 , fetchFromGitHub
 , installShellFiles
 , alsa-lib
+, aws-lc
 , bubblewrap
 , clang
 , cmake
@@ -22,13 +23,16 @@
 , linkFarm
 , lld
 , nix-update-script
+, oniguruma
 , pkg-config
 , openssl
 , ps
 , replaceVars
 , ripgrep
+, sqlite
 , versionCheckHook
 , writeText
+, zstd
 , installShellCompletions ? stdenv.buildPlatform.canExecute stdenv.hostPlatform
 , _experimental-update-script-combinators
 ,
@@ -166,8 +170,12 @@ rustPlatform.buildRustPackage (finalAttrs: {
   ];
 
   buildInputs = [
+    aws-lc
     libclang
+    oniguruma
     openssl
+    sqlite
+    zstd
   ]
   ++ lib.optionals supportsVoice [
     gst_all_1.gstreamer
@@ -217,6 +225,13 @@ rustPlatform.buildRustPackage (finalAttrs: {
   # and in practice not adding any real value. this decision may be reversed in
   # the future once this software stabilizes.
   doCheck = false;
+
+  # codex-voice-host is moved out of bin/ before fixup; strip it too, or its
+  # debug info keeps gcc and glibc.dev in the runtime closure.
+  stripDebugList = [
+    "bin"
+    "codex-resources"
+  ];
 
   # Metadata enables voice package discovery even without a daemon.
   # Patch ps and package rg/bwrap directly: a wrapper fails the daemon's
