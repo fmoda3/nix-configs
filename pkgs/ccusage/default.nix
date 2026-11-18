@@ -12,6 +12,7 @@
 , curl
 , runCommand
 , jq
+, zstd
 ,
 }:
 
@@ -24,10 +25,10 @@ let
   #
   # Both values below are kept in sync with the package version by
   # passthru.updateScript — do not edit them by hand.
-  litellmPricingRev = "20d53f2951c79bb9164af9032588c8b0a561727b";
+  litellmPricingUrl = "https://raw.githubusercontent.com/BerriAI/litellm/20d53f2951c79bb9164af9032588c8b0a561727b/model_prices_and_context_window.json";
   litellmPricingHash = "sha256-dpiVrPsVyEacsLCStpazgGIax+OX6COUjS1GmxYQ1/g=";
   litellmPricing = fetchurl {
-    url = "https://raw.githubusercontent.com/BerriAI/litellm/${litellmPricingRev}/model_prices_and_context_window.json";
+    url = litellmPricingUrl;
     hash = litellmPricingHash;
   };
 in
@@ -52,7 +53,10 @@ rustPlatform.buildRustPackage (finalAttrs: {
 
   nativeBuildInputs = [ pkg-config ];
 
-  buildInputs = lib.optionals stdenv.hostPlatform.isDarwin [
+  buildInputs = [
+    zstd
+  ]
+  ++ lib.optionals stdenv.hostPlatform.isDarwin [
     apple-sdk_15
     libiconv
   ];
@@ -76,11 +80,6 @@ rustPlatform.buildRustPackage (finalAttrs: {
   doInstallCheck = true;
 
   passthru = {
-    # Plain nix-update only refreshes version + src/cargo hashes; it can't know
-    # about the LiteLLM pricing pin above. This wrapper bumps the package as
-    # usual, then reads the litellm revision that ccusage locks at the new tag
-    # and rewrites litellmPricingRev/litellmPricingHash to match, so automated
-    # (r-ryantm) bumps stay complete instead of shipping stale pricing data.
     updateScript = lib.getExe (writeShellApplication {
       name = "ccusage-update";
       runtimeInputs = [
@@ -96,21 +95,18 @@ rustPlatform.buildRustPackage (finalAttrs: {
         nix-update "$attr"
 
         version=$(nix-instantiate --eval --raw -A "$attr.version")
-        rev=$(curl --fail --silent --show-error --location \
+        if ! url=$(curl --fail --silent --show-error --location \
           "https://raw.githubusercontent.com/ccusage/ccusage/v''${version}/flake.lock" \
-          | jq --exit-status --raw-output '
-              .nodes.litellm.locked
-              | (.rev // ((.url // "") | capture("^https://raw[.]githubusercontent[.]com/BerriAI/litellm/(?<rev>[0-9a-f]{40})/model_prices_and_context_window[.]json$").rev))
-              | if type == "string" and test("^[0-9a-f]{40}$") then .
-                else error("Invalid LiteLLM pricing revision") end
-            ')
-        hash=$(nix-prefetch-url --type sha256 \
-          "https://raw.githubusercontent.com/BerriAI/litellm/''${rev}/model_prices_and_context_window.json" \
+          | jq --exit-status --raw-output '.nodes[.nodes.root.inputs.litellm].locked.url'); then
+          echo "Could not find the LiteLLM pricing URL in ccusage v$version flake.lock" >&2
+          exit 1
+        fi
+        hash=$(nix-prefetch-url --type sha256 "$url" \
           | xargs nix --extra-experimental-features nix-command hash convert --hash-algo sha256 --to sri)
 
         file=$(nix-instantiate --eval --raw -A "$attr.meta.position" | sed -re 's/:[0-9]+$//')
         sed -i \
-          -e "s|litellmPricingRev = \"[0-9a-f]*\"|litellmPricingRev = \"''${rev}\"|" \
+          -e "s|litellmPricingUrl = \"[^\"]*\"|litellmPricingUrl = \"''${url}\"|" \
           -e "s|litellmPricingHash = \"sha256-[^\"]*\"|litellmPricingHash = \"''${hash}\"|" \
           "$file"
       '';
