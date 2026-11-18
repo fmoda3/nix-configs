@@ -126,7 +126,7 @@ stdenv.mkDerivation (finalAttrs: {
     wrapProgram $out/bin/pi \
       --prefix PATH : ${lib.makeBinPath ([ fd ripgrep ] ++ lib.optionals stdenv.hostPlatform.isLinux [ wl-clipboard xclip ])} \
       --set PI_PACKAGE_DIR $out/share/pi-coding-agent \
-      --set PI_SKIP_VERSION_CHECK 1
+      --set-default PI_SKIP_VERSION_CHECK 1
 
     runHook postInstall
   '';
