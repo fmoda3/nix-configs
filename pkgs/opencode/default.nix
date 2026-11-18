@@ -81,7 +81,7 @@ let
         if stdenv.hostPlatform.isLinux then
           "sha256-1fw254YWlcU+5sPKjXTDMPlUKXEjkikoQRMLYT8juGU="
         else if stdenv.hostPlatform.isDarwin then
-          "sha256-1fw254YWlcU+5sPKjXTDMPlUKXEjkikoQRMLYT8juGU="
+          "sha256-s/PGE0dN3KoZEaF6x5oSmCx8MVh+TiQ45CquxNxHR8s="
         else
           throw "Unsupported platform";
       outputHashMode = "recursive";
