@@ -9,7 +9,7 @@ buildNpmPackage {
   version = "2026-08-20";
 
   src = fetchGit {
-    url = "git@github.toasttab.com:cakeface/spelunk.git";
+    url = "ssh://git@github.toasttab.com/cakeface/spelunk.git";
     rev = "5a44b7e94ba2d5e6231e8d9c06a990bcfce39b3b";
     ref = "main";
     narHash = "sha256-CahfM3odxh61GjCH+58yBmhF2am6ydTwSRXQhsMpZ2Y=";

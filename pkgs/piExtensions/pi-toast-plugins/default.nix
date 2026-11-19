@@ -8,7 +8,7 @@ buildPiExtension {
   version = "2026-11-18";
 
   src = fetchGit {
-    url = "git@github.toasttab.com:toasttab/claude-marketplace.git";
+    url = "ssh://git@github.toasttab.com/toasttab/claude-marketplace.git";
     rev = "e7b5145b4d30147752e8789802909f0ab2ce9814";
     ref = "main";
     narHash = "sha256-waon0b6U4mJI9W2UBsRXhZWOIBvIOlStuRGWmNBl0yA=";

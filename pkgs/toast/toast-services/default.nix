@@ -9,7 +9,7 @@ stdenv.mkDerivation {
   version = "2026-09-15";
 
   src = fetchGit {
-    url = "git@github.toasttab.com:toasttab/toast-services.git";
+    url = "ssh://git@github.toasttab.com/toasttab/toast-services.git";
     rev = "6bf8f1caaa097c30d4929bc77edd98f375e3d563";
     ref = "development";
     narHash = "sha256-9WQhFjIuwVNFm0EUKx2RFNAvT9wB5xYXZJCAnLUBjOw=";

@@ -11,7 +11,7 @@ buildGoModule {
   version = "2026-09-22";
 
   src = fetchGit {
-    url = "git@github.toasttab.com:toasttab/oktoast-setup.git";
+    url = "ssh://git@github.toasttab.com/toasttab/oktoast-setup.git";
     rev = "ed8cb6c684a7985c7327d4503bd43786ca8ecec5";
     ref = "master";
     narHash = "sha256-kSclUjDtPsxmt5RiCx7TgzJ7z8FKeS7oHjTcAlwB2SY=";

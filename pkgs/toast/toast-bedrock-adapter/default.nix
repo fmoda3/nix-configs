@@ -9,7 +9,7 @@ buildNpmPackage (finalAttrs: {
   version = "2026-07-29";
 
   src = fetchGit {
-    url = "git@github.toasttab.com:nathannorman-toast/toast-bedrock-adapter.git";
+    url = "ssh://git@github.toasttab.com/nathannorman-toast/toast-bedrock-adapter.git";
     rev = "781eb6d4f3dd30b0ce799f20f8cb54830a79cc89";
     ref = "main";
     narHash = "sha256-/GejF3zgUQugXbbOXl6Fmzp1DXCXVuUQkt+0Db7paAM=";

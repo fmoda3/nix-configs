@@ -2,7 +2,7 @@
 
 let
   src = fetchGit {
-    url = "git@github.toasttab.com:toasttab/pi-toast.git";
+    url = "ssh://git@github.toasttab.com/toasttab/pi-toast.git";
     rev = "b0677e7e698ece7b9b88353395a0d0220dc381a1";
     ref = "main";
     narHash = "sha256-gkJ2JVnZBSDwEXvBWpmIBSlP6lcdwG9ayzRDWo+5Bgg=";

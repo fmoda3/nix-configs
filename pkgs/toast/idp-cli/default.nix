@@ -11,7 +11,7 @@ let
   version = "2026-09-18";
 
   src = fetchGit {
-    url = "git@github.toasttab.com:toasttab/idp-cli.git";
+    url = "ssh://git@github.toasttab.com/toasttab/idp-cli.git";
     rev = "7749da1276e1f8d218696fea6ac167cdb4aa81a1";
     ref = "main";
     narHash = "sha256-k5GFJU81CKFVkBKLEPVT4jcp2agj+gp4qCx4xXZG6jQ=";
