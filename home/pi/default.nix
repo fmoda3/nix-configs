@@ -21,8 +21,8 @@ let
 
   settings = {
     quietStartup = true;
-    defaultProvider = if cfg.isWork then "toast" else "openai-codex";
-    defaultModel = if cfg.isWork then "auto-claude" else "gpt-6.1-sol";
+    defaultProvider = if cfg.isWork then "toast" else "claude-bridge";
+    defaultModel = if cfg.isWork then "auto-claude" else "claude-opus-5-5";
     defaultTools = [
       "+codemode"
     ];
