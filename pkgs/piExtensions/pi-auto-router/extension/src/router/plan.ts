@@ -66,7 +66,7 @@ export type RoutePlan<C> =
 
 /**
  * Where a request goes when there is no decision and none can be made: the
- * `moderate` rung — Opus 5.5 at medium (Anthropic's own default) or GPT-6.1 Sol
+ * `moderate` rung — Opus 5.5 at medium (Anthropic's own default) or GPT-6.2 Sol
  * at medium.
  * Also where a failed classification lands, so a classifier outage costs the
  * user a routing decision, never their prompt.
@@ -75,7 +75,7 @@ export const DEFAULT_ROUTE: RoutedState = { level: "moderate" };
 
 /**
  * Where a scouting branch runs while the agent reads the material the prompt
- * points to: the `simple` rung (Haiku 5.5 · xhigh, GPT-6.1 Terra · medium).
+ * points to: the `simple` rung (Haiku 5.5 · xhigh, GPT-6.2 Sol · low).
  * Reading a ticket or a file needs competent tool use, not depth; the real level
  * comes after.
  */

@@ -67,30 +67,36 @@ const CLAUDE_RUNGS: Readonly<Record<Level, Rung>> = {
 };
 
 /**
- * The GPT ladder: GPT-6.1 Terra, then GPT-6.1 Sol through the middle, Astra on top.
+ * The GPT ladder: GPT-6.1 Terra at the bottom, GPT-6.2 Sol through the
+ * middle, GPT-6.2 Astra on top.
  *
  * Numbers are AA Intelligence Index v5.0.1. Terra `low`
- * (29.4, $0.071) beats Luna `high`, `xhigh` and `max`, and takes `trivial`
- * from Luna `medium` (18.5, $0.042): +10.9 points and 15% vs 2.5% on
- * Terminal-Bench 4.0, for 1.7x the cost, and it finishes 3x faster. Luna is
- * off the ladder.
+ * (29.4, $0.071) beats Luna `high`, `xhigh` and `max`, and holds `trivial`.
  *
- * Terra `medium` stays at `simple`. Sol 6.1 `medium` (46.3, $0.36) beats Terra
- * `xhigh` (45.3, $0.40), and Sol `xhigh` beats Terra `max`, so Sol runs
- * `moderate` to `hard`. Astra `xhigh` (55.3, $3.66) stays at `extreme`: Sol
- * `max` (54.6, $1.27) is close on the index but 3.5 points behind on
- * Terminal-Bench (56.1% vs 59.6%, the best GPT score).
+ * GPT-6.2 Sol takes `simple` to `hard`, so escalating among them changes only
+ * the effort and keeps the prompt cache. Sol 6.2 `low` (40.6, $0.184) replaces
+ * Terra `medium` (38.2, $0.169) at `simple`: +2.4 points and 37.9% vs 32.3% on
+ * Terminal-Bench 4.0 for 1.09x the cost, in half the time. Sol 6.2 `medium`
+ * (52.7, $0.41) beats Sol 6.1 `xhigh` (52.5, $0.76), and Sol 6.2 `high`
+ * (54.9, $0.56) is cheaper than Sol 6.1 `high`, so GPT-6.1 Sol is dominated at
+ * every effort. `hard` is Sol 6.2 `max` (57.3, $1.01), not `xhigh` (55.7,
+ * $0.65): `xhigh` is only +0.8 over `high` and lower on Terminal-Bench (56.1%
+ * vs 58.6%), while `max` is a real step (60.1%).
+ *
+ * GPT-6.2 Astra `xhigh` (61.6, $2.52) takes `extreme` from GPT-6 Astra `xhigh`
+ * (55.3, $3.66): +6.3 points for 69% of the cost, and the best GPT
+ * Terminal-Bench score (64.1%). GPT-6 Astra is dominated at every effort.
  *
  * The `openai-codex` provider declares `max` for every GPT-6 model, and pi
  * sends it as `reasoning.effort`, so every rung's effort reaches the model.
  */
 const GPT_RUNGS: Readonly<Record<Level, Rung>> = {
   trivial: { model: "gpt-6.1-terra", effort: "low", benchmark: { index: 29.4, costPerTask: 0.071 } },
-  simple: { model: "gpt-6.1-terra", effort: "medium", benchmark: { index: 38.2, costPerTask: 0.169 } },
-  moderate: { model: "gpt-6.1-sol", effort: "medium", benchmark: { index: 46.3, costPerTask: 0.36 } },
-  complex: { model: "gpt-6.1-sol", effort: "high", benchmark: { index: 50.3, costPerTask: 0.59 } },
-  hard: { model: "gpt-6.1-sol", effort: "xhigh", benchmark: { index: 52.5, costPerTask: 0.76 } },
-  extreme: { model: "gpt-6-astra", effort: "xhigh", benchmark: { index: 55.3, costPerTask: 3.66 } },
+  simple: { model: "gpt-6.2-sol", effort: "low", benchmark: { index: 40.6, costPerTask: 0.184 } },
+  moderate: { model: "gpt-6.2-sol", effort: "medium", benchmark: { index: 52.7, costPerTask: 0.41 } },
+  complex: { model: "gpt-6.2-sol", effort: "high", benchmark: { index: 54.9, costPerTask: 0.56 } },
+  hard: { model: "gpt-6.2-sol", effort: "max", benchmark: { index: 57.3, costPerTask: 1.01 } },
+  extreme: { model: "gpt-6.2-astra", effort: "xhigh", benchmark: { index: 61.6, costPerTask: 2.52 } },
 };
 
 /** A family's rungs, one per level. */
@@ -234,6 +240,7 @@ export function resolveClassifierModel(family: Family, available: readonly Avail
  *   gpt-6.1-terra       off → max
  *   gpt-6.1-sol         minimal → max       (`off` is explicitly disabled)
  *   gpt-6-astra         minimal → max       (`off` is explicitly disabled)
+ *   gpt-6.2-sol, -astra low → max           (`off` and `minimal` disabled)
  *
  * Applying an unsupported level is worse than merely useless: pi's
  * `clampThinkingLevel` silently walks the request to the nearest supported

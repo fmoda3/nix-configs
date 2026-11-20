@@ -42,9 +42,9 @@ export const LEVELS: readonly Level[] = ["trivial", "simple", "moderate", "compl
  * per family.
  *
  * Only `extreme` is gated on either ladder: Fable 5.2 `high` on Claude (≈3.7×
- * a `moderate` route per task) and GPT-6 Astra on GPT (≈10×). `hard` is cheap
- * enough to run unasked: Fable 5.2 `medium` is ≈1.6× on Claude, GPT-6.1 Sol
- * `xhigh` ≈2.1× on GPT. The classifier may suggest a
+ * a `moderate` route per task) and GPT-6.2 Astra `xhigh` on GPT (≈6.1×). `hard` is cheap
+ * enough to run unasked: Fable 5.2 `medium` is ≈1.6× on Claude, GPT-6.2 Sol
+ * `max` ≈2.5× on GPT. The classifier may suggest a
  * gated level, because refusing would make it useless for the work that
  * genuinely needs it, but spending that much must not happen without the user
  * saying so.
