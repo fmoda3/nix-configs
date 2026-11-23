@@ -79,9 +79,9 @@ let
 
       outputHash =
         if stdenv.hostPlatform.isLinux then
-          "sha256-1fw254YWlcU+5sPKjXTDMPlUKXEjkikoQRMLYT8juGU="
+          "sha256-4PJINKZ1f5syNHT3xGezCX78GECIiCgKZG8BXm0Ethw="
         else if stdenv.hostPlatform.isDarwin then
-          "sha256-s/PGE0dN3KoZEaF6x5oSmCx8MVh+TiQ45CquxNxHR8s="
+          "sha256-nhJXzJ6Q8UNz10goMO2qwRxRl+72qzndacuL4WJNgNQ="
         else
           throw "Unsupported platform";
       outputHashMode = "recursive";
@@ -89,7 +89,7 @@ let
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "opencode";
-  version = "2.3.2";
+  version = "2.4.1";
 
   __structuredAttrs = true;
   strictDeps = true;
@@ -98,7 +98,7 @@ stdenv.mkDerivation (finalAttrs: {
     owner = "anomalyco";
     repo = "opencode";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-yEdLD000KJPNkuowiy4g+sHV+7dm3xazKTEf15ZIYKs=";
+    hash = "sha256-0bgTMqKMooQZ2MO8O64uvp/XI0NluBvmxR+wKXMUScI=";
   };
 
   postPatch =
