@@ -8,13 +8,13 @@
 
 buildPiExtension rec {
   pname = "pi-processes";
-  version = "2026-11-20";
+  version = "2026-11-22";
 
   src = fetchFromGitHub {
     owner = "aliou";
     repo = "pi-processes";
-    rev = "a1efe6555e60cb8357c7ed8d82bae6042b07ecc7";
-    sha256 = "sha256-YYB8OwfKAfWrlZoih4zGfi8obWLAjcBb0WaRG2XuMgE=";
+    rev = "290aa5e258008bf6b1f08dab0ee71dbd327cd8b2";
+    sha256 = "sha256-7MCY7XKWzqGuDSeC9ZBz2ioqOwlAyOJOrnushOyKJRo=";
   };
 
   pnpmDeps = fetchPnpmDeps {
